@@ -1,0 +1,15 @@
+requests
+beautifulsoup4
+pymysql
+selenium
+webdriver-manager
+lxml
+langchain
+langchain-google-genai
+sentence-transformers
+langchain-community
+chromadb
+python-dotenv
+sqlalchemy
+tqdm
+fake-useragent
