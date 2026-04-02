@@ -2,7 +2,7 @@
 import json
 import logging
 from tqdm import tqdm
-from database_db.database import Database, RawPage
+from database_db.database import Database
 from processor.data_cleaner import DataCleaner
 from database_db.vector_store import VectorStore
 
@@ -13,8 +13,7 @@ db = Database()
 cleaner = DataCleaner()
 
 # 1단계: 정제 (태깅 없이 기본 메타데이터로 저장)
-with db.Session() as session:
-    raw_pages = session.query(RawPage).all()
+raw_pages = db.get_all_raw_pages()
 
 logger.info(f"처리 대상: {len(raw_pages)}개 페이지")
 

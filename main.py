@@ -165,8 +165,8 @@ def run_incremental(menu_filter: str = None):
 
 
 def run_process():
-    """2단계: 정제 + LLM 태깅 → MySQL chunks 저장"""
-    from database_db.database import Database, RawPage
+    """2단계: 정제 + LLM 태깅 → Supabase chunks 저장"""
+    from database_db.database import Database
     from processor.data_cleaner import DataCleaner
     from processor.metadata_tagger import MetadataTagger
 
@@ -174,8 +174,7 @@ def run_process():
     cleaner = DataCleaner()
     tagger = MetadataTagger()
 
-    with db.Session() as session:
-        raw_pages = session.query(RawPage).all()
+    raw_pages = db.get_all_raw_pages()
 
     logger.info(f"처리 대상: {len(raw_pages)}개 페이지")
 

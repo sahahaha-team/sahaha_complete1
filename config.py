@@ -21,15 +21,7 @@ MAX_PAGES_PER_MENU = 50
 REQUEST_TIMEOUT = 10
 MAX_RETRIES = 3
 
-# ===== MySQL 설정 =====
-MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
-MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
-MYSQL_USER = os.getenv("MYSQL_USER", "root")
-MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
-MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "saha_db")
-MYSQL_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}?charset=utf8mb4"
-
-# ===== Supabase 설정 (무료 티어 - pgvector) =====
+# ===== Supabase 설정 (PostgreSQL + pgvector) =====
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")  # anon/public key
 

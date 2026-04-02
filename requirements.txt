@@ -5,8 +5,6 @@ lxml
 fake-useragent
 selenium
 webdriver-manager
-pymysql
-sqlalchemy
 supabase
 langchain
 langchain-google-genai
