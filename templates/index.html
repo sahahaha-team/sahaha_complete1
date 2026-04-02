@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사하구청 AI 상담사</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="chat-app">
+        <!-- 헤더 -->
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#fff" fill-opacity="0.2"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#fff"/>
+                    </svg>
+                </div>
+                <div class="header-title">
+                    <h1>사하구청 AI 상담사</h1>
+                    <span class="header-subtitle">부산광역시 사하구 공식 정보 안내</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="btn-clear" class="btn-icon" title="대화 초기화">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- 채팅 영역 -->
+        <main class="chat-messages" id="chat-messages">
+            <!-- 환영 메시지 -->
+            <div class="message bot-message welcome-message">
+                <div class="message-avatar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" fill="#0066CC"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#fff"/>
+                    </svg>
+                </div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        <p>안녕하세요! <strong>사하구청 AI 상담사</strong>입니다.</p>
+                        <p>사하구 행정 서비스, 민원, 복지 등 궁금한 점을 물어보세요.</p>
+                        <div class="quick-actions">
+                            <button class="quick-btn" data-msg="사하구청 위치와 연락처 알려줘">구청 위치/연락처</button>
+                            <button class="quick-btn" data-msg="복지 지원 서비스 종류 알려줘">복지 서비스</button>
+                            <button class="quick-btn" data-msg="민원 서류 발급 방법 알려줘">민원 발급</button>
+                            <button class="quick-btn" data-msg="쓰레기 분리수거 방법 알려줘">분리수거 안내</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 입력 영역 -->
+        <footer class="chat-input-area">
+            <div class="input-wrapper">
+                <textarea id="user-input" placeholder="궁금한 점을 입력하세요..." rows="1" maxlength="500"></textarea>
+                <button id="btn-send" class="btn-send" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="input-notice">사하구청 공식 정보 기반 답변 | 개인정보를 입력하지 마세요</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>

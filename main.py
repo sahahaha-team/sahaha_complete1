@@ -1,6 +1,13 @@
 """
-사하구청 AI 상담사 - 데이터 수집 파이프라인
-실행: python main.py [--mode crawl|incremental|process|embed|all|stats] [--menu 메뉴명]
+사하구청 AI 상담사 - 데이터 파이프라인 + 웹 서버
+실행:
+  python main.py --mode web          # 웹 서버 실행
+  python main.py --mode crawl        # 전수 크롤링
+  python main.py --mode incremental  # 증분 크롤링
+  python main.py --mode process      # 정제 + 태깅
+  python main.py --mode embed        # 벡터 임베딩
+  python main.py --mode all          # 전체 파이프라인
+  python main.py --mode stats        # 통계 확인
 """
 
 import os
@@ -11,11 +18,6 @@ from tqdm import tqdm
 os.makedirs("data", exist_ok=True)
 
 from config import TARGET_MENUS, MAX_PAGES_PER_MENU, BASE_URL
-from crawler.saha_crawler import SahaCrawler
-from processor.data_cleaner import DataCleaner
-from processor.metadata_tagger import MetadataTagger
-from db.database import Database
-from db.vector_store import VectorStore
 
 logging.basicConfig(
     level=logging.INFO,
@@ -30,6 +32,9 @@ logger = logging.getLogger(__name__)
 
 def run_crawl(menu_filter: str = None):
     """1단계: 전수 크롤링 → MySQL 저장"""
+    from crawler.saha_crawler import SahaCrawler
+    from database_db.database import Database
+
     crawler = SahaCrawler(use_selenium=False)
     db = Database()
 
@@ -56,12 +61,13 @@ def run_crawl(menu_filter: str = None):
 
 
 def run_incremental(menu_filter: str = None):
-    """
-    증분 크롤링: 변경된 페이지만 감지하여 업데이트
-    - 신규 페이지 추가
-    - 내용이 바뀐 페이지 업데이트 + 관련 청크 재처리
-    - 사라진 페이지 삭제
-    """
+    """증분 크롤링: 변경된 페이지만 감지하여 업데이트"""
+    from crawler.saha_crawler import SahaCrawler
+    from database_db.database import Database
+    from processor.data_cleaner import DataCleaner
+    from processor.metadata_tagger import MetadataTagger
+    from database_db.vector_store import VectorStore
+
     crawler = SahaCrawler(use_selenium=False)
     db = Database()
     cleaner = DataCleaner()
@@ -106,7 +112,7 @@ def run_incremental(menu_filter: str = None):
             f"삭제: {stats['deleted']}개 / 변경없음: {stats['unchanged']}개"
         )
 
-        # 4. 변경된 페이지만 재처리 (정제 + 태깅 + 임베딩)
+        # 4. 변경된 페이지만 재처리
         if not changed_urls:
             logger.info("변경된 페이지 없음. 업데이트 불필요.")
             return stats
@@ -132,7 +138,6 @@ def run_incremental(menu_filter: str = None):
         if all_tagged:
             db.save_chunks_bulk(all_tagged)
 
-            # 변경된 청크만 벡터 DB 업데이트
             import json
             new_chunk_pairs = []
             for chunk, metadata in all_tagged:
@@ -161,12 +166,15 @@ def run_incremental(menu_filter: str = None):
 
 def run_process():
     """2단계: 정제 + LLM 태깅 → MySQL chunks 저장"""
+    from database_db.database import Database, RawPage
+    from processor.data_cleaner import DataCleaner
+    from processor.metadata_tagger import MetadataTagger
+
     db = Database()
     cleaner = DataCleaner()
     tagger = MetadataTagger()
 
     with db.Session() as session:
-        from db.database import RawPage
         raw_pages = session.query(RawPage).all()
 
     logger.info(f"처리 대상: {len(raw_pages)}개 페이지")
@@ -193,7 +201,10 @@ def run_process():
 
 
 def run_embed():
-    """3단계: 미임베딩 청크 → ChromaDB 벡터 저장"""
+    """3단계: 미임베딩 청크 → Supabase 벡터 저장"""
+    from database_db.database import Database
+    from database_db.vector_store import VectorStore
+
     db = Database()
     vs = VectorStore()
 
@@ -228,6 +239,9 @@ def run_embed():
 
 
 def show_stats():
+    from database_db.database import Database
+    from database_db.vector_store import VectorStore
+
     db = Database()
     vs = VectorStore()
 
@@ -239,18 +253,32 @@ def show_stats():
     print(f"  정제 청크:     {db_stats['chunks']}개")
     print(f"  임베딩 완료:   {db_stats['embedded']}개")
     print(f"  벡터 DB:       {vs_stats['total_vectors']}개")
+    print(f"  대화 로그:     {db_stats['conversations']}개")
     print("===========================\n")
 
 
+def run_web():
+    """웹 서버 실행"""
+    from app import run_server
+    logger.info("=== 사하구청 AI 상담사 웹 서버 시작 ===")
+    run_server()
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="사하구청 데이터 수집 파이프라인")
-    parser.add_argument("--mode", choices=["crawl", "incremental", "process", "embed", "all", "stats"],
-                        default="all", help="실행 모드")
+    parser = argparse.ArgumentParser(description="사하구청 AI 상담사")
+    parser.add_argument(
+        "--mode",
+        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web"],
+        default="web",
+        help="실행 모드 (기본: web)",
+    )
     parser.add_argument("--menu", type=str, default=None,
                         help=f"특정 메뉴만 크롤링: {list(TARGET_MENUS.keys())}")
     args = parser.parse_args()
 
-    if args.mode == "stats":
+    if args.mode == "web":
+        run_web()
+    elif args.mode == "stats":
         show_stats()
     elif args.mode == "crawl":
         run_crawl(args.menu)

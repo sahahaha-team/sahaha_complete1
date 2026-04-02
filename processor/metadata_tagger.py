@@ -1,15 +1,15 @@
 """
-LLM 기반 메타데이터 자동 태깅 (Google Gemini - 무료 티어)
+LLM 기반 메타데이터 자동 태깅 (Groq - 무료 티어)
 - 청크별 서비스 분류, 대상, 키워드 추출
 """
 
 import json
 import time
 import logging
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 
-from config import GEMINI_API_KEY, GEMINI_LLM_MODEL
+from config import GROQ_API_KEY, GROQ_LLM_MODEL
 
 logger = logging.getLogger(__name__)
 
@@ -34,20 +34,20 @@ TAGGING_PROMPT = PromptTemplate.from_template("""
 
 class MetadataTagger:
     def __init__(self):
-        if not GEMINI_API_KEY:
-            logger.warning("GEMINI_API_KEY 미설정 - 메타데이터 태깅 비활성화")
+        if not GROQ_API_KEY:
+            logger.warning("GROQ_API_KEY 미설정 - 메타데이터 태깅 비활성화")
             self.llm = None
             return
         try:
-            self.llm = ChatGoogleGenerativeAI(
-                model=GEMINI_LLM_MODEL,
-                google_api_key=GEMINI_API_KEY,
+            self.llm = ChatGroq(
+                model=GROQ_LLM_MODEL,
+                api_key=GROQ_API_KEY,
                 temperature=0,
             )
             self.chain = TAGGING_PROMPT | self.llm
-            logger.info(f"Gemini 연결 완료: {GEMINI_LLM_MODEL}")
+            logger.info(f"Groq 연결 완료: {GROQ_LLM_MODEL}")
         except Exception as e:
-            logger.warning(f"Gemini 초기화 실패 - 태깅 비활성화: {e}")
+            logger.warning(f"Groq 초기화 실패 - 태깅 비활성화: {e}")
             self.llm = None
 
     def tag(self, chunk) -> dict:
@@ -85,6 +85,6 @@ class MetadataTagger:
             for chunk in batch:
                 meta = self.tag(chunk)
                 results.append((chunk, meta))
-                time.sleep(10)  # 분당 15회 제한 대응 (6req/min)
+                time.sleep(25)  # 분당 2~3회로 보수적 대응 (무료 할당량 보존)
             logger.info(f"태깅 진행: {min(i+batch_size, len(chunks))}/{len(chunks)}")
         return results

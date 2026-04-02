@@ -1,5 +1,5 @@
 """
-MySQL DB - 원본 크롤링 데이터 및 정제 청크 저장
+MySQL DB - 원본 크롤링 데이터, 정제 청크, 대화 이력 저장
 """
 
 import logging
@@ -26,7 +26,7 @@ class RawPage(Base):
     content = Column(LONGTEXT)
     category = Column(String(100))
     sub_category = Column(String(300))
-    content_hash = Column(String(32))           # 변경 감지용 MD5 해시
+    content_hash = Column(String(32))
     crawled_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -63,6 +63,22 @@ class ProcessedChunk(Base):
     )
 
 
+class ConversationLog(Base):
+    """대화 이력 저장 (멀티턴 대화 지원)"""
+    __tablename__ = "conversation_logs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    session_id = Column(String(64), nullable=False, index=True)
+    role = Column(String(20), nullable=False)  # user / assistant
+    content = Column(Text, nullable=False)
+    sources = Column(Text)  # JSON: 참조된 출처 URL 목록
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        Index("ix_conv_session_created", "session_id", "created_at"),
+    )
+
+
 class Database:
     def __init__(self):
         self.engine = create_engine(
@@ -75,8 +91,9 @@ class Database:
         self.Session = sessionmaker(bind=self.engine)
         logger.info(f"MySQL DB 연결: {MYSQL_URL.split('@')[-1]}")
 
+    # ===== 크롤링 데이터 =====
+
     def save_raw_page(self, page_data) -> bool:
-        """원본 페이지 저장 (중복 URL 스킵)"""
         import hashlib
         content_hash = hashlib.md5(page_data.content.encode()).hexdigest()
 
@@ -97,12 +114,6 @@ class Database:
             return True
 
     def upsert_raw_page(self, page_data) -> str:
-        """
-        증분 크롤링용 저장
-        - 신규 URL: 저장 → 'new' 반환
-        - 내용 변경: 업데이트 → 'updated' 반환
-        - 변경 없음: 스킵 → 'unchanged' 반환
-        """
         import hashlib
         content_hash = hashlib.md5(page_data.content.encode()).hexdigest()
 
@@ -125,7 +136,6 @@ class Database:
             if exists.content_hash == content_hash:
                 return "unchanged"
 
-            # 내용이 변경된 경우 업데이트
             exists.title = page_data.title
             exists.content = page_data.content
             exists.sub_category = page_data.sub_category
@@ -133,33 +143,30 @@ class Database:
             exists.updated_at = datetime.utcnow()
             session.commit()
 
-            # 해당 URL의 기존 청크 삭제 (재처리 필요)
             session.query(ProcessedChunk).filter_by(url=page_data.url).delete()
             session.commit()
             return "updated"
 
     def get_all_urls(self) -> set:
-        """DB에 저장된 모든 URL 반환"""
         with self.Session() as session:
             rows = session.query(RawPage.url).all()
             return {r.url for r in rows}
 
     def delete_page(self, url: str):
-        """페이지 및 관련 청크 삭제 (사라진 페이지 처리)"""
         with self.Session() as session:
             session.query(ProcessedChunk).filter_by(url=url).delete()
             session.query(RawPage).filter_by(url=url).delete()
             session.commit()
 
     def get_pages_by_urls(self, urls: list) -> list:
-        """특정 URL 목록의 페이지 조회"""
         with self.Session() as session:
             rows = session.query(RawPage).filter(RawPage.url.in_(urls)).all()
             session.expunge_all()
             return rows
 
+    # ===== 청크 데이터 =====
+
     def save_chunks_bulk(self, tagged_chunks: list):
-        """청크 일괄 저장"""
         import json
         with self.Session() as session:
             new_count = 0
@@ -189,23 +196,75 @@ class Database:
             logger.info(f"DB 저장 완료: {new_count}개 청크")
 
     def get_unembedded_chunks(self) -> list:
-        """벡터 임베딩 안 된 청크 조회"""
         with self.Session() as session:
             rows = session.query(ProcessedChunk).filter_by(embedded=False).all()
             session.expunge_all()
             return rows
 
     def mark_embedded(self, chunk_ids: list[str]):
-        """임베딩 완료 표시"""
         with self.Session() as session:
             session.query(ProcessedChunk)\
                 .filter(ProcessedChunk.chunk_id.in_(chunk_ids))\
                 .update({"embedded": True}, synchronize_session=False)
             session.commit()
 
+    def get_chunks_by_metadata(self, category: str = None, service_type: str = None, limit: int = 100) -> list:
+        """메타데이터 기반 청크 필터링 (하이브리드 검색 1차 필터)"""
+        with self.Session() as session:
+            query = session.query(ProcessedChunk)
+            if category:
+                query = query.filter(ProcessedChunk.category == category)
+            if service_type:
+                query = query.filter(ProcessedChunk.service_type == service_type)
+            rows = query.limit(limit).all()
+            session.expunge_all()
+            return rows
+
+    # ===== 대화 이력 =====
+
+    def save_conversation(self, session_id: str, role: str, content: str, sources: str = None):
+        with self.Session() as session:
+            row = ConversationLog(
+                session_id=session_id,
+                role=role,
+                content=content,
+                sources=sources,
+            )
+            session.add(row)
+            session.commit()
+
+    def get_conversation_history(self, session_id: str, limit: int = 10) -> list[dict]:
+        with self.Session() as session:
+            rows = session.query(ConversationLog)\
+                .filter_by(session_id=session_id)\
+                .order_by(ConversationLog.created_at.desc())\
+                .limit(limit)\
+                .all()
+            result = []
+            for r in reversed(rows):
+                result.append({
+                    "role": r.role,
+                    "content": r.content,
+                    "sources": r.sources,
+                })
+            return result
+
+    def clear_conversation(self, session_id: str):
+        with self.Session() as session:
+            session.query(ConversationLog).filter_by(session_id=session_id).delete()
+            session.commit()
+
+    # ===== 통계 =====
+
     def stats(self) -> dict:
         with self.Session() as session:
             raw = session.query(RawPage).count()
             chunks = session.query(ProcessedChunk).count()
             embedded = session.query(ProcessedChunk).filter_by(embedded=True).count()
-            return {"raw_pages": raw, "chunks": chunks, "embedded": embedded}
+            conversations = session.query(ConversationLog).count()
+            return {
+                "raw_pages": raw,
+                "chunks": chunks,
+                "embedded": embedded,
+                "conversations": conversations,
+            }
