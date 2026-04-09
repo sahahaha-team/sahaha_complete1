@@ -133,7 +133,8 @@ class VectorStore:
             self.add_chunks(batch, db=db)
             logger.info(f"임베딩 진행: {min(i + batch_size, total)}/{total}")
 
-    def similarity_search(self, query: str, k: int = 5, filter_meta: dict = None) -> list[dict]:
+    def similarity_search(self, query: str, k: int = 5, filter_meta: dict = None,
+                          min_similarity: float = 0.5) -> list[dict]:
         """Supabase 테이블에서 데이터를 가져와 Python에서 코사인 유사도 계산"""
         query_embedding = np.array(self.embed_text(query))
 
@@ -161,16 +162,25 @@ class VectorStore:
                 np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding) + 1e-10
             ))
 
-            docs.append({
-                "id": row["id"],
-                "content": row["content"],
-                "metadata": meta,
-                "similarity": similarity,
-            })
+            # 최소 유사도 이상인 문서만 포함
+            if similarity >= min_similarity:
+                docs.append({
+                    "id": row["id"],
+                    "content": row["content"],
+                    "metadata": meta,
+                    "similarity": similarity,
+                })
 
         # 유사도 내림차순 정렬 후 상위 k개
         docs.sort(key=lambda x: x["similarity"], reverse=True)
-        return docs[:k]
+        top = docs[:k]
+
+        # 디버깅: 상위 결과 유사도 출력
+        for d in top:
+            title = d["metadata"].get("title", "?")[:30]
+            logger.info(f"  [검색결과] 유사도={d['similarity']:.4f} | {title}")
+
+        return top
 
     def hybrid_search(self, query: str, category: str = None, service_type: str = None, k: int = 5) -> list[dict]:
         """

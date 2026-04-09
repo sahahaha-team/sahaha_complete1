@@ -128,7 +128,7 @@ class ChatBot:
                 search_query = " ".join(recent + [user_message])
 
         results = self.retriever.search(search_query)
-        context, sources = self.retriever.format_context(results)
+        context, sources = self.retriever.format_context(user_message, results)
 
         if not context:
             context = "(관련 참고자료를 찾지 못했습니다)"

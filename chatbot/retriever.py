@@ -81,7 +81,28 @@ class HybridRetriever:
             logger.warning(f"벡터 검색 실패 (Supabase SQL 미설정?): {e}")
             return []
 
-    def format_context(self, results: list[dict]) -> tuple[str, list[dict]]:
+    def _is_relevant_source(self, query: str, title: str, content: str) -> bool:
+        """질문 키워드가 문서 제목이나 내용에 실제로 포함되어 있는지 확인"""
+        # 불용어 (너무 일반적인 단어 제외)
+        stopwords = {"알려줘", "알려주세요", "뭐야", "어떻게", "해줘", "있어", "없어",
+                     "하고", "싶어", "인가요", "인지", "대해", "관련", "안내", "정보",
+                     "사하구", "사하구청", "부산"}
+
+        # 질문에서 2글자 이상 키워드 추출
+        query_keywords = set()
+        for word in query.replace("?", "").replace(".", "").split():
+            word = word.strip()
+            if len(word) >= 2 and word not in stopwords:
+                query_keywords.add(word)
+
+        if not query_keywords:
+            return True  # 키워드가 없으면 그냥 표시
+
+        # 제목이나 내용에 키워드가 하나라도 포함되면 관련 있음
+        combined = title + " " + content
+        return any(kw in combined for kw in query_keywords)
+
+    def format_context(self, query: str, results: list[dict]) -> tuple[str, list[dict]]:
         """검색 결과를 LLM 컨텍스트 + 출처 목록으로 변환"""
         if not results:
             return "", []
@@ -103,7 +124,8 @@ class HybridRetriever:
                 f"내용: {content}\n"
             )
 
-            if url and url not in seen_urls:
+            # 출처는 질문과 실제로 관련 있는 경우에만 표시
+            if url and url not in seen_urls and self._is_relevant_source(query, title, content):
                 seen_urls.add(url)
                 sources.append({
                     "title": title,
