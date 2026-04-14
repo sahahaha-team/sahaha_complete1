@@ -55,6 +55,11 @@ crawler/ → processor/ → database_db/  →  chatbot/ → app.py
 - 다음 크롤링 시 해시 비교로 변경/신규/삭제 페이지를 감지
 - 변경된 페이지만 재처리하여 서버 부하 최소화
 
+**자동 스케줄링 (APScheduler)**:
+- 웹 서버 실행 시 백그라운드 스케줄러가 함께 시작
+- 매일 새벽 3시에 `run_incremental()`을 자동 실행
+- 별도의 cron 설정 없이 서버 프로세스 하나로 운영
+
 ### 1-2. 정제 (processor/data_cleaner.py)
 
 크롤링된 원본 텍스트를 정리합니다.

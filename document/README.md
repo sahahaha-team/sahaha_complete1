@@ -14,6 +14,7 @@
 - **하이브리드 검색**: 메타데이터 필터링 + 벡터 유사도 검색을 결합하여 정확도 향상
 - **환각 방지**: 사하구청 공식 데이터만 사용, 모르는 건 모른다고 답변
 - **개인정보 보호**: 주민등록번호, 전화번호 등 입력 시 LLM 전달 전 차단
+- **자동 데이터 갱신**: APScheduler로 매일 증분 크롤링 자동 실행
 
 ## 기술 스택
 
@@ -25,6 +26,7 @@
 | 임베딩 | HuggingFace sentence-transformers (MiniLM-L12-v2) |
 | 벡터 DB | Supabase PostgreSQL + pgvector |
 | 크롤링 | requests + BeautifulSoup (Selenium fallback) |
+| 스케줄러 | APScheduler (증분 크롤링 자동화, 매일 03:00) |
 | 프론트엔드 | HTML/CSS/JS (Vanilla) |
 | 프레임워크 | LangChain |
 
@@ -141,6 +143,7 @@ python quick_pipeline.py
 ```bash
 python main.py --mode web
 # http://127.0.0.1:5000 에서 접속
+# 매일 새벽 3시에 증분 크롤링이 자동 실행됩니다 (APScheduler)
 ```
 
 ## 상세 문서

@@ -257,8 +257,23 @@ def show_stats():
 
 
 def run_web():
-    """웹 서버 실행"""
+    """웹 서버 실행 (증분 크롤링 스케줄러 포함)"""
     from app import run_server
+    from apscheduler.schedulers.background import BackgroundScheduler
+
+    # 증분 크롤링 자동 스케줄러 (매일 새벽 3시 실행)
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        func=run_incremental,
+        trigger="cron",
+        hour=3,
+        minute=0,
+        id="incremental_crawl",
+        misfire_grace_time=3600,
+    )
+    scheduler.start()
+    logger.info("=== 증분 크롤링 스케줄러 등록 (매일 03:00) ===")
+
     logger.info("=== 사하구청 AI 상담사 웹 서버 시작 ===")
     run_server()
 

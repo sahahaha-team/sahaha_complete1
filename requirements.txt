@@ -14,3 +14,4 @@ langchain-text-splitters
 sentence-transformers
 python-dotenv
 tqdm
+apscheduler
