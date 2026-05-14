@@ -1,15 +1,14 @@
 """
 Supabase pgvector 벡터 스토어 (무료 티어)
 - HuggingFace 로컬 임베딩 (완전 무료)
-- Supabase PostgreSQL + pgvector 확장으로 벡터 검색
+- Supabase match_documents() RPC로 서버사이드 pgvector 검색 수행
 """
 
 import json
 import logging
-import numpy as np
-from supabase import create_client
 
-from config import SUPABASE_URL, SUPABASE_KEY
+from config import SUPABASE_SERVICE_KEY
+from database_db import get_supabase
 
 logger = logging.getLogger(__name__)
 
@@ -18,8 +17,12 @@ EMBEDDING_DIM = 384  # MiniLM-L12-v2 출력 차원
 
 
 class VectorStore:
-    def __init__(self):
-        from langchain_community.embeddings import HuggingFaceEmbeddings
+    def __init__(self, admin: bool = None):
+        # langchain-huggingface 우선, 미설치 시 langchain-community 폴백
+        try:
+            from langchain_huggingface import HuggingFaceEmbeddings
+        except ImportError:
+            from langchain_community.embeddings import HuggingFaceEmbeddings
 
         logger.info(f"임베딩 모델 로딩 중: {EMBED_MODEL}")
         self.embeddings = HuggingFaceEmbeddings(
@@ -28,58 +31,10 @@ class VectorStore:
             encode_kwargs={"normalize_embeddings": True},
         )
 
-        if not SUPABASE_URL or not SUPABASE_KEY:
-            raise ValueError("SUPABASE_URL과 SUPABASE_KEY를 .env에 설정해주세요")
-
-        self.supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-        logger.info("Supabase 연결 완료")
-
-        self._ensure_table()
-
-    def _ensure_table(self):
-        """Supabase에 벡터 테이블이 없으면 생성 안내 로그"""
-        # Supabase SQL Editor에서 아래 SQL 실행 필요:
-        # create extension if not exists vector;
-        # create table if not exists documents (
-        #   id text primary key,
-        #   content text,
-        #   embedding vector(384),
-        #   metadata jsonb,
-        #   created_at timestamp with time zone default now()
-        # );
-        # create index on documents using ivfflat (embedding vector_cosine_ops) with (lists = 100);
-        #
-        # -- 유사도 검색 함수
-        # create or replace function match_documents(
-        #   query_embedding vector(384),
-        #   match_count int default 5,
-        #   filter_metadata jsonb default '{}'
-        # )
-        # returns table (
-        #   id text,
-        #   content text,
-        #   metadata jsonb,
-        #   similarity float
-        # )
-        # language plpgsql
-        # as $$
-        # begin
-        #   return query
-        #   select
-        #     d.id,
-        #     d.content,
-        #     d.metadata,
-        #     1 - (d.embedding <=> query_embedding) as similarity
-        #   from documents d
-        #   where case
-        #     when filter_metadata = '{}'::jsonb then true
-        #     else d.metadata @> filter_metadata
-        #   end
-        #   order by d.embedding <=> query_embedding
-        #   limit match_count;
-        # end;
-        # $$;
-        logger.info("Supabase 벡터 테이블 준비 (SQL 설정 필요 - setup_supabase.sql 참조)")
+        if admin is None:
+            admin = bool(SUPABASE_SERVICE_KEY)
+        self.supabase = get_supabase(admin=admin)
+        logger.info("Supabase 벡터 스토어 준비 완료")
 
     def embed_text(self, text: str) -> list[float]:
         """텍스트 → 임베딩 벡터"""
@@ -116,7 +71,6 @@ class VectorStore:
                 "metadata": safe_meta,
             })
 
-        # Supabase upsert (배치)
         self.supabase.table("documents").upsert(rows).execute()
 
         if db:
@@ -135,49 +89,46 @@ class VectorStore:
 
     def similarity_search(self, query: str, k: int = 5, filter_meta: dict = None,
                           min_similarity: float = 0.5) -> list[dict]:
-        """Supabase 테이블에서 데이터를 가져와 Python에서 코사인 유사도 계산"""
-        query_embedding = np.array(self.embed_text(query))
-
-        # 테이블에서 전체 문서 조회
-        result = self.supabase.table("documents").select("id, content, embedding, metadata").execute()
+        """
+        Supabase match_documents() RPC를 호출하여 서버사이드 pgvector 검색 수행.
+        - 클라이언트는 query embedding만 전송 (전체 임베딩 노출 차단)
+        - 서버에서 HNSW 인덱스로 유사도 계산 및 정렬
+        """
+        query_embedding = self.embed_text(query)
+        try:
+            result = self.supabase.rpc(
+                "match_documents",
+                {
+                    "query_embedding": query_embedding,
+                    "match_count": max(k * 2, 10),  # 임계값 필터 이후 k개 확보용 여유
+                    "filter_metadata": filter_meta or {},
+                },
+            ).execute()
+        except Exception as e:
+            logger.error(f"match_documents RPC 호출 실패: {e}")
+            return []
 
         docs = []
-        for row in result.data:
-            # 메타데이터 필터링
-            if filter_meta:
-                meta = row["metadata"] if isinstance(row["metadata"], dict) else json.loads(row["metadata"])
-                if not all(meta.get(fk) == fv for fk, fv in filter_meta.items()):
-                    continue
-            else:
-                meta = row["metadata"] if isinstance(row["metadata"], dict) else json.loads(row["metadata"])
+        for row in result.data or []:
+            similarity = float(row.get("similarity", 0))
+            if similarity < min_similarity:
+                continue
+            meta = row.get("metadata") or {}
+            if isinstance(meta, str):
+                try:
+                    meta = json.loads(meta)
+                except Exception:
+                    meta = {}
+            docs.append({
+                "id": row.get("id"),
+                "content": row.get("content", ""),
+                "metadata": meta,
+                "similarity": similarity,
+            })
 
-            # 임베딩 파싱
-            emb = row["embedding"]
-            if isinstance(emb, str):
-                emb = json.loads(emb)
-            doc_embedding = np.array(emb)
-
-            # 코사인 유사도 계산
-            similarity = float(np.dot(query_embedding, doc_embedding) / (
-                np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding) + 1e-10
-            ))
-
-            # 최소 유사도 이상인 문서만 포함
-            if similarity >= min_similarity:
-                docs.append({
-                    "id": row["id"],
-                    "content": row["content"],
-                    "metadata": meta,
-                    "similarity": similarity,
-                })
-
-        # 유사도 내림차순 정렬 후 상위 k개
-        docs.sort(key=lambda x: x["similarity"], reverse=True)
         top = docs[:k]
-
-        # 디버깅: 상위 결과 유사도 출력
         for d in top:
-            title = d["metadata"].get("title", "?")[:30]
+            title = (d["metadata"].get("title") or "?")[:30]
             logger.info(f"  [검색결과] 유사도={d['similarity']:.4f} | {title}")
 
         return top
@@ -185,8 +136,8 @@ class VectorStore:
     def hybrid_search(self, query: str, category: str = None, service_type: str = None, k: int = 5) -> list[dict]:
         """
         하이브리드 검색 (2단계 전략)
-        1차: 메타데이터 필터링 (카테고리, 서비스 유형)
-        2차: 필터된 범위 내 벡터 유사도 검색
+        1차: 메타데이터 필터 (카테고리, 서비스 유형)
+        2차: 필터된 범위 내 pgvector 유사도 검색 (서버사이드)
         """
         filter_meta = {}
         if category:

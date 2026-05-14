@@ -6,11 +6,14 @@
 """
 
 import re
+import logging
 import hashlib
 from dataclasses import dataclass
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from config import CHUNK_SIZE, CHUNK_OVERLAP
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -26,13 +29,26 @@ class CleanedChunk:
 
 
 class DataCleaner:
-    def __init__(self):
+    def __init__(self, db=None):
+        """
+        db: Database 인스턴스를 전달하면 DB의 기존 chunk_id를 미리 조회해
+        재실행 시에도 중복 청크의 임베딩 비용을 줄임.
+        """
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=CHUNK_SIZE,
             chunk_overlap=CHUNK_OVERLAP,
             separators=["\n\n", "\n", ". ", " ", ""],
         )
         self._seen_hashes: set = set()
+        self._existing_chunk_ids: set = set()
+        if db is not None:
+            try:
+                # 처음 1회만 DB에서 기존 chunk_id 전수 조회 (incremental 재실행 시 효율적)
+                result = db.client.table("processed_chunks").select("chunk_id").execute()
+                self._existing_chunk_ids = {r["chunk_id"] for r in (result.data or [])}
+                logger.info(f"기존 chunk_id 캐시 로드: {len(self._existing_chunk_ids)}개")
+            except Exception as e:
+                logger.warning(f"기존 chunk_id 조회 실패 (메모리 중복만 감지): {e}")
 
     def clean_text(self, text: str) -> str:
         """텍스트 정제"""
@@ -87,9 +103,16 @@ class DataCleaner:
 
         chunks = self.splitter.split_text(cleaned)
         result = []
+        skipped = 0
 
         for i, chunk in enumerate(chunks):
             chunk_id = hashlib.md5(f"{page_data.url}_{i}".encode()).hexdigest()
+
+            # DB에 이미 존재하는 chunk_id는 스킵 (재실행 비용 절감)
+            if chunk_id in self._existing_chunk_ids:
+                skipped += 1
+                continue
+
             result.append(CleanedChunk(
                 chunk_id=chunk_id,
                 url=page_data.url,
@@ -100,5 +123,8 @@ class DataCleaner:
                 chunk_index=i,
                 total_chunks=len(chunks),
             ))
+
+        if skipped:
+            logger.info(f"  중복 청크 스킵: {skipped}/{len(chunks)} ({page_data.url})")
 
         return result

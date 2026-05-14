@@ -1,4 +1,6 @@
 flask
+flask-cors
+flask-limiter
 requests
 beautifulsoup4
 lxml
@@ -10,6 +12,7 @@ langchain
 langchain-google-genai
 langchain-groq
 langchain-community
+langchain-huggingface
 langchain-text-splitters
 sentence-transformers
 python-dotenv

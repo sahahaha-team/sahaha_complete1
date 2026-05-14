@@ -70,7 +70,7 @@ def run_incremental(menu_filter: str = None):
 
     crawler = SahaCrawler(use_selenium=False)
     db = Database()
-    cleaner = DataCleaner()
+    cleaner = DataCleaner(db=db)
     tagger = MetadataTagger()
     vs = VectorStore()
 
@@ -171,7 +171,7 @@ def run_process():
     from processor.metadata_tagger import MetadataTagger
 
     db = Database()
-    cleaner = DataCleaner()
+    cleaner = DataCleaner(db=db)
     tagger = MetadataTagger()
 
     raw_pages = db.get_all_raw_pages()
@@ -256,13 +256,31 @@ def show_stats():
     print("===========================\n")
 
 
+def cleanup_old_conversations_job():
+    """대화 이력 TTL 정리 작업 (스케줄러용)"""
+    from database_db.database import Database
+    from config import CONVERSATION_TTL_DAYS
+    try:
+        db = Database(admin=True) if _has_service_key() else Database()
+        db.cleanup_old_conversations(ttl_days=CONVERSATION_TTL_DAYS)
+    except Exception as e:
+        logger.error(f"대화 이력 TTL 정리 실패: {e}")
+
+
+def _has_service_key() -> bool:
+    from config import SUPABASE_SERVICE_KEY
+    return bool(SUPABASE_SERVICE_KEY)
+
+
 def run_web():
-    """웹 서버 실행 (증분 크롤링 스케줄러 포함)"""
+    """웹 서버 실행 (증분 크롤링 + 대화 이력 TTL 스케줄러 포함)"""
     from app import run_server
     from apscheduler.schedulers.background import BackgroundScheduler
+    from config import CONVERSATION_TTL_DAYS
 
-    # 증분 크롤링 자동 스케줄러 (매일 새벽 3시 실행)
     scheduler = BackgroundScheduler()
+
+    # 증분 크롤링 (매일 새벽 3시)
     scheduler.add_job(
         func=run_incremental,
         trigger="cron",
@@ -271,8 +289,21 @@ def run_web():
         id="incremental_crawl",
         misfire_grace_time=3600,
     )
+
+    # 대화 이력 TTL 정리 (매일 새벽 4시)
+    scheduler.add_job(
+        func=cleanup_old_conversations_job,
+        trigger="cron",
+        hour=4,
+        minute=0,
+        id="conversation_ttl_cleanup",
+        misfire_grace_time=3600,
+    )
+
     scheduler.start()
-    logger.info("=== 증분 크롤링 스케줄러 등록 (매일 03:00) ===")
+    logger.info(
+        f"=== 스케줄러 등록 (증분 크롤링 03:00 / 대화 이력 {CONVERSATION_TTL_DAYS}일 정리 04:00) ==="
+    )
 
     logger.info("=== 사하구청 AI 상담사 웹 서버 시작 ===")
     run_server()

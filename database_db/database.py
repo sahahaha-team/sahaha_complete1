@@ -6,20 +6,24 @@ Supabase DB - 원본 크롤링 데이터, 정제 청크, 대화 이력 저장
 import json
 import hashlib
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
-from supabase import create_client
-from config import SUPABASE_URL, SUPABASE_KEY
+from config import SUPABASE_SERVICE_KEY
+from database_db import get_supabase
 
 logger = logging.getLogger(__name__)
 
 
 class Database:
-    def __init__(self):
-        if not SUPABASE_URL or not SUPABASE_KEY:
-            raise ValueError("SUPABASE_URL과 SUPABASE_KEY를 .env에 설정해주세요")
-        self.client = create_client(SUPABASE_URL, SUPABASE_KEY)
-        logger.info(f"Supabase DB 연결: {SUPABASE_URL}")
+    def __init__(self, admin: bool = None):
+        """
+        admin=None  : SUPABASE_SERVICE_KEY가 설정돼 있으면 admin, 아니면 anon
+        admin=True  : service role 키 강제 사용 (RLS 우회)
+        admin=False : anon 키 강제 사용 (RLS 적용)
+        """
+        if admin is None:
+            admin = bool(SUPABASE_SERVICE_KEY)
+        self.client = get_supabase(admin=admin)
 
     # ===== 크롤링 데이터 =====
 
@@ -166,6 +170,32 @@ class Database:
 
     def clear_conversation(self, session_id: str):
         self.client.table("conversation_logs").delete().eq("session_id", session_id).execute()
+
+    def cleanup_old_conversations(self, ttl_days: int = 30) -> int:
+        """TTL 경과 대화 이력 자동 삭제 (스케줄러에서 호출)"""
+        cutoff = (datetime.now(timezone.utc) - timedelta(days=ttl_days)).isoformat()
+        result = self.client.table("conversation_logs") \
+            .delete() \
+            .lt("created_at", cutoff) \
+            .execute()
+        count = len(result.data) if result.data else 0
+        logger.info(f"대화 이력 정리: {ttl_days}일 경과 {count}건 삭제")
+        return count
+
+    def get_existing_chunk_ids(self, chunk_ids: list[str]) -> set[str]:
+        """주어진 chunk_id 중 DB에 이미 존재하는 ID 반환 (중복 방지)"""
+        if not chunk_ids:
+            return set()
+        existing = set()
+        # Supabase in_ 쿼리는 길이 제한이 있으므로 100개 단위로 분할
+        for i in range(0, len(chunk_ids), 100):
+            batch = chunk_ids[i:i + 100]
+            result = self.client.table("processed_chunks") \
+                .select("chunk_id") \
+                .in_("chunk_id", batch) \
+                .execute()
+            existing.update(r["chunk_id"] for r in result.data)
+        return existing
 
     # ===== 통계 =====
 

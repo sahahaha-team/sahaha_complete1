@@ -29,8 +29,8 @@ SYSTEM_PROMPT = """당신은 부산광역시 사하구청 공식 AI 상담사입
 
 ## 규칙 (반드시 준수)
 1. **사실 기반 답변**: 제공된 참고자료에 있는 정보만 사용하세요. 참고자료에 없는 내용은 절대 추측하거나 지어내지 마세요.
-2. **모호한 질문 처리**: 질문이 너무 넓거나 모호하면, 바로 답변하지 말고 구체적인 선택지를 제시하며 역질문하세요.
-   예: "복지 관련 문의를 주셨네요. 혹시 다음 중 어떤 분야가 궁금하신가요? 1) 노인복지 2) 아동복지 3) 장애인복지 4) 기초생활수급"
+2. **모호한 질문 처리**: 질문이 너무 넓거나 모호하면, 답변 마지막에 정확히 `[CLARIFICATION]` 토큰을 한 줄로 추가하고 구체적인 선택지를 제시하며 역질문하세요.
+   예: "복지 관련 문의를 주셨네요. 혹시 다음 중 어떤 분야가 궁금하신가요? 1) 노인복지 2) 아동복지 3) 장애인복지 4) 기초생활수급\n[CLARIFICATION]"
 3. **출처 명시**: 답변에 사용한 정보의 출처를 반드시 언급하세요. (예: "사하구청 홈페이지 ○○ 페이지에 따르면...")
 4. **개인정보 보호**: 사용자가 주민등록번호, 전화번호 등 개인정보를 입력하면, 저장하지 않으며 입력하지 말 것을 안내하세요.
 5. **정보 부족 시**: 참고자료에서 답을 찾을 수 없으면, 솔직히 "해당 정보를 찾지 못했습니다"라고 안내하고, 사하구청 대표전화(051-220-4000)나 홈페이지 방문을 권장하세요.
@@ -40,12 +40,37 @@ SYSTEM_PROMPT = """당신은 부산광역시 사하구청 공식 AI 상담사입
 {context}
 """
 
-# 개인정보 패턴
+# 개인정보 패턴 (탐지 + 마스킹)
 PERSONAL_INFO_PATTERNS = [
-    (r"\d{6}[-\s]?\d{7}", "주민등록번호"),
-    (r"01[016789][-\s]?\d{3,4}[-\s]?\d{4}", "전화번호"),
-    (r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", "이메일"),
+    (re.compile(r"\d{6}[-\s]?\d{7}"), "주민등록번호"),
+    (re.compile(r"01[016789][-\s]?\d{3,4}[-\s]?\d{4}"), "전화번호"),
+    (re.compile(r"\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}"), "카드번호"),
+    (re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"), "이메일"),
 ]
+
+CLARIFICATION_TAG = "[CLARIFICATION]"
+
+
+def detect_personal_info(text: str) -> str | None:
+    """텍스트에서 첫 번째로 매칭된 개인정보 유형 반환 (없으면 None)"""
+    for pattern, info_type in PERSONAL_INFO_PATTERNS:
+        if pattern.search(text):
+            return info_type
+    return None
+
+
+def mask_personal_info(text: str) -> tuple[str, list[str]]:
+    """
+    텍스트의 개인정보를 [MASKED:<유형>]으로 치환하고 (마스킹된 텍스트, 발견된 유형 목록) 반환.
+    LLM 응답이 크롤링 데이터에 포함된 개인정보를 그대로 노출하지 않도록 출력단에서 호출.
+    """
+    found: list[str] = []
+    masked = text
+    for pattern, info_type in PERSONAL_INFO_PATTERNS:
+        if pattern.search(masked):
+            found.append(info_type)
+            masked = pattern.sub(f"[MASKED:{info_type}]", masked)
+    return masked, found
 
 
 class ChatBot:
@@ -73,11 +98,8 @@ class ChatBot:
         logger.info("챗봇 초기화 완료")
 
     def _check_personal_info(self, text: str) -> str | None:
-        """개인정보 입력 감지"""
-        for pattern, info_type in PERSONAL_INFO_PATTERNS:
-            if re.search(pattern, text):
-                return info_type
-        return None
+        """개인정보 입력 감지 (하위 호환용 래퍼)"""
+        return detect_personal_info(text)
 
     def _build_history(self, conversation: list[dict]) -> list:
         """대화 이력을 LangChain 메시지 형식으로 변환"""
@@ -154,10 +176,23 @@ class ChatBot:
             )
             sources = []
 
-        # 5. 역질문 여부 판단
-        is_clarification = any(kw in answer for kw in ["어떤 분야", "어떤 것이", "구체적으로", "선택해", "궁금하신가요?", "알려주시겠어요"])
+        # 5. 역질문 여부 판단 ([CLARIFICATION] 태그 우선, 키워드 폴백)
+        is_clarification = CLARIFICATION_TAG in answer
+        if is_clarification:
+            answer = answer.replace(CLARIFICATION_TAG, "").strip()
+        else:
+            # LLM이 태그를 빠뜨린 경우 키워드 휴리스틱으로 폴백
+            is_clarification = any(kw in answer for kw in [
+                "어떤 분야", "어떤 것이", "구체적으로", "선택해",
+                "궁금하신가요?", "알려주시겠어요"
+            ])
 
-        # 6. 대화 이력 저장
+        # 6. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
+        answer, leaked = mask_personal_info(answer)
+        if leaked:
+            logger.warning(f"LLM 응답에서 개인정보 감지/마스킹: {leaked}")
+
+        # 7. 대화 이력 저장
         self.db.save_conversation(session_id, "user", user_message)
         self.db.save_conversation(
             session_id, "assistant", answer,

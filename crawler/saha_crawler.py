@@ -8,7 +8,9 @@ import time
 import logging
 import requests
 from bs4 import BeautifulSoup
+from collections import deque
 from urllib.parse import urljoin, urlparse
+from urllib.robotparser import RobotFileParser
 from dataclasses import dataclass, field
 from typing import Optional
 from fake_useragent import UserAgent
@@ -31,12 +33,37 @@ class PageData:
 
 
 class SahaCrawler:
-    def __init__(self, use_selenium: bool = False):
+    def __init__(self, use_selenium: bool = False, respect_robots: bool = True):
         self.session = self._init_session()
         self.use_selenium = use_selenium
         self.driver = None
+        self.user_agent = self.session.headers.get("User-Agent", "*")
+        self.robot_parser = self._init_robots(respect_robots)
         if use_selenium:
             self._init_selenium()
+
+    def _init_robots(self, respect_robots: bool) -> Optional[RobotFileParser]:
+        """robots.txt 파싱 (실패 시 모든 URL 허용)"""
+        if not respect_robots:
+            return None
+        rp = RobotFileParser()
+        rp.set_url(urljoin(BASE_URL, "/robots.txt"))
+        try:
+            rp.read()
+            logger.info(f"robots.txt 로딩 완료: {BASE_URL}/robots.txt")
+            return rp
+        except Exception as e:
+            logger.warning(f"robots.txt 로딩 실패 (전체 허용으로 동작): {e}")
+            return None
+
+    def _can_fetch(self, url: str) -> bool:
+        """robots.txt 정책 확인"""
+        if self.robot_parser is None:
+            return True
+        try:
+            return self.robot_parser.can_fetch(self.user_agent, url)
+        except Exception:
+            return True
 
     def _init_session(self) -> requests.Session:
         ua = UserAgent()
@@ -168,18 +195,22 @@ class SahaCrawler:
         return list(set(links))
 
     def crawl_menu(self, menu_name: str, start_url: str, max_pages: int = 50) -> list[PageData]:
-        """메뉴 전체 크롤링"""
+        """메뉴 전체 크롤링 (BFS, deque 기반 O(1) 큐)"""
         results = []
         visited = set()
-        queue = [start_url]
+        queue: deque[str] = deque([start_url])
 
         logger.info(f"[{menu_name}] 크롤링 시작: {start_url}")
 
         while queue and len(results) < max_pages:
-            url = queue.pop(0)
+            url = queue.popleft()
             if url in visited:
                 continue
             visited.add(url)
+
+            if not self._can_fetch(url):
+                logger.info(f"  [SKIP-robots] {url}")
+                continue
 
             html = self.fetch_page(url)
             if not html:
@@ -190,7 +221,6 @@ class SahaCrawler:
                 results.append(page_data)
                 logger.info(f"  [{len(results)}/{max_pages}] {page_data.title[:40]} - {url}")
 
-            # 하위 링크 큐 추가
             for link in page_data.links:
                 if link not in visited and self._is_target_url(link):
                     queue.append(link)
