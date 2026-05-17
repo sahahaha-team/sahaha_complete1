@@ -64,3 +64,10 @@ RATE_LIMIT_CHAT = os.getenv("RATE_LIMIT_CHAT", "10 per minute")
 
 # ===== 대화 이력 TTL (일 단위) =====
 CONVERSATION_TTL_DAYS = int(os.getenv("CONVERSATION_TTL_DAYS", "30"))
+
+# ===== 하이브리드 검색 가중치 (벡터:BM25) =====
+# 합이 1.0이 되도록 설정. 기본 0.7:0.3 (의미 검색 우선, 키워드 보조)
+HYBRID_VECTOR_WEIGHT = float(os.getenv("HYBRID_VECTOR_WEIGHT", "0.7"))
+HYBRID_BM25_WEIGHT = float(os.getenv("HYBRID_BM25_WEIGHT", "0.3"))
+# BM25 후보 풀 크기 (벡터 검색 후 BM25로 재랭킹할 후보 수)
+HYBRID_BM25_TOP_N = int(os.getenv("HYBRID_BM25_TOP_N", "30"))

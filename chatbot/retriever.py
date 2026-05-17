@@ -1,21 +1,48 @@
 """
 하이브리드 검색 모듈
-1차 필터링: 메타데이터(카테고리, 서비스유형) 기반 범위 축소
-2차 정밀 검색: 벡터 유사도 검색
+- 1차 필터링: 메타데이터(카테고리, 서비스 유형) 기반 범위 축소
+- 2차 의미 검색: 벡터 유사도 (pgvector match_documents RPC)
+- 3차 키워드 보강: BM25 점수와 가중 합산하여 최종 랭킹
 """
 
-import json
 import logging
 from database_db.vector_store import VectorStore
 from database_db.database import Database
+from config import (
+    HYBRID_VECTOR_WEIGHT,
+    HYBRID_BM25_WEIGHT,
+    HYBRID_BM25_TOP_N,
+)
 
 logger = logging.getLogger(__name__)
+
+
+def _normalize_scores(scored_items: list[tuple[str, float]]) -> dict[str, float]:
+    """min-max 정규화로 점수를 [0, 1] 범위로 변환"""
+    if not scored_items:
+        return {}
+    scores = [s for _, s in scored_items]
+    smin, smax = min(scores), max(scores)
+    if smax - smin < 1e-9:
+        return {doc_id: 1.0 for doc_id, _ in scored_items}
+    return {
+        doc_id: (s - smin) / (smax - smin)
+        for doc_id, s in scored_items
+    }
 
 
 class HybridRetriever:
     def __init__(self):
         self.vs = VectorStore()
         self.db = Database()
+
+        # BM25 인덱스 사전 로딩 (지연 로딩하면 첫 질문 시 수 초 지연)
+        try:
+            from chatbot.bm25_index import BM25Index
+            self.bm25 = BM25Index()
+        except Exception as e:
+            logger.warning(f"BM25 인덱스 사전 로딩 실패: {e}")
+            self.bm25 = None
 
     def detect_category(self, query: str) -> dict:
         """질문에서 카테고리/서비스유형 힌트 감지"""
@@ -52,43 +79,97 @@ class HybridRetriever:
 
         return detected
 
+    def _hybrid_combine(self, query: str, vector_results: list[dict], k: int) -> list[dict]:
+        """
+        벡터 결과와 BM25 점수를 가중 합산하여 재랭킹.
+        BM25 비활성화 또는 미설치 시 벡터 결과 그대로 반환.
+        """
+        if not self.bm25 or not self.bm25.enabled:
+            return vector_results[:k]
+
+        # BM25 후보 집합
+        bm25_results = self.bm25.search(query, top_n=HYBRID_BM25_TOP_N)
+        if not bm25_results:
+            return vector_results[:k]
+
+        # 두 결과의 union으로 후보 풀 구성
+        candidates: dict[str, dict] = {}
+        for r in vector_results:
+            candidates[r["id"]] = {**r, "bm25_score": 0.0}
+        for r in bm25_results:
+            if r["id"] in candidates:
+                candidates[r["id"]]["bm25_score"] = r["bm25_score"]
+            else:
+                candidates[r["id"]] = {
+                    "id": r["id"],
+                    "content": r["content"],
+                    "metadata": r["metadata"],
+                    "similarity": 0.0,
+                    "bm25_score": r["bm25_score"],
+                }
+
+        # 점수 정규화
+        vec_norm = _normalize_scores([(cid, c["similarity"]) for cid, c in candidates.items()])
+        bm25_norm = _normalize_scores([(cid, c["bm25_score"]) for cid, c in candidates.items()])
+
+        # 가중 합산
+        for cid, c in candidates.items():
+            c["hybrid_score"] = (
+                HYBRID_VECTOR_WEIGHT * vec_norm.get(cid, 0)
+                + HYBRID_BM25_WEIGHT * bm25_norm.get(cid, 0)
+            )
+
+        # 정렬 후 상위 k개
+        ranked = sorted(candidates.values(), key=lambda x: x["hybrid_score"], reverse=True)[:k]
+        for d in ranked:
+            title = (d["metadata"].get("title") or "?")[:30]
+            logger.info(
+                f"  [하이브리드] hybrid={d['hybrid_score']:.3f} "
+                f"(vec={d.get('similarity', 0):.2f}/bm25={d['bm25_score']:.2f}) | {title}"
+            )
+
+        # 출처 표시는 similarity 키를 사용하므로 hybrid_score로 갱신
+        for d in ranked:
+            d["similarity"] = d["hybrid_score"]
+        return ranked
+
     def search(self, query: str, k: int = 5) -> list[dict]:
         """
         하이브리드 검색 수행
         1. 질문에서 메타데이터 힌트 감지
-        2. 감지된 필터로 범위 축소 + 벡터 검색
-        3. 필터 결과가 부족하면 전체 범위로 폴백
+        2. 감지된 필터로 벡터 검색
+        3. 결과 부족 시 필터 해제하여 전체 벡터 검색
+        4. BM25 점수와 가중 합산하여 재랭킹
         """
         hints = self.detect_category(query)
         logger.info(f"검색 힌트: {hints}")
 
         try:
-            # 1차: 메타데이터 필터 + 벡터 검색
+            # 1차: 메타데이터 필터 + 벡터 검색 (k의 2배를 가져와 재랭킹 여유 확보)
             results = self.vs.hybrid_search(
                 query=query,
                 category=hints.get("category"),
                 service_type=hints.get("service_type"),
-                k=k,
+                k=k * 2,
             )
 
-            # 결과가 부족하면 필터 없이 전체 검색
+            # 결과 부족 시 필터 해제
             if len(results) < 2:
                 logger.info("필터 결과 부족 → 전체 범위 검색")
-                results = self.vs.similarity_search(query, k=k)
+                results = self.vs.similarity_search(query, k=k * 2)
 
-            return results
+            # BM25 결합 재랭킹
+            return self._hybrid_combine(query, results, k=k)
         except Exception as e:
-            logger.warning(f"벡터 검색 실패 (Supabase SQL 미설정?): {e}")
+            logger.warning(f"하이브리드 검색 실패: {e}")
             return []
 
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:
         """질문 키워드가 문서 제목이나 내용에 실제로 포함되어 있는지 확인"""
-        # 불용어 (너무 일반적인 단어 제외)
         stopwords = {"알려줘", "알려주세요", "뭐야", "어떻게", "해줘", "있어", "없어",
                      "하고", "싶어", "인가요", "인지", "대해", "관련", "안내", "정보",
                      "사하구", "사하구청", "부산"}
 
-        # 질문에서 2글자 이상 키워드 추출
         query_keywords = set()
         for word in query.replace("?", "").replace(".", "").split():
             word = word.strip()
@@ -96,9 +177,8 @@ class HybridRetriever:
                 query_keywords.add(word)
 
         if not query_keywords:
-            return True  # 키워드가 없으면 그냥 표시
+            return True
 
-        # 제목이나 내용에 키워드가 하나라도 포함되면 관련 있음
         combined = title + " " + content
         return any(kw in combined for kw in query_keywords)
 
@@ -124,7 +204,6 @@ class HybridRetriever:
                 f"내용: {content}\n"
             )
 
-            # 출처는 질문과 실제로 관련 있는 경우에만 표시
             if url and url not in seen_urls and self._is_relevant_source(query, title, content):
                 seen_urls.add(url)
                 sources.append({
