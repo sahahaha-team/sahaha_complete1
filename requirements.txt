@@ -1,6 +1,7 @@
-flask
-flask-cors
-flask-limiter
+fastapi
+uvicorn[standard]
+slowapi
+itsdangerous
 requests
 beautifulsoup4
 lxml
