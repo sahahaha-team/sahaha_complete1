@@ -51,25 +51,53 @@ PERSONAL_INFO_PATTERNS = [
 CLARIFICATION_TAG = "[CLARIFICATION]"
 
 
-def detect_personal_info(text: str) -> str | None:
-    """텍스트에서 첫 번째로 매칭된 개인정보 유형 반환 (없으면 None)"""
+def detect_personal_info(text: str, use_ner: bool = True) -> str | None:
+    """
+    텍스트에서 첫 번째로 매칭된 개인정보 유형 반환 (없으면 None).
+    1차: 정규식 (주민등록번호/전화번호/카드번호/이메일 - 정형)
+    2차: NER (이름/주소 - 비정형, use_ner=True일 때)
+    """
     for pattern, info_type in PERSONAL_INFO_PATTERNS:
         if pattern.search(text):
             return info_type
+
+    if use_ner:
+        try:
+            from chatbot.pii_detector import NERPIIDetector
+            _, ner_found = NERPIIDetector().detect_and_mask(text)
+            if ner_found:
+                return ner_found[0]
+        except Exception as e:
+            logger.warning(f"NER 탐지 호출 실패 (정규식만 사용): {e}")
+
     return None
 
 
-def mask_personal_info(text: str) -> tuple[str, list[str]]:
+def mask_personal_info(text: str, use_ner: bool = True) -> tuple[str, list[str]]:
     """
     텍스트의 개인정보를 [MASKED:<유형>]으로 치환하고 (마스킹된 텍스트, 발견된 유형 목록) 반환.
     LLM 응답이 크롤링 데이터에 포함된 개인정보를 그대로 노출하지 않도록 출력단에서 호출.
+
+    정규식과 NER을 병렬 적용하여 정형/비정형 PII를 모두 차단.
     """
     found: list[str] = []
     masked = text
+
+    # 1단계: 정규식 기반 정형 PII (전화번호, 주민번호 등)
     for pattern, info_type in PERSONAL_INFO_PATTERNS:
         if pattern.search(masked):
             found.append(info_type)
             masked = pattern.sub(f"[MASKED:{info_type}]", masked)
+
+    # 2단계: NER 기반 비정형 PII (이름, 주소 등)
+    if use_ner:
+        try:
+            from chatbot.pii_detector import NERPIIDetector
+            masked, ner_found = NERPIIDetector().detect_and_mask(masked)
+            found.extend(ner_found)
+        except Exception as e:
+            logger.warning(f"NER 마스킹 호출 실패 (정규식 결과만 반환): {e}")
+
     return masked, found
 
 
@@ -87,6 +115,13 @@ class ChatBot:
         self.retriever = HybridRetriever()
         self.db = Database()
         self._last_call_time = 0
+
+        # NER PII 탐지기 사전 로딩 (첫 요청 지연 방지)
+        try:
+            from chatbot.pii_detector import NERPIIDetector
+            NERPIIDetector()
+        except Exception as e:
+            logger.warning(f"NER 탐지기 사전 로딩 실패 (필요 시 지연 로딩): {e}")
 
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", SYSTEM_PROMPT),

@@ -15,6 +15,8 @@ langchain-community
 langchain-huggingface
 langchain-text-splitters
 sentence-transformers
+transformers
+torch
 python-dotenv
 tqdm
 apscheduler
