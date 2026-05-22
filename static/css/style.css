@@ -226,6 +226,32 @@ body {
     color: white;
 }
 
+/* ===== degraded 안내 배너 ===== */
+.degraded-banner {
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #FFF8E1;
+    border: 1px solid #FFC107;
+    border-left: 3px solid #FF9800;
+    border-radius: var(--radius-sm);
+    color: #5D4037;
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+.degraded-banner .degraded-icon {
+    flex-shrink: 0;
+    color: #FF9800;
+    margin-top: 1px;
+}
+
+.degraded-banner .degraded-text {
+    flex: 1;
+}
+
 /* ===== 출처 카드 ===== */
 .sources-container {
     margin-top: 12px;
@@ -456,5 +482,12 @@ body {
         --shadow: rgba(0, 0, 0, 0.3);
         --bot-bubble: #16213E;
         --primary-light: #1A2744;
+    }
+
+    .degraded-banner {
+        background: #3A2E1A;
+        border-color: #B8860B;
+        border-left-color: #FF9800;
+        color: #FFE082;
     }
 }

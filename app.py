@@ -51,6 +51,9 @@ class ChatResponse(BaseModel):
     answer: str
     sources: list[Source]
     is_clarification: bool
+    # 검색/태깅/LLM 단계의 부분 실패 신호. True면 프론트가 안내 배너 표시.
+    degraded: bool = False
+    degraded_reason: Optional[str] = None
 
 
 class ClearResponse(BaseModel):
@@ -249,6 +252,8 @@ async def chat(request: Request, payload: ChatRequest):
                 "answer": "죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
                 "sources": [],
                 "is_clarification": False,
+                "degraded": True,
+                "degraded_reason": "internal_error",
             },
         )
 

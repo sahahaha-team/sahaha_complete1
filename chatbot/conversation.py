@@ -171,6 +171,8 @@ class ChatBot:
                 "answer": warning,
                 "sources": [],
                 "is_clarification": False,
+                "degraded": False,
+                "degraded_reason": None,
             }
 
         # 2. 대화 이력 조회
@@ -184,7 +186,10 @@ class ChatBot:
             if recent:
                 search_query = " ".join(recent + [user_message])
 
-        results = self.retriever.search(search_query)
+        search_outcome = self.retriever.search(search_query)
+        results = search_outcome["results"]
+        degraded = search_outcome["degraded"]
+        degraded_reason = search_outcome["reason"]
         context, sources = self.retriever.format_context(user_message, results)
 
         if not context:
@@ -210,6 +215,8 @@ class ChatBot:
                 "잠시 후 다시 시도해주시거나, 사하구청 대표전화(051-220-4000)로 문의해주세요."
             )
             sources = []
+            degraded = True
+            degraded_reason = "llm_failed"
 
         # 5. 역질문 여부 판단 ([CLARIFICATION] 태그 우선, 키워드 폴백)
         is_clarification = CLARIFICATION_TAG in answer
@@ -238,6 +245,8 @@ class ChatBot:
             "answer": answer,
             "sources": sources,
             "is_clarification": is_clarification,
+            "degraded": degraded,
+            "degraded_reason": degraded_reason,
         }
 
     def clear_session(self, session_id: str):

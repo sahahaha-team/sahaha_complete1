@@ -133,16 +133,31 @@ class HybridRetriever:
             d["similarity"] = d["hybrid_score"]
         return ranked
 
-    def search(self, query: str, k: int = 5) -> list[dict]:
+    def search(self, query: str, k: int = 5) -> dict:
         """
         하이브리드 검색 수행
         1. 질문에서 메타데이터 힌트 감지
         2. 감지된 필터로 벡터 검색
         3. 결과 부족 시 필터 해제하여 전체 벡터 검색
         4. BM25 점수와 가중 합산하여 재랭킹
+
+        Returns:
+            {
+                "results": list[dict],   # 검색된 문서 목록
+                "degraded": bool,        # 검색 파이프라인 부분 실패 여부
+                "reason": str | None,    # degraded=True일 때 원인 코드
+            }
+
+        degraded=True 케이스:
+            - vector_search_failed: 벡터 RPC 호출 자체가 예외로 실패
+            - bm25_failed: BM25 인덱스가 비활성 상태라 키워드 보정 불가
+              (벡터 결과만으로 응답하므로 정확도가 평소보다 낮을 수 있음)
         """
         hints = self.detect_category(query)
         logger.info(f"검색 힌트: {hints}")
+
+        degraded = False
+        reason: str | None = None
 
         try:
             # 1차: 메타데이터 필터 + 벡터 검색 (k의 2배를 가져와 재랭킹 여유 확보)
@@ -157,12 +172,19 @@ class HybridRetriever:
             if len(results) < 2:
                 logger.info("필터 결과 부족 → 전체 범위 검색")
                 results = self.vs.similarity_search(query, k=k * 2)
-
-            # BM25 결합 재랭킹
-            return self._hybrid_combine(query, results, k=k)
         except Exception as e:
-            logger.warning(f"하이브리드 검색 실패: {e}")
-            return []
+            logger.warning(f"벡터 검색 실패: {e}")
+            return {"results": [], "degraded": True, "reason": "vector_search_failed"}
+
+        # BM25 비활성 상태이면 벡터 결과만 사용하면서 degraded 표시
+        if not self.bm25 or not self.bm25.enabled:
+            degraded = True
+            reason = "bm25_failed"
+            return {"results": results[:k], "degraded": degraded, "reason": reason}
+
+        # BM25 결합 재랭킹
+        combined = self._hybrid_combine(query, results, k=k)
+        return {"results": combined, "degraded": degraded, "reason": reason}
 
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:
         """질문 키워드가 문서 제목이나 내용에 실제로 포함되어 있는지 확인"""

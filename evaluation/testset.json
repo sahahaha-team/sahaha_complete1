@@ -1,0 +1,65 @@
+{
+  "description": "사하구청 AI 상담사 하이브리드 검색 평가 테스트셋 (수기 라벨링)",
+  "version": "2026-05-22",
+  "judge_rule": "검색된 상위 k개 문서의 content 또는 metadata.title에 expected_keywords 중 하나 이상이 포함되면 해당 순위를 정답으로 간주한다.",
+  "queries": [
+    { "id": "Q01", "query": "전입신고 어떻게 하나요", "expected_keywords": ["전입신고", "주민등록"], "type": "keyword" },
+    { "id": "Q02", "query": "주민등록증 분실 재발급", "expected_keywords": ["주민등록증", "재발급"], "type": "keyword" },
+    { "id": "Q03", "query": "인감증명서 발급 받고 싶어요", "expected_keywords": ["인감", "증명서"], "type": "keyword" },
+    { "id": "Q04", "query": "가족관계증명서 떼는 법", "expected_keywords": ["가족관계", "증명서"], "type": "keyword" },
+    { "id": "Q05", "query": "출생신고는 어디서 하나요", "expected_keywords": ["출생신고", "출생"], "type": "keyword" },
+    { "id": "Q06", "query": "혼인신고 절차", "expected_keywords": ["혼인", "혼인신고"], "type": "keyword" },
+    { "id": "Q07", "query": "사망신고 서류", "expected_keywords": ["사망신고", "사망"], "type": "keyword" },
+    { "id": "Q08", "query": "자동차 등록 어디서 해요", "expected_keywords": ["자동차", "등록"], "type": "keyword" },
+    { "id": "Q09", "query": "건축물대장 발급", "expected_keywords": ["건축물대장", "건축물"], "type": "keyword" },
+    { "id": "Q10", "query": "토지대장 열람 방법", "expected_keywords": ["토지대장", "토지"], "type": "keyword" },
+
+    { "id": "Q11", "query": "노인 복지 지원 어떤거 있어요", "expected_keywords": ["노인", "어르신", "복지"], "type": "keyword" },
+    { "id": "Q12", "query": "기초생활수급자 신청", "expected_keywords": ["기초생활", "수급"], "type": "keyword" },
+    { "id": "Q13", "query": "장애인 지원금 종류", "expected_keywords": ["장애인", "지원"], "type": "keyword" },
+    { "id": "Q14", "query": "아동수당 받으려면 어떻게", "expected_keywords": ["아동수당", "아동"], "type": "keyword" },
+    { "id": "Q15", "query": "어린이집 보육료 지원", "expected_keywords": ["보육", "어린이집"], "type": "keyword" },
+    { "id": "Q16", "query": "한부모가정 혜택", "expected_keywords": ["한부모", "한부모가정"], "type": "keyword" },
+    { "id": "Q17", "query": "출산 장려금 얼마", "expected_keywords": ["출산", "장려금"], "type": "keyword" },
+    { "id": "Q18", "query": "치매 어르신 돌봄 서비스", "expected_keywords": ["치매", "돌봄"], "type": "keyword" },
+    { "id": "Q19", "query": "청년 정책 어떤거 있나요", "expected_keywords": ["청년"], "type": "general" },
+    { "id": "Q20", "query": "다문화가정 지원사업", "expected_keywords": ["다문화"], "type": "keyword" },
+
+    { "id": "Q21", "query": "재산세 납부 방법", "expected_keywords": ["재산세", "납부"], "type": "keyword" },
+    { "id": "Q22", "query": "자동차세 언제 내요", "expected_keywords": ["자동차세"], "type": "keyword" },
+    { "id": "Q23", "query": "지방세 환급", "expected_keywords": ["지방세", "환급"], "type": "keyword" },
+    { "id": "Q24", "query": "세금 체납 시 불이익", "expected_keywords": ["체납", "세금"], "type": "keyword" },
+    { "id": "Q25", "query": "취득세 신고", "expected_keywords": ["취득세"], "type": "keyword" },
+
+    { "id": "Q26", "query": "음식물 쓰레기 분리수거 방법", "expected_keywords": ["음식물", "쓰레기", "분리수거"], "type": "keyword" },
+    { "id": "Q27", "query": "대형 폐기물 어떻게 버리나요", "expected_keywords": ["폐기물", "대형"], "type": "keyword" },
+    { "id": "Q28", "query": "재활용 분리배출 안내", "expected_keywords": ["재활용", "분리배출"], "type": "keyword" },
+    { "id": "Q29", "query": "동네 환경미화", "expected_keywords": ["환경", "청소"], "type": "general" },
+    { "id": "Q30", "query": "불법 투기 신고", "expected_keywords": ["불법", "투기", "신고"], "type": "keyword" },
+
+    { "id": "Q31", "query": "도서관 운영시간", "expected_keywords": ["도서관"], "type": "keyword" },
+    { "id": "Q32", "query": "평생학습 강좌 신청", "expected_keywords": ["평생학습", "강좌"], "type": "keyword" },
+    { "id": "Q33", "query": "사하구 축제 일정", "expected_keywords": ["축제"], "type": "keyword" },
+    { "id": "Q34", "query": "체육시설 이용 안내", "expected_keywords": ["체육"], "type": "keyword" },
+    { "id": "Q35", "query": "공연 예매 어떻게", "expected_keywords": ["공연"], "type": "general" },
+
+    { "id": "Q36", "query": "주차 위반 과태료", "expected_keywords": ["주차", "과태료"], "type": "keyword" },
+    { "id": "Q37", "query": "버스 노선 안내", "expected_keywords": ["버스", "노선"], "type": "keyword" },
+    { "id": "Q38", "query": "도로 보수 신고", "expected_keywords": ["도로"], "type": "general" },
+
+    { "id": "Q39", "query": "사하구청 위치", "expected_keywords": ["위치", "오시는길", "사하구청"], "type": "general" },
+    { "id": "Q40", "query": "구청 운영 시간", "expected_keywords": ["운영", "시간"], "type": "general" },
+    { "id": "Q41", "query": "민원실 연락처", "expected_keywords": ["민원", "연락처"], "type": "general" },
+    { "id": "Q42", "query": "구청장 인사말", "expected_keywords": ["구청장"], "type": "keyword" },
+    { "id": "Q43", "query": "조직도 어디서 봐요", "expected_keywords": ["조직"], "type": "general" },
+    { "id": "Q44", "query": "사하구 연혁", "expected_keywords": ["연혁"], "type": "keyword" },
+
+    { "id": "Q45", "query": "정보공개 청구 방법", "expected_keywords": ["정보공개", "청구"], "type": "keyword" },
+    { "id": "Q46", "query": "예산 공시 자료", "expected_keywords": ["예산"], "type": "keyword" },
+    { "id": "Q47", "query": "구민 제안 어떻게 해요", "expected_keywords": ["제안", "구민"], "type": "general" },
+    { "id": "Q48", "query": "주민참여예산제", "expected_keywords": ["주민참여", "참여예산"], "type": "keyword" },
+
+    { "id": "Q49", "query": "복지가 뭔가요", "expected_keywords": ["복지"], "type": "general" },
+    { "id": "Q50", "query": "신청은 어떻게 하나요", "expected_keywords": ["신청"], "type": "general" }
+  ]
+}

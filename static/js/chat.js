@@ -11,7 +11,30 @@
 
     // ===== 메시지 렌더링 =====
 
-    function createMessageEl(role, content, sources) {
+    // degraded 원인 코드 → 사용자 안내 문구 매핑
+    const DEGRADED_MESSAGES = {
+        vector_search_failed: "검색 시스템 일부에 문제가 발생해 평소보다 결과가 적거나 부정확할 수 있습니다.",
+        bm25_failed: "키워드 보정 검색이 비활성화된 상태입니다. 답변 정확도가 평소보다 낮을 수 있습니다.",
+        llm_failed: "답변 생성 중 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        internal_error: "일시적인 시스템 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+    };
+    const DEGRADED_DEFAULT = "일부 처리에 실패했습니다. 답변 정확도가 평소보다 낮을 수 있습니다.";
+
+    function createDegradedBannerEl(reason) {
+        const banner = document.createElement("div");
+        banner.className = "degraded-banner";
+        banner.innerHTML = `
+            <svg class="degraded-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span class="degraded-text">${escapeHtml(DEGRADED_MESSAGES[reason] || DEGRADED_DEFAULT)}</span>
+        `;
+        return banner;
+    }
+
+    function createMessageEl(role, content, sources, degraded, degradedReason) {
         const msg = document.createElement("div");
         msg.className = `message ${role === "user" ? "user-message" : "bot-message"}`;
 
@@ -42,6 +65,11 @@
         }
 
         contentDiv.appendChild(bubble);
+
+        // degraded 안내 배너 (검색/태깅/LLM 단계 부분 실패 시)
+        if (role !== "user" && degraded) {
+            contentDiv.appendChild(createDegradedBannerEl(degradedReason));
+        }
 
         // 출처 카드 추가
         if (sources && sources.length > 0) {
@@ -170,8 +198,11 @@
 
             removeTypingIndicator();
 
-            // 봇 답변 표시
-            const botMsg = createMessageEl("bot", data.answer, data.sources);
+            // 봇 답변 표시 (degraded=true이면 안내 배너 포함)
+            const botMsg = createMessageEl(
+                "bot", data.answer, data.sources,
+                Boolean(data.degraded), data.degraded_reason
+            );
             messagesEl.appendChild(botMsg);
 
         } catch (err) {
