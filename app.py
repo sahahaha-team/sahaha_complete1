@@ -45,6 +45,7 @@ class Source(BaseModel):
     url: str
     category: str = ""
     service_type: str = "기타"
+    department: str = ""  # 담당 부서명 (LLM 태깅, 본문 미명시 시 빈 문자열)
 
 
 class ChatResponse(BaseModel):

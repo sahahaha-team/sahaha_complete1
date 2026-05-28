@@ -25,6 +25,7 @@ BATCH_TAGGING_PROMPT = PromptTemplate.from_template("""
 [
   {{
     "service_type": "민원|복지|세금|교통|환경|교육|문화|기타" 중 하나,
+    "department": 텍스트에 명시된 담당 부서명(예: "복지정책과", "민원여권과", "주민자치과"). 본문에 명시되지 않았으면 null,
     "target_audience": ["전체시민", "노인", "장애인", "아동", "청년", "임산부", "저소득층"] 중 해당하는 것들,
     "keywords": 핵심 키워드 5개 이내의 리스트,
     "has_deadline": true 또는 false,
@@ -45,6 +46,7 @@ JSON으로만 응답하세요 (설명 없이).
 형식:
 {{
   "service_type": "민원|복지|세금|교통|환경|교육|문화|기타" 중 하나,
+  "department": 텍스트에 명시된 담당 부서명(예: "복지정책과", "민원여권과", "주민자치과"). 본문에 명시되지 않았으면 null,
   "target_audience": ["전체시민", "노인", "장애인", "아동", "청년", "임산부", "저소득층"] 중 해당하는 것들,
   "keywords": 핵심 키워드 5개 이내의 리스트,
   "has_deadline": true 또는 false,

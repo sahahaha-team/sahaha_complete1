@@ -307,6 +307,11 @@ body {
     flex-shrink: 0;
 }
 
+/* 담당 부서 배지: 서비스 유형 배지와 구분되도록 색상 변형 */
+.source-card .source-badge-dept {
+    background: #6B7280;  /* slate-500 */
+}
+
 /* ===== 로딩 ===== */
 .typing-indicator {
     display: flex;

@@ -10,6 +10,7 @@
 import re
 import json
 import time
+import threading
 import logging
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -115,6 +116,8 @@ class ChatBot:
         self.retriever = HybridRetriever()
         self.db = Database()
         self._last_call_time = 0
+        # 스레드풀에서 동일 싱글턴 봇을 공유하므로 호출 간격 갱신을 락으로 보호
+        self._call_lock = threading.Lock()
 
         # NER PII 탐지기 사전 로딩 (첫 요청 지연 방지)
         try:
@@ -196,12 +199,17 @@ class ChatBot:
             context = "(관련 참고자료를 찾지 못했습니다)"
 
         # 4. LLM 답변 생성 (무료 티어 속도 제한: 최소 4초 간격)
-        elapsed = time.time() - self._last_call_time
-        if elapsed < 4:
-            time.sleep(4 - elapsed)
+        #    호출 간격 계산·갱신만 락으로 보호하고, 갱신 직후 락을 풀어
+        #    실제 네트워크 호출(invoke)은 락 밖에서 수행한다.
+        #    → 연속 호출이 4초 이상 간격으로 "시작"되도록 보장하면서도,
+        #      느린 LLM 응답 동안 다른 요청이 불필요하게 막히지 않게 한다.
+        with self._call_lock:
+            elapsed = time.time() - self._last_call_time
+            if elapsed < 4:
+                time.sleep(4 - elapsed)
+            self._last_call_time = time.time()
 
         try:
-            self._last_call_time = time.time()
             response = self.chain.invoke({
                 "context": context,
                 "history": langchain_history,

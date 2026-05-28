@@ -41,6 +41,8 @@ class Database:
             "category": page_data.category,
             "sub_category": page_data.sub_category,
             "content_hash": content_hash,
+            "etag": getattr(page_data, "etag", None),
+            "last_modified": getattr(page_data, "last_modified", None),
         }).execute()
         return True
 
@@ -57,11 +59,15 @@ class Database:
                 "category": page_data.category,
                 "sub_category": page_data.sub_category,
                 "content_hash": content_hash,
+                "etag": getattr(page_data, "etag", None),
+                "last_modified": getattr(page_data, "last_modified", None),
             }).execute()
             return "new"
 
         row = existing.data[0]
         if row["content_hash"] == content_hash:
+            # 본문 미변경 — etag/last_modified만 새로 받았다면 갱신해 다음 회차 GET을 절약
+            self._update_cache_validators_if_present(page_data)
             return "unchanged"
 
         self.client.table("raw_pages").update({
@@ -69,12 +75,45 @@ class Database:
             "content": page_data.content,
             "sub_category": page_data.sub_category,
             "content_hash": content_hash,
+            "etag": getattr(page_data, "etag", None),
+            "last_modified": getattr(page_data, "last_modified", None),
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }).eq("url", page_data.url).execute()
 
         # 해당 URL의 기존 청크 삭제
         self.client.table("processed_chunks").delete().eq("url", page_data.url).execute()
         return "updated"
+
+    def _update_cache_validators_if_present(self, page_data):
+        """본문 미변경 시 etag/last_modified가 새로 들어왔다면 갱신"""
+        etag = getattr(page_data, "etag", None)
+        last_modified = getattr(page_data, "last_modified", None)
+        if not (etag or last_modified):
+            return
+        try:
+            self.client.table("raw_pages").update({
+                "etag": etag,
+                "last_modified": last_modified,
+            }).eq("url", page_data.url).execute()
+        except Exception as e:
+            logger.warning(f"캐시 검증자 갱신 실패 ({page_data.url}): {e}")
+
+    def get_cache_validators(self) -> dict:
+        """
+        증분 크롤링용: 전체 URL의 캐시 검증자(+카테고리)를 dict로 반환.
+        반환: {url: {"etag": str|None, "last_modified": str|None, "category": str}}
+        """
+        result = self.client.table("raw_pages") \
+            .select("url, etag, last_modified, category") \
+            .execute()
+        out: dict = {}
+        for r in result.data or []:
+            out[r["url"]] = {
+                "etag": r.get("etag"),
+                "last_modified": r.get("last_modified"),
+                "category": r.get("category"),
+            }
+        return out
 
     def get_all_urls(self) -> set:
         result = self.client.table("raw_pages").select("url").execute()
@@ -113,6 +152,8 @@ class Database:
                 "chunk_index": chunk.chunk_index,
                 "total_chunks": chunk.total_chunks,
                 "service_type": metadata.get("service_type", "기타"),
+                # LLM이 본문에서 담당부서를 추출했을 때만 저장 (미명시 시 NULL)
+                "department": metadata.get("department") or None,
                 "target_audience": json.dumps(metadata.get("target_audience", []), ensure_ascii=False),
                 "keywords": json.dumps(metadata.get("keywords", []), ensure_ascii=False),
                 "has_deadline": metadata.get("has_deadline", False),

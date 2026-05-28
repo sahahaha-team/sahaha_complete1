@@ -122,6 +122,7 @@
                 </span>
                 <span class="source-title">${escapeHtml(src.title)}</span>
                 ${src.service_type ? `<span class="source-badge">${escapeHtml(src.service_type)}</span>` : ""}
+                ${src.department ? `<span class="source-badge source-badge-dept">${escapeHtml(src.department)}</span>` : ""}
             `;
 
             container.appendChild(card);

@@ -60,8 +60,36 @@ def run_crawl(menu_filter: str = None):
     return total_saved
 
 
+def _rebuild_bm25_index():
+    """
+    증분 변경 후 BM25 싱글턴 인덱스를 재구축.
+    벡터 검색은 Supabase 서버사이드라 즉시 최신 상태이지만, BM25는
+    웹 프로세스 메모리의 싱글턴이므로 명시적으로 다시 빌드해야
+    증분 변경(신규/수정/삭제)이 키워드 검색에도 반영된다.
+    """
+    try:
+        from chatbot.bm25_index import BM25Index
+        BM25Index().rebuild()
+        logger.info("BM25 인덱스 재구축 완료 (증분 변경 반영)")
+    except Exception as e:
+        logger.warning(f"BM25 인덱스 재구축 실패 (서버 재시작 시 반영): {e}")
+
+
 def run_incremental(menu_filter: str = None):
-    """증분 크롤링: 변경된 페이지만 감지하여 업데이트"""
+    """
+    증분 크롤링: ETag/Last-Modified 기반 조건부 GET으로 변경분만 다운로드.
+
+    동작:
+      1. DB에서 (url, etag, last_modified, category)를 읽어 크롤러에 주입
+      2. BFS 큐를 (menu landing + 해당 카테고리의 known URL)로 시드 → landing이
+         304이어도 알려진 URL은 모두 점검
+      3. fetch_page가 If-None-Match / If-Modified-Since 헤더로 요청
+         - 304: 본문 다운로드 없음 (가장 흔한 경로 = 서버 부하 최소화)
+         - 200: 파싱 후 content_hash로 한 번 더 비교 (서버가 검증자를 안 줄 때 대비)
+         - 404: 페이지 삭제 — DB에서도 제거
+         - 일시 실패: 보존
+      4. 변경된 페이지만 청크 재처리·재임베딩, BM25 인덱스 재구축
+    """
     from crawler.saha_crawler import SahaCrawler
     from database_db.database import Database
     from processor.data_cleaner import DataCleaner
@@ -76,35 +104,62 @@ def run_incremental(menu_filter: str = None):
 
     menus = {k: v for k, v in TARGET_MENUS.items() if menu_filter is None or k == menu_filter}
 
+    # 1. 캐시 검증자 + 메뉴별 known URL 준비
+    validators = db.get_cache_validators()
+    crawler.set_cache_validators({
+        u: {"etag": v.get("etag"), "last_modified": v.get("last_modified")}
+        for u, v in validators.items()
+    })
+    known_by_menu: dict[str, list[str]] = {m: [] for m in menus}
+    for u, v in validators.items():
+        cat = v.get("category")
+        if cat in known_by_menu:
+            known_by_menu[cat].append(u)
+
     stats = {"new": 0, "updated": 0, "unchanged": 0, "deleted": 0}
-    changed_urls = []
+    changed_urls: list[str] = []
+    seen_urls: set[str] = set()
 
     try:
-        # 1. 현재 사이트 전체 크롤링
-        current_pages = {}
         for menu_name, menu_path in menus.items():
             start_url = BASE_URL + menu_path
-            pages = crawler.crawl_menu(menu_name, start_url, max_pages=MAX_PAGES_PER_MENU)
+            pages = crawler.crawl_menu(
+                menu_name, start_url,
+                max_pages=MAX_PAGES_PER_MENU,
+                known_urls=known_by_menu.get(menu_name, []),
+            )
+
             for page in pages:
-                current_pages[page.url] = page
+                seen_urls.add(page.url)
 
-        logger.info(f"현재 사이트 페이지 수: {len(current_pages)}개")
+                if page.transient_fail:
+                    # 일시 실패는 무시 — 다음 회차 재시도. 삭제로 오판하지 않도록 seen에는 포함.
+                    continue
 
-        # 2. 신규/변경 페이지 처리
-        for url, page in current_pages.items():
-            result = db.upsert_raw_page(page)
-            stats[result] += 1
-            if result in ("new", "updated"):
-                changed_urls.append(url)
-                logger.info(f"  [{result.upper()}] {page.title[:40]} - {url}")
+                if page.deleted:
+                    db.delete_page(page.url)
+                    stats["deleted"] += 1
+                    logger.info(f"  [DELETED-404] {page.url}")
+                    continue
 
-        # 3. 사라진 페이지 삭제
-        db_urls = db.get_all_urls()
-        deleted_urls = db_urls - set(current_pages.keys())
-        for url in deleted_urls:
+                if page.not_modified:
+                    stats["unchanged"] += 1
+                    continue
+
+                # 정상 응답 — content_hash로 한 번 더 비교 (서버가 검증자를 안 줘서
+                # 200이 와도 본문은 동일할 수 있음)
+                result = db.upsert_raw_page(page)
+                stats[result] += 1
+                if result in ("new", "updated"):
+                    changed_urls.append(page.url)
+                    logger.info(f"  [{result.upper()}] {page.title[:40]} - {page.url}")
+
+        # 2. 사라진 페이지 정리: known URL 중 이번 회차에 한 번도 방문되지 않은 것
+        orphans = set(validators.keys()) - seen_urls
+        for url in orphans:
             db.delete_page(url)
             stats["deleted"] += 1
-            logger.info(f"  [DELETED] {url}")
+            logger.info(f"  [DELETED-orphan] {url}")
 
         logger.info(
             f"증분 크롤링 완료 - "
@@ -112,51 +167,56 @@ def run_incremental(menu_filter: str = None):
             f"삭제: {stats['deleted']}개 / 변경없음: {stats['unchanged']}개"
         )
 
-        # 4. 변경된 페이지만 재처리
-        if not changed_urls:
-            logger.info("변경된 페이지 없음. 업데이트 불필요.")
-            return stats
+        # 4. 변경된 페이지만 재처리 (신규/수정)
+        if changed_urls:
+            logger.info(f"변경된 {len(changed_urls)}개 페이지 재처리 시작...")
+            changed_pages = db.get_pages_by_urls(changed_urls)
 
-        logger.info(f"변경된 {len(changed_urls)}개 페이지 재처리 시작...")
-        changed_pages = db.get_pages_by_urls(changed_urls)
+            all_tagged = []
+            for raw in tqdm(changed_pages, desc="재처리 중"):
+                class _P:
+                    url = raw.url
+                    title = raw.title
+                    content = raw.content
+                    category = raw.category
+                    sub_category = raw.sub_category
 
-        all_tagged = []
-        for raw in tqdm(changed_pages, desc="재처리 중"):
-            class _P:
-                url = raw.url
-                title = raw.title
-                content = raw.content
-                category = raw.category
-                sub_category = raw.sub_category
+                chunks = cleaner.process(_P())
+                if not chunks:
+                    continue
+                tagged = tagger.tag_batch(chunks)
+                all_tagged.extend(tagged)
 
-            chunks = cleaner.process(_P())
-            if not chunks:
-                continue
-            tagged = tagger.tag_batch(chunks)
-            all_tagged.extend(tagged)
+            if all_tagged:
+                db.save_chunks_bulk(all_tagged)
 
-        if all_tagged:
-            db.save_chunks_bulk(all_tagged)
+                import json
+                new_chunk_pairs = []
+                for chunk, metadata in all_tagged:
+                    class _C:
+                        chunk_id = chunk.chunk_id
+                        content = chunk.content
+                    meta = {
+                        "url": chunk.url,
+                        "title": chunk.title,
+                        "category": chunk.category,
+                        "sub_category": chunk.sub_category,
+                        "service_type": metadata.get("service_type", "기타"),
+                        "department": metadata.get("department") or "",
+                        "keywords": json.dumps(metadata.get("keywords", []), ensure_ascii=False),
+                        "summary": metadata.get("summary", ""),
+                    }
+                    new_chunk_pairs.append((_C(), meta))
 
-            import json
-            new_chunk_pairs = []
-            for chunk, metadata in all_tagged:
-                class _C:
-                    chunk_id = chunk.chunk_id
-                    content = chunk.content
-                meta = {
-                    "url": chunk.url,
-                    "title": chunk.title,
-                    "category": chunk.category,
-                    "sub_category": chunk.sub_category,
-                    "service_type": metadata.get("service_type", "기타"),
-                    "keywords": json.dumps(metadata.get("keywords", []), ensure_ascii=False),
-                    "summary": metadata.get("summary", ""),
-                }
-                new_chunk_pairs.append((_C(), meta))
+                vs.add_chunks_batch(new_chunk_pairs, batch_size=50, db=db)
+                logger.info(f"재처리 완료: {len(all_tagged)}개 청크 업데이트")
+        else:
+            logger.info("신규/변경 페이지 없음. 재처리 불필요.")
 
-            vs.add_chunks_batch(new_chunk_pairs, batch_size=50, db=db)
-            logger.info(f"재처리 완료: {len(all_tagged)}개 청크 업데이트")
+        # 5. BM25 인덱스 갱신: 신규/수정/삭제가 하나라도 있으면 재구축.
+        #    (삭제만 발생한 경우에도 BM25에서 해당 문서를 제거해야 하므로 포함)
+        if stats["new"] or stats["updated"] or stats["deleted"]:
+            _rebuild_bm25_index()
 
     finally:
         crawler.close()
@@ -227,6 +287,7 @@ def run_embed():
             "category": row.category,
             "sub_category": row.sub_category,
             "service_type": row.service_type or "기타",
+            "department": getattr(row, "department", None) or "",
             "keywords": row.keywords or "[]",
             "summary": row.summary or "",
         }

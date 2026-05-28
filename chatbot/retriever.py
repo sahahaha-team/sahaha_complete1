@@ -233,6 +233,8 @@ class HybridRetriever:
                     "url": url,
                     "category": meta.get("category", ""),
                     "service_type": meta.get("service_type", "기타"),
+                    # 담당 부서 (LLM이 본문에서 추출, 미명시 시 빈 문자열)
+                    "department": meta.get("department", "") or "",
                 })
 
         context = "\n---\n".join(context_parts)

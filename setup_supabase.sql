@@ -36,9 +36,16 @@ create table if not exists raw_pages (
   category text,
   sub_category text,
   content_hash text,
+  -- HTTP 조건부 GET용 캐시 검증자 (증분 크롤링에서 If-None-Match / If-Modified-Since로 전송)
+  etag text,
+  last_modified text,
   crawled_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
 );
+
+-- 기존 테이블에 컬럼이 없을 경우를 위한 호환성 마이그레이션
+alter table raw_pages add column if not exists etag text;
+alter table raw_pages add column if not exists last_modified text;
 
 create index if not exists ix_raw_pages_category on raw_pages(category);
 
@@ -55,6 +62,8 @@ create table if not exists processed_chunks (
   chunk_index int,
   total_chunks int,
   service_type text,
+  -- 담당 부서명 (LLM이 본문에서 추출, 미명시 시 NULL)
+  department text,
   target_audience text,
   keywords text,
   has_deadline boolean default false,
@@ -64,8 +73,12 @@ create table if not exists processed_chunks (
   created_at timestamp with time zone default now()
 );
 
+-- 기존 테이블 호환성 마이그레이션
+alter table processed_chunks add column if not exists department text;
+
 create index if not exists ix_chunks_category on processed_chunks(category);
 create index if not exists ix_chunks_service_type on processed_chunks(service_type);
+create index if not exists ix_chunks_department on processed_chunks(department);
 create index if not exists ix_chunks_embedded on processed_chunks(embedded);
 create index if not exists ix_chunks_url on processed_chunks(url);
 
