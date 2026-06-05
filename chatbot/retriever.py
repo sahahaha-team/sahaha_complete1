@@ -210,7 +210,8 @@ class HybridRetriever:
             return "", []
 
         context_parts = []
-        sources = []
+        relevant_sources = []   # 질문 키워드가 실제로 포함된 출처 (우선 제시)
+        fallback_sources = []   # 그 외 상위 결과 (관련 출처가 하나도 없을 때 폴백)
         seen_urls = set()
 
         for i, doc in enumerate(results, 1):
@@ -226,16 +227,23 @@ class HybridRetriever:
                 f"내용: {content}\n"
             )
 
-            if url and url not in seen_urls and self._is_relevant_source(query, title, content):
+            if url and url not in seen_urls:
                 seen_urls.add(url)
-                sources.append({
+                src = {
                     "title": title,
                     "url": url,
                     "category": meta.get("category", ""),
                     "service_type": meta.get("service_type", "기타"),
                     # 담당 부서 (LLM이 본문에서 추출, 미명시 시 빈 문자열)
                     "department": meta.get("department", "") or "",
-                })
+                }
+                if self._is_relevant_source(query, title, content):
+                    relevant_sources.append(src)
+                else:
+                    fallback_sources.append(src)
+
+        # 출처는 반드시 함께 제시: 관련성 통과분이 있으면 그것을, 없으면 상위 결과로 폴백.
+        sources = relevant_sources if relevant_sources else fallback_sources[:3]
 
         context = "\n---\n".join(context_parts)
         return context, sources

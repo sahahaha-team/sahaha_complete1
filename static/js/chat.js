@@ -36,7 +36,7 @@
     function applyUserPreferences() {
         if (localStorage.getItem("theme") === "dark") {
             document.body.classList.add("dark-mode");
-            themeToggle.checked = true;
+            if (themeToggle) themeToggle.checked = true;
         }
         let savedSize = parseFloat(localStorage.getItem("fontSize")) || 14.5;
         updateFontSize(savedSize);
@@ -45,10 +45,11 @@
     function updateFontSize(size) {
         if (size > 20) size = 20;
         if (size < 12) size = 12;
-        
+
         document.documentElement.style.setProperty('--msg-font-size', `${size}px`);
         localStorage.setItem("fontSize", size);
-        
+
+        if (!fontSizeDisplay) return;
         if (size === 14.5) {
             fontSizeDisplay.textContent = "기본";
         } else if (size > 14.5) {
@@ -58,40 +59,48 @@
         }
     }
 
-    // 설정 톱니바퀴 토글
-    btnSettings.addEventListener("click", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        settingsMenu.classList.toggle("hidden");
-    });
+    // 설정 톱니바퀴 토글 (위젯 모드에는 설정 UI가 없을 수 있어 가드)
+    if (btnSettings && settingsMenu) {
+        btnSettings.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            settingsMenu.classList.toggle("hidden");
+        });
 
-    // 바깥 누르면 설정창 닫기
-    document.addEventListener("click", function(e) {
-        if (!btnSettings.contains(e.target) && !settingsMenu.contains(e.target)) {
-            settingsMenu.classList.add("hidden");
-        }
-    });
+        // 바깥 누르면 설정창 닫기
+        document.addEventListener("click", function(e) {
+            if (!btnSettings.contains(e.target) && !settingsMenu.contains(e.target)) {
+                settingsMenu.classList.add("hidden");
+            }
+        });
+    }
 
     // 다크모드 토글
-    themeToggle.addEventListener("change", function(e) {
-        if (e.target.checked) {
-            document.body.classList.add("dark-mode");
-            localStorage.setItem("theme", "dark");
-        } else {
-            document.body.classList.remove("dark-mode");
-            localStorage.setItem("theme", "light");
-        }
-    });
+    if (themeToggle) {
+        themeToggle.addEventListener("change", function(e) {
+            if (e.target.checked) {
+                document.body.classList.add("dark-mode");
+                localStorage.setItem("theme", "dark");
+            } else {
+                document.body.classList.remove("dark-mode");
+                localStorage.setItem("theme", "light");
+            }
+        });
+    }
 
     // 글씨 가감 버튼
-    btnFontInc.addEventListener("click", function() {
-        let currentSize = parseFloat(localStorage.getItem("fontSize")) || 14.5;
-        updateFontSize(currentSize + 0.5);
-    });
-    btnFontDec.addEventListener("click", function() {
-        let currentSize = parseFloat(localStorage.getItem("fontSize")) || 14.5;
-        updateFontSize(currentSize - 0.5);
-    });
+    if (btnFontInc) {
+        btnFontInc.addEventListener("click", function() {
+            let currentSize = parseFloat(localStorage.getItem("fontSize")) || 14.5;
+            updateFontSize(currentSize + 0.5);
+        });
+    }
+    if (btnFontDec) {
+        btnFontDec.addEventListener("click", function() {
+            let currentSize = parseFloat(localStorage.getItem("fontSize")) || 14.5;
+            updateFontSize(currentSize - 0.5);
+        });
+    }
 
     // ===== TTS 재생/중지 제어 엔진 =====
     function stopSpeaking() {
@@ -204,7 +213,7 @@
     function formatBotMessage(text) {
         if (!text) return "";
         let html = text
-            .replace(/\*\*(.*?)\*\"/g, "<strong>$1</strong>")
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
             .replace(/\*(.*?)\*/g, "<em>$1</em>")
             .replace(/\n{2,}/g, "</p><p>")
             .replace(/\n/g, "<br>");

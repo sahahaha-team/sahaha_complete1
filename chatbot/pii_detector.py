@@ -16,12 +16,13 @@ logger = logging.getLogger(__name__)
 NER_MODEL = "Leo97/KoELECTRA-small-v3-modu-ner"
 
 # 마스킹 대상 NER 라벨 → 표시명 매핑
-# PS=Person(인명), LC=Location(지명), AF=Artifact(작품/제품), OG=Organization은 제외
-# (사하구청, 부산광역시 등 공공기관명이 마스킹되면 답변 품질 저하)
+# PS=Person(인명), LC=Location(지명)만 마스킹.
+# AF=Artifact, OG=Organization은 제외 — "지하철/버스" 같은 일반 명사가
+# AF로 오탐되어 행정 안내(교통 등) 답변이 가려지는 품질 저하를 막기 위함.
+# (사하구청, 부산광역시 등 공공기관명도 마스킹되면 답변 품질 저하)
 MASK_LABEL_MAP = {
     "PS": "이름",
     "LC": "주소",
-    "AF": "물건",
 }
 
 # 마스킹에서 제외할 단어 (공공기관/지역명 등 자주 등장하는 공식 명칭)
