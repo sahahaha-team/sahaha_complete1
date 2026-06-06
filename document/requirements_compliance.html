@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>사하구청 AI 챗봇 — 요구사항 충족 보고서</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+    color: #1f2937; margin: 0; line-height: 1.6; font-size: 11pt;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  h1,h2,h3 { color: #0b4a8b; margin: 0; }
+  .accent { color: #0066CC; }
+
+  /* 표지 */
+  .cover {
+    height: 247mm; display: flex; flex-direction: column; justify-content: center;
+    page-break-after: always; text-align: center;
+    background: linear-gradient(135deg, #0066CC 0%, #003f7d 100%);
+    color: #fff; border-radius: 10px; padding: 40px;
+  }
+  .cover .badge { font-size: 13pt; letter-spacing: 3px; opacity: .85; margin-bottom: 24px; }
+  .cover h1 { color: #fff; font-size: 30pt; line-height: 1.3; margin-bottom: 16px; }
+  .cover .sub { font-size: 14pt; opacity: .9; margin-bottom: 48px; }
+  .cover .meta { font-size: 11pt; opacity: .8; }
+  .cover .logo { font-size: 40pt; margin-bottom: 24px; }
+
+  /* 섹션 */
+  .section { page-break-inside: avoid; margin-bottom: 22px; }
+  h2 {
+    font-size: 16pt; border-bottom: 3px solid #0066CC; padding-bottom: 6px;
+    margin: 26px 0 14px;
+  }
+  h2 .num {
+    background: #0066CC; color:#fff; border-radius: 6px; padding: 1px 10px;
+    font-size: 13pt; margin-right: 8px;
+  }
+  h3 { font-size: 12.5pt; margin: 14px 0 6px; color:#0b4a8b; }
+
+  .req {
+    background:#eef5ff; border-left: 4px solid #0066CC; padding: 8px 12px;
+    border-radius: 4px; margin: 8px 0; font-size: 10.5pt;
+  }
+  .req b { color:#0b4a8b; }
+
+  .impl { padding: 4px 2px 4px 4px; }
+  .impl ul { margin: 4px 0 8px; padding-left: 20px; }
+  .impl li { margin: 3px 0; }
+  code {
+    background:#f1f5f9; padding: 1px 5px; border-radius: 4px;
+    font-family: Consolas, monospace; font-size: 9.5pt; color:#b91c1c;
+  }
+  .chip {
+    display:inline-block; font-size: 9pt; font-weight: 700; padding: 2px 10px;
+    border-radius: 20px; margin-left: 8px; vertical-align: middle;
+  }
+  .ok { background:#dcfce7; color:#166534; }
+  .plus { background:#fef9c3; color:#854d0e; }
+
+  table { width:100%; border-collapse: collapse; font-size: 10pt; margin: 8px 0; }
+  th,td { border: 1px solid #cbd5e1; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background:#0066CC; color:#fff; font-weight: 600; }
+  tr:nth-child(even) td { background:#f8fafc; }
+  .cok { color:#166534; font-weight:700; }
+
+  .note {
+    background:#fffbeb; border:1px solid #fcd34d; border-radius:6px;
+    padding:10px 14px; font-size:10pt; margin-top:10px;
+  }
+  .foot { text-align:center; color:#94a3b8; font-size:9pt; margin-top:30px; }
+  .pillrow { margin: 10px 0; }
+</style>
+</head>
+<body>
+
+<!-- ===== 표지 ===== -->
+<div class="cover">
+  <div class="logo">🏛️ 🤖</div>
+  <div class="badge">REQUIREMENTS COMPLIANCE REPORT</div>
+  <h1>부산광역시 사하구청<br>AI 상담 챗봇</h1>
+  <div class="sub">요구사항 충족 현황 보고서</div>
+  <div class="meta">
+    RAG 기반 행정정보 안내 · 하이브리드 검색 · 멀티턴 대화<br>
+    2026. 06.
+  </div>
+</div>
+
+<!-- ===== 요약 ===== -->
+<div class="section">
+  <h2>요약 (Executive Summary)</h2>
+  <p>요청하신 <b>프로그램 형태 · 4대 주요 기능 · 3대 유의사항</b>의 모든 항목을 구현·검증 완료했습니다.
+  특히 <b>증분 크롤링, 2단계 하이브리드 검색, 멀티턴 역질문</b>은 명세 요구 이상으로 고도화하였습니다.</p>
+  <table>
+    <tr><th style="width:38%">요구사항</th><th style="width:14%">상태</th><th>구현 핵심</th></tr>
+    <tr><td>웹 애플리케이션 (홈페이지 연동형)</td><td class="cok">충족</td><td>FastAPI 웹앱 + iframe 임베드용 위젯 페이지</td></tr>
+    <tr><td>반응형 UI/UX (PC·모바일)</td><td class="cok">충족</td><td>반응형 레이아웃 + 다크모드·글자크기·TTS</td></tr>
+    <tr><td>① 증분 크롤링</td><td class="cok">충족 ＋</td><td>ETag 조건부 GET, 매일 자동 갱신</td></tr>
+    <tr><td>① AI 자동 태깅</td><td class="cok">충족</td><td>LLM으로 부서·분야·키워드 자동 추출</td></tr>
+    <tr><td>② 하이브리드 검색 (2단계)</td><td class="cok">충족 ＋</td><td>메타필터 → 벡터 → BM25 재랭킹</td></tr>
+    <tr><td>③ 멀티턴 대화</td><td class="cok">충족</td><td>역질문(의도파악) + 대화 문맥 유지</td></tr>
+    <tr><td>④ 답변 생성·출처 명시</td><td class="cok">충족</td><td>자연어 요약 + 출처 카드(원문 링크)</td></tr>
+    <tr><td>Fact-based (환각 방지)</td><td class="cok">충족</td><td>참고자료 한정 답변, 미확인 시 안내</td></tr>
+    <tr><td>Privacy (개인정보 보호)</td><td class="cok">충족</td><td>정규식+NER 이중 PII 차단, 미저장</td></tr>
+    <tr><td>Performance (응답 속도)</td><td class="cok">충족</td><td>모델 사전로딩·인덱스 캐싱·증분 부하 절감</td></tr>
+  </table>
+  <p style="font-size:10pt;color:#64748b">＋ 표시는 명세 요구를 넘어 추가 고도화한 항목입니다.</p>
+</div>
+
+<!-- ===== 1. 프로그램 형태 ===== -->
+<div class="section">
+  <h2>1. 프로그램 형태</h2>
+
+  <h3>웹 애플리케이션 — 홈페이지 연동형 <span class="chip ok">충족</span></h3>
+  <div class="req"><b>요구</b> · 홈페이지 연동형 웹페이지 (아이콘/링크 접속)</div>
+  <div class="impl"><ul>
+    <li>FastAPI 기반 웹 서비스로 구축, 메인 상담 페이지(<code>/</code>)와 <b>홈페이지 삽입용 위젯 페이지(<code>/widget</code>)</b>를 별도 제공</li>
+    <li>위젯은 전체화면(100vh)·테두리 없는 형태로, 기존 사하구청 홈페이지에 <b>iframe / 링크 / 아이콘 버튼</b>으로 손쉽게 연동 가능</li>
+    <li>위젯 임베딩 출처 제한(CORS)으로 공식 도메인에서만 안전하게 호출</li>
+  </ul></div>
+
+  <h3>반응형 UI/UX — PC·모바일 최적화 <span class="chip ok">충족</span></h3>
+  <div class="req"><b>요구</b> · PC 및 모바일 환경 최적화</div>
+  <div class="impl"><ul>
+    <li>반응형 레이아웃: 데스크톱(≥768px)은 카드형 중앙 정렬, 모바일(≤767px)은 전체화면 전환</li>
+    <li>사용자 편의 기능: <b>다크 모드</b>, <b>글자 크기 조절</b>(접근성), <b>음성 읽기(TTS)</b>, 마스코트 캐릭터 상태 표시</li>
+    <li>설정값은 브라우저에 저장되어 재방문 시 유지</li>
+  </ul></div>
+</div>
+
+<!-- ===== 2. 주요 기능 ===== -->
+<div class="section">
+  <h2>2. 주요 기능</h2>
+
+  <h3><span class="num">①</span> 데이터 수집 및 구조화 (Data Pipeline)</h3>
+
+  <div class="req"><b>요구</b> · 증분 크롤링 — 최초 1회 전수 수집 후, 변경된 페이지만 주기적 감지·업데이트하여 서버 부하 최소화
+    <span class="chip plus">고도화</span></div>
+  <div class="impl"><ul>
+    <li>각 페이지의 <b>ETag / Last-Modified</b>를 저장하고, 다음 회차에 <code>If-None-Match</code>·<code>If-Modified-Since</code> <b>조건부 GET</b>으로 요청</li>
+    <li>응답을 4가지로 분기 처리 — <b>304</b>(변경 없음, 본문 다운로드 생략) / <b>200</b>(변경분만 재처리) / <b>404</b>(삭제 페이지 DB 정리) / 일시 오류(보존·재시도)</li>
+    <li>변경 감지된 페이지만 청크 재생성·재임베딩 → <b>네트워크·연산 부하 최소화</b></li>
+    <li><b>매일 새벽 3시 자동 실행</b>(스케줄러)으로 "주기적 감지·업데이트" 충족</li>
+  </ul></div>
+
+  <div class="req"><b>요구</b> · AI 자동 태깅 — LLM으로 메타데이터(카테고리·부서·키워드 등) 자동 추출·태깅
+    <span class="chip ok">충족</span></div>
+  <div class="impl"><ul>
+    <li>LLM이 각 문서에서 <b>서비스 유형(민원·복지·세금·교통 등)</b>, <b>담당 부서명</b>, <b>대상(노인·아동·장애인 등)</b>, <b>핵심 키워드</b>, 한 줄 요약을 자동 추출</li>
+    <li>5건씩 묶어 1회 호출하는 <b>배치 태깅</b>으로 처리 효율화, 실패 시 단건 폴백으로 안정성 확보</li>
+  </ul></div>
+
+  <h3><span class="num">②</span> 하이브리드 검색 (Hybrid Retrieval) <span class="chip plus">고도화</span></h3>
+  <div class="req"><b>요구</b> · 2단계 검색 — ①태깅된 메타데이터로 탐색 범위 축소 → ②축소 범위 내 의미(Vector) 검색으로 정확도 향상</div>
+  <div class="impl"><ul>
+    <li><b>1차 필터링</b>: 질문에서 카테고리·서비스유형을 감지해 해당 범위로 탐색 대상 축소</li>
+    <li><b>2차 정밀 검색</b>: 축소 범위 내 <b>벡터 의미 검색</b>(pgvector) 수행</li>
+    <li><b>(추가) 3차 키워드 보강</b>: BM25 키워드 점수를 가중 합산해 재랭킹 → 고유명사·숫자 질의 정확도 향상</li>
+    <li>필터 결과가 부족하면 자동으로 전체 범위로 폴백하여 누락 방지</li>
+  </ul></div>
+
+  <h3><span class="num">③</span> 멀티턴(Multi-turn) 대화 처리 <span class="chip ok">충족</span></h3>
+  <div class="req"><b>요구</b> · 심층 의도 파악(모호한 질문 시 역질문) + 문맥 유지(이전 대화 기억)</div>
+  <div class="impl"><ul>
+    <li><b>역질문</b>: 질문이 모호하면 바로 답을 끝내지 않고 <b>선택지를 제시하며 되묻도록</b> 설계(예: "1)노인복지 2)아동복지 3)장애인복지 …"). 전용 신호 토큰 + 키워드 폴백으로 이중 감지</li>
+    <li><b>문맥 유지</b>: 직전 대화 이력을 LLM에 함께 전달하고, 검색어에도 합성하여 "그건/거기" 같은 <b>지시 표현이 포함된 후속 질문</b>도 자연스럽게 처리</li>
+  </ul></div>
+
+  <h3><span class="num">④</span> 답변 생성 및 출처 명시 <span class="chip ok">충족</span></h3>
+  <div class="req"><b>요구</b> · 자연어 요약(행정용어 → 쉬운 언어) + 출처 검증(원문 URL을 카드/버튼 형태로 반드시 제시)</div>
+  <div class="impl"><ul>
+    <li><b>자연어 요약</b>: 행정 용어를 일반인이 이해하기 쉬운 말로 풀고, 핵심을 먼저 간결히 답하도록 프롬프트 규칙화</li>
+    <li><b>출처 카드</b>: 답변 근거가 된 홈페이지 <b>원문을 클릭 가능한 카드(새 창 링크)</b>로 제시. 카드에 제목·분야 배지 표시</li>
+    <li>관련 출처가 마땅치 않을 때도 상위 근거 문서를 폴백 제시하여 <b>"출처 반드시 제시"</b>를 보장</li>
+  </ul></div>
+</div>
+
+<!-- ===== 3. 유의사항 ===== -->
+<div class="section">
+  <h2>3. 유의사항 준수</h2>
+
+  <h3>Fact-based — 사실 기반 (환각 방지) <span class="chip ok">충족</span></h3>
+  <div class="impl"><ul>
+    <li>"제공된 참고자료에 있는 정보만 사용, 없는 내용은 추측·생성 금지"를 시스템 규칙으로 강제</li>
+    <li>자료에서 답을 못 찾으면 솔직히 <b>"찾지 못했습니다"</b> 안내 + 대표전화(051-220-4000)·홈페이지 안내</li>
+  </ul></div>
+
+  <h3>Privacy — 개인정보 보호 <span class="chip ok">충족</span></h3>
+  <div class="impl"><ul>
+    <li><b>이중 차단</b>: 정규식(주민번호·전화·카드·이메일) + <b>NER 모델</b>(이름·주소 등 비정형) 으로 입력·출력 양단에서 개인정보 마스킹</li>
+    <li>개인정보 입력 감지 시 <b>저장하지 않으며</b> 입력 자제를 안내. 대화 이력은 보관 기간 경과 후 자동 정리</li>
+  </ul></div>
+
+  <h3>Performance — 응답 속도 <span class="chip ok">충족</span></h3>
+  <div class="impl"><ul>
+    <li>임베딩·NER·검색 인덱스를 <b>서버 기동 시 사전 로딩</b>하여 첫 응답 지연 제거</li>
+    <li>증분 크롤링으로 갱신 부하를 최소화, 검색 인덱스는 메모리 캐싱</li>
+  </ul></div>
+</div>
+
+<!-- ===== 4. 품질 관리 ===== -->
+<div class="section">
+  <h2>4. 최근 품질 개선</h2>
+  <p>UI 통합 직후 점검에서 발견한 4개 항목을 즉시 수정·검증 완료했습니다.</p>
+  <table>
+    <tr><th style="width:34%">항목</th><th>개선 내용</th></tr>
+    <tr><td>위젯 페이지 안정화</td><td>홈페이지 연동용 위젯에서 챗봇이 정상 동작하도록 스크립트 호환성 수정</td></tr>
+    <tr><td>답변 서식 렌더링</td><td>강조(굵게) 표기가 올바르게 표시되도록 교정</td></tr>
+    <tr><td>개인정보 과잉 마스킹 해소</td><td>'지하철·버스' 등 일반 명사가 가려지던 오탐 제거 → 교통 안내 정상 표기</td></tr>
+    <tr><td>출처 표기 보장</td><td>관련 출처가 없을 때도 근거 문서를 제시하도록 보강</td></tr>
+  </table>
+  <div class="note">
+    <b>종합 결론</b> — 요청하신 모든 요구사항이 실제 동작 수준에서 구현·검증되었으며, 일부 기능(증분 크롤링·하이브리드 검색)은 명세 이상으로 고도화되었습니다.
+  </div>
+</div>
+
+<div class="foot">부산광역시 사하구청 AI 상담 챗봇 · 요구사항 충족 보고서</div>
+
+</body>
+</html>
