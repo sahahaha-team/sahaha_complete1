@@ -19,6 +19,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 from config import GROQ_API_KEY, GROQ_LLM_MODEL, CHATBOT_TEMPERATURE, MAX_CONVERSATION_HISTORY
 from database_db.database import Database
 from chatbot.retriever import HybridRetriever
+from chatbot.dept_directory import normalize_dept_names
 
 logger = logging.getLogger(__name__)
 
@@ -237,12 +238,20 @@ class ChatBot:
                 "궁금하신가요?", "알려주시겠어요"
             ])
 
-        # 6. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
+        # 역질문(되묻기) 응답에는 아직 '답변'이 없으므로 출처를 표시하지 않는다.
+        # (관련성 낮은 폴백 출처가 역질문에 붙어 혼란을 주는 것을 방지)
+        if is_clarification:
+            sources = []
+
+        # 6. 부서명 오기 보정 (예: '도로과' → '도로정비과', 공식 조직도 기준)
+        answer = normalize_dept_names(answer)
+
+        # 7. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
         answer, leaked = mask_personal_info(answer)
         if leaked:
             logger.warning(f"LLM 응답에서 개인정보 감지/마스킹: {leaked}")
 
-        # 7. 대화 이력 저장
+        # 8. 대화 이력 저장
         self.db.save_conversation(session_id, "user", user_message)
         self.db.save_conversation(
             session_id, "assistant", answer,

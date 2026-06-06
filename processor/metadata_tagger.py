@@ -11,6 +11,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 
 from config import GROQ_API_KEY, GROQ_LLM_MODEL
+from chatbot.dept_directory import correct_dept
 
 logger = logging.getLogger(__name__)
 
@@ -116,6 +117,8 @@ class MetadataTagger:
             parsed = _parse_json_block(response.content)
             if isinstance(parsed, dict):
                 meta.update(parsed)
+                if meta.get("department"):
+                    meta["department"] = correct_dept(meta["department"])
         except Exception as e:
             logger.warning(f"단건 태깅 실패 ({chunk.chunk_id}): {e}")
         return meta
@@ -147,6 +150,8 @@ class MetadataTagger:
             meta = _base_meta(chunk)
             if isinstance(llm_meta, dict):
                 meta.update(llm_meta)
+                if meta.get("department"):
+                    meta["department"] = correct_dept(meta["department"])
             results.append(meta)
         return results
 

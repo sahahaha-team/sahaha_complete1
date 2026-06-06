@@ -46,6 +46,7 @@ class Source(BaseModel):
     category: str = ""
     service_type: str = "기타"
     department: str = ""  # 담당 부서명 (LLM 태깅, 본문 미명시 시 빈 문자열)
+    contact: str = ""     # 담당부서 연락처 (직통번호 없으면 대표전화 폴백)
 
 
 class ChatResponse(BaseModel):

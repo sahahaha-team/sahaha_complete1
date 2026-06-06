@@ -197,6 +197,19 @@
 
             ttsControls.appendChild(ttsBtn);
             bubble.appendChild(ttsControls); // 🎯 기존 바깥쪽이 아니라 말풍선('bubble') 내부에 직접 넣어서 가둠
+
+            // 담당부서 + 연락처 안내를 흰색 답변 말풍선 맨 아래에 포함
+            // (별도 박스가 아니라 주요 답변의 일부로 표시)
+            if (sources && sources.length > 0) {
+                const deptSrc = sources.find(function (s) { return s.department; });
+                if (deptSrc) {
+                    const phone = deptSrc.contact || "051-220-4000";
+                    const guide = document.createElement("div");
+                    guide.className = "bubble-contact";
+                    guide.innerHTML = `📞 더 자세한 안내가 필요하시면 담당부서 <b>${escapeHtml(deptSrc.department)}</b> 또는 사하구청 대표전화(<a href="tel:${phone.replace(/[^0-9]/g, "")}">${escapeHtml(phone)}</a>)로 문의해주세요.`;
+                    bubble.appendChild(guide);
+                }
+            }
         }
 
         contentDiv.appendChild(bubble);
@@ -236,13 +249,21 @@
             card.target = "_blank";
             card.rel = "noopener noreferrer";
 
+            const deptLine = src.department
+                ? `<span class="source-dept">🏛️ 담당: ${escapeHtml(src.department)}</span>`
+                : "";
+
             card.innerHTML = `
                 <span class="source-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-                <span class="source-title">${escapeHtml(src.title)}</span>
+                <span class="source-body">
+                    <span class="source-title">${escapeHtml(src.title)}</span>
+                    ${deptLine}
+                </span>
                 ${src.service_type ? `<span class="source-badge">${escapeHtml(src.service_type)}</span>` : ""}
             `;
             container.appendChild(card);
         });
+
         return container;
     }
 

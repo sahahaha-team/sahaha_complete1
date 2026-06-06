@@ -8,6 +8,7 @@
 import logging
 from database_db.vector_store import VectorStore
 from database_db.database import Database
+from chatbot.dept_directory import correct_dept, get_contact
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
@@ -229,13 +230,16 @@ class HybridRetriever:
 
             if url and url not in seen_urls:
                 seen_urls.add(url)
+                # 담당 부서 (LLM이 본문에서 추출) → 공식 명칭으로 보정 후 연락처 매핑
+                dept = correct_dept(meta.get("department", "") or "")
                 src = {
                     "title": title,
                     "url": url,
                     "category": meta.get("category", ""),
                     "service_type": meta.get("service_type", "기타"),
-                    # 담당 부서 (LLM이 본문에서 추출, 미명시 시 빈 문자열)
-                    "department": meta.get("department", "") or "",
+                    "department": dept,
+                    # 담당부서 연락처 (확인된 직통번호 없으면 대표전화로 폴백)
+                    "contact": get_contact(dept) if dept else "",
                 }
                 if self._is_relevant_source(query, title, content):
                     relevant_sources.append(src)
