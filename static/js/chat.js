@@ -1,11 +1,12 @@
 /**
- * 사하구청 AI 상담사 - 채팅 통합 스크립트 클라이언트 (TTS 스피커 완벽 고정 버전)
+ * 사하구청 AI 상담사 - 채팅 통합 스크립트 클라이언트 (TTS + STT 음성인식 통합 버전)
  */
 (function () {
     const messagesEl = document.getElementById("chat-messages");
     const inputEl = document.getElementById("user-input");
     const sendBtn = document.getElementById("btn-send");
     const clearBtn = document.getElementById("btn-clear");
+    const micBtn = document.getElementById("btn-mic"); // 🎯 마이크 버튼 엘리먼트 추가
 
     // 테마 및 환경 설정 엘리먼트 정의
     const btnSettings = document.getElementById("btn-settings");
@@ -27,10 +28,63 @@
     let currentUtterance = null; 
     let activeTtsButton = null;   
 
-    // 🎯 직관적인 스피커 아이콘(소리 재생) 및 네모(중지) 아이콘으로 전면 변경
+    // ===== STT (음성 인식) 웹 표준 API 설정 =====
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    let isListeningSTT = false; // 마이크 작동 상태 플래그
+
+    // 🎯 디자인 일관성을 위한 SVG 아이콘 정의 (스피커 & 마이크)
     const ICON_PLAY = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
     const ICON_STOP = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>`;
+    
+    // 🎤 마이크 기본 아이콘 및 녹음 중(네모/정지) 아이콘
+    const ICON_MIC_READY = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>`;
+    const ICON_MIC_LISTENING = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor"></rect></svg>`;
 
+    // 브라우저가 음성 인식을 지원하는지 확인 후 초기화
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;     // 한 문장만 인식 후 자동 종료
+        recognition.interimResults = false;  // 중간 중간 웅얼거리는 건 무시하고 최종 결과만 추출
+        recognition.lang = 'ko-KR';          // 대한민국 한국어 설정
+
+        // 음성 인식 시작 시
+        recognition.onstart = function() {
+            isListeningSTT = true;
+            if (micBtn) {
+                micBtn.innerHTML = ICON_MIC_LISTENING;
+                micBtn.classList.add("listening");
+                micBtn.setAttribute("title", "음성 인식 중지");
+            }
+        };
+
+        // 음성 인식 성공 시 결과 처리
+        recognition.onresult = function(event) {
+            const speechToText = event.results[0][0].transcript;
+            if (inputEl) {
+                // 기존에 쓰던 글이 있다면 이어서 붙여줌
+                inputEl.value = (inputEl.value + " " + speechToText).trim();
+                updateSendButton();
+                autoResizeInput();
+                inputEl.focus();
+            }
+        };
+
+        // 음성 인식 종료 시 (에러가 나든 정상 종료되든 무조건 실행)
+        recognition.onend = function() {
+            stopListening();
+        };
+
+        // 에러 발생 시 처리
+        recognition.onerror = function(event) {
+            console.error("STT 에러 발생: ", event.error);
+            stopListening();
+        };
+    } else {
+        // 브라우저가 STT를 지원하지 않는 경우 마이크 버튼 숨김 처리
+        if (micBtn) micBtn.style.display = 'none';
+        console.warn("이 브라우저는 웹 표준 음성 인식(STT)을 지원하지 않습니다.");
+    }
 
     // ===== 사용자 설정 로드 및 적용 =====
     function applyUserPreferences() {
@@ -59,7 +113,7 @@
         }
     }
 
-    // 설정 톱니바퀴 토글 (위젯 모드에는 설정 UI가 없을 수 있어 가드)
+    // 설정 톱니바퀴 토글
     if (btnSettings && settingsMenu) {
         btnSettings.addEventListener("click", function(e) {
             e.preventDefault();
@@ -67,7 +121,6 @@
             settingsMenu.classList.toggle("hidden");
         });
 
-        // 바깥 누르면 설정창 닫기
         document.addEventListener("click", function(e) {
             if (!btnSettings.contains(e.target) && !settingsMenu.contains(e.target)) {
                 settingsMenu.classList.add("hidden");
@@ -117,6 +170,9 @@
     }
 
     function speakText(text, buttonEl) {
+        // 🎯 TTS 켜질 때 마이크(STT)가 켜져 있으면 꺼버림 (하울링/루프 방지)
+        stopListening();
+
         if (synth.speaking || synth.pending) {
             if (activeTtsButton === buttonEl) {
                 stopSpeaking();
@@ -144,6 +200,32 @@
         };
 
         synth.speak(currentUtterance);
+    }
+
+    // ===== STT 음성 인식 제어 함수 =====
+    function startListening() {
+        if (!recognition || isLoading) return;
+        
+        // 🎯 마이크 켜기 전, AI가 말하고 있었다면 TTS 목소리를 끕니다.
+        stopSpeaking();
+
+        try {
+            recognition.start();
+        } catch (e) {
+            console.error("음성 인식 시작 실패:", e);
+        }
+    }
+
+    function stopListening() {
+        isListeningSTT = false;
+        if (recognition) {
+            try { recognition.stop(); } catch(e) {}
+        }
+        if (micBtn) {
+            micBtn.innerHTML = ICON_MIC_READY;
+            micBtn.classList.remove("listening");
+            micBtn.setAttribute("title", "음성으로 말하기");
+        }
     }
 
 
@@ -176,12 +258,10 @@
         } else {
             bubble.innerHTML = formatBotMessage(content);
             
-            // 🎯 임시 div를 통해 퓨어한 한국어 텍스트 문장만 추출 (HTML 태그 제거용)
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = bubble.innerHTML;
             plainTextContent = tempDiv.textContent || tempDiv.innerText;
 
-            // 🎯 TTS 컨트롤 스피커 버튼을 생성하여 말풍선 내부 우측상단에 부착
             const ttsControls = document.createElement('div');
             ttsControls.className = 'tts-controls';
             
@@ -196,10 +276,8 @@
             });
 
             ttsControls.appendChild(ttsBtn);
-            bubble.appendChild(ttsControls); // 🎯 기존 바깥쪽이 아니라 말풍선('bubble') 내부에 직접 넣어서 가둠
+            bubble.appendChild(ttsControls); 
 
-            // 담당부서 + 연락처 안내를 흰색 답변 말풍선 맨 아래에 포함
-            // (별도 박스가 아니라 주요 답변의 일부로 표시)
             if (sources && sources.length > 0) {
                 const deptSrc = sources.find(function (s) { return s.department; });
                 if (deptSrc) {
@@ -288,6 +366,7 @@
         if (el) el.remove();
     }
 
+    // 스크롤 제어
     function scrollToBottom() {
         messagesEl.scrollTop = messagesEl.scrollHeight;
     }
@@ -310,7 +389,8 @@
         isLoading = true;
         sendBtn.disabled = true;
 
-        stopSpeaking(); // 전송 시 기존 말 정지
+        stopSpeaking();   // 전송 시 기존 말 정지
+        stopListening();  // 전송 시 마이크 무조건 종료
 
         const userMsg = createMessageEl("user", text);
         messagesEl.appendChild(userMsg);
@@ -352,6 +432,7 @@
     async function clearChat() {
         if (isLoading) return;
         stopSpeaking();
+        stopListening(); // 초기화 시 마이크 정지
 
         try { await fetch("/api/clear", { method: "POST" }); } catch (e) {}
 
@@ -370,6 +451,22 @@
     function autoResizeInput() {
         inputEl.style.height = "auto";
         inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + "px";
+    }
+
+    // ===== 이벤트 리스너 세팅 =====
+
+    // 🎯 마이크 버튼 클릭 핸들러 추가
+    if (micBtn) {
+        micBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            if (isLoading) return;
+            
+            if (isListeningSTT) {
+                stopListening(); // 녹음 중이었으면 수동 중지
+            } else {
+                startListening(); // 대기 중이었으면 녹음 시작
+            }
+        });
     }
 
     inputEl.addEventListener("input", function () {
@@ -419,5 +516,12 @@
 
     applyUserPreferences();
     bindQuickButtons();
+    
+    // 페이지 로드 시 마이크 버튼 모양 초기 세팅
+    if (micBtn && SpeechRecognition) {
+        micBtn.innerHTML = ICON_MIC_READY;
+        micBtn.setAttribute("title", "음성으로 말하기");
+    }
+
     inputEl.focus();
 })();

@@ -87,7 +87,7 @@ body {
 }
 .btn-icon:hover { background: rgba(255,255,255,0.35); }
 
-/* ===== ⚙️ 설정 드롭다운 디자인 (오타 완벽 수정) ===== */
+/* ===== ⚙️ 설정 드롭다운 디자인 ===== */
 .settings-container { position: relative; }
 .settings-dropdown {
     position: absolute;
@@ -97,7 +97,7 @@ body {
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    padding: 16px; /* 🎯 166px 오타 완벽하게 수정 완료! */
+    padding: 16px;
     width: 220px;
     z-index: 9999 !important;
     display: flex;
@@ -144,7 +144,7 @@ body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: #444; }
 
 .message-content { position: relative; }
 
-/* ===== 🎯 말풍선 알맹이 디자인 (위치 기준 설정 변경) ===== */
+/* ===== 🎯 말풍선 알맹이 디자인 ===== */
 .message-bubble {
     padding: 12px 16px;
     border-radius: var(--radius);
@@ -153,7 +153,7 @@ body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: #444; }
     word-break: keep-all;
     overflow-wrap: break-word;
     transition: font-size 0.2s, background-color 0.3s, color 0.3s;
-    position: relative; /* 🎯 TTS 버튼이 이 박스 기준으로 배치되도록 변경 */
+    position: relative;
 }
 
 /* 내부 모든 글자 자식태그 버그 방지 규칙 */
@@ -168,14 +168,14 @@ body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: #444; }
     border-top-left-radius: 4px; 
     border: 1px solid var(--border); 
     box-shadow: 0 2px 6px var(--shadow); 
-    padding-right: 46px; /* 🎯 우측 상단에 항상 배치될 TTS 버튼 자리를 미리 확보 */
+    padding-right: 46px;
 }
 .user-message .message-bubble { background: var(--user-bubble); color: white; border-top-right-radius: 4px; box-shadow: 0 2px 6px rgba(0, 122, 255, 0.2); }
 .message-bubble p { margin-bottom: 0.5em; }
 .message-bubble p:last-child { margin-bottom: 0; }
 .message-bubble strong { font-weight: 700; }
 
-/* ===== 🔊 [수정] TTS 읽어주기 스피커 버튼 디자인 ===== */
+/* ===== 🔊 TTS 읽어주기 스피커 버튼 디자인 ===== */
 .tts-controls {
     position: absolute;
     right: 12px;
@@ -188,7 +188,7 @@ body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: #444; }
     border: 1px solid var(--border);
     cursor: pointer;
     color: var(--text-light);
-    width: 28px !important;   /* 버튼 크기 명확히 지정 */
+    width: 28px !important;
     height: 28px !important;
     border-radius: 50% !important;
     display: flex;
@@ -198,7 +198,6 @@ body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: #444; }
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* 언제나 선명하게 보이도록 수정 */
 .tts-btn:hover {
     background-color: var(--primary);
     color: white;
@@ -206,7 +205,6 @@ body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: #444; }
     transform: scale(1.08);
 }
 
-/* 스피커 켜져서 읽고 있을 때 효과 */
 .tts-btn.speaking {
     background-color: #ff4d4f !important;
     color: white !important;
@@ -238,7 +236,6 @@ body.dark-mode .quick-btn:hover { background: var(--primary-light); }
 .source-card .source-dept { font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .source-card:hover .source-dept { color: var(--primary-dark); }
 .source-card .source-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--primary-light); color: var(--primary); flex-shrink: 0; align-self: flex-start; }
-/* 담당부서 연락처 안내 — 흰색 답변 말풍선 맨 아래에 구분선과 함께 포함 */
 .bubble-contact { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border); font-size: 12px; line-height: 1.55; color: var(--text-muted); }
 .bubble-contact b { color: var(--primary-dark); }
 .bubble-contact a { color: var(--primary); font-weight: 600; text-decoration: none; }
@@ -256,8 +253,53 @@ body.dark-mode .quick-btn:hover { background: var(--primary-light); }
 .input-wrapper:focus-within { border-color: var(--primary); background: var(--white); box-shadow: 0 0 0 3px var(--primary-light); }
 body.dark-mode .input-wrapper:focus-within { background: #1E1E1E; }
 
-#user-input { flex: 1; border: none; background: transparent; font-family: inherit; font-size: var(--msg-font-size); line-height: 1.4; resize: none; outline: none; max-height: 100px; color: var(--text); padding: 6px 0; transition: font-size 0.2s; }
+/* 🎯 입력창 스크롤바(화살표) 숨김 처리 추가 완료! */
+#user-input { 
+    flex: 1; 
+    border: none; 
+    background: transparent; 
+    font-family: inherit; 
+    font-size: var(--msg-font-size); 
+    line-height: 1.4; 
+    resize: none; 
+    outline: none; 
+    max-height: 100px; 
+    color: var(--text); 
+    padding: 6px 0; 
+    transition: font-size 0.2s; 
+    -ms-overflow-style: none; /* 인터넷 익스플로러, 구형 엣지 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+#user-input::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 최신 엣지 등 */
+}
 #user-input::placeholder { color: var(--text-muted); }
+
+/* 🎯 마이크 버튼 스타일 */
+.btn-mic { 
+    width: 36px; 
+    height: 36px; 
+    border: none; 
+    background: transparent; 
+    color: var(--text-light); 
+    border-radius: 50%; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-shrink: 0; 
+    transition: all 0.2s; 
+}
+.btn-mic:hover { 
+    background: var(--primary-light); 
+    color: var(--primary); 
+}
+.btn-mic.listening { 
+    background-color: #ff4d4f !important; 
+    color: white !important; 
+    animation: pulse-red 1.5s infinite; 
+}
+body.dark-mode .btn-mic:hover { background: rgba(255, 255, 255, 0.1); }
 
 .btn-send { width: 36px; height: 36px; border: none; background: var(--primary); color: white; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
 .btn-send:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
