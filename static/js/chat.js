@@ -487,7 +487,7 @@
         scrollToBottom();
 
         if (checkFrontPrivacy(text)) {
-            const warnText = "⚠️ <strong>입력하신 내용에 개인정보가 포함되어 있습니다.</strong><br><br>개인정보 보호를 위해 채팅창에 주민등록번호, 전화번호, 이메일, 상세주소를 입력하지 말아주세요.";
+            const warnText = "⚠️ 입력하신 내용에 개인정보가 포함되어 있습니다.\n\n개인정보 보호를 위해 채팅창에 주민등록번호, 전화번호, 이메일, 상세주소를 입력하지 말아주세요.";
             const botMsg = createMessageEl("bot", warnText, null, false, null);
             messagesEl.appendChild(botMsg);
             scrollToBottom();
