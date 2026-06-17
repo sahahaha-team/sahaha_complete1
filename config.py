@@ -5,6 +5,7 @@ load_dotenv()
 
 # ===== 크롤링 대상 =====
 BASE_URL = "https://www.saha.go.kr"
+STAFF_DIRECTORY_URL = "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000"
 
 TARGET_MENUS = {
     "분야별정보": "/portal/contents.do?mId=0401000000",

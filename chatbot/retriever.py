@@ -8,7 +8,7 @@
 import logging
 from database_db.vector_store import VectorStore
 from database_db.database import Database
-from chatbot.dept_directory import correct_dept, get_contact
+from chatbot.dept_directory import correct_dept, get_contact, search_staff_directory
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
@@ -134,6 +134,35 @@ class HybridRetriever:
             d["similarity"] = d["hybrid_score"]
         return ranked
 
+    def _staff_results_to_documents(self, query: str, limit: int = 5) -> list[dict]:
+        official_hits = search_staff_directory(query, limit=limit)
+        if not official_hits:
+            return []
+
+        top_score = max(hit.get("score", 0.0) for hit in official_hits) or 1.0
+        docs: list[dict] = []
+        for idx, hit in enumerate(official_hits, 1):
+            dept = correct_dept(hit.get("department", "") or "")
+            phone = (hit.get("contact", "") or "").strip() or get_contact(dept)
+            duties = (hit.get("duties", "") or "").strip()
+            title = (hit.get("title", "") or dept or "직원업무안내").strip()
+            docs.append(
+                {
+                    "id": f"staff:{dept}:{title}:{idx}",
+                    "content": duties or f"{dept} {title}".strip(),
+                    "metadata": {
+                        "url": hit.get("url", "") or "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+                        "title": title,
+                        "category": "staff_directory",
+                        "service_type": "기타",
+                        "department": dept,
+                        "contact": phone,
+                    },
+                    "similarity": min(1.0, float(hit.get("score", 0.0)) / top_score),
+                }
+            )
+        return docs
+
     def search(self, query: str, k: int = 5) -> dict:
         """
         하이브리드 검색 수행
@@ -176,6 +205,10 @@ class HybridRetriever:
         except Exception as e:
             logger.warning(f"벡터 검색 실패: {e}")
             return {"results": [], "degraded": True, "reason": "vector_search_failed"}
+
+        official_docs = self._staff_results_to_documents(query, limit=max(k, 3))
+        if official_docs:
+            results = official_docs + results
 
         # BM25 비활성 상태이면 벡터 결과만 사용하면서 degraded 표시
         if not self.bm25 or not self.bm25.enabled:
@@ -239,7 +272,7 @@ class HybridRetriever:
                     "service_type": meta.get("service_type", "기타"),
                     "department": dept,
                     # 담당부서 연락처 (확인된 직통번호 없으면 대표전화로 폴백)
-                    "contact": get_contact(dept) if dept else "",
+                    "contact": (meta.get("contact") or "").strip() or (get_contact(dept) if dept else ""),
                 }
                 if self._is_relevant_source(query, title, content):
                     relevant_sources.append(src)
