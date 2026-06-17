@@ -432,7 +432,9 @@
     function checkFrontPrivacy(text) {
         const rrnRegex = /\d{6}-[1-4]\d{6}|\d{6}[1-4]\d{6}/;
         const phoneRegex = /01[016789]-\d{3,4}-\d{4}|01[016789]\d{7,8}|0[2-6]:?\d{1,2}-\d{3,4}-\d{4}/;
-        return rrnRegex.test(text) || phoneRegex.test(text);
+        const addressRegex = /[가-힣]{1,20}(?:동|읍|면|리)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?|[가-힣]{1,20}(?:로|길)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?/;
+        const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+        return rrnRegex.test(text) || phoneRegex.test(text) || addressRegex.test(text) || emailRegex.test(text);
     }
 
     // 서버 송신 처리
@@ -449,7 +451,7 @@
         scrollToBottom();
 
         if (checkFrontPrivacy(text)) {
-            const warnText = "⚠️ <strong>입력하신 내용에 개인정보가 포함되어 있습니다.</strong><br><br>개인정보 보호를 위해 채팅창에 주민등록번호나 전화번호를 입력하지 말아주세요.";
+            const warnText = "⚠️ <strong>입력하신 내용에 개인정보가 포함되어 있습니다.</strong><br><br>개인정보 보호를 위해 채팅창에 주민등록번호, 전화번호, 이메일, 상세주소를 입력하지 말아주세요.";
             const botMsg = createMessageEl("bot", warnText, null, false, null);
             messagesEl.appendChild(botMsg);
             scrollToBottom();

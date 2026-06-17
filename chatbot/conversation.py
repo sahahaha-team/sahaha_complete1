@@ -50,6 +50,11 @@ PERSONAL_INFO_PATTERNS = [
     (re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"), "이메일"),
 ]
 
+ADDRESS_PATTERNS = [
+    re.compile(r"[가-힣]{1,20}(?:동|읍|면|리)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?"),
+    re.compile(r"[가-힣]{1,20}(?:로|길)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?"),
+]
+
 CLARIFICATION_TAG = "[CLARIFICATION]"
 ANSWER_STYLE_SUFFIX = """
 
@@ -64,12 +69,16 @@ Answer style:
 def detect_personal_info(text: str, use_ner: bool = True) -> str | None:
     """
     텍스트에서 첫 번째로 매칭된 개인정보 유형 반환 (없으면 None).
-    1차: 정규식 (주민등록번호/전화번호/카드번호/이메일 - 정형)
-    2차: NER (이름/주소 - 비정형, use_ner=True일 때)
+    입력 차단은 정형 개인정보와 상세주소만 검사하고,
+    동 이름 같은 일반 지역명은 막지 않는다.
     """
     for pattern, info_type in PERSONAL_INFO_PATTERNS:
         if pattern.search(text):
             return info_type
+
+    for pattern in ADDRESS_PATTERNS:
+        if pattern.search(text):
+            return "주소"
 
     if use_ner:
         try:
@@ -146,7 +155,7 @@ class ChatBot:
 
     def _check_personal_info(self, text: str) -> str | None:
         """개인정보 입력 감지 (하위 호환용 래퍼)"""
-        return detect_personal_info(text)
+        return detect_personal_info(text, use_ner=False)
 
     def _build_history(self, conversation: list[dict]) -> list:
         """대화 이력을 LangChain 메시지 형식으로 변환"""
