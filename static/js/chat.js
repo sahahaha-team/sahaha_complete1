@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 사하구청 AI 상담사 - 채팅 통합 스크립트 클라이언트 (TTS + STT 음성인식 통합 버전)
  */
 (function () {
@@ -253,6 +253,26 @@
 
         let plainTextContent = '';
 
+        function normalizeDeptName(value) {
+            return String(value || "").replace(/\s+/g, "");
+        }
+
+        function findMatchedDeptSource(sourceList, text) {
+            const normalizedText = normalizeDeptName(text);
+            const deptSources = (sourceList || []).filter(function (src) {
+                return src && src.department;
+            });
+
+            for (const src of deptSources) {
+                const dept = normalizeDeptName(src.department);
+                if (dept && normalizedText.includes(dept)) {
+                    return src;
+                }
+            }
+
+            return null;
+        }
+
         if (role === "user") {
             bubble.textContent = content;
         } else {
@@ -279,12 +299,12 @@
             bubble.appendChild(ttsControls); 
 
             if (sources && sources.length > 0) {
-                const deptSrc = sources.find(function (s) { return s.department; });
-                if (deptSrc) {
-                    const phone = deptSrc.contact || "051-220-4000";
+                const deptSrc = findMatchedDeptSource(sources, content);
+                if (deptSrc && deptSrc.department) {
+                    const phone = deptSrc.contact || "";
                     const guide = document.createElement("div");
                     guide.className = "bubble-contact bubble-contact-highlight";
-                    guide.innerHTML = `담당부서 <b>${escapeHtml(deptSrc.department)}</b> · 연락처 <a href="tel:${phone.replace(/[^0-9]/g, "")}">${escapeHtml(phone)}</a>`;
+                    guide.innerHTML = `담당부서 <b>${escapeHtml(deptSrc.department)}</b> · 연락처 ${phone ? `<a href="tel:${phone.replace(/[^0-9]/g, "")}">${escapeHtml(phone)}</a>` : "안내 없음"}`;
                     bubble.appendChild(guide);
                 }
             }
