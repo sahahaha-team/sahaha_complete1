@@ -283,8 +283,8 @@
                 if (deptSrc) {
                     const phone = deptSrc.contact || "051-220-4000";
                     const guide = document.createElement("div");
-                    guide.className = "bubble-contact";
-                    guide.innerHTML = `📞 더 자세한 안내가 필요하시면 담당부서 <b>${escapeHtml(deptSrc.department)}</b> 또는 사하구청 대표전화(<a href="tel:${phone.replace(/[^0-9]/g, "")}">${escapeHtml(phone)}</a>)로 문의해주세요.`;
+                    guide.className = "bubble-contact bubble-contact-highlight";
+                    guide.innerHTML = `담당부서 <b>${escapeHtml(deptSrc.department)}</b> · 연락처 <a href="tel:${phone.replace(/[^0-9]/g, "")}">${escapeHtml(phone)}</a>`;
                     bubble.appendChild(guide);
                 }
             }

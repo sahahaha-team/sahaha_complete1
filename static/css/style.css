@@ -257,6 +257,23 @@ body.dark-mode .quick-btn:hover { background: var(--primary-light); }
 .source-card:hover .source-dept { color: var(--primary-dark); }
 .source-card .source-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--primary-light); color: var(--primary); flex-shrink: 0; align-self: flex-start; }
 .bubble-contact { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border); font-size: 12px; line-height: 1.55; color: var(--text-muted); }
+.bubble-contact-highlight {
+    padding: 10px 12px;
+    border-top: none;
+    border: 1px solid rgba(255, 193, 7, 0.35);
+    border-radius: 12px;
+    background: rgba(255, 193, 7, 0.14);
+    color: var(--text);
+    font-weight: 600;
+}
+.bubble-contact-highlight b {
+    color: var(--primary-dark);
+}
+.bubble-contact-highlight a {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+}
 .bubble-contact b { color: var(--primary-dark); }
 .bubble-contact a { color: var(--primary); font-weight: 600; text-decoration: none; }
 
