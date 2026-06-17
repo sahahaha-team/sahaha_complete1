@@ -17,10 +17,12 @@
     const fontSizeDisplay = document.getElementById("font-size-display");
 
     let isLoading = false;
-    const ROBOT_IMAGES = {
-        neutral: '/static/images/mascot_neutral.png',
-        thinking: '/static/images/mascot_thinking.png',
-        warning: '/static/images/mascot_warning.png'
+    
+    // 🦢 고우니 이미지 설정으로 변경 완료
+    const GOUNI_IMAGES = {
+        neutral: '/static/images/hi.png',
+        thinking: '/static/images/think.png',
+        warning: '/static/images/no.png'
     };
 
     // ===== TTS (읽어주기) 웹 표준 API 설정 =====
@@ -241,8 +243,8 @@
             avatar.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#fff"/></svg>`;
         } else {
             let isWarning = content && (content.includes('⚠️') || content.includes('개인정보가 포함되어 있습니다'));
-            const currentImg = isWarning ? ROBOT_IMAGES.warning : ROBOT_IMAGES.neutral;
-            avatar.innerHTML = `<img src="${currentImg}" class="bot-avatar-img" alt="로봇">`;
+            const currentImg = isWarning ? GOUNI_IMAGES.warning : GOUNI_IMAGES.neutral;
+            avatar.innerHTML = `<img src="${currentImg}" class="bot-avatar-img" alt="사하구 마스코트 고우니">`;
         }
 
         const contentDiv = document.createElement("div");
@@ -438,7 +440,7 @@
         msg.className = "message bot-message";
         msg.id = "typing-indicator";
         msg.innerHTML = `
-            <div class="message-avatar"><img src="${ROBOT_IMAGES.thinking}" class="bot-avatar-img" alt="생각중"></div>
+            <div class="message-avatar"><img src="${GOUNI_IMAGES.thinking}" class="bot-avatar-img" alt="고민중인 고우니"></div>
             <div class="message-content">
                 <div class="message-bubble">
                     <div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>

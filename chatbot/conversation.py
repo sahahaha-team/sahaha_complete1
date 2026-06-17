@@ -1,6 +1,6 @@
-﻿"""
+"""
 멀티턴 대화 처리 모듈
-- Gemini 무료 티어 기반 답변 생성
+- Gemini 무료 티어 기반 답변 생성 (현재 Groq 연동)
 - 문맥 유지 (이전 대화 기억)
 - 모호한 질문 시 역질문으로 의도 파악
 - 출처 명시 답변
@@ -227,7 +227,7 @@ class ChatBot:
 
         Returns:
             {
-                "answer": str,        # AI 답변
+                "answer": str,       # AI 답변
                 "sources": list,      # 출처 목록 [{title, url, category}]
                 "is_clarification": bool,  # 역질문 여부
             }
@@ -266,15 +266,14 @@ class ChatBot:
         degraded = search_outcome["degraded"]
         degraded_reason = search_outcome["reason"]
         context, sources = self.retriever.format_context(user_message, results)
+        
+        # 정확도 정보 추출
+        best_score = float(results[0].get("similarity", 0.0)) if results else 0.0
 
         if not context:
             context = "(관련 참고자료를 찾지 못했습니다)"
 
         # 4. LLM 답변 생성 (무료 티어 속도 제한: 최소 4초 간격)
-        #    호출 간격 계산·갱신만 락으로 보호하고, 갱신 직후 락을 풀어
-        #    실제 네트워크 호출(invoke)은 락 밖에서 수행한다.
-        #    → 연속 호출이 4초 이상 간격으로 "시작"되도록 보장하면서도,
-        #      느린 LLM 응답 동안 다른 요청이 불필요하게 막히지 않게 한다.
         with self._call_lock:
             elapsed = time.time() - self._last_call_time
             if elapsed < 4:
@@ -298,31 +297,38 @@ class ChatBot:
             degraded = True
             degraded_reason = "llm_failed"
 
-        # 5. 역질문 여부 판단 ([CLARIFICATION] 태그 우선, 키워드 폴백)
+        # 5. 역질문 여부 판단 및 후처리
         is_clarification = CLARIFICATION_TAG in answer
         if is_clarification:
             answer = answer.replace(CLARIFICATION_TAG, "").strip()
         else:
-            # LLM이 태그를 빠뜨린 경우 키워드 휴리스틱으로 폴백
             is_clarification = any(kw in answer for kw in [
                 "어떤 분야", "어떤 것이", "구체적으로", "선택해",
                 "궁금하신가요?", "알려주시겠어요"
             ])
 
-        # 역질문(되묻기) 응답에는 아직 '답변'이 없으므로 출처를 표시하지 않는다.
-        # (관련성 낮은 폴백 출처가 역질문에 붙어 혼란을 주는 것을 방지)
         if is_clarification:
             sources = []
 
-        # 6. 부서명 오기 보정 (예: '도로과' → '도로정비과', 공식 조직도 기준)
+        # 6. 부서명 및 연락처 보정
         answer = normalize_dept_names(answer)
         answer = enforce_official_contact(answer, user_message, sources)
-
         answer = strip_foreign_script(answer)
-        # 7. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
+
+        # [본문 내 URL 제거 로직] 대화창 본문에서 URL 텍스트만 깔끔하게 지웁니다.
+        answer = re.sub(r'https?://[^\s<>"]+|www\.[^\s<>"]+', '', answer).strip()
+
+        # 7. LLM 응답 PII 마스킹
         answer, leaked = mask_personal_info(answer)
         if leaked:
             logger.warning(f"LLM 응답에서 개인정보 감지/마스킹: {leaked}")
+
+        # [중복 방지 로직 추가] AI가 이전 대화를 흉내 내서 스스로 쓴 정확도 문구가 있다면 깔끔하게 지워버림
+        answer = re.sub(r'\*?\s*\(검색\s*정확도:\s*\d+%\)\s*\*?', '', answer).strip()
+
+        # [정확도 표시] 본문 맨 아래에 코드로 딱 1회만 추가
+        accuracy_percent = int(best_score * 100) if best_score <= 1.0 else int(best_score)
+        answer = f"{answer}\n\n*(검색 정확도: {accuracy_percent}%)*"
 
         # 8. 대화 이력 저장
         self.db.save_conversation(session_id, "user", user_message)
