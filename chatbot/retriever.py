@@ -1,4 +1,4 @@
-"""
+﻿"""
 하이브리드 검색 모듈
 - 1차 필터링: 메타데이터(카테고리, 서비스 유형) 기반 범위 축소
 - 2차 의미 검색: 벡터 유사도 (pgvector match_documents RPC)
@@ -163,6 +163,18 @@ class HybridRetriever:
             )
         return docs
 
+    def _resolve_official_source(self, query: str, title: str, content: str, dept: str) -> tuple[str, str]:
+        lookup_text = " ".join(part for part in [query, title, content, dept] if part)
+        hits = search_staff_directory(lookup_text, limit=1)
+        if hits:
+            hit = hits[0]
+            resolved_dept = correct_dept(hit.get("department", "") or dept or "")
+            resolved_contact = (hit.get("contact", "") or "").strip() or get_contact(resolved_dept)
+            return resolved_dept, resolved_contact
+
+        resolved_dept = correct_dept(dept) if dept else ""
+        return resolved_dept, (get_contact(resolved_dept) if resolved_dept else "")
+
     def search(self, query: str, k: int = 5) -> dict:
         """
         하이브리드 검색 수행
@@ -265,6 +277,7 @@ class HybridRetriever:
                 seen_urls.add(url)
                 # 담당 부서 (LLM이 본문에서 추출) → 공식 명칭으로 보정 후 연락처 매핑
                 dept = correct_dept(meta.get("department", "") or "")
+                dept, contact = self._resolve_official_source(query, title, content, dept)
                 src = {
                     "title": title,
                     "url": url,
@@ -272,7 +285,7 @@ class HybridRetriever:
                     "service_type": meta.get("service_type", "기타"),
                     "department": dept,
                     # 담당부서 연락처 (확인된 직통번호 없으면 대표전화로 폴백)
-                    "contact": (meta.get("contact") or "").strip() or (get_contact(dept) if dept else ""),
+                    "contact": (meta.get("contact") or "").strip() or contact,
                 }
                 if self._is_relevant_source(query, title, content):
                     relevant_sources.append(src)

@@ -1,4 +1,4 @@
-"""
+﻿"""
 멀티턴 대화 처리 모듈
 - Gemini 무료 티어 기반 답변 생성
 - 문맥 유지 (이전 대화 기억)
@@ -63,6 +63,7 @@ Answer style:
 - Prefer 3 to 5 short bullet points for actionable guidance.
 - Do not repeat the same sentence, phone number, or paragraph.
 - If the user asks about a street/manhole issue, give the report steps once and avoid boilerplate repetition.
+- Do not mix in foreign-language phrases such as Japanese or other non-Korean text.
 """
 
 
@@ -118,6 +119,17 @@ def mask_personal_info(text: str, use_ner: bool = True) -> tuple[str, list[str]]
             logger.warning(f"NER 마스킹 호출 실패 (정규식 결과만 반환): {e}")
 
     return masked, found
+
+
+def strip_foreign_script(text: str) -> str:
+    """Remove stray Japanese kana and similar foreign-script fragments from replies."""
+    if not text:
+        return text
+
+    cleaned = re.sub(r"[\u3040-\u30ff\u31f0-\u31ff]", "", text)
+    cleaned = re.sub(r"[ \t]{2,}", " ", cleaned)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned.strip()
 
 
 class ChatBot:
@@ -263,6 +275,7 @@ class ChatBot:
         # 6. 부서명 오기 보정 (예: '도로과' → '도로정비과', 공식 조직도 기준)
         answer = normalize_dept_names(answer)
 
+        answer = strip_foreign_script(answer)
         # 7. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
         answer, leaked = mask_personal_info(answer)
         if leaked:
