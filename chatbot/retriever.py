@@ -146,10 +146,19 @@ class HybridRetriever:
             phone = (hit.get("contact", "") or "").strip() or get_contact(dept)
             duties = (hit.get("duties", "") or "").strip()
             title = (hit.get("title", "") or dept or "직원업무안내").strip()
+            content_lines = []
+            if dept:
+                content_lines.append(f"공식 담당부서: {dept}")
+            if title:
+                content_lines.append(f"직위: {title}")
+            if phone:
+                content_lines.append(f"공식 전화번호: {phone}")
+            if duties:
+                content_lines.append(f"업무: {duties}")
             docs.append(
                 {
                     "id": f"staff:{dept}:{title}:{idx}",
-                    "content": duties or f"{dept} {title}".strip(),
+                    "content": "\n".join(content_lines) or duties or f"{dept} {title}".strip(),
                     "metadata": {
                         "url": hit.get("url", "") or "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
                         "title": title,
@@ -270,6 +279,8 @@ class HybridRetriever:
             context_parts.append(
                 f"[참고자료 {i}] (유사도: {similarity:.2f})\n"
                 f"제목: {title}\n"
+                f"담당부서: {meta.get('department', '')}\n"
+                f"연락처: {meta.get('contact', '')}\n"
                 f"내용: {content}\n"
             )
 

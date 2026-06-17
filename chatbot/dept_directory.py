@@ -17,6 +17,7 @@ from crawler.staff_directory import OUTPUT_PATH as STAFF_DIRECTORY_PATH, refresh
 logger = logging.getLogger(__name__)
 
 REP_PHONE = "051-220-4000"
+STAFF_DIRECTORY_PAGE_URL = "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000"
 
 # A few high-value aliases keep common user wording aligned with the official
 # staff directory naming.
@@ -223,7 +224,7 @@ def search_staff_directory(query: str, limit: int = 5) -> list[dict]:
                 "title": row.get("title", ""),
                 "contact": row.get("phone", "") or get_contact(dept),
                 "duties": row.get("duties", ""),
-                "url": row.get("source_url", "") or row.get("url", "") or "",
+                "url": row.get("source_url", "") or row.get("url", "") or STAFF_DIRECTORY_PAGE_URL,
             }
         )
     return results

@@ -132,6 +132,48 @@ def strip_foreign_script(text: str) -> str:
     return cleaned.strip()
 
 
+def enforce_official_contact(answer: str, user_message: str, sources: list[dict]) -> str:
+    """For department/contact questions, force the official staff-directory phone number."""
+    if not answer or not sources:
+        return answer
+
+    query = (user_message or "").lower()
+    if not any(keyword in query for keyword in ["담당", "부서", "연락", "전화", "번호", "문의"]):
+        return answer
+
+    official_source = next(
+        (
+            source for source in sources
+            if (source.get("contact") or "").strip()
+            and (
+                source.get("category") == "staff_directory"
+                or "staff/list.do" in (source.get("url") or "")
+            )
+        ),
+        None,
+    )
+    if not official_source:
+        return answer
+
+    official_contact = official_source["contact"].strip()
+    if not official_contact:
+        return answer
+
+    phone_pattern = re.compile(r"0\d{1,2}-\d{3,4}-\d{4}")
+    phone_matches = phone_pattern.findall(answer)
+
+    if phone_matches:
+        for phone in set(phone_matches):
+            answer = answer.replace(phone, official_contact)
+        return answer
+
+    dept_name = (official_source.get("department") or "").strip()
+    if dept_name and official_contact not in answer:
+        answer += f"\n\n공식 직원업무안내 기준 {dept_name} 연락처는 {official_contact}입니다."
+
+    return answer
+
+
 class ChatBot:
     def __init__(self):
         if not GROQ_API_KEY:
@@ -274,6 +316,7 @@ class ChatBot:
 
         # 6. 부서명 오기 보정 (예: '도로과' → '도로정비과', 공식 조직도 기준)
         answer = normalize_dept_names(answer)
+        answer = enforce_official_contact(answer, user_message, sources)
 
         answer = strip_foreign_script(answer)
         # 7. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
