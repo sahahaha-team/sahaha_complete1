@@ -51,6 +51,14 @@ PERSONAL_INFO_PATTERNS = [
 ]
 
 CLARIFICATION_TAG = "[CLARIFICATION]"
+ANSWER_STYLE_SUFFIX = """
+
+Answer style:
+- Keep replies concise and conversational.
+- Prefer 3 to 5 short bullet points for actionable guidance.
+- Do not repeat the same sentence, phone number, or paragraph.
+- If the user asks about a street/manhole issue, give the report steps once and avoid boilerplate repetition.
+"""
 
 
 def detect_personal_info(text: str, use_ner: bool = True) -> str | None:
@@ -128,7 +136,7 @@ class ChatBot:
             logger.warning(f"NER 탐지기 사전 로딩 실패 (필요 시 지연 로딩): {e}")
 
         self.prompt = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT),
+            ("system", SYSTEM_PROMPT + ANSWER_STYLE_SUFFIX),
             MessagesPlaceholder(variable_name="history"),
             ("human", "{question}"),
         ])

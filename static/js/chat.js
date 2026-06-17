@@ -303,13 +303,65 @@
 
     function formatBotMessage(text) {
         if (!text) return "";
-        let html = text
-            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-            .replace(/\*(.*?)\*/g, "<em>$1</em>")
-            .replace(/\n{2,}/g, "</p><p>")
-            .replace(/\n/g, "<br>");
-        html = html.replace(/(\d+)\)\s/g, "<br>$1) ");
-        return `<p>${html}</p>`;
+        const lines = String(text)
+            .replace(/\r\n/g, "\n")
+            .split("\n")
+            .map(line => line.trim())
+            .filter((line, index, arr) => line !== "" || (index > 0 && arr[index - 1] !== ""));
+
+        const compactLines = [];
+        for (const line of lines) {
+            if (compactLines.length === 0 || compactLines[compactLines.length - 1] !== line) {
+                compactLines.push(line);
+            }
+        }
+
+        const escape = (value) => escapeHtml(value);
+        const renderInline = (value) => {
+            return escape(value)
+                .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+                .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+                .replace(/\*(.+?)\*/g, "<em>$1</em>");
+        };
+
+        const chunks = [];
+        let listType = null;
+        let listItems = [];
+
+        const flushList = () => {
+            if (!listType || listItems.length === 0) return;
+            const tag = listType === "ol" ? "ol" : "ul";
+            chunks.push(`<${tag}>${listItems.map(item => `<li>${renderInline(item)}</li>`).join("")}</${tag}>`);
+            listType = null;
+            listItems = [];
+        };
+
+        for (const rawLine of compactLines) {
+            const bulletMatch = rawLine.match(/^(?:[-*]\s+)(.+)$/);
+            const numberMatch = rawLine.match(/^(\d+)[.)]\s+(.+)$/);
+
+            if (bulletMatch) {
+                if (listType && listType !== "ul") flushList();
+                listType = "ul";
+                listItems.push(bulletMatch[1]);
+                continue;
+            }
+
+            if (numberMatch) {
+                if (listType && listType !== "ol") flushList();
+                listType = "ol";
+                listItems.push(numberMatch[2]);
+                continue;
+            }
+
+            flushList();
+            if (rawLine) {
+                chunks.push(`<p>${renderInline(rawLine)}</p>`);
+            }
+        }
+
+        flushList();
+        return chunks.join("");
     }
 
     function createSourcesEl(sources) {
