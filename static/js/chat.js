@@ -324,9 +324,22 @@
                 .replace(/\*(.+?)\*/g, "<em>$1</em>");
         };
 
+        const highlightPrefixes = [
+            "핵심",
+            "중요",
+            "결론",
+            "요약",
+            "먼저",
+            "우선",
+            "필수",
+            "가장 필요한 정보",
+            "바로 해야 할 일",
+        ];
+
         const chunks = [];
         let listType = null;
         let listItems = [];
+        let paragraphCount = 0;
 
         const flushList = () => {
             if (!listType || listItems.length === 0) return;
@@ -356,7 +369,10 @@
 
             flushList();
             if (rawLine) {
-                chunks.push(`<p>${renderInline(rawLine)}</p>`);
+                const shouldHighlight = paragraphCount === 0 || highlightPrefixes.some(prefix => rawLine.startsWith(prefix));
+                const className = shouldHighlight ? ' class="answer-highlight"' : "";
+                chunks.push(`<p${className}>${renderInline(rawLine)}</p>`);
+                paragraphCount += 1;
             }
         }
 
