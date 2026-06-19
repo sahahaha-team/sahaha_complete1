@@ -1,5 +1,5 @@
 ﻿/**
- * 사하구청 AI 상담사 - 채팅 통합 스크립트 클라이언트 (TTS + STT 음성인식 통합 버전)
+ * 사하구청 AI 상담사 - 채팅 통합 스크립트 클라이언트 (TTS + STT 음성인식 통합 버전 - 다크모드 이미지 변환 수정)
  */
 (function () {
     const messagesEl = document.getElementById("chat-messages");
@@ -18,12 +18,7 @@
 
     let isLoading = false;
     
-    // 🦢 고우니 이미지 설정으로 변경 완료
-    const GOUNI_IMAGES = {
-        neutral: '/static/images/hi.png',
-        thinking: '/static/images/think.png',
-        warning: '/static/images/no.png'
-    };
+    //  Swan 고우니 이미지 설정 - 🎯 [수정] JS에서 src를 강제 고정하지 않도록 상수를 제거하고 동적 로직으로 변경 (아래 getGouniImage 함수 참고)
 
     // ===== TTS (읽어주기) 웹 표준 API 설정 =====
     const synth = window.speechSynthesis;
@@ -88,6 +83,15 @@
         console.warn("이 브라우저는 웹 표준 음성 인식(STT)을 지원하지 않습니다.");
     }
 
+    // ===== 🎯 [핵심 추가] 현재 테마 상태에 맞는 고우니 이미지 경로 반환 함수 =====
+    // type: 'hi' (기본/neutral), 'think' (생각중), 'no' (경고/warning)
+    function getGouniImage(type) {
+        const isDarkMode = document.body.classList.contains("dark-mode");
+        // 다크모드면 이미지 파일명 뒤에 2를 붙임 (예: hi -> hi2.png, think -> think2.png)
+        const suffix = isDarkMode ? '2' : '';
+        return `/static/images/${type}${suffix}.png`;
+    }
+
     // ===== 사용자 설정 로드 및 적용 =====
     function applyUserPreferences() {
         if (localStorage.getItem("theme") === "dark") {
@@ -140,6 +144,19 @@
                 document.body.classList.remove("dark-mode");
                 localStorage.setItem("theme", "light");
             }
+
+            // 🎯 [핵심 추가] 테마 스위칭 시 화면에 떠 있는 모든 고우니 이미지 실시간 교체
+            // (JS 하드코딩src를 극복하기 위해 다크모드 스위치 켤 때 기존 이미지src들을 싹 바꿔줍니다)
+            const suffix = e.target.checked ? '2' : '';
+            document.querySelectorAll('.bot-avatar-img').forEach(function(img) {
+                // 이미지가 'hi', 'think', 'no' 중 어떤 상태인지 클래스를 통해 알아냅니다.
+                let status = 'hi'; // default
+                if (img.classList.contains('think')) status = 'think';
+                if (img.classList.contains('no')) status = 'no';
+                
+                // 이미지 경로 강제 업데이트
+                img.src = `/static/images/${status}${suffix}.png`;
+            });
         });
     }
 
@@ -242,9 +259,14 @@
         if (role === "user") {
             avatar.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#fff"/></svg>`;
         } else {
+            // 🎯 [수정] JS 하드코딩 src 제거 및 테마에 맞는 dynamic src 부여
+            // 경고 메시지 여부 판단
             let isWarning = content && (content.includes('⚠️') || content.includes('개인정보가 포함되어 있습니다'));
-            const currentImg = isWarning ? GOUNI_IMAGES.warning : GOUNI_IMAGES.neutral;
-            avatar.innerHTML = `<img src="${currentImg}" class="bot-avatar-img" alt="사하구 마스코트 고우니">`;
+            const status = isWarning ? 'no' : 'hi';
+            
+            const currentImgSrc = getGouniImage(status);
+            // 🎯 다크모드 스위칭 시 실시간 이미지 타겟팅을 위해 상태 클래스(hi, no)를 추가로 부여해 줍니다.
+            avatar.innerHTML = `<img src="${currentImgSrc}" class="bot-avatar-img ${status}" alt="사하구 마스코트 고우니">`;
         }
 
         const contentDiv = document.createElement("div");
@@ -389,6 +411,11 @@
                 continue;
             }
 
+            if (rawLine === "" && listType) {
+                flushList();
+                continue;
+            }
+
             flushList();
             if (rawLine) {
                 const shouldHighlight = paragraphCount === 0 || highlightPrefixes.some(prefix => rawLine.startsWith(prefix));
@@ -439,8 +466,12 @@
         const msg = document.createElement("div");
         msg.className = "message bot-message";
         msg.id = "typing-indicator";
+        
+        // 🎯 [수정] JS 하드코딩 src 제거 및 테마에 맞는 dynamic src 부여
+        const currentThinkingImg = getGouniImage('think');
+        // 🎯 실시간 이미지 타겟팅을 위해 'think' 클래스 부여
         msg.innerHTML = `
-            <div class="message-avatar"><img src="${GOUNI_IMAGES.thinking}" class="bot-avatar-img" alt="고민중인 고우니"></div>
+            <div class="message-avatar"><img src="${currentThinkingImg}" class="bot-avatar-img think" alt="고민중인 고우니"></div>
             <div class="message-content">
                 <div class="message-bubble">
                     <div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>

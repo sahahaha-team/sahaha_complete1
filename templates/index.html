@@ -8,8 +8,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        // [필수] 화면이 그려지기 전에 다크모드 클래스를 미리 적용하여 배경 깜빡임 방지
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.classList.add("dark-mode");
+        }
+    </script>
 </head>
 <body>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+        }
+    </script>
+
     <div id="chat-app">
         <header class="chat-header">
             <div class="header-left">
@@ -62,7 +74,7 @@
         <div id="chat-messages" class="chat-messages">
             <div class="message bot-message welcome-message">
                 <div class="message-avatar">
-                    <img src="/static/images/hi.png" alt="사하구 마스코트 고우니" class="bot-avatar-img">
+                    <img src="/static/images/hi.png" id="welcome-avatar" alt="사하구 마스코트 고우니" class="bot-avatar-img">
                 </div>
                 <div class="message-content">
                     <div class="message-bubble">
@@ -97,6 +109,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            const welcomeAvatar = document.getElementById("welcome-avatar");
+            if (welcomeAvatar) {
+                welcomeAvatar.src = "/static/images/hi2.png";
+            }
+        }
+    </script>
 
     <script src="/static/js/chat.js"></script>
 </body>
