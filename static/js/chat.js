@@ -457,6 +457,23 @@
                 ${src.service_type ? `<span class="source-badge">${escapeHtml(src.service_type)}</span>` : ""}
             `;
             container.appendChild(card);
+
+            // 첨부파일(PDF/HWP 등) 다운로드 링크 — 카드 anchor 중첩을 피해 별도 블록으로 렌더
+            if (src.attachments && src.attachments.length > 0) {
+                const attWrap = document.createElement("div");
+                attWrap.className = "source-attachments";
+                src.attachments.forEach(function (att) {
+                    if (!att || !att.url) return;
+                    const link = document.createElement("a");
+                    link.className = "attachment-link";
+                    link.href = att.url;
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    link.innerHTML = `<span class="attachment-icon">📎</span><span class="attachment-name">${escapeHtml(att.name || "첨부파일")}</span>`;
+                    attWrap.appendChild(link);
+                });
+                container.appendChild(attWrap);
+            }
         });
 
         return container;

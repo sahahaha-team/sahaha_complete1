@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사하구청 AI 상담사 - 기술적 난관과 해결책</title>
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:48px 32px;
+    font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+    background:#ffffff;
+    color:#3b3f8c;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:34px;
+  }
+  .box{
+    background:#cdd2f5;
+    border-radius:28px;
+    padding:30px 44px 34px;
+  }
+  .box h2{
+    margin:0 0 14px;
+    font-size:30px;
+    font-weight:800;
+    color:#2f3597;
+    letter-spacing:-0.5px;
+  }
+  .box ul{
+    margin:0;
+    padding-left:26px;
+    list-style:none;
+  }
+  .box li{
+    position:relative;
+    font-size:21px;
+    font-weight:700;
+    line-height:1.75;
+    color:#3a3f9e;
+  }
+  .box li::before{
+    content:"•";
+    position:absolute;
+    left:-22px;
+    color:#3a3f9e;
+  }
+  .box li b{font-weight:800;color:#2a2f8f;}
+  @media (max-width:640px){
+    body{padding:28px 16px;}
+    .box{padding:24px 26px 28px;border-radius:22px;}
+    .box h2{font-size:23px;}
+    .box li{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="box">
+      <h2>1. RAG 검색 정확도 최적화</h2>
+      <ul>
+        <li>문제: 행정 용어 검색 혼선</li>
+        <li>해결: 하이브리드 검색 <b>(BM25 + 벡터 유사도)</b> 도입</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>2. 대규모 트래픽 처리 (서버 재설계)</h2>
+      <ul>
+        <li>문제: 동시 접속 시 동기식(Sync) 응답 지연</li>
+        <li>해결: <b>FastAPI(ASGI) 전환 + 워커 스레드풀</b>로 동시 요청 비차단 처리</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>3. 무결점 데이터 파이프라인 구축</h2>
+      <ul>
+        <li>문제: 증분 크롤링 시 이전 데이터와 충돌 및 중복 발생</li>
+        <li>해결: <b>콘텐츠 해시(MD5) 기반 Upsert + 조건부 GET</b>으로 중복 없이 최신 상태 유지</li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>

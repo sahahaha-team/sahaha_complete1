@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사하구청 AI 상담사 - 개발 로드맵</title>
+<style>
+  :root{
+    --navy:#2f3645;
+    --green:#5aa45f;
+    --orange:#c8893a;
+    --blue:#4f63d8;
+    --card:#f7f8fb;
+    --border:#e6e8ef;
+    --text:#2f3645;
+    --sub:#5b6270;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:32px 20px;
+    font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+    background:#ffffff;
+    color:var(--text);
+  }
+  .board{
+    max-width:1480px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+  }
+  .col{display:flex;flex-direction:column;gap:18px;}
+  .step-head{
+    background:var(--navy);
+    color:#fff;
+    text-align:center;
+    font-weight:800;
+    letter-spacing:2px;
+    font-size:20px;
+    padding:16px 0;
+    border-radius:10px;
+  }
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:26px 22px 30px;
+    text-align:center;
+    box-shadow:0 1px 2px rgba(0,0,0,0.03);
+    flex:1;
+  }
+  .badge{
+    position:absolute;
+    top:14px;
+    right:14px;
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+    padding:4px 12px;
+    border-radius:8px;
+  }
+  .badge.done{background:var(--green);}
+  .badge.ing{background:var(--orange);}
+  .badge.plan{background:#8a93a6;}
+  .icon{font-size:42px;line-height:1;margin:6px 0 18px;}
+  .card h3{
+    margin:0 0 14px;
+    font-size:22px;
+    font-weight:800;
+  }
+  .card p{
+    margin:0;
+    font-size:16px;
+    line-height:1.6;
+    color:var(--sub);
+    font-weight:600;
+  }
+  /* STEP 04 강조 (다음 단계) */
+  .col.next .card.highlight{
+    background:#f3f4ff;
+    border:2px solid var(--blue);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .col.next .card.highlight h3{color:var(--blue);font-size:24px;}
+  .col.next .card.highlight p{color:#3b4252;}
+  .stamp{
+    position:absolute;
+    bottom:14px;
+    right:14px;
+    color:#c0392b;
+    border:2px solid #c0392b;
+    border-radius:50%;
+    width:74px;height:74px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;text-align:center;
+    transform:rotate(-12deg);
+    opacity:.85;
+  }
+  .footnote{
+    max-width:1480px;
+    margin:34px auto 0;
+    font-size:13px;
+    color:#8a93a6;
+    line-height:1.7;
+    border-top:1px dashed var(--border);
+    padding-top:16px;
+  }
+  @media (max-width:1100px){
+    .board{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:620px){
+    .board{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="board">
+
+    <!-- STEP 01 -->
+    <div class="col">
+      <div class="step-head">STEP 01</div>
+      <div class="card">
+        <span class="badge done">완료</span>
+        <div class="icon">🗄️</div>
+        <h3>DB 스키마 설계</h3>
+        <p>Supabase PostgreSQL + pgvector<br>초기 인프라 구축</p>
+      </div>
+      <div class="card">
+        <span class="badge done">완료</span>
+        <div class="icon">⚙️</div>
+        <h3>데이터 수집</h3>
+        <p>사하구청 6개 분야<br>증분 크롤링 구현</p>
+      </div>
+    </div>
+
+    <!-- STEP 02 -->
+    <div class="col">
+      <div class="step-head">STEP 02</div>
+      <div class="card">
+        <span class="badge done">완료</span>
+        <div class="icon">📡</div>
+        <h3>API 및 세션</h3>
+        <p>FastAPI 기반 라우팅<br>UUID 세션 연동</p>
+      </div>
+      <div class="card">
+        <span class="badge done">완료</span>
+        <div class="icon">🛠️</div>
+        <h3>최적화 튜닝</h3>
+        <p>행정 용어 프롬프트<br>HNSW 인덱스 최적화</p>
+      </div>
+    </div>
+
+    <!-- STEP 03 -->
+    <div class="col">
+      <div class="step-head">STEP 03</div>
+      <div class="card">
+        <span class="badge done">완료</span>
+        <div class="icon">⚖️</div>
+        <h3>품질 및 보안</h3>
+        <p>NER 기반 PII 보안 로직 강화<br>개인정보 입력 차단 구현</p>
+      </div>
+      <div class="card">
+        <span class="badge ing">진행중</span>
+        <div class="icon">🦽</div>
+        <h3>실증 및 확장</h3>
+        <p>음성 상담(TTS·STT) 접근성 구현<br>구민 대상 실증 테스트 예정</p>
+      </div>
+    </div>
+
+    <!-- STEP 04 -->
+    <div class="col next">
+      <div class="step-head">STEP 04</div>
+      <div class="card highlight">
+        <span class="badge plan">예정</span>
+        <div class="icon">🚀</div>
+        <h3>대규모 트래픽 대응</h3>
+        <p>FastAPI 비동기 전환 완료<br>부하 테스트(100명+ 동시접속) 및<br>시스템 성능 극대화</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footnote">
+    ※ 원본 로드맵 대비 수정 사항 — ① DB: MySQL → <b>Supabase PostgreSQL + pgvector</b> (실제 사용 스택)
+    · ② API: Flask → <b>FastAPI</b> (마이그레이션 이미 완료) · ③ STEP03 "정답률 90% 달성"은 근거 없어 삭제하고
+    검증된 <b>PII 보안 강화</b>만 표기 · ④ STEP04: FastAPI 마이그레이션은 완료 상태이므로
+    다음 과제를 <b>대규모 트래픽 대응 / 부하 테스트</b>로 변경.
+  </div>
+
+</body>
+</html>

@@ -29,6 +29,8 @@ class PageData:
     category: str
     sub_category: str = ""
     links: list = field(default_factory=list)
+    # 게시물에 첨부된 다운로드 파일 목록 [{"name": 파일명, "url": 다운로드 URL}]
+    attachments: list = field(default_factory=list)
     raw_html: str = ""
     # HTTP 캐시 검증자 (다음 증분 크롤링에서 If-None-Match / If-Modified-Since 헤더로 전송)
     etag: Optional[str] = None
@@ -209,6 +211,7 @@ class SahaCrawler:
         content = self._extract_content(soup)
         sub_category = self._extract_sub_category(soup)
         links = self._extract_links(soup, url)
+        attachments = self._extract_attachments(soup, url)
 
         return PageData(
             url=url,
@@ -217,6 +220,7 @@ class SahaCrawler:
             category=category,
             sub_category=sub_category,
             links=links,
+            attachments=attachments,
             raw_html=html,
         )
 
@@ -257,6 +261,52 @@ class SahaCrawler:
             if "saha.go.kr" in parsed.netloc and parsed.scheme in ("http", "https"):
                 links.append(full_url)
         return list(set(links))
+
+    # 첨부파일로 인정할 확장자 / 다운로드 URL 힌트
+    _ATTACHMENT_EXT = (
+        ".pdf", ".hwp", ".hwpx", ".doc", ".docx",
+        ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".txt", ".csv",
+    )
+    _ATTACHMENT_HINTS = ("download", "filedown", "/fms/", "cmm/fms", "atchfile", "fileid")
+
+    def _extract_attachments(self, soup: BeautifulSoup, base_url: str) -> list:
+        """게시물의 첨부파일 다운로드 링크 추출 → [{"name", "url"}].
+
+        - href가 문서 확장자로 끝나거나, 정부표준 다운로드 엔드포인트(FileDown.do 등)를
+          가리키는 <a>만 수집한다.
+        - javascript:fn_egov_downFile(...) 처럼 URL 복원이 불가한 스크립트 핸들러는
+          제외(엔드포인트 정보가 없어 직접 링크를 만들 수 없음).
+        """
+        seen: set = set()
+        out: list = []
+        for a in soup.find_all("a", href=True):
+            href = (a["href"] or "").strip()
+            if not href or href.startswith("#") or href.lower().startswith("javascript"):
+                continue
+
+            full_url = urljoin(base_url, href)
+            parsed = urlparse(full_url)
+            if parsed.scheme not in ("http", "https") or "saha.go.kr" not in parsed.netloc:
+                continue
+
+            low = full_url.lower()
+            path_no_query = low.split("?")[0]
+            is_file_ext = path_no_query.endswith(self._ATTACHMENT_EXT)
+            is_download = any(h in low for h in self._ATTACHMENT_HINTS)
+            if not (is_file_ext or is_download):
+                continue
+
+            name = a.get_text(strip=True) or path_no_query.rstrip("/").split("/")[-1]
+            name = (name or "첨부파일").strip()[:120]
+
+            key = (name, full_url)
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({"name": name, "url": full_url})
+            if len(out) >= 10:  # 비정상적으로 많은 링크 방어
+                break
+        return out
 
     def crawl_menu(
         self,

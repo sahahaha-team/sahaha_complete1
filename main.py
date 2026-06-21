@@ -8,6 +8,7 @@
   python main.py --mode embed        # 벡터 임베딩
   python main.py --mode all          # 전체 파이프라인
   python main.py --mode stats        # 통계 확인
+  python main.py --mode ingest-files # PDF/HWPX/HWP 매뉴얼 적재 (--path 폴더/파일)
 """
 
 import os
@@ -180,6 +181,7 @@ def run_incremental(menu_filter: str = None):
                     content = raw.content
                     category = raw.category
                     sub_category = raw.sub_category
+                    attachments = getattr(raw, "attachments", None) or []
 
                 chunks = cleaner.process(_P())
                 if not chunks:
@@ -205,6 +207,7 @@ def run_incremental(menu_filter: str = None):
                         "department": metadata.get("department") or "",
                         "keywords": json.dumps(metadata.get("keywords", []), ensure_ascii=False),
                         "summary": metadata.get("summary", ""),
+                        "attachments": getattr(chunk, "attachments", None) or [],
                     }
                     new_chunk_pairs.append((_C(), meta))
 
@@ -222,6 +225,85 @@ def run_incremental(menu_filter: str = None):
         crawler.close()
 
     return stats
+
+
+def run_ingest_files(path: str = None):
+    """
+    파일 단위 적재: PDF/HWPX/HWP에서 텍스트를 추출해 웹 크롤링과 동일한
+    파이프라인(정제 → 태깅 → 청크 저장 → 임베딩 → BM25 재구축)에 태운다.
+
+    크롤러의 PageData 대신 file_loader.FilePageData를 쓰지만 필드가 호환되므로
+    upsert_raw_page / DataCleaner / MetadataTagger / VectorStore 모두 그대로 동작한다.
+    중복/변경 판정은 기존과 동일하게 content_hash + chunk_id(MD5) 기반 upsert로 처리.
+    """
+    import json
+    from crawler.file_loader import load_files
+    from database_db.database import Database
+    from processor.data_cleaner import DataCleaner
+    from processor.metadata_tagger import MetadataTagger
+    from database_db.vector_store import VectorStore
+    from config import FILE_INGEST_DIR, FILE_INGEST_CATEGORY
+
+    target = path or FILE_INGEST_DIR
+    pages = load_files(target, FILE_INGEST_CATEGORY)
+    if not pages:
+        logger.info("적재할 파일이 없습니다: %s", target)
+        return 0
+
+    db = Database()
+    cleaner = DataCleaner(db=db)
+    tagger = MetadataTagger()
+    vs = VectorStore()
+
+    # 1. 원본 페이지 upsert (신규/변경된 파일만 재처리 대상으로 수집)
+    changed = []
+    for page in pages:
+        result = db.upsert_raw_page(page)
+        if result in ("new", "updated"):
+            changed.append(page)
+            logger.info("  [%s] %s", result.upper(), page.url)
+
+    if not changed:
+        logger.info("변경된 파일 없음. 재처리 불필요.")
+        return 0
+
+    # 2. 정제 + 태깅
+    all_tagged = []
+    for page in tqdm(changed, desc="파일 정제·태깅"):
+        chunks = cleaner.process(page)
+        if not chunks:
+            continue
+        all_tagged.extend(tagger.tag_batch(chunks))
+
+    if not all_tagged:
+        logger.info("생성된 청크 없음.")
+        return 0
+
+    # 3. 청크 저장 + 임베딩
+    db.save_chunks_bulk(all_tagged)
+    chunk_meta_pairs = []
+    for chunk, metadata in all_tagged:
+        class _C:
+            chunk_id = chunk.chunk_id
+            content = chunk.content
+        chunk_meta_pairs.append((_C(), {
+            "url": chunk.url,
+            "title": chunk.title,
+            "category": chunk.category,
+            "sub_category": chunk.sub_category,
+            "service_type": metadata.get("service_type", "기타"),
+            "department": metadata.get("department") or "",
+            "keywords": json.dumps(metadata.get("keywords", []), ensure_ascii=False),
+            "summary": metadata.get("summary", ""),
+            "attachments": getattr(chunk, "attachments", None) or [],
+        }))
+    vs.add_chunks_batch(chunk_meta_pairs, batch_size=50, db=db)
+
+    # 4. BM25 인덱스 재구축 (키워드 검색에도 반영)
+    _rebuild_bm25_index()
+
+    logger.info("파일 적재 완료: %d개 파일 → %d개 청크", len(changed), len(all_tagged))
+    return len(all_tagged)
 
 
 def run_process():
@@ -246,6 +328,7 @@ def run_process():
             content = raw.content
             category = raw.category
             sub_category = raw.sub_category
+            attachments = getattr(raw, "attachments", None) or []
 
         chunks = cleaner.process(_P())
         if not chunks:
@@ -290,6 +373,7 @@ def run_embed():
             "department": getattr(row, "department", None) or "",
             "keywords": row.keywords or "[]",
             "summary": row.summary or "",
+            "attachments": getattr(row, "attachments", None) or [],
         }
         chunk_meta_pairs.append((_C(), meta))
 
@@ -343,12 +427,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="사하구청 AI 상담사")
     parser.add_argument(
         "--mode",
-        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web"],
+        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web", "ingest-files"],
         default="web",
         help="실행 모드 (기본: web)",
     )
     parser.add_argument("--menu", type=str, default=None,
                         help=f"특정 메뉴만 크롤링: {list(TARGET_MENUS.keys())}")
+    parser.add_argument("--path", type=str, default=None,
+                        help="ingest-files 모드에서 적재할 폴더 또는 파일 경로")
     args = parser.parse_args()
 
     if args.mode == "web":
@@ -363,6 +449,8 @@ if __name__ == "__main__":
         run_process()
     elif args.mode == "embed":
         run_embed()
+    elif args.mode == "ingest-files":
+        run_ingest_files(args.path)
     elif args.mode == "all":
         logger.info("=== 전체 파이프라인 실행 ===")
         run_crawl(args.menu)

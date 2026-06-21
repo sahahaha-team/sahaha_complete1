@@ -46,6 +46,8 @@ create table if not exists raw_pages (
 -- 기존 테이블에 컬럼이 없을 경우를 위한 호환성 마이그레이션
 alter table raw_pages add column if not exists etag text;
 alter table raw_pages add column if not exists last_modified text;
+-- 게시물 첨부파일 목록 [{"name","url"}] (JSONB)
+alter table raw_pages add column if not exists attachments jsonb default '[]'::jsonb;
 
 create index if not exists ix_raw_pages_category on raw_pages(category);
 
@@ -70,11 +72,14 @@ create table if not exists processed_chunks (
   has_contact_info boolean default false,
   summary text,
   embedded boolean default false,
+  -- 해당 청크가 속한 페이지의 첨부파일 목록 [{"name","url"}] (JSONB)
+  attachments jsonb default '[]'::jsonb,
   created_at timestamp with time zone default now()
 );
 
 -- 기존 테이블 호환성 마이그레이션
 alter table processed_chunks add column if not exists department text;
+alter table processed_chunks add column if not exists attachments jsonb default '[]'::jsonb;
 
 create index if not exists ix_chunks_category on processed_chunks(category);
 create index if not exists ix_chunks_service_type on processed_chunks(service_type);

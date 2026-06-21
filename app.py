@@ -40,6 +40,11 @@ class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=500)
 
 
+class Attachment(BaseModel):
+    name: str = "첨부파일"
+    url: str
+
+
 class Source(BaseModel):
     title: str
     url: str
@@ -47,6 +52,7 @@ class Source(BaseModel):
     service_type: str = "기타"
     department: str = ""  # 담당 부서명 (LLM 태깅, 본문 미명시 시 빈 문자열)
     contact: str = ""     # 담당부서 연락처 (직통번호 없으면 대표전화 폴백)
+    attachments: list[Attachment] = []  # 게시물 첨부파일(PDF/HWP 등) 다운로드 링크
 
 
 class ChatResponse(BaseModel):

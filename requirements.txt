@@ -26,3 +26,5 @@ rank-bm25
 python-dotenv
 tqdm
 apscheduler
+pdfplumber
+olefile

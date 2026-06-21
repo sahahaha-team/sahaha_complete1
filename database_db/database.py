@@ -43,6 +43,7 @@ class Database:
             "content_hash": content_hash,
             "etag": getattr(page_data, "etag", None),
             "last_modified": getattr(page_data, "last_modified", None),
+            "attachments": getattr(page_data, "attachments", None) or [],
         }).execute()
         return True
 
@@ -61,6 +62,7 @@ class Database:
                 "content_hash": content_hash,
                 "etag": getattr(page_data, "etag", None),
                 "last_modified": getattr(page_data, "last_modified", None),
+                "attachments": getattr(page_data, "attachments", None) or [],
             }).execute()
             return "new"
 
@@ -77,6 +79,7 @@ class Database:
             "content_hash": content_hash,
             "etag": getattr(page_data, "etag", None),
             "last_modified": getattr(page_data, "last_modified", None),
+            "attachments": getattr(page_data, "attachments", None) or [],
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }).eq("url", page_data.url).execute()
 
@@ -159,6 +162,7 @@ class Database:
                 "has_deadline": metadata.get("has_deadline", False),
                 "has_contact_info": metadata.get("has_contact_info", False),
                 "summary": metadata.get("summary", ""),
+                "attachments": getattr(chunk, "attachments", None) or [],
             })
 
         # 배치 upsert (chunk_id 기준)

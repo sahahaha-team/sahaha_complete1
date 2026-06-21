@@ -8,7 +8,7 @@
 import re
 import logging
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from config import CHUNK_SIZE, CHUNK_OVERLAP
@@ -26,6 +26,8 @@ class CleanedChunk:
     sub_category: str
     chunk_index: int
     total_chunks: int
+    # 페이지 첨부파일 목록 [{"name","url"}] — 같은 페이지의 모든 청크가 공유
+    attachments: list = field(default_factory=list)
 
 
 class DataCleaner:
@@ -104,6 +106,7 @@ class DataCleaner:
         chunks = self.splitter.split_text(cleaned)
         result = []
         skipped = 0
+        attachments = getattr(page_data, "attachments", None) or []
 
         for i, chunk in enumerate(chunks):
             chunk_id = hashlib.md5(f"{page_data.url}_{i}".encode()).hexdigest()
@@ -122,6 +125,7 @@ class DataCleaner:
                 sub_category=page_data.sub_category,
                 chunk_index=i,
                 total_chunks=len(chunks),
+                attachments=attachments,
             ))
 
         if skipped:

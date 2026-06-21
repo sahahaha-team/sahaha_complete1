@@ -229,6 +229,14 @@ body.dark-mode .bot-avatar-img.no { content: url('/static/images/no2.png') !impo
 .tts-btn.speaking { background-color: #ff4d4f !important; color: white !important; border-color: #ff4d4f !important; animation: pulse-red 1.5s infinite; }
 @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.5); } 70% { box-shadow: 0 0 0 6px rgba(255, 77, 79, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); } }
 
+/* ===== 📎 첨부파일 다운로드 링크 ===== */
+.source-attachments { display: flex; flex-direction: column; gap: 4px; margin: 2px 0 8px 4px; }
+.attachment-link { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--primary); font-size: calc(var(--msg-font-size) - 1.5px); font-weight: 500; transition: all 0.15s; max-width: 100%; }
+.attachment-link:hover { background: var(--primary-light); border-color: var(--primary); }
+.attachment-icon { flex-shrink: 0; }
+.attachment-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.dark-mode .attachment-link { background: transparent; }
+
 /* ===== 추천 빠른 액션 버튼 ===== */
 .quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .quick-btn { padding: 8px 14px; border: 1px solid var(--primary); background: var(--white); color: var(--primary); border-radius: 20px; font-size: calc(var(--msg-font-size) - 1.5px); font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }

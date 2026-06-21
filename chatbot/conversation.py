@@ -16,7 +16,10 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 
-from config import GROQ_API_KEY, GROQ_LLM_MODEL, CHATBOT_TEMPERATURE, MAX_CONVERSATION_HISTORY
+from config import (
+    GROQ_API_KEY, GROQ_LLM_MODEL, CHATBOT_TEMPERATURE, MAX_CONVERSATION_HISTORY,
+    CONFIDENCE_MIN_SIMILARITY, LOW_CONFIDENCE_MESSAGE,
+)
 from database_db.database import Database
 from chatbot.retriever import HybridRetriever
 from chatbot.dept_directory import normalize_dept_names
@@ -266,6 +269,22 @@ class ChatBot:
         results = search_outcome["results"]
         degraded = search_outcome["degraded"]
         degraded_reason = search_outcome["reason"]
+
+        # 3-1. 신뢰도 게이트: 키워드 겹침 + 유사도 바닥값을 함께 보고, 신뢰 불가 시
+        #      LLM을 호출하지 않고 안전 안내 멘트를 출력한다 (환각 방지 + API 절약).
+        is_confident, top_sim = self.retriever.assess_confidence(user_message, results)
+        if not is_confident:
+            logger.info(f"신뢰도 미달 (최상위 유사도={top_sim:.2f}, 임계값={CONFIDENCE_MIN_SIMILARITY}, 키워드겹침 실패 또는 유사도 부족) → 안전 안내 출력")
+            self.db.save_conversation(session_id, "user", user_message)
+            self.db.save_conversation(session_id, "assistant", LOW_CONFIDENCE_MESSAGE)
+            return {
+                "answer": LOW_CONFIDENCE_MESSAGE,
+                "sources": [],
+                "is_clarification": False,
+                "degraded": True,
+                "degraded_reason": "low_confidence",
+            }
+
         context, sources = self.retriever.format_context(user_message, results)
 
         if not context:

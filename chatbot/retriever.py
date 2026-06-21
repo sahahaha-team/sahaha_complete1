@@ -5,6 +5,7 @@
 - 3차 키워드 보강: BM25 점수와 가중 합산하여 최종 랭킹
 """
 
+import re
 import logging
 from database_db.vector_store import VectorStore
 from database_db.database import Database
@@ -13,6 +14,7 @@ from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
     HYBRID_BM25_TOP_N,
+    CONFIDENCE_MIN_SIMILARITY,
 )
 
 logger = logging.getLogger(__name__)
@@ -94,9 +96,12 @@ class HybridRetriever:
             return vector_results[:k]
 
         # 두 결과의 union으로 후보 풀 구성
+        # vector_similarity: 하이브리드 정규화 전 "원본 코사인 유사도"를 보존한다.
+        #   (hybrid_score는 후보 풀 내 min-max 정규화라 최상위가 항상 ~1.0이 되어
+        #    절대적 신뢰도 지표로 쓸 수 없으므로, 신뢰도 게이트는 이 값을 사용)
         candidates: dict[str, dict] = {}
         for r in vector_results:
-            candidates[r["id"]] = {**r, "bm25_score": 0.0}
+            candidates[r["id"]] = {**r, "bm25_score": 0.0, "vector_similarity": r.get("similarity", 0.0)}
         for r in bm25_results:
             if r["id"] in candidates:
                 candidates[r["id"]]["bm25_score"] = r["bm25_score"]
@@ -106,6 +111,7 @@ class HybridRetriever:
                     "content": r["content"],
                     "metadata": r["metadata"],
                     "similarity": 0.0,
+                    "vector_similarity": 0.0,
                     "bm25_score": r["bm25_score"],
                 }
 
@@ -241,6 +247,83 @@ class HybridRetriever:
         combined = self._hybrid_combine(query, results, k=k)
         return {"results": combined, "degraded": degraded, "reason": reason}
 
+    def assess_confidence(self, query: str, results: list[dict]) -> tuple[bool, float]:
+        """답변 신뢰 가능 여부 평가 → (is_confident, top_vector_similarity).
+
+        MiniLM 코사인 유사도는 무관한 질문에도 0.7~0.8로 압축돼 절대 임계값만으로는
+        도메인 밖 질문을 못 거른다. 따라서 다음 두 신호를 함께 본다:
+          1) 키워드 겹침: 질문의 핵심 키워드가 상위 문서 제목/본문에 실제로 등장하는가
+             (가장 신뢰할 만한 정밀도 신호 — "아이폰/코스피"처럼 사하구 도메인 밖이면 미등장)
+          2) 유사도 바닥값: 최상위 원본 벡터 유사도가 임계값 이상인가
+        둘 다 만족할 때만 신뢰한다. (staff_directory를 무조건 통과시키던 로직은 제거 —
+        직원검색이 어떤 질문에든 느슨히 매칭돼 게이트를 무력화했기 때문)
+        """
+        if not results:
+            return (False, 0.0)
+
+        top_sim = 0.0
+        for r in results:
+            sim = r.get("vector_similarity")
+            if sim is None:
+                sim = r.get("similarity", 0.0)
+            top_sim = max(top_sim, float(sim or 0.0))
+
+        # 질문에서 "내용어" 키워드만 추출 (순수 숫자·짧은 토큰 제외).
+        #   - 순수 숫자(16 등)는 전화번호/날짜에 부분 매칭돼 오탐을 일으키므로 제외
+        #   - 한글 2자 이상 또는 영문 3자 이상만 의미 있는 키워드로 인정
+        keywords = self._content_keywords(query)
+
+        # 키워드가 하나도 없으면(전부 불용어/숫자) 유사도 신호만으로 판정
+        if not keywords:
+            return (top_sim >= CONFIDENCE_MIN_SIMILARITY, top_sim)
+
+        # 상위 문서 중 하나라도 키워드(조사 제거 어간 포함)를 포함하면 키워드 겹침 통과
+        keyword_overlap = False
+        for r in results:
+            haystack = ((r.get("metadata") or {}).get("title", "") or "") + " " + (r.get("content", "") or "")
+            if any(kw in haystack for kw in keywords):
+                keyword_overlap = True
+                break
+
+        # 보수적 판정: "유사도 충분" OR "키워드 겹침" 중 하나라도 만족하면 신뢰.
+        # (둘 다 요구하면 동의어/조사 차이로 정상 질문이 차단됨 — false negative 방지.
+        #  진짜로 검색이 빈약할 때, 즉 유사도도 낮고 키워드도 안 겹칠 때만 안전 멘트 출력)
+        is_confident = (top_sim >= CONFIDENCE_MIN_SIMILARITY) or keyword_overlap
+        return (is_confident, top_sim)
+
+    # 신뢰도 판정용 불용어 (출처 표시용 _is_relevant_source와 별도 유지)
+    _CONF_STOPWORDS = {
+        "알려줘", "알려주세요", "뭐야", "어떻게", "해줘", "있어", "없어", "하고",
+        "싶어", "인가요", "인지", "대해", "관련", "안내", "정보", "사하구", "사하구청",
+        "부산", "얼마야", "얼마", "무엇", "어디", "언제", "누구",
+    }
+
+    # 어말 1글자 조사 (어간 추출용) — 명사 뒤에 붙어 키워드 매칭을 방해함
+    _JOSA = ("을", "를", "이", "가", "은", "는", "와", "과", "의", "에", "도", "로", "만")
+
+    def _strip_josa(self, word: str) -> str:
+        """'위치와'→'위치', '가격이'→'가격'처럼 어말 조사 1글자 제거 (어간 ≥2자 유지)."""
+        if len(word) >= 3 and word[-1] in self._JOSA:
+            return word[:-1]
+        return word
+
+    def _content_keywords(self, query: str) -> set[str]:
+        """질문에서 의미 있는 내용어만 추출 (순수 숫자·불용어·짧은 토큰 제외, 조사 제거)."""
+        keywords: set[str] = set()
+        for word in re.split(r"\s+", query.replace("?", " ").replace(".", " ")):
+            word = word.strip()
+            if len(word) < 2 or word in self._CONF_STOPWORDS:
+                continue
+            if word.isdigit():  # 순수 숫자 제외 (전화번호/날짜 부분매칭 오탐 방지)
+                continue
+            word = self._strip_josa(word)
+            if word in self._CONF_STOPWORDS:
+                continue
+            hangul = len(re.findall(r"[가-힣]", word))
+            if hangul >= 2 or (word.isascii() and word.isalpha() and len(word) >= 3):
+                keywords.add(word)
+        return keywords
+
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:
         """질문 키워드가 문서 제목이나 내용에 실제로 포함되어 있는지 확인"""
         stopwords = {"알려줘", "알려주세요", "뭐야", "어떻게", "해줘", "있어", "없어",
@@ -289,6 +372,23 @@ class HybridRetriever:
                 # 담당 부서 (LLM이 본문에서 추출) → 공식 명칭으로 보정 후 연락처 매핑
                 dept = correct_dept(meta.get("department", "") or "")
                 dept, contact = self._resolve_official_source(query, title, content, dept)
+                # 첨부파일 목록 정규화 ([{"name","url"}]만 통과)
+                # documents.metadata는 환경에 따라 list 또는 JSON 문자열로 올 수 있어
+                # 문자열이면 파싱한다 (파싱 실패 시 빈 목록 — 첨부를 조용히 버리지 않도록).
+                raw_attachments = meta.get("attachments") or []
+                if isinstance(raw_attachments, str):
+                    try:
+                        import json as _json
+                        raw_attachments = _json.loads(raw_attachments)
+                    except Exception:
+                        raw_attachments = []
+                if not isinstance(raw_attachments, list):
+                    raw_attachments = []
+                attachments = [
+                    {"name": str(a.get("name") or a.get("title") or "첨부파일"), "url": str(a.get("url", ""))}
+                    for a in raw_attachments
+                    if isinstance(a, dict) and a.get("url")
+                ]
                 src = {
                     "title": title,
                     "url": url,
@@ -297,6 +397,7 @@ class HybridRetriever:
                     "department": dept,
                     # 담당부서 연락처 (확인된 직통번호 없으면 대표전화로 폴백)
                     "contact": (meta.get("contact") or "").strip() or contact,
+                    "attachments": attachments,
                 }
                 if self._is_relevant_source(query, title, content):
                     relevant_sources.append(src)
