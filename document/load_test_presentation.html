@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>동시 접속 부하 테스트 대응 — 발표</title>
+<style>
+  :root{
+    --bg:#0b1020; --panel:#121a32; --panel2:#0f1730;
+    --ink:#eef2ff; --muted:#9aa7c7; --line:#243154;
+    --accent:#4f8cff; --good:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --groq:#f97316; --ollama:#22d3ee;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+    background:radial-gradient(1200px 800px at 70% -10%,#1a2547 0,var(--bg) 60%);
+    color:var(--ink); overflow:hidden;
+  }
+  .deck{height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .slide{
+    display:none; width:min(1080px,100%); max-height:calc(100vh - 48px);
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line); border-radius:20px; padding:48px 56px;
+    box-shadow:0 30px 80px rgba(0,0,0,.45); overflow-y:auto;
+  }
+  .slide.active{display:block; animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .kicker{display:inline-block;font-size:13px;letter-spacing:.14em;font-weight:700;
+    color:var(--accent);text-transform:uppercase;margin-bottom:14px}
+  h1{font-size:40px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:30px;line-height:1.25;font-weight:800;letter-spacing:-.02em;margin-bottom:22px}
+  .sub{color:var(--muted);font-size:18px;margin-top:14px;line-height:1.6}
+  p,li{font-size:18px;line-height:1.7}
+  .lead{font-size:22px;line-height:1.6}
+  strong{color:#fff}
+  .hl{color:var(--accent);font-weight:700}
+  .quote{border-left:4px solid var(--accent);background:rgba(79,140,255,.08);
+    padding:18px 22px;border-radius:0 12px 12px 0;font-size:21px;line-height:1.6;margin:8px 0}
+  ul{margin:6px 0 6px 4px;list-style:none}
+  ul li{position:relative;padding-left:26px;margin:12px 0}
+  ul li::before{content:"";position:absolute;left:4px;top:11px;width:8px;height:8px;
+    border-radius:50%;background:var(--accent)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+  .card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{font-size:20px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
+  .tag.groq{background:rgba(249,115,22,.15);color:var(--groq);border:1px solid rgba(249,115,22,.4)}
+  .tag.ollama{background:rgba(34,211,238,.13);color:var(--ollama);border:1px solid rgba(34,211,238,.4)}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:16px}
+  th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:14px}
+  td .y{color:var(--good);font-weight:700}
+  td .n{color:var(--bad);font-weight:700}
+  .qa{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:12px 0}
+  .qa .q{font-weight:700;color:var(--warn);margin-bottom:8px}
+  .qa .a{color:#dbe4ff}
+  .warnbox{margin-top:18px;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.35);
+    border-radius:12px;padding:16px 20px;font-size:16px}
+  .warnbox b{color:var(--bad)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+  .step{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .step .num{font-size:13px;font-weight:800;color:var(--accent)}
+  .step h4{font-size:18px;margin:8px 0}
+  .step p{font-size:15px;color:var(--muted)}
+  .center{display:flex;flex-direction:column;justify-content:center;min-height:420px}
+  .footer{position:fixed;bottom:18px;left:0;right:0;display:flex;justify-content:center;gap:14px;align-items:center}
+  .dots{display:flex;gap:8px}
+  .dot{width:9px;height:9px;border-radius:50%;background:#33406a;cursor:pointer;transition:.2s}
+  .dot.on{background:var(--accent);transform:scale(1.25)}
+  .nav{position:fixed;bottom:14px;right:22px;color:var(--muted);font-size:13px}
+  .pageno{position:fixed;top:18px;right:24px;color:var(--muted);font-size:13px;letter-spacing:.05em}
+  .hint{position:fixed;bottom:14px;left:22px;color:#566089;font-size:12px}
+  @media (max-width:720px){
+    .slide{padding:28px 22px}.grid2{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
+    h1{font-size:28px}h2{font-size:23px}p,li{font-size:16px}
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide active center">
+    <div class="kicker">미팅 피드백 대응</div>
+    <h1>동시 접속 부하 테스트<br>— 어떻게 대응할 것인가</h1>
+    <p class="sub">"최소 100명 이상 동시 접속 시에도 속도 저하 없이 성능을 유지하는지<br>부하 테스트가 필요하다"는 피드백에 대한 우리 팀의 답변</p>
+    <p class="sub" style="margin-top:28px;color:#6f7da3">사하구청 AI 상담사 · 발표 자료</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker">받은 피드백</div>
+    <h2>지적 사항</h2>
+    <div class="quote">"실제 주민들이 사용하게 될 경우를 대비해, 최소 <strong>100명 이상</strong>이 동시 접속했을 때도 <strong>속도 저하 없이</strong> 비슷한 성능을 유지할 수 있는지 <strong>부하 테스트</strong>가 필요하다."</div>
+    <p class="sub">→ 타당한 지적입니다. 다만 답변의 핵심은 <span class="hl">"무엇이 동시 처리 성능을 결정하는가"</span>를 정확히 짚는 데 있습니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">핵심 논리</div>
+    <h2>동시 처리 성능을 결정하는 것</h2>
+    <div class="quote" style="border-left-color:var(--good);background:rgba(52,211,153,.08)">
+      동시 접속 처리 능력은 <strong>앱 구조가 아니라 LLM 백엔드의 추론 처리량</strong>에 의해 결정됩니다.</div>
+    <ul>
+      <li><strong>웹 서버 계층</strong> (FastAPI 비동기 + 워커 스레드풀)은 다수의 동시 접속 자체를 <span class="hl">이미 비차단으로 처리</span>합니다.</li>
+      <li>실제 응답 속도를 좌우하는 병목은 <strong>LLM 모델의 추론 속도</strong> 한 곳입니다.</li>
+      <li>그리고 이 LLM 백엔드는 우리 시스템에서 <span class="hl">교체 가능하게(swappable) 설계</span>되어 있습니다.</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker">데모 vs 운영</div>
+    <h2>Groq(발표 데모)와 Ollama(실제 운영)는 다릅니다</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="tag groq">발표 데모</span> Groq API</h3>
+        <ul>
+          <li>무료 티어 정책상 <strong>요청 간 최소 간격 제한</strong>이 걸려 있음</li>
+          <li>즉 데모의 동시 처리 수치는 <span class="hl">무료 API 정책</span> 때문이지 <strong>시스템의 한계가 아님</strong></li>
+          <li>빠른 시연·발표에는 충분</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="tag ollama">실제 운영</span> Ollama 자체 호스팅</h3>
+        <ul>
+          <li>외부 API 제한 <span class="y" style="color:var(--good)">없음</span> · 비용·쿼터 제약 해소</li>
+          <li>주민 데이터가 외부로 안 나감 → <span class="hl">PII 보안 유리</span></li>
+          <li>동시 처리량은 <strong>운영 서버 GPU 사양에 따라 확장</strong></li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:18px">→ 따라서 의미 있는 부하 테스트는 <span class="hl">운영 환경(Ollama + 실제 서버) 기준</span>으로 수행해야 합니다.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker">백엔드 비교</div>
+    <h2>전환 시 실제로 달라지는 것</h2>
+    <table>
+      <thead><tr><th>항목</th><th>Groq (데모)</th><th>Ollama (운영)</th></tr></thead>
+      <tbody>
+        <tr><td>요청 간격/쿼터 제한</td><td><span class="n">있음 (무료 티어)</span></td><td><span class="y">없음</span></td></tr>
+        <tr><td>비용</td><td>무료/유료 티어</td><td><span class="y">자체 호스팅</span></td></tr>
+        <tr><td>주민 데이터(PII)</td><td>외부 전송</td><td><span class="y">로컬 처리 — 안전</span></td></tr>
+        <tr><td>동시 처리 한계</td><td>API 정책이 좌우</td><td>서버 <strong>GPU 사양</strong>이 좌우</td></tr>
+      </tbody>
+    </table>
+    <p class="sub" style="margin-top:16px">동시성 병목이 <strong>"외부 API 정책" → "우리가 통제하는 하드웨어"</strong>로 이동합니다.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">대응 계획</div>
+    <h2>책임 있는 검증 로드맵</h2>
+    <div class="steps">
+      <div class="step"><div class="num">STEP 1</div><h4>병목 제거</h4><p>데모용 요청 간격 제한 등 인위적 직렬화 요소를 운영 구성에서 제거</p></div>
+      <div class="step"><div class="num">STEP 2</div><h4>처리량 확보</h4><p>운영 모델·GPU 사양에 맞춰 병렬 처리 수와 요청 큐를 튜닝</p></div>
+      <div class="step"><div class="num">STEP 3</div><h4>부하 테스트</h4><p>100명+ 동시 접속 시나리오로 응답시간·처리량·실패율 측정</p></div>
+    </div>
+    <p class="sub" style="margin-top:18px">부하 테스트 <span class="hl">하니스(스크립트)는 미리 준비</span>해두고, 배포 서버 사양이 확정되는 시점에 운영 환경 기준으로 측정합니다.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker">예상 질문 대비</div>
+    <h2>Q&amp;A 대비</h2>
+    <div class="qa">
+      <div class="q">Q. 그럼 지금 데모로는 100명 못 받는 거 아니냐?</div>
+      <div class="a">A. 데모 환경(무료 Groq)에는 외부 API 정책상 제한이 있는 게 맞습니다. 하지만 그것은 <strong>운영 구성이 아니며</strong>, 실제 배포(Ollama)에서는 해당 제한이 없습니다.</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q. Ollama로 하면 100명 정말 되냐?</div>
+      <div class="a">A. 동시 처리량은 GPU 사양에 비례합니다. 모델 크기·서버 사양에 맞춰 병렬 처리 수를 튜닝하고, 실제 주민 사용 패턴(전원이 같은 순간 전송하는 건 아님)을 반영한 부하 테스트로 <strong>검증하겠습니다</strong>.</div>
+    </div>
+    <div class="warnbox">⚠️ <b>주의:</b> "지금도 100명 거뜬합니다"라고 단언하면 역공당합니다(데모 환경 제한 때문에 실제로는 못 버팀). <b>"백엔드 교체로 해결되는 구조 + 운영 환경에서 검증 예정"</b>으로 프레이밍하는 것이 정직하면서도 안전합니다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide center">
+    <div class="kicker">한 줄 요약</div>
+    <div class="quote lead" style="font-size:24px">"동시 접속 성능은 <strong>LLM 백엔드 처리량</strong>이 결정하며, 우리 시스템은 그 백엔드를 <strong>교체 가능하게</strong> 설계했습니다. 데모는 Groq, 운영은 Ollama이며, 부하 테스트는 <strong>운영 환경 기준</strong>으로 검증합니다."</div>
+    <p class="sub" style="margin-top:24px">정직함 + 구조적 해결 가능성 + 검증 계획 — 세 가지를 함께 전달하는 것이 핵심.</p>
+  </section>
+
+</div>
+
+<div class="pageno" id="pageno">1 / 8</div>
+<div class="footer"><div class="dots" id="dots"></div></div>
+<div class="hint">← → 또는 스페이스로 이동</div>
+<div class="nav">방향키 / 클릭으로 넘기기</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const dotsWrap=document.getElementById('dots');
+  const pageno=document.getElementById('pageno');
+  let i=0;
+  slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');
+    d.onclick=()=>go(n);dotsWrap.appendChild(d);});
+  const dots=[...document.querySelectorAll('.dot')];
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    pageno.textContent=(i+1)+' / '+slides.length;
+    slides[i].scrollTop=0;
+  }
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1);}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+  });
+  document.getElementById('deck').addEventListener('click',e=>{
+    if(e.target.closest('.dot'))return;
+    const x=e.clientX/window.innerWidth; if(x>0.5)go(i+1);else go(i-1);
+  });
+</script>
+</body>
+</html>

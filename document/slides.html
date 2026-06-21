@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사하구청 AI 상담사 - 발표 슬라이드 모음 (정정판)</title>
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:40px 32px 80px;
+    font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+    background:#ffffff;
+    color:#3b3f8c;
+  }
+  .page{max-width:1240px;margin:0 auto;}
+  /* 상단 인덱스 */
+  .toc{
+    max-width:1240px;margin:0 auto 40px;
+    background:#f3f4ff;border:1px solid #d8dbf5;border-radius:18px;
+    padding:22px 28px;
+  }
+  .toc h1{margin:0 0 12px;font-size:24px;color:#2f3597;font-weight:800;}
+  .toc ol{margin:0;padding-left:22px;color:#4a4f9e;font-size:16px;line-height:1.9;font-weight:600;}
+  .toc a{color:#4f63d8;text-decoration:none;}
+  .toc a:hover{text-decoration:underline;}
+
+  .slide{max-width:1240px;margin:0 auto 70px;}
+  .slide-label{
+    font-size:14px;font-weight:800;letter-spacing:1px;color:#8a93c8;
+    text-transform:uppercase;margin-bottom:10px;
+  }
+  .slide-title{font-size:26px;font-weight:800;color:#2f3597;margin:0 0 24px;}
+
+  /* ===== 보라 박스 양식 (필요성 / 한 일 / 한계) ===== */
+  .boxwrap{display:flex;flex-direction:column;gap:30px;}
+  .box{background:#cdd2f5;border-radius:28px;padding:28px 42px 32px;}
+  .box h2{margin:0 0 14px;font-size:28px;font-weight:800;color:#2f3597;letter-spacing:-0.5px;}
+  .box ul{margin:0;padding-left:26px;list-style:none;}
+  .box li{position:relative;font-size:20px;font-weight:700;line-height:1.7;color:#3a3f9e;margin-bottom:4px;}
+  .box li::before{content:"•";position:absolute;left:-22px;color:#3a3f9e;}
+  .box li b{font-weight:800;color:#2a2f8f;}
+
+  /* ===== STEP 그리드 (로드맵) ===== */
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .col{display:flex;flex-direction:column;gap:16px;}
+  .step-head{background:#2f3645;color:#fff;text-align:center;font-weight:800;letter-spacing:2px;font-size:18px;padding:14px 0;border-radius:10px;}
+  .card{position:relative;background:#f7f8fb;border:1px solid #e6e8ef;border-radius:14px;padding:22px 18px 26px;text-align:center;flex:1;}
+  .badge{position:absolute;top:12px;right:12px;color:#fff;font-size:12px;font-weight:700;padding:4px 11px;border-radius:8px;}
+  .badge.done{background:#5aa45f;}
+  .badge.ing{background:#c8893a;}
+  .badge.plan{background:#8a93a6;}
+  .icon{font-size:34px;line-height:1;margin:4px 0 14px;}
+  .card h3{margin:0 0 10px;font-size:19px;font-weight:800;}
+  .card p{margin:0;font-size:14px;line-height:1.55;color:#5b6270;font-weight:600;}
+  .col.next .card.highlight{background:#f3f4ff;border:2px solid #4f63d8;display:flex;flex-direction:column;justify-content:center;}
+  .col.next .card.highlight h3{color:#4f63d8;font-size:21px;}
+
+  .note{
+    margin-top:18px;font-size:13px;color:#8a93b5;line-height:1.7;
+    border-top:1px dashed #d8dbf5;padding-top:14px;
+  }
+  .note b{color:#5a61b0;}
+  hr.sep{border:none;border-top:2px solid #eef0fb;margin:0 auto 60px;max-width:1240px;}
+
+  @media (max-width:1000px){.board{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){
+    body{padding:24px 16px 60px;}
+    .box{padding:22px 24px 26px;border-radius:22px;}
+    .box h2{font-size:22px;} .box li{font-size:16px;}
+    .board{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="toc">
+    <h1>발표 슬라이드 모음 (정정판)</h1>
+    <ol>
+      <li><a href="#concurrency">동시 접속 대응 설계</a> — 코드 실태에 맞게 정정</li>
+      <li><a href="#challenges">기술적 난관과 해결책</a></li>
+      <li><a href="#roadmap">개발 로드맵 (STEP)</a></li>
+    </ol>
+  </div>
+
+  <!-- ===================== 슬라이드 1: 동시 접속 대응 설계 (정정) ===================== -->
+  <section class="slide" id="concurrency">
+    <div class="slide-label">SLIDE 1</div>
+    <h2 class="slide-title">동시 접속 대응 설계 (정정판)</h2>
+    <div class="boxwrap">
+
+      <div class="box">
+        <h2>필요성</h2>
+        <ul>
+          <li>주민 동시 접속 상황에서도 안정적 응답 필요</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>이번 단계에서 한 일</h2>
+        <ul>
+          <li><b>FastAPI(ASGI) 전환 + 워커 스레드풀</b>로 동시 요청 비차단 처리</li>
+          <li>검색·응답 파이프라인 최적화 (<b>서버사이드 pgvector 검색</b>, 임베딩·BM25 모델 1회 로딩)</li>
+          <li><b>Render</b> 클라우드 배포</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>한계 및 향후 계획</h2>
+        <ul>
+          <li>현재 무료 LLM(Groq) 일일 한도 대응으로 <b>LLM 호출을 최소 4초 간격으로 직렬화</b> → 실제 동시 처리량 제한. 부하 테스트 전 운영 구성에서 제거 예정</li>
+          <li>실제 대규모 동시 접속 테스트는 시간·환경 제약으로 향후 고도화 단계에서 검증 예정</li>
+          <li>추후 <b>Locust/K6</b> 기반 부하 테스트로 동시 사용자 수·응답시간·오류율 검증 예정</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="note">
+      ※ 원본 대비 정정 — ① "FastAPI <b>비동기 구조</b>" → 실제는 <b>ASGI 전환 + 동기 호출을 워커 스레드풀로 위임</b>(네이티브 async/await 아님)
+      · ② "<b>헬스체크 경로 구성</b>" 삭제 — 코드에 <b>/health 등 전용 헬스체크 엔드포인트 없음</b>(라우트: /, /widget, /api/chat, /api/clear, /api/stats)
+      · ③ 한계에 <b>LLM 4초 직렬화</b> 추가 — conversation.py의 글로벌 락으로 LLM 답변이 사실상 분당 ~15건으로 제한되어 "동시 접속 대응" 취지와 충돌하므로 명시.
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ===================== 슬라이드 2: 기술적 난관과 해결책 (정정) ===================== -->
+  <section class="slide" id="challenges">
+    <div class="slide-label">SLIDE 2</div>
+    <h2 class="slide-title">기술적 난관과 해결책 (정정판)</h2>
+    <div class="boxwrap">
+
+      <div class="box">
+        <h2>1. RAG 검색 정확도 최적화</h2>
+        <ul>
+          <li>문제: 행정 용어 검색 혼선</li>
+          <li>해결: 하이브리드 검색 <b>(BM25 + 벡터 유사도)</b> 도입</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>2. 대규모 트래픽 처리 (서버 재설계)</h2>
+        <ul>
+          <li>문제: 동시 접속 시 동기식(Sync) 응답 지연</li>
+          <li>해결: <b>FastAPI(ASGI) 전환 + 워커 스레드풀</b>로 동시 요청 비차단 처리</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>3. 무결점 데이터 파이프라인 구축</h2>
+        <ul>
+          <li>문제: 증분 크롤링 시 이전 데이터와 충돌 및 중복 발생</li>
+          <li>해결: <b>콘텐츠 해시(MD5) 기반 Upsert + 조건부 GET</b>으로 중복 없이 최신 상태 유지</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ===================== 슬라이드 3: 개발 로드맵 (정정) ===================== -->
+  <section class="slide" id="roadmap">
+    <div class="slide-label">SLIDE 3</div>
+    <h2 class="slide-title">개발 로드맵 (정정판)</h2>
+    <div class="board">
+
+      <div class="col">
+        <div class="step-head">STEP 01</div>
+        <div class="card"><span class="badge done">완료</span><div class="icon">🗄️</div><h3>DB 스키마 설계</h3><p>Supabase PostgreSQL + pgvector<br>초기 인프라 구축</p></div>
+        <div class="card"><span class="badge done">완료</span><div class="icon">⚙️</div><h3>데이터 수집</h3><p>사하구청 6개 분야<br>증분 크롤링 구현</p></div>
+      </div>
+
+      <div class="col">
+        <div class="step-head">STEP 02</div>
+        <div class="card"><span class="badge done">완료</span><div class="icon">📡</div><h3>API 및 세션</h3><p>FastAPI 기반 라우팅<br>UUID 세션 연동</p></div>
+        <div class="card"><span class="badge done">완료</span><div class="icon">🛠️</div><h3>최적화 튜닝</h3><p>행정 용어 프롬프트<br>HNSW 인덱스 최적화</p></div>
+      </div>
+
+      <div class="col">
+        <div class="step-head">STEP 03</div>
+        <div class="card"><span class="badge done">완료</span><div class="icon">⚖️</div><h3>품질 및 보안</h3><p>NER 기반 PII 보안 로직 강화<br>개인정보 입력 차단 구현</p></div>
+        <div class="card"><span class="badge ing">진행중</span><div class="icon">🦽</div><h3>실증 및 확장</h3><p>음성 상담(TTS·STT) 접근성 구현<br>구민 대상 실증 테스트 예정</p></div>
+      </div>
+
+      <div class="col next">
+        <div class="step-head">STEP 04</div>
+        <div class="card highlight"><span class="badge plan">예정</span><div class="icon">🚀</div><h3>대규모 트래픽 대응</h3><p>FastAPI 비동기 전환 완료<br>부하 테스트(100명+ 동시접속) 및<br>시스템 성능 극대화</p></div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>
