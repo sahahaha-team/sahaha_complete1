@@ -190,6 +190,12 @@ class HybridRetriever:
         resolved_dept = correct_dept(dept) if dept else ""
         return resolved_dept, (get_contact(resolved_dept) if resolved_dept else "")
 
+    # 인물/연락처 의도 표현 (이때만 직원업무안내 문서를 상위에 노출)
+    _CONTACT_INTENT = (
+        "담당", "부서", "연락처", "전화", "번호", "문의", "누구", "과장",
+        "팀장", "계장", "주무관", "청장", "직원", "담당자", "소장", "과는",
+    )
+
     def search(self, query: str, k: int = 5) -> dict:
         """
         하이브리드 검색 수행
@@ -217,15 +223,26 @@ class HybridRetriever:
         reason: str | None = None
 
         try:
-            # 1차: 메타데이터 필터 + 벡터 검색 (k의 2배를 가져와 재랭킹 여유 확보)
+            # 메타데이터 필터는 "단일 facet"만 사용한다.
+            #   과거: category(예: 사하소개) AND service_type(예: 교통)를 동시에 걸면
+            #   필터가 과도하게 좁아져, "사하구 도로명주소 안내도" 같은 질문에서 정작
+            #   관련 페이지가 통째로 누락됐다(둘 다 만족하는 청크가 거의 없음).
+            #   → 더 구체적인 service_type을 우선 쓰고, 없으면 category만 사용.
+            single_category = None
+            single_service = None
+            if hints.get("service_type"):
+                single_service = hints["service_type"]
+            elif hints.get("category"):
+                single_category = hints["category"]
+
             results = self.vs.hybrid_search(
                 query=query,
-                category=hints.get("category"),
-                service_type=hints.get("service_type"),
+                category=single_category,
+                service_type=single_service,
                 k=k * 2,
             )
 
-            # 결과 부족 시 필터 해제
+            # 필터 결과가 부족하면 필터 해제하여 전체 의미검색으로 대체 (baseline과 동일)
             if len(results) < 2:
                 logger.info("필터 결과 부족 → 전체 범위 검색")
                 results = self.vs.similarity_search(query, k=k * 2)
@@ -233,9 +250,13 @@ class HybridRetriever:
             logger.warning(f"벡터 검색 실패: {e}")
             return {"results": [], "degraded": True, "reason": "vector_search_failed"}
 
-        official_docs = self._staff_results_to_documents(query, limit=max(k, 3))
-        if official_docs:
-            results = official_docs + results
+        # 직원업무안내(staff) 문서는 "담당/연락처/부서/직원" 등 인물·연락 의도가 있는
+        # 질문에서만 상위에 끼워 넣는다. 그렇지 않으면 staff가 "사하구청장"처럼 지명만으로
+        # 매칭돼 콘텐츠 페이지(예: 안내도·자료)를 밀어내므로 제외한다.
+        if any(w in query for w in self._CONTACT_INTENT):
+            official_docs = self._staff_results_to_documents(query, limit=max(k, 3))
+            if official_docs:
+                results = official_docs + results
 
         # BM25 비활성 상태이면 벡터 결과만 사용하면서 degraded 표시
         if not self.bm25 or not self.bm25.enabled:
