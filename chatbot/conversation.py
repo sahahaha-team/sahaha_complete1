@@ -22,7 +22,7 @@ from config import (
 )
 from database_db.database import Database
 from chatbot.retriever import HybridRetriever
-from chatbot.dept_directory import normalize_dept_names
+from chatbot.dept_directory import normalize_dept_names, REP_PHONE
 
 logger = logging.getLogger(__name__)
 
@@ -138,10 +138,24 @@ def strip_foreign_script(text: str) -> str:
 
 def enforce_official_contact(answer: str, user_message: str, sources: list[dict]) -> str:
     """For department/contact questions, force the official staff-directory phone number."""
-    if not answer or not sources:
+    if not answer:
         return answer
 
     query = (user_message or "").lower()
+
+    # 대표전화/대표번호 질문은 특정인 직통번호(예: 구청장 051-220-4001)가 아니라
+    # 공식 대표번호(051-220-4000)로 고정한다. (직원검색이 '사하구청장'을 매칭해
+    # 대표전화로 4001을 잘못 안내하던 문제 방지)
+    if any(k in query for k in ["대표전화", "대표 전화", "대표번호", "대표 번호", "대표 연락처", "대표연락처"]):
+        phone_pattern = re.compile(r"0\d{1,2}-\d{3,4}-\d{4}")
+        if phone_pattern.search(answer):
+            answer = phone_pattern.sub(REP_PHONE, answer)
+        elif REP_PHONE not in answer:
+            answer += f"\n\n사하구청 대표전화는 {REP_PHONE}입니다."
+        return answer
+
+    if not sources:
+        return answer
     if not any(keyword in query for keyword in ["담당", "부서", "연락", "전화", "번호", "문의"]):
         return answer
 
