@@ -1,5 +1,5 @@
 """
-LLM 기반 메타데이터 자동 태깅 (Groq - 무료 티어)
+LLM 기반 메타데이터 자동 태깅 (로컬 Ollama)
 - 청크 다중 묶음을 1회 LLM 호출로 일괄 태깅 (배치 처리)
 - 단일 호출 폴백 + JSON 파싱 실패 시 단건 재시도
 """
@@ -7,11 +7,19 @@ LLM 기반 메타데이터 자동 태깅 (Groq - 무료 티어)
 import json
 import time
 import logging
-from langchain_groq import ChatGroq
+try:
+    # 최신 LangChain에서는 Ollama 통합이 별도 패키지로 분리되었다.
+    from langchain_ollama import ChatOllama
+except ImportError:  # 구버전 환경 호환
+    from langchain_community.chat_models import ChatOllama
 from langchain_core.prompts import PromptTemplate
 
-from config import GROQ_API_KEY, GROQ_LLM_MODEL
-from chatbot.dept_directory import correct_dept
+from config import (
+    OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT, OLLAMA_NUM_CTX,
+    OLLAMA_KEEP_ALIVE,
+)
+from chatbot.dept_directory import correct_dept, department_is_supported
+from processor.metadata_defaults import fallback_keywords
 
 logger = logging.getLogger(__name__)
 
@@ -56,10 +64,10 @@ JSON으로만 응답하세요 (설명 없이).
 }}
 """)
 
-# Groq 무료 티어: 분당 30회 → 배치(5청크) 호출 사이 2초 간격이면 안전
+# 로컬 Ollama는 외부 호출 제한이 없으며 순차 배치만 유지한다.
 BATCH_SIZE = 5
-BATCH_DELAY_SEC = 2.0
-SINGLE_DELAY_SEC = 5.0
+BATCH_DELAY_SEC = 0.0
+SINGLE_DELAY_SEC = 0.0
 
 
 def _base_meta(chunk) -> dict:
@@ -71,6 +79,27 @@ def _base_meta(chunk) -> dict:
         "chunk_index": chunk.chunk_index,
         "total_chunks": chunk.total_chunks,
     }
+
+
+def ensure_metadata(meta: dict, chunk) -> dict:
+    """LLM 응답의 누락 필드를 결정적 폴백으로 보완한다."""
+    normalized = {**_base_meta(chunk), **(meta or {})}
+    normalized["service_type"] = normalized.get("service_type") or "기타"
+    department_hint = correct_dept(getattr(chunk, "department_hint", "") or "")
+    proposed_department = correct_dept(normalized.get("department") or "")
+    evidence_text = f"{getattr(chunk, 'title', '')} {getattr(chunk, 'content', '')}"
+    normalized["department"] = (
+        department_hint
+        or (proposed_department if department_is_supported(proposed_department, evidence_text) else None)
+    )
+    normalized["target_audience"] = normalized.get("target_audience") or []
+    normalized["keywords"] = normalized.get("keywords") or fallback_keywords(
+        chunk.content, chunk.title
+    )
+    normalized["has_deadline"] = bool(normalized.get("has_deadline", False))
+    normalized["has_contact_info"] = bool(normalized.get("has_contact_info", False))
+    normalized["summary"] = normalized.get("summary") or chunk.content.strip()[:50]
+    return normalized
 
 
 def _parse_json_block(text: str):
@@ -90,28 +119,29 @@ def _parse_json_block(text: str):
 
 class MetadataTagger:
     def __init__(self):
-        if not GROQ_API_KEY:
-            logger.warning("GROQ_API_KEY 미설정 - 메타데이터 태깅 비활성화")
-            self.llm = None
-            return
         try:
-            self.llm = ChatGroq(
-                model=GROQ_LLM_MODEL,
-                api_key=GROQ_API_KEY,
+            self.llm = ChatOllama(
+                base_url=OLLAMA_BASE_URL,
+                model=OLLAMA_MODEL,
                 temperature=0,
+                num_predict=1000,
+                num_ctx=OLLAMA_NUM_CTX,
+                timeout=OLLAMA_TIMEOUT,
+                keep_alive=OLLAMA_KEEP_ALIVE,
+                format="json",
             )
             self.batch_chain = BATCH_TAGGING_PROMPT | self.llm
             self.single_chain = SINGLE_TAGGING_PROMPT | self.llm
-            logger.info(f"Groq 연결 완료: {GROQ_LLM_MODEL}")
+            logger.info(f"Ollama 태깅 모델 설정: {OLLAMA_MODEL} ({OLLAMA_BASE_URL})")
         except Exception as e:
-            logger.warning(f"Groq 초기화 실패 - 태깅 비활성화: {e}")
+            logger.warning(f"Ollama 초기화 실패 - 태깅 폴백 사용: {e}")
             self.llm = None
 
     def _tag_single(self, chunk) -> dict:
         """단건 태깅 (배치 실패 시 폴백)"""
         meta = _base_meta(chunk)
         if not self.llm:
-            return meta
+            return ensure_metadata(meta, chunk)
         try:
             response = self.single_chain.invoke({"content": chunk.content[:800]})
             parsed = _parse_json_block(response.content)
@@ -121,12 +151,12 @@ class MetadataTagger:
                     meta["department"] = correct_dept(meta["department"])
         except Exception as e:
             logger.warning(f"단건 태깅 실패 ({chunk.chunk_id}): {e}")
-        return meta
+        return ensure_metadata(meta, chunk)
 
     def _tag_batch_one_call(self, batch: list) -> list[dict]:
         """배치를 1회 LLM 호출로 태깅. 실패 시 [] 반환 (호출자가 단건 폴백)"""
         if not self.llm or not batch:
-            return [_base_meta(c) for c in batch]
+            return [ensure_metadata(_base_meta(c), c) for c in batch]
 
         items_text = "\n\n".join(
             f"[항목 {i+1}]\n{c.content[:800]}" for i, c in enumerate(batch)
@@ -152,7 +182,7 @@ class MetadataTagger:
                 meta.update(llm_meta)
                 if meta.get("department"):
                     meta["department"] = correct_dept(meta["department"])
-            results.append(meta)
+            results.append(ensure_metadata(meta, chunk))
         return results
 
     def tag(self, chunk) -> dict:
@@ -169,7 +199,13 @@ class MetadataTagger:
 
         for i in range(0, total, batch_size):
             batch = chunks[i:i + batch_size]
-            batch_results = self._tag_batch_one_call(batch)
+            # 한 건만 배열 프롬프트로 보내면 소형 로컬 모델이 JSON 객체를
+            # 반환해 같은 요청을 단건으로 다시 수행하는 경우가 많다.
+            # 처음부터 단건 체인을 사용해 결과는 유지하고 호출 수를 줄인다.
+            if len(batch) == 1:
+                batch_results = [self._tag_single(batch[0])]
+            else:
+                batch_results = self._tag_batch_one_call(batch)
 
             if batch_results:
                 results.extend(zip(batch, batch_results))

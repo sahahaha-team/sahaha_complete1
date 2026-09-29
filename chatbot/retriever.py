@@ -10,10 +10,16 @@ import logging
 from database_db.vector_store import VectorStore
 from database_db.database import Database
 from chatbot.dept_directory import correct_dept, get_contact, search_staff_directory
+from chatbot.evidence import (
+    assess_evidence as evaluate_evidence,
+    is_official_document,
+    select_grounded_results as filter_grounded_results,
+)
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
     HYBRID_BM25_TOP_N,
+    BM25_FAST_PATH_MIN_SCORE,
     CONFIDENCE_MIN_SIMILARITY,
 )
 
@@ -179,21 +185,36 @@ class HybridRetriever:
         return docs
 
     def _resolve_official_source(self, query: str, title: str, content: str, dept: str) -> tuple[str, str]:
-        lookup_text = " ".join(part for part in [query, title, content, dept] if part)
-        hits = search_staff_directory(lookup_text, limit=1)
-        if hits:
-            hit = hits[0]
-            resolved_dept = correct_dept(hit.get("department", "") or dept or "")
-            resolved_contact = (hit.get("contact", "") or "").strip() or get_contact(resolved_dept)
-            return resolved_dept, resolved_contact
-
         resolved_dept = correct_dept(dept) if dept else ""
-        return resolved_dept, (get_contact(resolved_dept) if resolved_dept else "")
+        if resolved_dept:
+            return resolved_dept, get_contact(resolved_dept)
+
+        # 직원·연락처를 직접 묻는 질문에서만 직원업무안내를 이용해 부서를
+        # 추론한다. 일반 정보 질문에서는 비슷한 업무명만으로 부서를 붙이지 않는다.
+        if any(word in (query or "") for word in self._CONTACT_INTENT):
+            lookup_text = " ".join(part for part in [query, title, content] if part)
+            hits = search_staff_directory(lookup_text, limit=1)
+            if hits:
+                hit = hits[0]
+                resolved_dept = correct_dept(hit.get("department", "") or "")
+                resolved_contact = (hit.get("contact", "") or "").strip() or get_contact(resolved_dept)
+                return resolved_dept, resolved_contact
+
+        return "", ""
 
     # 인물/연락처 의도 표현 (이때만 직원업무안내 문서를 상위에 노출)
     _CONTACT_INTENT = (
         "담당", "부서", "연락처", "전화", "번호", "문의", "누구", "과장",
         "팀장", "계장", "주무관", "청장", "직원", "담당자", "소장", "과는",
+    )
+
+    # 행정 상담 도메인임을 명확히 드러내는 표현. 벡터 유사도만 높은 도메인 밖
+    # 질문이 신뢰도 게이트를 통과하지 않도록 보조 신호로 사용한다.
+    _DOMAIN_INTENT = (
+        "사하", "구청", "민원", "신청", "발급", "신고", "복지", "지원",
+        "수당", "세금", "납부", "주차", "도로", "교통", "쓰레기", "폐기물",
+        "재활용", "청소", "보육", "교육", "도서관", "축제", "체육", "부서",
+        "담당", "공무원", "행정", "주민", "전입", "등본", "증명서",
     )
 
     def search(self, query: str, k: int = 5) -> dict:
@@ -221,6 +242,32 @@ class HybridRetriever:
 
         degraded = False
         reason: str | None = None
+
+        # 행정 용어·품목명이 정확히 일치하는 질문은 CPU 벡터 임베딩(수십 초)을
+        # 기다리지 않고 BM25 결과를 사용한다. 점수가 약한 자연어 질문은 아래의
+        # 벡터+BM25 하이브리드 경로를 그대로 탄다.
+        contact_intent = any(word in query for word in self._CONTACT_INTENT)
+        if self.bm25 and self.bm25.enabled and not contact_intent:
+            lexical_results = self.bm25.search(query, top_n=max(k, 10))
+            if (
+                lexical_results
+                and lexical_results[0]["bm25_score"] >= BM25_FAST_PATH_MIN_SCORE
+                and self._is_official_document(lexical_results[0])
+            ):
+                top_score = lexical_results[0]["bm25_score"] or 1.0
+                fast_results = []
+                for row in lexical_results[:k]:
+                    fast_results.append({
+                        **row,
+                        "similarity": min(1.0, row["bm25_score"] / top_score),
+                        "vector_similarity": 0.0,
+                        "hybrid_score": min(1.0, row["bm25_score"] / top_score),
+                    })
+                logger.info(
+                    f"BM25 고신뢰 빠른 경로: score={top_score:.2f}, "
+                    f"results={len(fast_results)}"
+                )
+                return {"results": fast_results, "degraded": False, "reason": None}
 
         try:
             # 메타데이터 필터는 "단일 facet"만 사용한다.
@@ -268,49 +315,53 @@ class HybridRetriever:
         combined = self._hybrid_combine(query, results, k=k)
         return {"results": combined, "degraded": degraded, "reason": reason}
 
-    def assess_confidence(self, query: str, results: list[dict]) -> tuple[bool, float]:
-        """답변 신뢰 가능 여부 평가 → (is_confident, top_vector_similarity).
+    @staticmethod
+    def _is_official_document(doc: dict) -> bool:
+        """사하구 공식 웹 문서 또는 관리자가 적재한 내부 파일인지 확인한다."""
+        return is_official_document(doc)
 
-        MiniLM 코사인 유사도는 무관한 질문에도 0.7~0.8로 압축돼 절대 임계값만으로는
-        도메인 밖 질문을 못 거른다. 따라서 다음 두 신호를 함께 본다:
-          1) 키워드 겹침: 질문의 핵심 키워드가 상위 문서 제목/본문에 실제로 등장하는가
-             (가장 신뢰할 만한 정밀도 신호 — "아이폰/코스피"처럼 사하구 도메인 밖이면 미등장)
-          2) 유사도 바닥값: 최상위 원본 벡터 유사도가 임계값 이상인가
-        둘 다 만족할 때만 신뢰한다. (staff_directory를 무조건 통과시키던 로직은 제거 —
-        직원검색이 어떤 질문에든 느슨히 매칭돼 게이트를 무력화했기 때문)
+    def assess_evidence(self, query: str, results: list[dict]) -> dict:
+        """검색 근거를 다중 신호로 평가한다.
+
+        MiniLM의 코사인 유사도는 도메인 밖 질문에도 높게 나올 수 있으므로 유사도
+        하나만으로 통과시키지 않는다. 공식 출처가 존재하고, 다음 중 하나가 있어야 한다.
+        - 질문 핵심어가 문서에 직접 등장
+        - BM25가 실제 어휘 일치를 포착
+        - 행정 의도가 명확하며 벡터 유사도가 임계값 이상
+
+        반환되는 상태값은 사용자에게 백분율 대신 '공식 자료 확인됨/추가 확인 필요'처럼
+        근거의 성격을 설명하는 데 사용한다.
         """
-        if not results:
-            return (False, 0.0)
-
-        top_sim = 0.0
-        for r in results:
-            sim = r.get("vector_similarity")
-            if sim is None:
-                sim = r.get("similarity", 0.0)
-            top_sim = max(top_sim, float(sim or 0.0))
-
-        # 질문에서 "내용어" 키워드만 추출 (순수 숫자·짧은 토큰 제외).
-        #   - 순수 숫자(16 등)는 전화번호/날짜에 부분 매칭돼 오탐을 일으키므로 제외
-        #   - 한글 2자 이상 또는 영문 3자 이상만 의미 있는 키워드로 인정
         keywords = self._content_keywords(query)
+        query_lower = query.lower()
+        domain_intent = bool(self.detect_category(query)) or any(
+            word in query_lower for word in self._DOMAIN_INTENT + self._CONTACT_INTENT
+        )
+        return evaluate_evidence(
+            results,
+            keywords=keywords,
+            domain_intent=domain_intent,
+            min_similarity=CONFIDENCE_MIN_SIMILARITY,
+        )
 
-        # 키워드가 하나도 없으면(전부 불용어/숫자) 유사도 신호만으로 판정
-        if not keywords:
-            return (top_sim >= CONFIDENCE_MIN_SIMILARITY, top_sim)
+    def assess_confidence(self, query: str, results: list[dict]) -> tuple[bool, float]:
+        """기존 호출부와 평가 스크립트를 위한 하위 호환 래퍼."""
+        evidence = self.assess_evidence(query, results)
+        return evidence["confident"], evidence["top_similarity"]
 
-        # 상위 문서 중 하나라도 키워드(조사 제거 어간 포함)를 포함하면 키워드 겹침 통과
-        keyword_overlap = False
-        for r in results:
-            haystack = ((r.get("metadata") or {}).get("title", "") or "") + " " + (r.get("content", "") or "")
-            if any(kw in haystack for kw in keywords):
-                keyword_overlap = True
-                break
-
-        # 보수적 판정: "유사도 충분" OR "키워드 겹침" 중 하나라도 만족하면 신뢰.
-        # (둘 다 요구하면 동의어/조사 차이로 정상 질문이 차단됨 — false negative 방지.
-        #  진짜로 검색이 빈약할 때, 즉 유사도도 낮고 키워드도 안 겹칠 때만 안전 멘트 출력)
-        is_confident = (top_sim >= CONFIDENCE_MIN_SIMILARITY) or keyword_overlap
-        return (is_confident, top_sim)
+    def select_grounded_results(self, query: str, results: list[dict], limit: int = 5) -> list[dict]:
+        """LLM에 전달할 문서를 공식 출처와 실제 검색 신호가 있는 결과로 제한한다."""
+        keywords = self._content_keywords(query)
+        domain_intent = bool(self.detect_category(query)) or any(
+            word in query.lower() for word in self._DOMAIN_INTENT + self._CONTACT_INTENT
+        )
+        return filter_grounded_results(
+            results,
+            keywords=keywords,
+            domain_intent=domain_intent,
+            min_similarity=CONFIDENCE_MIN_SIMILARITY,
+            limit=limit,
+        )
 
     # 신뢰도 판정용 불용어 (출처 표시용 _is_relevant_source와 별도 유지)
     _CONF_STOPWORDS = {

@@ -1,6 +1,6 @@
 """
 멀티턴 대화 처리 모듈
-- Gemini 무료 티어 기반 답변 생성
+- 로컬 Ollama 기반 답변 생성
 - 문맥 유지 (이전 대화 기억)
 - 모호한 질문 시 역질문으로 의도 파악
 - 출처 명시 답변
@@ -9,20 +9,31 @@
 
 import re
 import json
-import time
 import threading
 import logging
-from langchain_groq import ChatGroq
+try:
+    from langchain_ollama import ChatOllama
+except ImportError:  # 구버전 환경 호환
+    from langchain_community.chat_models import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 
 from config import (
-    GROQ_API_KEY, GROQ_LLM_MODEL, CHATBOT_TEMPERATURE, MAX_CONVERSATION_HISTORY,
-    CONFIDENCE_MIN_SIMILARITY, LOW_CONFIDENCE_MESSAGE,
+    OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT, OLLAMA_NUM_CTX,
+    OLLAMA_KEEP_ALIVE, CHATBOT_TEMPERATURE, CHATBOT_MAX_TOKENS,
+    MAX_CONVERSATION_HISTORY,
+    CONFIDENCE_MIN_SIMILARITY, LOW_CONFIDENCE_MESSAGE, PERSIST_CONVERSATIONS,
 )
 from database_db.database import Database
 from chatbot.retriever import HybridRetriever
 from chatbot.dept_directory import normalize_dept_names, REP_PHONE
+from chatbot.response_helpers import (
+    build_clarification,
+    build_contextual_search_query,
+    build_suggested_questions,
+    is_obviously_out_of_domain,
+)
+from chatbot.privacy import detect_personal_info, mask_personal_info
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +46,7 @@ SYSTEM_PROMPT = """당신은 부산광역시 사하구청 공식 AI 상담사입
 ## 규칙 (반드시 준수)
 1. **사실 기반 답변**: 제공된 참고자료에 있는 정보만 사용하세요. 참고자료에 없는 내용은 절대 추측하거나 지어내지 마세요.
 2. **구체적인 정보 직접 제공**: 검색된 문서에 사용자가 묻는 구체적인 정보(예: 배출 요일, 시간, 장소, 방법 등)가 있다면, "홈페이지를 확인하라"는 식의 회피성 답변을 하지 마세요. 해당 정보를 글머리 기호(블릿)를 사용하여 이해하기 쉽게 직접 요약해 제공해야 합니다.
-3. **역질문 및 대화 유도 절대 금지**: 답변의 마지막에 "어떤 것이 궁금하신가요?"라고 되묻거나, 사용자의 추가 질문을 유도하기 위해 번호(1., 2., 3. 등)를 매겨 선택지를 제공하는 행위를 엄격하게 금지합니다. 답변은 오직 정보 제공으로만 깔끔하게 끝내세요.
+3. **불필요한 대화 유도 금지**: 답변 가능한 질문에는 정보만 제공하고 불필요한 후속 질문을 붙이지 마세요. 질문이 너무 모호하여 정확한 자료를 고를 수 없을 때만 한 가지 확인 질문을 하세요.
 4. **출처 명시**: 답변에 사용한 정보의 출처를 반드시 언급하세요. (예: "사하구청 홈페이지 ○○ 페이지에 따르면...")
 5. **개인정보 보호**: 사용자가 주민등록번호, 전화번호 등 개인정보를 입력하면, 저장하지 않으며 입력하지 말 것을 안내하세요.
 6. **정보 부족 시**: 참고자료에서 답을 찾을 수 없으면, 솔직히 "해당 정보를 찾지 못했습니다"라고 안내하고, 사하구청 대표전화(051-220-4000)나 홈페이지 방문을 권장하세요.
@@ -45,19 +56,6 @@ SYSTEM_PROMPT = """당신은 부산광역시 사하구청 공식 AI 상담사입
 ## 참고자료
 {context}
 """
-
-# 개인정보 패턴 (탐지 + 마스킹)
-PERSONAL_INFO_PATTERNS = [
-    (re.compile(r"\d{6}[-\s]?\d{7}"), "주민등록번호"),
-    (re.compile(r"01[016789][-\s]?\d{3,4}[-\s]?\d{4}"), "전화번호"),
-    (re.compile(r"\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}"), "카드번호"),
-    (re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"), "이메일"),
-]
-
-ADDRESS_PATTERNS = [
-    re.compile(r"[가-힣]{1,20}(?:동|읍|면|리)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?"),
-    re.compile(r"[가-힣]{1,20}(?:로|길)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?"),
-]
 
 CLARIFICATION_TAG = "[CLARIFICATION]"
 ANSWER_STYLE_SUFFIX = """
@@ -69,60 +67,6 @@ Answer style:
 - If the user asks about a street/manhole issue, give the report steps once and avoid boilerplate repetition.
 - Do not mix in foreign-language phrases such as Japanese or other non-Korean text.
 """
-
-
-def detect_personal_info(text: str, use_ner: bool = True) -> str | None:
-    """
-    텍스트에서 첫 번째로 매칭된 개인정보 유형 반환 (없으면 None).
-    입력 차단은 정형 개인정보와 상세주소만 검사하고,
-    동 이름 같은 일반 지역명은 막지 않는다.
-    """
-    for pattern, info_type in PERSONAL_INFO_PATTERNS:
-        if pattern.search(text):
-            return info_type
-
-    for pattern in ADDRESS_PATTERNS:
-        if pattern.search(text):
-            return "주소"
-
-    if use_ner:
-        try:
-            from chatbot.pii_detector import NERPIIDetector
-            _, ner_found = NERPIIDetector().detect_and_mask(text)
-            if ner_found:
-                return ner_found[0]
-        except Exception as e:
-            logger.warning(f"NER 탐지 호출 실패 (정규식만 사용): {e}")
-
-    return None
-
-
-def mask_personal_info(text: str, use_ner: bool = True) -> tuple[str, list[str]]:
-    """
-    텍스트의 개인정보를 [MASKED:<유형>]으로 치환하고 (마스킹된 텍스트, 발견된 유형 목록) 반환.
-    LLM 응답이 크롤링 데이터에 포함된 개인정보를 그대로 노출하지 않도록 출력단에서 호출.
-
-    정규식과 NER을 병렬 적용하여 정형/비정형 PII를 모두 차단.
-    """
-    found: list[str] = []
-    masked = text
-
-    # 1단계: 정규식 기반 정형 PII (전화번호, 주민번호 등)
-    for pattern, info_type in PERSONAL_INFO_PATTERNS:
-        if pattern.search(masked):
-            found.append(info_type)
-            masked = pattern.sub(f"[MASKED:{info_type}]", masked)
-
-    # 2단계: NER 기반 비정형 PII (이름, 주소 등)
-    if use_ner:
-        try:
-            from chatbot.pii_detector import NERPIIDetector
-            masked, ner_found = NERPIIDetector().detect_and_mask(masked)
-            found.extend(ner_found)
-        except Exception as e:
-            logger.warning(f"NER 마스킹 호출 실패 (정규식 결과만 반환): {e}")
-
-    return masked, found
 
 
 def strip_foreign_script(text: str) -> str:
@@ -194,27 +138,21 @@ def enforce_official_contact(answer: str, user_message: str, sources: list[dict]
 
 class ChatBot:
     def __init__(self):
-        if not GROQ_API_KEY:
-            raise ValueError("GROQ_API_KEY를 .env에 설정해주세요")
-
-        self.llm = ChatGroq(
-            model=GROQ_LLM_MODEL,
-            api_key=GROQ_API_KEY,
+        self.llm = ChatOllama(
+            base_url=OLLAMA_BASE_URL,
+            model=OLLAMA_MODEL,
             temperature=CHATBOT_TEMPERATURE,
-            max_retries=1,
+            num_predict=CHATBOT_MAX_TOKENS,
+            num_ctx=OLLAMA_NUM_CTX,
+            timeout=OLLAMA_TIMEOUT,
+            keep_alive=OLLAMA_KEEP_ALIVE,
         )
         self.retriever = HybridRetriever()
-        self.db = Database()
-        self._last_call_time = 0
-        # 스레드풀에서 동일 싱글턴 봇을 공유하므로 호출 간격 갱신을 락으로 보호
-        self._call_lock = threading.Lock()
-
-        # NER PII 탐지기 사전 로딩 (첫 요청 지연 방지)
-        try:
-            from chatbot.pii_detector import NERPIIDetector
-            NERPIIDetector()
-        except Exception as e:
-            logger.warning(f"NER 탐지기 사전 로딩 실패 (필요 시 지연 로딩): {e}")
+        # 기본은 개인정보 최소수집을 위해 프로세스 메모리에서만 문맥을 유지한다.
+        # 영구 저장을 명시적으로 켠 경우에만 service role로 DB에 기록한다.
+        self.db = Database(admin=True) if PERSIST_CONVERSATIONS else None
+        self._memory_history: dict[str, list[dict]] = {}
+        self._history_lock = threading.RLock()
 
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", SYSTEM_PROMPT + ANSWER_STYLE_SUFFIX),
@@ -238,6 +176,34 @@ class ChatBot:
             elif msg["role"] == "assistant":
                 messages.append(AIMessage(content=msg["content"]))
         return messages
+
+    def _get_history_safe(self, session_id: str) -> list[dict]:
+        """DB 장애가 챗봇 전체 500 오류로 번지지 않도록 빈 이력으로 폴백한다."""
+        if self.db is None:
+            with self._history_lock:
+                return list(self._memory_history.get(session_id, []))[-MAX_CONVERSATION_HISTORY:]
+        try:
+            return self.db.get_conversation_history(
+                session_id, limit=MAX_CONVERSATION_HISTORY
+            )
+        except Exception as exc:
+            logger.warning(f"대화 이력 조회 실패 (빈 이력으로 계속): {exc}")
+            return []
+
+    def _save_conversation_safe(
+        self, session_id: str, role: str, content: str, sources: str = None
+    ) -> None:
+        """대화 로그 저장 실패는 기록하되 사용자 답변 자체는 유지한다."""
+        if self.db is None:
+            with self._history_lock:
+                history = self._memory_history.setdefault(session_id, [])
+                history.append({"role": role, "content": content, "sources": sources})
+                del history[:-MAX_CONVERSATION_HISTORY]
+            return
+        try:
+            self.db.save_conversation(session_id, role, content, sources=sources)
+        except Exception as exc:
+            logger.warning(f"대화 이력 저장 실패 ({role}): {exc}")
 
     def chat(self, session_id: str, user_message: str) -> dict:
         """
@@ -266,18 +232,48 @@ class ChatBot:
                 "is_clarification": False,
                 "degraded": False,
                 "degraded_reason": None,
+                "evidence": {"status": "protected", "label": "개인정보 보호됨", "official_source_count": 0},
+                "suggested_questions": [],
+            }
+
+        # 1-1. 주가·코인 예측 등 명백한 비행정 요청은 공식 문서의 단어가 우연히
+        # 겹치더라도 검색/LLM으로 넘기지 않는다. 이는 답변 생성 이전의 환각 차단선이다.
+        if is_obviously_out_of_domain(user_message):
+            return {
+                "answer": LOW_CONFIDENCE_MESSAGE,
+                "sources": [],
+                "is_clarification": False,
+                "degraded": True,
+                "degraded_reason": "out_of_domain",
+                "evidence": {
+                    "status": "out_of_domain",
+                    "label": "사하구 행정 상담 범위 밖",
+                    "official_source_count": 0,
+                },
+                "suggested_questions": ["사하구 민원 안내해줘", "사하구 복지 지원 알려줘"],
+            }
+
+        # 1-2. 너무 포괄적인 요청은 임의로 답하지 않고 먼저 범위를 좁힌다.
+        clarification = build_clarification(user_message)
+        if clarification:
+            self._save_conversation_safe(session_id, "user", user_message)
+            self._save_conversation_safe(session_id, "assistant", clarification["answer"])
+            return {
+                "answer": clarification["answer"],
+                "sources": [],
+                "is_clarification": True,
+                "degraded": False,
+                "degraded_reason": None,
+                "evidence": {"status": "clarification", "label": "상황 확인 필요", "official_source_count": 0},
+                "suggested_questions": clarification["suggested_questions"],
             }
 
         # 2. 대화 이력 조회
-        history = self.db.get_conversation_history(session_id, limit=MAX_CONVERSATION_HISTORY)
+        history = self._get_history_safe(session_id)
         langchain_history = self._build_history(history)
 
         # 3. 하이브리드 검색 (문맥 포함 검색어 구성)
-        search_query = user_message
-        if history:
-            recent = [m["content"] for m in history[-2:] if m["role"] == "user"]
-            if recent:
-                search_query = " ".join(recent + [user_message])
+        search_query = build_contextual_search_query(user_message, history)
 
         search_outcome = self.retriever.search(search_query)
         results = search_outcome["results"]
@@ -286,35 +282,33 @@ class ChatBot:
 
         # 3-1. 신뢰도 게이트: 키워드 겹침 + 유사도 바닥값을 함께 보고, 신뢰 불가 시
         #      LLM을 호출하지 않고 안전 안내 멘트를 출력한다 (환각 방지 + API 절약).
-        is_confident, top_sim = self.retriever.assess_confidence(user_message, results)
-        if not is_confident:
+        evidence = self.retriever.assess_evidence(user_message, results)
+        if not evidence["confident"]:
+            top_sim = evidence["top_similarity"]
             logger.info(f"신뢰도 미달 (최상위 유사도={top_sim:.2f}, 임계값={CONFIDENCE_MIN_SIMILARITY}, 키워드겹침 실패 또는 유사도 부족) → 안전 안내 출력")
-            self.db.save_conversation(session_id, "user", user_message)
-            self.db.save_conversation(session_id, "assistant", LOW_CONFIDENCE_MESSAGE)
+            self._save_conversation_safe(session_id, "user", user_message)
+            self._save_conversation_safe(session_id, "assistant", LOW_CONFIDENCE_MESSAGE)
             return {
                 "answer": LOW_CONFIDENCE_MESSAGE,
                 "sources": [],
                 "is_clarification": False,
                 "degraded": True,
                 "degraded_reason": "low_confidence",
+                "evidence": {
+                    "status": evidence["status"],
+                    "label": evidence["label"],
+                    "official_source_count": evidence["official_source_count"],
+                },
+                "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
             }
 
-        context, sources = self.retriever.format_context(user_message, results)
+        grounded_results = self.retriever.select_grounded_results(user_message, results)
+        context, sources = self.retriever.format_context(user_message, grounded_results)
 
         if not context:
             context = "(관련 참고자료를 찾지 못했습니다)"
 
-        # 4. LLM 답변 생성 (무료 티어 속도 제한: 최소 4초 간격)
-        #    호출 간격 계산·갱신만 락으로 보호하고, 갱신 직후 락을 풀어
-        #    실제 네트워크 호출(invoke)은 락 밖에서 수행한다.
-        #    → 연속 호출이 4초 이상 간격으로 "시작"되도록 보장하면서도,
-        #      느린 LLM 응답 동안 다른 요청이 불필요하게 막히지 않게 한다.
-        with self._call_lock:
-            elapsed = time.time() - self._last_call_time
-            if elapsed < 4:
-                time.sleep(4 - elapsed)
-            self._last_call_time = time.time()
-
+        # 4. 로컬 Ollama 답변 생성 (외부 API 키·무료 티어 제한 없음)
         try:
             response = self.chain.invoke({
                 "context": context,
@@ -354,13 +348,16 @@ class ChatBot:
 
         answer = strip_foreign_script(answer)
         # 7. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
-        answer, leaked = mask_personal_info(answer)
+        # 전화·이메일·주민번호 등 명시 패턴은 즉시 마스킹한다. 범용 NER는 CPU에서
+        # 응답마다 수십 초가 걸리고 공개 담당자명까지 오탐할 수 있어 기본 응답 경로에서는
+        # 사용하지 않는다. 사용자 입력은 저장되지 않으며 동일한 정규식 검사를 먼저 거친다.
+        answer, leaked = mask_personal_info(answer, use_ner=False)
         if leaked:
             logger.warning(f"LLM 응답에서 개인정보 감지/마스킹: {leaked}")
 
         # 8. 대화 이력 저장
-        self.db.save_conversation(session_id, "user", user_message)
-        self.db.save_conversation(
+        self._save_conversation_safe(session_id, "user", user_message)
+        self._save_conversation_safe(
             session_id, "assistant", answer,
             sources=json.dumps([s["url"] for s in sources], ensure_ascii=False) if sources else None,
         )
@@ -371,8 +368,21 @@ class ChatBot:
             "is_clarification": is_clarification,
             "degraded": degraded,
             "degraded_reason": degraded_reason,
+            "evidence": {
+                "status": "unavailable" if degraded_reason == "llm_failed" else evidence["status"],
+                "label": "답변 생성 일시 중단" if degraded_reason == "llm_failed" else evidence["label"],
+                "official_source_count": len(sources),
+            },
+            "suggested_questions": [] if is_clarification else build_suggested_questions(user_message, sources),
         }
 
     def clear_session(self, session_id: str):
         """대화 초기화"""
-        self.db.clear_conversation(session_id)
+        if self.db is None:
+            with self._history_lock:
+                self._memory_history.pop(session_id, None)
+            return
+        try:
+            self.db.clear_conversation(session_id)
+        except Exception as exc:
+            logger.warning(f"대화 이력 초기화 실패: {exc}")

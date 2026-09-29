@@ -249,7 +249,7 @@
 
 
     // ===== 메시지 UI 조립 팩토리 =====
-    function createMessageEl(role, content, sources, degraded, degradedReason) {
+    function createMessageEl(role, content, sources, degraded, degradedReason, evidence, suggestedQuestions) {
         const msg = document.createElement("div");
         msg.className = `message ${role === "user" ? "user-message" : "bot-message"}`;
 
@@ -261,7 +261,9 @@
         } else {
             // 🎯 [수정] JS 하드코딩 src 제거 및 테마에 맞는 dynamic src 부여
             // 경고 메시지 여부 판단
-            let isWarning = content && (content.includes('⚠️') || content.includes('개인정보가 포함되어 있습니다'));
+            let isWarning = (evidence && ["insufficient", "protected", "unavailable"].includes(evidence.status))
+                || degradedReason === "low_confidence"
+                || (content && (content.includes('⚠️') || content.includes('개인정보가 포함되어 있습니다')));
             const status = isWarning ? 'no' : 'hi';
             
             const currentImgSrc = getGouniImage(status);
@@ -336,13 +338,73 @@
 
         contentDiv.appendChild(bubble);
 
+        if (role !== "user" && evidence) {
+            contentDiv.appendChild(createEvidenceEl(evidence));
+        }
+
         if (sources && sources.length > 0) {
             contentDiv.appendChild(createSourcesEl(sources));
+        }
+
+        if (role !== "user" && suggestedQuestions && suggestedQuestions.length > 0) {
+            contentDiv.appendChild(createSuggestedQuestionsEl(suggestedQuestions));
         }
 
         msg.appendChild(avatar);
         msg.appendChild(contentDiv);
         return msg;
+    }
+
+    function createEvidenceEl(evidence) {
+        const status = String(evidence.status || "unavailable");
+        const labels = {
+            official: "사하구 공식 자료 확인됨",
+            supported: "관련 공식 자료 확인됨",
+            insufficient: "정확한 자료를 찾지 못함",
+            protected: "개인정보 보호됨",
+            clarification: "상황 확인 필요",
+            unavailable: "근거 상태를 확인할 수 없음",
+        };
+        const icons = {
+            official: "✓",
+            supported: "✓",
+            insufficient: "!",
+            protected: "🔒",
+            clarification: "?",
+            unavailable: "!",
+        };
+        const badge = document.createElement("div");
+        badge.className = `evidence-badge evidence-${status}`;
+        badge.setAttribute("role", "status");
+        const sourceCount = Number(evidence.official_source_count || 0);
+        const countText = sourceCount > 0 ? ` · 출처 ${sourceCount}건` : "";
+        badge.innerHTML = `<span class="evidence-icon" aria-hidden="true">${icons[status] || "!"}</span><span>${escapeHtml(evidence.label || labels[status] || labels.unavailable)}${countText}</span>`;
+        return badge;
+    }
+
+    function createSuggestedQuestionsEl(questions) {
+        const wrap = document.createElement("div");
+        wrap.className = "followup-panel";
+
+        const label = document.createElement("div");
+        label.className = "followup-label";
+        label.textContent = "고우니에게 이어서 묻기";
+        wrap.appendChild(label);
+
+        const actions = document.createElement("div");
+        actions.className = "followup-actions";
+        questions.slice(0, 3).forEach(function (question) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "followup-btn";
+            button.textContent = question;
+            button.addEventListener("click", function () {
+                if (!isLoading) sendMessage(question);
+            });
+            actions.appendChild(button);
+        });
+        wrap.appendChild(actions);
+        return wrap;
     }
 
     function formatBotMessage(text) {
@@ -538,7 +600,10 @@
 
         if (checkFrontPrivacy(text)) {
             const warnText = "⚠️ 입력하신 내용에 개인정보가 포함되어 있습니다.\n\n개인정보 보호를 위해 채팅창에 주민등록번호, 전화번호, 이메일, 상세주소를 입력하지 말아주세요.";
-            const botMsg = createMessageEl("bot", warnText, null, false, null);
+            const botMsg = createMessageEl(
+                "bot", warnText, null, false, null,
+                { status: "protected", label: "개인정보 보호됨", official_source_count: 0 }, []
+            );
             messagesEl.appendChild(botMsg);
             scrollToBottom();
             isLoading = false;
@@ -557,7 +622,10 @@
             const data = await response.json();
             removeTypingIndicator();
 
-            const botMsg = createMessageEl("bot", data.answer, data.sources, Boolean(data.degraded), data.degraded_reason);
+            const botMsg = createMessageEl(
+                "bot", data.answer, data.sources, Boolean(data.degraded), data.degraded_reason,
+                data.evidence, data.suggested_questions
+            );
             messagesEl.appendChild(botMsg);
         } catch (err) {
             removeTypingIndicator();

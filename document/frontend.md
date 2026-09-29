@@ -20,7 +20,7 @@ static/
 
 **왜 Vanilla JS인가?**
 - 챗봇 UI는 단일 페이지로 구조가 단순
-- React/Vue 등의 빌드 과정 없이 바로 Flask에서 서빙 가능
+- React/Vue 등의 빌드 과정 없이 FastAPI의 정적 파일·템플릿 기능으로 바로 서빙 가능
 - 추가 의존성 없이 가볍고 빠름
 
 ---

@@ -14,13 +14,13 @@
 
 사용법:
     python -m evaluation.accuracy_eval                # 전체
-    python -m evaluation.accuracy_eval --limit 5      # 앞 5개만 (Groq 토큰 절약)
+    python -m evaluation.accuracy_eval --limit 5      # 앞 5개만 빠르게 점검
     python -m evaluation.accuracy_eval --delay 1.0    # 질문 사이 추가 지연(초)
 
 결과:
     표준 출력 + evaluation/accuracy_results.md
 주의:
-    - 실제 LLM(Groq)을 호출하므로 무료티어 일일 토큰 한도를 소비한다.
+    - 실제 로컬 Ollama 모델을 호출하므로 모델이 실행 중이어야 한다.
       한도 초과(429)는 정답/오답이 아닌 'error'로 분류해 정답률 분모에서 제외한다.
     - 각 질문은 새 세션으로 평가하고, 끝나면 대화 로그를 정리해 DB 오염을 막는다.
 """
@@ -68,7 +68,7 @@ def is_pii_block(result: dict) -> bool:
 def judge(item: dict, result: dict) -> str:
     """정답 판정 → 'correct' | 'wrong' | 'error'.
 
-    error: LLM 호출 자체가 실패(예: Groq 토큰 한도). 정확도가 아닌 인프라 문제라
+    error: LLM 호출 자체가 실패(예: Ollama 미실행/모델 미설치). 정확도가 아닌 인프라 문제라
            정답률 분모에서 제외한다.
     """
     if result.get("degraded_reason") == "llm_failed":
@@ -187,7 +187,7 @@ def render_markdown(rows, summary, overall, all_correct, all_graded, total_error
     lines += ["", "## 판정 규칙 / 한계", "",
               "- **결정적 판정**: 키워드 포함·거절 패턴·PII 경고로 판정 → 재현 가능, 설명 가능.",
               "- **키워드 판정 한계**: 의미는 맞지만 표현이 달라 키워드가 빠지면 오답 처리될 수 있음(보수적).",
-              "- **에러(⚠️)**: Groq 토큰 한도 등 LLM 호출 실패. 정확도가 아니므로 분모에서 제외.",
+              "- **에러(⚠️)**: Ollama 미실행·모델 미설치 등 LLM 호출 실패. 정확도가 아니므로 분모에서 제외.",
               "- 표본이 작으므로(수십 문항) 점수는 **상대 비교·회귀 점검용**이며, 표본을 늘리면 신뢰도 상승."]
     RESULTS_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

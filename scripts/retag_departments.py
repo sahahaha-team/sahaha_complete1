@@ -3,7 +3,7 @@
 
 전체 run_process는 모든 청크를 재처리(삭제→재생성)하지만,
 이 스크립트는 NULL 부서만 골라 department 컬럼만 부분 UPDATE한다.
-- Groq 무료 티어(RPM 30) 부담 최소화
+- 로컬 Ollama 호출 부담 최소화
 - 기존 태깅 결과(service_type, keywords 등)는 그대로 보존
 - 본문에 부서가 명시되지 않은 청크는 NULL 유지(환각 방지)
 
@@ -36,6 +36,7 @@ class _ChunkObj:
         self.sub_category = row.get("sub_category") or ""
         self.chunk_index = row.get("chunk_index") or 0
         self.total_chunks = row.get("total_chunks") or 1
+        self.department_hint = ""
 
 
 def fetch_null_department_chunks(client) -> list[dict]:
@@ -80,7 +81,7 @@ def main():
 
     tagger = MetadataTagger()
     if not tagger.llm:
-        print("LLM 미초기화 — GROQ_API_KEY 확인 필요")
+        print("LLM 미초기화 — Ollama 실행 상태와 OLLAMA_MODEL 확인 필요")
         sys.exit(1)
 
     chunks = [_ChunkObj(r) for r in rows]

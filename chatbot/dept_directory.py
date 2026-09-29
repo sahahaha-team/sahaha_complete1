@@ -129,6 +129,31 @@ def correct_dept(name: str) -> str:
     return _best_official_match(name)
 
 
+def department_is_supported(name: str, text: str) -> bool:
+    """부서명이 제공된 원문에 실제로 등장하는지 확인한다."""
+    normalized = correct_dept(name)
+    if not normalized or not text:
+        return False
+    return _compact(normalized) in _compact(text)
+
+
+def extract_explicit_department(text: str) -> str:
+    """페이지의 담당자/담당부서 표기에서 공식 부서명을 결정적으로 추출한다."""
+    if not text:
+        return ""
+    compact_text = re.sub(r"\s+", " ", text)
+    labels = ("담당자", "담당부서", "문의부서", "담당 부서")
+    for label in labels:
+        start = compact_text.rfind(label)
+        if start < 0:
+            continue
+        nearby = compact_text[start:start + 100]
+        for name in sorted(_official_names(), key=len, reverse=True):
+            if name and name in nearby:
+                return name
+    return ""
+
+
 def normalize_dept_names(text: str) -> str:
     """Replace department aliases inside free-form text."""
     if not text:

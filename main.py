@@ -14,6 +14,9 @@
 import os
 import argparse
 import logging
+import json
+from datetime import datetime, timezone
+from pathlib import Path
 from tqdm import tqdm
 
 os.makedirs("data", exist_ok=True)
@@ -93,15 +96,9 @@ def run_incremental(menu_filter: str = None):
     """
     from crawler.saha_crawler import SahaCrawler
     from database_db.database import Database
-    from processor.data_cleaner import DataCleaner
-    from processor.metadata_tagger import MetadataTagger
-    from database_db.vector_store import VectorStore
 
     crawler = SahaCrawler(use_selenium=False)
     db = Database()
-    cleaner = DataCleaner(db=db)
-    tagger = MetadataTagger()
-    vs = VectorStore()
 
     menus = {k: v for k, v in TARGET_MENUS.items() if menu_filter is None or k == menu_filter}
 
@@ -119,7 +116,12 @@ def run_incremental(menu_filter: str = None):
 
     stats = {"new": 0, "updated": 0, "unchanged": 0, "deleted": 0}
     changed_urls: list[str] = []
+    queued_job_urls: list[str] = []
     seen_urls: set[str] = set()
+    started_at = datetime.now(timezone.utc)
+    run_id = db.start_crawl_run(mode="incremental", menu=menu_filter)
+    run_status = "succeeded"
+    run_error = None
 
     try:
         for menu_name, menu_path in menus.items():
@@ -128,6 +130,7 @@ def run_incremental(menu_filter: str = None):
                 menu_name, start_url,
                 max_pages=MAX_PAGES_PER_MENU,
                 known_urls=known_by_menu.get(menu_name, []),
+                exclude_urls=seen_urls,
             )
 
             for page in pages:
@@ -145,18 +148,26 @@ def run_incremental(menu_filter: str = None):
 
                 if page.not_modified:
                     stats["unchanged"] += 1
+                    db.mark_page_checked(page.url)
                     continue
 
                 # 정상 응답 — content_hash로 한 번 더 비교 (서버가 검증자를 안 줘서
                 # 200이 와도 본문은 동일할 수 있음)
                 result = db.upsert_raw_page(page)
                 stats[result] += 1
+                db.mark_page_checked(page.url)
                 if result in ("new", "updated"):
                     changed_urls.append(page.url)
+                    if db.enqueue_ingestion_job(page.url, page.category) is not None:
+                        queued_job_urls.append(page.url)
                     logger.info(f"  [{result.upper()}] {page.title[:40]} - {page.url}")
 
         # 2. 사라진 페이지 정리: known URL 중 이번 회차에 한 번도 방문되지 않은 것
-        orphans = set(validators.keys()) - seen_urls
+        scoped_known_urls = {
+            url for url, validator in validators.items()
+            if validator.get("category") in menus
+        }
+        orphans = scoped_known_urls - seen_urls
         for url in orphans:
             db.delete_page(url)
             stats["deleted"] += 1
@@ -170,6 +181,16 @@ def run_incremental(menu_filter: str = None):
 
         # 4. 변경된 페이지만 재처리 (신규/수정)
         if changed_urls:
+            db.update_ingestion_jobs(queued_job_urls, "running")
+            from processor.data_cleaner import DataCleaner
+            from processor.metadata_tagger import MetadataTagger
+            from database_db.vector_store import VectorStore
+
+            # 변경 URL은 같은 URL/인덱스의 chunk_id를 재사용하므로 기존 ID를
+            # 중복으로 건너뛰지 않고 새 본문 전체를 다시 만든다.
+            cleaner = DataCleaner()
+            tagger = MetadataTagger()
+            vs = VectorStore()
             logger.info(f"변경된 {len(changed_urls)}개 페이지 재처리 시작...")
             changed_pages = db.get_pages_by_urls(changed_urls)
 
@@ -192,7 +213,6 @@ def run_incremental(menu_filter: str = None):
             if all_tagged:
                 db.save_chunks_bulk(all_tagged)
 
-                import json
                 new_chunk_pairs = []
                 for chunk, metadata in all_tagged:
                     class _C:
@@ -213,6 +233,11 @@ def run_incremental(menu_filter: str = None):
 
                 vs.add_chunks_batch(new_chunk_pairs, batch_size=50, db=db)
                 logger.info(f"재처리 완료: {len(all_tagged)}개 청크 업데이트")
+            valid_chunk_ids_by_url = {url: set() for url in changed_urls}
+            for chunk, _metadata in all_tagged:
+                valid_chunk_ids_by_url.setdefault(chunk.url, set()).add(chunk.chunk_id)
+            db.delete_stale_derived_for_urls(valid_chunk_ids_by_url)
+            db.update_ingestion_jobs(queued_job_urls, "succeeded")
         else:
             logger.info("신규/변경 페이지 없음. 재처리 불필요.")
 
@@ -221,8 +246,28 @@ def run_incremental(menu_filter: str = None):
         if stats["new"] or stats["updated"] or stats["deleted"]:
             _rebuild_bm25_index()
 
+    except BaseException as exc:
+        run_status = "failed"
+        run_error = str(exc)
+        db.update_ingestion_jobs(queued_job_urls, "failed", run_error)
+        raise
     finally:
         crawler.close()
+        finished_at = datetime.now(timezone.utc)
+        db.finish_crawl_run(run_id, run_status, stats, run_error)
+        audit_record = {
+            "started_at": started_at.isoformat(),
+            "finished_at": finished_at.isoformat(),
+            "mode": "incremental",
+            "menu": menu_filter,
+            "status": run_status,
+            **stats,
+            "error": run_error,
+        }
+        audit_path = Path("data/crawl_runs.jsonl")
+        audit_path.parent.mkdir(parents=True, exist_ok=True)
+        with audit_path.open("a", encoding="utf-8") as audit_file:
+            audit_file.write(json.dumps(audit_record, ensure_ascii=False) + "\n")
 
     return stats
 
@@ -251,7 +296,8 @@ def run_ingest_files(path: str = None):
         return 0
 
     db = Database()
-    cleaner = DataCleaner(db=db)
+    # 변경 파일은 기존 chunk_id와 같아도 내용을 다시 생성해야 한다.
+    cleaner = DataCleaner()
     tagger = MetadataTagger()
     vs = VectorStore()
 
@@ -298,6 +344,10 @@ def run_ingest_files(path: str = None):
             "attachments": getattr(chunk, "attachments", None) or [],
         }))
     vs.add_chunks_batch(chunk_meta_pairs, batch_size=50, db=db)
+    valid_chunk_ids_by_url = {page.url: set() for page in changed}
+    for chunk, _metadata in all_tagged:
+        valid_chunk_ids_by_url.setdefault(chunk.url, set()).add(chunk.chunk_id)
+    db.delete_stale_derived_for_urls(valid_chunk_ids_by_url)
 
     # 4. BM25 인덱스 재구축 (키워드 검색에도 반영)
     _rebuild_bm25_index()
@@ -418,16 +468,22 @@ def _has_service_key() -> bool:
 
 
 def run_web():
-    """웹 서버 실행 (FastAPI/uvicorn). 스케줄러는 FastAPI lifespan에서 시작."""
+    """웹 서버 실행 (FastAPI/uvicorn). 크롤링은 별도 worker 모드에서 실행."""
     from app import run_server
     run_server()
+
+
+def run_worker():
+    """웹 요청과 자원 경쟁이 없도록 별도 스케줄 Worker 실행."""
+    from worker import run_worker as start_worker
+    start_worker()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="사하구청 AI 상담사")
     parser.add_argument(
         "--mode",
-        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web", "ingest-files"],
+        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web", "worker", "ingest-files"],
         default="web",
         help="실행 모드 (기본: web)",
     )
@@ -439,6 +495,8 @@ if __name__ == "__main__":
 
     if args.mode == "web":
         run_web()
+    elif args.mode == "worker":
+        run_worker()
     elif args.mode == "stats":
         show_stats()
     elif args.mode == "crawl":

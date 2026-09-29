@@ -19,16 +19,19 @@ TARGET_MENUS = {
 # ===== 크롤러 설정 =====
 CRAWL_DELAY = 1.0
 MAX_PAGES_PER_MENU = 50
-REQUEST_TIMEOUT = 10
+REQUEST_TIMEOUT = 20
 MAX_RETRIES = 3
 
 # ===== Supabase 설정 (PostgreSQL + pgvector) =====
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")  # anon/public key
 
-# ===== LLM 설정 (Groq - 무료 티어) =====
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_LLM_MODEL = "llama-3.3-70b-versatile"
+# ===== LLM 설정 (로컬 Ollama) =====
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
+OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))
+OLLAMA_NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "4096"))
+OLLAMA_KEEP_ALIVE = os.getenv("OLLAMA_KEEP_ALIVE", "30m")
 
 # ===== 청크 설정 =====
 CHUNK_SIZE = 500
@@ -38,6 +41,7 @@ CHUNK_OVERLAP = 50
 MAX_CONVERSATION_HISTORY = 10
 MAX_RETRIEVAL_RESULTS = 5
 CHATBOT_TEMPERATURE = 0.3
+CHATBOT_MAX_TOKENS = int(os.getenv("CHATBOT_MAX_TOKENS", "384"))
 
 # ===== Flask 설정 =====
 FLASK_HOST = os.getenv("FLASK_HOST", "0.0.0.0")
@@ -51,7 +55,8 @@ if not SECRET_KEY:
 # ===== 관리자 API 인증 =====
 ADMIN_API_KEY = os.getenv("ADMIN_API_KEY")
 
-# ===== Supabase service role 키 (관리자 작업용, RLS 우회) =====
+# ===== Supabase service role 키 (대화 이력·관리자 작업용, RLS 우회) =====
+# 브라우저에 노출하지 않으며 conversation_logs는 이 키를 사용하는 백엔드만 접근한다.
 SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "")
 
 # ===== CORS 허용 출처 (위젯 임베딩) =====
@@ -65,13 +70,17 @@ RATE_LIMIT_CHAT = os.getenv("RATE_LIMIT_CHAT", "10 per minute")
 
 # ===== 대화 이력 TTL (일 단위) =====
 CONVERSATION_TTL_DAYS = int(os.getenv("CONVERSATION_TTL_DAYS", "30"))
+# 개인정보 최소수집 원칙: 기본은 영구 저장하지 않고 메모리에서만 문맥 유지.
+PERSIST_CONVERSATIONS = os.getenv("PERSIST_CONVERSATIONS", "false").lower() == "true"
 
 # ===== 하이브리드 검색 가중치 (벡터:BM25) =====
-# 합이 1.0이 되도록 설정. 기본 0.7:0.3 (의미 검색 우선, 키워드 보조)
-HYBRID_VECTOR_WEIGHT = float(os.getenv("HYBRID_VECTOR_WEIGHT", "0.7"))
-HYBRID_BM25_WEIGHT = float(os.getenv("HYBRID_BM25_WEIGHT", "0.3"))
+# 합이 1.0이 되도록 설정. 50개 행정 질의 그리드 서치에서
+# 0.3:0.7이 Recall@1 96%, Recall@3/5 100%, MRR 0.977로 가장 우수했다.
+HYBRID_VECTOR_WEIGHT = float(os.getenv("HYBRID_VECTOR_WEIGHT", "0.30"))
+HYBRID_BM25_WEIGHT = float(os.getenv("HYBRID_BM25_WEIGHT", "0.70"))
 # BM25 후보 풀 크기 (벡터 검색 후 BM25로 재랭킹할 후보 수)
 HYBRID_BM25_TOP_N = int(os.getenv("HYBRID_BM25_TOP_N", "30"))
+BM25_FAST_PATH_MIN_SCORE = float(os.getenv("BM25_FAST_PATH_MIN_SCORE", "8.0"))
 
 # ===== 답변 신뢰도 게이트 =====
 # 검색된 최상위 문서의 "원본 벡터 유사도(코사인)"가 이 임계값 미만이면

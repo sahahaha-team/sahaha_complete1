@@ -9,7 +9,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from collections import deque
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.robotparser import RobotFileParser
 from dataclasses import dataclass, field
 from typing import Optional
@@ -257,8 +257,19 @@ class SahaCrawler:
             href = a["href"]
             full_url = urljoin(base_url, href)
             parsed = urlparse(full_url)
-            # 사하구청 도메인 내부 링크만
-            if "saha.go.kr" in parsed.netloc and parsed.scheme in ("http", "https"):
+            hostname = (parsed.hostname or "").lower()
+            is_official = hostname == "saha.go.kr" or hostname.endswith(".saha.go.kr")
+            # 첨부파일은 출처 메타데이터로 따로 보존하므로 일반 페이지 BFS에서 제외한다.
+            low = full_url.lower()
+            path_no_query = low.split("?", 1)[0]
+            is_attachment = path_no_query.endswith(self._ATTACHMENT_EXT) or any(
+                hint in low for hint in self._ATTACHMENT_HINTS
+            )
+            if (
+                is_official
+                and parsed.scheme in ("http", "https")
+                and not is_attachment
+            ):
                 links.append(full_url)
         return list(set(links))
 
@@ -266,6 +277,7 @@ class SahaCrawler:
     _ATTACHMENT_EXT = (
         ".pdf", ".hwp", ".hwpx", ".doc", ".docx",
         ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".txt", ".csv",
+        ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".ai",
     )
     _ATTACHMENT_HINTS = ("download", "filedown", "/fms/", "cmm/fms", "atchfile", "fileid")
 
@@ -286,7 +298,9 @@ class SahaCrawler:
 
             full_url = urljoin(base_url, href)
             parsed = urlparse(full_url)
-            if parsed.scheme not in ("http", "https") or "saha.go.kr" not in parsed.netloc:
+            hostname = (parsed.hostname or "").lower()
+            is_official = hostname == "saha.go.kr" or hostname.endswith(".saha.go.kr")
+            if parsed.scheme not in ("http", "https") or not is_official:
                 continue
 
             low = full_url.lower()
@@ -314,6 +328,7 @@ class SahaCrawler:
         start_url: str,
         max_pages: int = 50,
         known_urls: Optional[list] = None,
+        exclude_urls: Optional[set] = None,
     ) -> list[PageData]:
         """
         메뉴 BFS 크롤링.
@@ -331,7 +346,10 @@ class SahaCrawler:
           - transient_fail=True: 네트워크 오류 (보존)
         """
         results: list[PageData] = []
-        visited: set[str] = set()
+        # 한 증분 회차에서 앞선 메뉴가 이미 확인한 URL은 다시 요청하지 않는다.
+        # 사하구청 메뉴들이 서로 광범위하게 연결되어 있어 이 전역 중복 제거가 없으면
+        # 같은 페이지를 메뉴 수만큼 재다운로드하게 된다.
+        visited: set[str] = set(exclude_urls or set())
         queue: deque[str] = deque([start_url])
         known_set: set[str] = set(known_urls or [])
         if known_urls:
@@ -340,6 +358,8 @@ class SahaCrawler:
         bfs_new_count = 0  # BFS로 새로 발견하여 처리한 페이지 수 (known과 별도 집계)
 
         incremental = bool(self.cache_validators or known_urls)
+        menu_id = parse_qs(urlparse(start_url).query).get("mId", [""])[0]
+        menu_prefix = menu_id[:2] if len(menu_id) >= 2 else ""
         mode = "증분" if incremental else "전수"
         logger.info(
             f"[{menu_name}] {mode} 크롤링 시작: {start_url} "
@@ -411,7 +431,11 @@ class SahaCrawler:
                 )
 
             for link in page_data.links:
-                if link not in visited and self._is_target_url(link):
+                if (
+                    link not in visited
+                    and self._is_target_url(link)
+                    and self._belongs_to_menu(link, menu_prefix)
+                ):
                     queue.append(link)
 
             time.sleep(CRAWL_DELAY)
@@ -434,6 +458,14 @@ class SahaCrawler:
             "/english/", "/chinese/",
         ]
         return not any(p in url.lower() for p in exclude_patterns)
+
+    @staticmethod
+    def _belongs_to_menu(url: str, menu_prefix: str) -> bool:
+        """전역 메뉴 링크를 따라 다른 분야로 새 데이터가 잘못 분류되는 것을 막는다."""
+        if not menu_prefix:
+            return True
+        menu_id = parse_qs(urlparse(url).query).get("mId", [""])[0]
+        return len(menu_id) >= 2 and menu_id.startswith(menu_prefix)
 
     def close(self):
         if self.driver:

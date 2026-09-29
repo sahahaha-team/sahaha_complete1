@@ -4,7 +4,10 @@ Supabase 마이그레이션 적용 점검.
 확인 항목:
   - raw_pages.etag
   - raw_pages.last_modified
+  - raw_pages.last_checked_at
   - processed_chunks.department
+  - crawl_runs / ingestion_jobs 테이블
+  - conversation_logs / crawl_runs / ingestion_jobs 익명 SELECT 차단
 
 각 컬럼이 실제로 존재하는지 SELECT 한 줄로 검증하고,
 백필 진척도(채워진 행 수 / 전체 행 수)도 함께 출력한다.
@@ -48,8 +51,22 @@ def _count_filled(client, table: str, col: str) -> tuple[int, int]:
         return -1, -1
 
 
+def _anon_select_is_blocked(client, table: str) -> tuple[bool, str]:
+    """anon 역할이 민감한 운영 테이블을 SELECT하지 못하는지 검사."""
+    try:
+        client.table(table).select("*").limit(1).execute()
+        return False, "anon SELECT가 허용되어 있음"
+    except Exception as e:
+        return True, str(e).splitlines()[0][:200]
+
+
 def main():
-    client = get_supabase(admin=bool(SUPABASE_SERVICE_KEY))
+    if not SUPABASE_SERVICE_KEY:
+        print("[FAIL] SUPABASE_SERVICE_KEY가 없어 관리자 스키마 점검을 수행할 수 없습니다.")
+        sys.exit(1)
+
+    admin_client = get_supabase(admin=True)
+    anon_client = get_supabase(admin=False)
     print("=" * 60)
     print("Supabase Migration Check")
     print("=" * 60)
@@ -57,32 +74,48 @@ def main():
     checks = [
         ("raw_pages", "etag"),
         ("raw_pages", "last_modified"),
+        ("raw_pages", "last_checked_at"),
         ("processed_chunks", "department"),
+        ("crawl_runs", "id"),
+        ("ingestion_jobs", "id"),
     ]
 
     all_ok = True
     for table, col in checks:
-        ok, msg = _select_one(client, table, col)
+        ok, msg = _select_one(admin_client, table, col)
         mark = "OK " if ok else "FAIL"
         print(f"[{mark}] {table}.{col}: {msg}")
         if not ok:
             all_ok = False
 
     if not all_ok:
-        print("\n누락된 컬럼이 있습니다. setup_supabase.sql의 ALTER TABLE 문을")
-        print("Supabase Dashboard > SQL Editor에서 실행해주세요.")
+        print("\n누락된 테이블 또는 컬럼이 있습니다.")
+        print("scripts/migration_crawl_audit_and_security.sql을 SQL Editor에서 실행해주세요.")
         sys.exit(1)
+
+    print("\n--- RLS / anon 접근 차단 ---")
+    protected_tables = ["conversation_logs", "crawl_runs", "ingestion_jobs"]
+    for table in protected_tables:
+        blocked, msg = _anon_select_is_blocked(anon_client, table)
+        mark = "OK " if blocked else "FAIL"
+        print(f"[{mark}] anon SELECT {table}: {'차단됨' if blocked else msg}")
+        if not blocked:
+            all_ok = False
 
     print("\n--- 백필 진척도 ---")
     for table, col in checks:
-        filled, total = _count_filled(client, table, col)
+        filled, total = _count_filled(admin_client, table, col)
         if total < 0:
             print(f"  {table}.{col}: 집계 실패")
             continue
         pct = (filled / total * 100) if total else 0
         print(f"  {table}.{col}: {filled}/{total} ({pct:.1f}%)")
 
-    print("\n결과: 모든 컬럼 존재함. 다음 단계 진행 가능.")
+    if not all_ok:
+        print("\n결과: RLS 정책이 요구사항을 충족하지 않습니다.")
+        sys.exit(1)
+
+    print("\n결과: 스키마와 익명 접근 차단이 요구사항을 충족합니다.")
 
 
 if __name__ == "__main__":

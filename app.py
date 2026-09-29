@@ -7,6 +7,7 @@
 
 import uuid
 import logging
+import time
 from contextlib import asynccontextmanager
 from typing import Optional
 
@@ -30,6 +31,7 @@ from config import (
     CORS_ALLOWED_ORIGINS,
     RATE_LIMIT_CHAT,
 )
+from chatbot.ollama_runtime import get_ollama_status
 
 logger = logging.getLogger(__name__)
 
@@ -52,16 +54,24 @@ class Source(BaseModel):
     service_type: str = "기타"
     department: str = ""  # 담당 부서명 (LLM 태깅, 본문 미명시 시 빈 문자열)
     contact: str = ""     # 담당부서 연락처 (직통번호 없으면 대표전화 폴백)
-    attachments: list[Attachment] = []  # 게시물 첨부파일(PDF/HWP 등) 다운로드 링크
+    attachments: list[Attachment] = Field(default_factory=list)  # 게시물 첨부파일(PDF/HWP 등) 다운로드 링크
+
+
+class Evidence(BaseModel):
+    status: str = "unavailable"
+    label: str = "근거 상태를 확인할 수 없음"
+    official_source_count: int = 0
 
 
 class ChatResponse(BaseModel):
     answer: str
-    sources: list[Source]
+    sources: list[Source] = Field(default_factory=list)
     is_clarification: bool
     # 검색/태깅/LLM 단계의 부분 실패 신호. True면 프론트가 안내 배너 표시.
     degraded: bool = False
     degraded_reason: Optional[str] = None
+    evidence: Evidence = Field(default_factory=Evidence)
+    suggested_questions: list[str] = Field(default_factory=list)
 
 
 class ClearResponse(BaseModel):
@@ -99,59 +109,23 @@ def get_vector_store():
     return _vector_store
 
 
-# ===== APScheduler (lifespan에서 시작/종료) =====
-
-_scheduler = None
-
-
-def _init_scheduler():
-    global _scheduler
-    from apscheduler.schedulers.background import BackgroundScheduler
-    from config import CONVERSATION_TTL_DAYS
-
-    # 순환 import 방지를 위해 main.py의 job 함수는 lazy import
-    from main import run_incremental, cleanup_old_conversations_job
-
-    _scheduler = BackgroundScheduler()
-    _scheduler.add_job(
-        func=run_incremental, trigger="cron", hour=3, minute=0,
-        id="incremental_crawl", misfire_grace_time=3600,
-    )
-    _scheduler.add_job(
-        func=cleanup_old_conversations_job, trigger="cron", hour=4, minute=0,
-        id="conversation_ttl_cleanup", misfire_grace_time=3600,
-    )
-    _scheduler.start()
-    logger.info(
-        f"=== 스케줄러 등록 (증분 크롤링 03:00 / 대화 이력 {CONVERSATION_TTL_DAYS}일 정리 04:00) ==="
-    )
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """앱 시작/종료 lifecycle hook"""
     logger.info("=== 사하구청 AI 상담사 웹 서버 시작 ===")
-    logger.info("챗봇 사전 초기화 중 (임베딩/NER/BM25 모델 로딩)...")
+    logger.info("챗봇 사전 초기화 중 (임베딩/BM25 모델 로딩)...")
+    ollama = await run_in_threadpool(get_ollama_status)
+    if ollama["model_ready"]:
+        logger.info(f"Ollama 준비 완료: {ollama['model']}")
+    else:
+        logger.warning(ollama["message"])
     try:
         await run_in_threadpool(get_chatbot)
         logger.info("챗봇 사전 초기화 완료")
     except Exception as e:
         logger.warning(f"챗봇 사전 초기화 실패 (첫 요청 시 재시도): {e}")
 
-    try:
-        _init_scheduler()
-    except Exception as e:
-        logger.error(f"스케줄러 초기화 실패: {e}")
-
     yield
-
-    # shutdown
-    if _scheduler is not None:
-        try:
-            _scheduler.shutdown(wait=False)
-            logger.info("스케줄러 종료")
-        except Exception as e:
-            logger.warning(f"스케줄러 종료 실패: {e}")
 
 
 # ===== FastAPI 앱 =====
@@ -178,6 +152,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
+    expose_headers=["Server-Timing"],
 )
 
 # 정적 파일 / 템플릿 (Flask와 동일 경로)
@@ -190,9 +165,13 @@ templates = Jinja2Templates(directory="templates")
 @app.middleware("http")
 async def security_headers(request: Request, call_next):
     """클릭재킹/XSS 방지 보안 헤더 부착"""
+    started = time.perf_counter()
     response = await call_next(request)
     allowed = " ".join(CORS_ALLOWED_ORIGINS) if CORS_ALLOWED_ORIGINS else "'self'"
-    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    # 공식 홈페이지에 삽입되는 위젯은 CSP frame-ancestors로 허용 출처를 제한한다.
+    # SAMEORIGIN을 함께 보내면 브라우저가 saha.go.kr의 iframe까지 차단할 수 있다.
+    if request.url.path != "/widget":
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Content-Security-Policy"] = (
@@ -203,6 +182,7 @@ async def security_headers(request: Request, call_next):
         "img-src 'self' data: https:; "
         "connect-src 'self'"
     )
+    response.headers["Server-Timing"] = f"app;dur={(time.perf_counter() - started) * 1000:.1f}"
     return response
 
 
@@ -236,6 +216,51 @@ async def widget(request: Request):
     return templates.TemplateResponse(request, "widget.html")
 
 
+@app.get("/system", response_class=HTMLResponse)
+async def system_dashboard(request: Request):
+    """발표·운영 점검용 비민감 시스템 상태 화면."""
+    return templates.TemplateResponse(request, "system.html")
+
+
+@app.get("/api/health")
+async def health():
+    """웹·Ollama 준비 상태를 운영 점검용으로 제공한다."""
+    ollama = await run_in_threadpool(get_ollama_status)
+    return {
+        "status": "ok" if ollama["model_ready"] else "degraded",
+        "llm_provider": "ollama",
+        "ollama": ollama,
+    }
+
+
+@app.get("/api/system-status")
+async def system_status():
+    """콘텐츠를 노출하지 않고 구성요소별 상태와 건수만 반환한다."""
+    ollama = await run_in_threadpool(get_ollama_status)
+    try:
+        db = get_db()
+        vs = get_vector_store()
+        vector_stats = await run_in_threadpool(vs.collection_stats)
+        queue_stats = await run_in_threadpool(db.ingestion_queue_stats)
+        latest_crawl = await run_in_threadpool(db.latest_crawl_run)
+        search_ready = vector_stats.get("total_vectors", 0) > 0
+    except Exception as exc:
+        logger.warning(f"시스템 상태 DB 점검 실패: {exc}")
+        vector_stats = {"total_vectors": 0}
+        queue_stats = {"available": False, "queued": 0, "running": 0, "succeeded": 0, "failed": 0}
+        latest_crawl = None
+        search_ready = False
+    return {
+        "status": "ok" if ollama["model_ready"] and search_ready and queue_stats["available"] else "degraded",
+        "web": {"ready": True},
+        "ollama": ollama,
+        "search": {"ready": search_ready, **vector_stats},
+        "queue": queue_stats,
+        "latest_crawl": latest_crawl,
+        "privacy": {"conversation_persistence": False},
+    }
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 @limiter.limit(RATE_LIMIT_CHAT)
 async def chat(request: Request, payload: ChatRequest):
@@ -262,6 +287,12 @@ async def chat(request: Request, payload: ChatRequest):
                 "is_clarification": False,
                 "degraded": True,
                 "degraded_reason": "internal_error",
+                "evidence": {
+                    "status": "unavailable",
+                    "label": "서비스 연결을 확인할 수 없음",
+                    "official_source_count": 0,
+                },
+                "suggested_questions": [],
             },
         )
 

@@ -28,7 +28,7 @@
                     </svg>
                 </div>
                 <div class="header-title">
-                    <h1>사하구청 AI 상담사</h1>
+                    <h1>고우니 AI 상담사</h1>
                 </div>
             </div>
             <div class="header-actions">
@@ -42,14 +42,12 @@
         <main class="chat-messages" id="chat-messages">
             <div class="message bot-message welcome-message">
                 <div class="message-avatar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="10" fill="#0066CC"/>
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#fff"/>
-                    </svg>
+                    <img src="/static/images/hi.png" alt="사하구 마스코트 고우니" class="bot-avatar-img hi">
                 </div>
                 <div class="message-content">
                     <div class="message-bubble">
-                        <p>안녕하세요! <strong>사하구청 AI 상담사</strong>입니다. 무엇이 궁금하신가요?</p>
+                        <div class="welcome-kicker">사하생활 길잡이</div>
+                        <p>안녕하세요! 공식 행정정보를 찾아드리는 <strong>고우니</strong>예요.</p>
                         <div class="quick-actions">
                             <button class="quick-btn" data-msg="사하구청 위치와 연락처 알려줘">구청 위치</button>
                             <button class="quick-btn" data-msg="복지 지원 서비스 종류 알려줘">복지 서비스</button>
@@ -68,6 +66,7 @@
                     </svg>
                 </button>
             </div>
+            <div class="input-notice">공식 자료 기반 · 대화 내용 영구 저장 안 함 · 개인정보 입력 금지</div>
         </footer>
     </div>
     <script src="/static/js/chat.js"></script>

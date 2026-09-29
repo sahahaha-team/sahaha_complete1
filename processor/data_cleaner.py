@@ -9,11 +9,30 @@ import re
 import logging
 import hashlib
 from dataclasses import dataclass, field
+from urllib.parse import urlparse
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from config import CHUNK_SIZE, CHUNK_OVERLAP
+from chatbot.dept_directory import extract_explicit_department
 
 logger = logging.getLogger(__name__)
+
+_NON_PAGE_EXTENSIONS = (
+    ".pdf", ".hwp", ".hwpx", ".doc", ".docx", ".xls", ".xlsx",
+    ".ppt", ".pptx", ".zip", ".txt", ".csv", ".jpg", ".jpeg",
+    ".png", ".gif", ".webp", ".svg", ".ai",
+)
+
+
+def is_non_page_url(url: str) -> bool:
+    """파일 다운로드·이미지 URL을 검색 본문으로 처리하지 않는다."""
+    path = urlparse(url or "").path.lower()
+    return (
+        "/filedown" in path
+        or "/cmm/fms/" in path
+        or "/images/" in path
+        or path.endswith(_NON_PAGE_EXTENSIONS)
+    )
 
 
 @dataclass
@@ -26,6 +45,7 @@ class CleanedChunk:
     sub_category: str
     chunk_index: int
     total_chunks: int
+    department_hint: str = ""
     # 페이지 첨부파일 목록 [{"name","url"}] — 같은 페이지의 모든 청크가 공유
     attachments: list = field(default_factory=list)
 
@@ -96,6 +116,9 @@ class DataCleaner:
 
     def process(self, page_data) -> list[CleanedChunk]:
         """PageData → CleanedChunk 리스트 변환"""
+        if is_non_page_url(getattr(page_data, "url", "")):
+            logger.info(f"  비페이지 URL 제외: {page_data.url}")
+            return []
         cleaned = self.clean_text(page_data.content)
 
         if not self.is_valid_content(cleaned):
@@ -107,6 +130,7 @@ class DataCleaner:
         result = []
         skipped = 0
         attachments = getattr(page_data, "attachments", None) or []
+        department_hint = extract_explicit_department(cleaned)
 
         for i, chunk in enumerate(chunks):
             chunk_id = hashlib.md5(f"{page_data.url}_{i}".encode()).hexdigest()
@@ -125,6 +149,7 @@ class DataCleaner:
                 sub_category=page_data.sub_category,
                 chunk_index=i,
                 total_chunks=len(chunks),
+                department_hint=department_hint,
                 attachments=attachments,
             ))
 

@@ -13,8 +13,8 @@ webdriver-manager
 supabase
 langchain
 langchain-google-genai
-langchain-groq
 langchain-community
+langchain-ollama
 langchain-huggingface
 langchain-text-splitters
 sentence-transformers

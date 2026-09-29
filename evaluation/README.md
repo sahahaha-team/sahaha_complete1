@@ -33,7 +33,7 @@
 
 ## 실행
 
-`.env` 가 정상 설정된 상태에서 (Supabase + Groq 키 + Kiwi 모델 준비됨):
+`.env` 가 정상 설정된 상태에서 (Supabase + Ollama 모델 + Kiwi 모델 준비됨):
 
 ```bash
 python -m evaluation.grid_search
@@ -92,12 +92,12 @@ python -m evaluation.grid_search
 
 ```bash
 python -m evaluation.accuracy_eval              # 전체
-python -m evaluation.accuracy_eval --limit 5    # 앞 5개만 (Groq 토큰 절약)
+python -m evaluation.accuracy_eval --limit 5    # 앞 5개만 빠르게 점검
 python -m evaluation.accuracy_eval --delay 1.0  # 질문 사이 추가 지연
 ```
 
 - 각 질의는 **새 세션**으로 평가하고(이전 대화 오염 방지), 끝나면 대화 로그를 정리한다.
-- 실제 LLM(Groq)을 호출하므로 **무료티어 일일 토큰 한도**를 소비한다. 한도 초과(429)는
+- 실제 로컬 Ollama 모델을 호출하므로 **Ollama 서버와 설정 모델이 실행 중**이어야 한다. 연결 실패는
   정답/오답이 아닌 `error`로 분류해 **정답률 분모에서 제외**한다.
 
 ## 결과 활용

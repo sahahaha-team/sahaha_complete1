@@ -24,6 +24,8 @@ class Database:
         if admin is None:
             admin = bool(SUPABASE_SERVICE_KEY)
         self.client = get_supabase(admin=admin)
+        self._last_checked_supported = None
+        self._ingestion_queue_supported = None
 
     # ===== 크롤링 데이터 =====
 
@@ -83,8 +85,9 @@ class Database:
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }).eq("url", page_data.url).execute()
 
-        # 해당 URL의 기존 청크 삭제
-        self.client.table("processed_chunks").delete().eq("url", page_data.url).execute()
+        # 파생 청크/벡터는 새 버전의 처리와 임베딩이 성공한 뒤 정리한다.
+        # 여기서 먼저 삭제하면 태깅 모델·임베딩 모델 장애 시 검색 가능한
+        # 기존 데이터까지 사라질 수 있다.
         return "updated"
 
     def _update_cache_validators_if_present(self, page_data):
@@ -100,6 +103,109 @@ class Database:
             }).eq("url", page_data.url).execute()
         except Exception as e:
             logger.warning(f"캐시 검증자 갱신 실패 ({page_data.url}): {e}")
+
+    def mark_page_checked(self, url: str):
+        """증분 회차에서 URL을 확인한 시각을 기록한다(구버전 스키마에서는 무시)."""
+        if self._last_checked_supported is False:
+            return
+        try:
+            self.client.table("raw_pages").update({
+                "last_checked_at": datetime.now(timezone.utc).isoformat(),
+            }).eq("url", url).execute()
+            self._last_checked_supported = True
+        except Exception as e:
+            self._last_checked_supported = False
+            logger.warning(f"last_checked_at 기록 비활성화(마이그레이션 필요): {e}")
+
+    def start_crawl_run(self, mode: str = "incremental", menu: str = None):
+        """크롤링 실행 감사 레코드를 만들고 ID를 반환한다."""
+        try:
+            result = self.client.table("crawl_runs").insert({
+                "mode": mode,
+                "menu": menu,
+                "status": "running",
+            }).execute()
+            return result.data[0]["id"] if result.data else None
+        except Exception as e:
+            logger.warning(f"crawl_runs 시작 기록 생략(마이그레이션 필요): {e}")
+            return None
+
+    def finish_crawl_run(self, run_id, status: str, stats: dict, error_message: str = None):
+        """크롤링 결과를 감사 레코드에 마감 기록한다."""
+        if run_id is None:
+            return
+        try:
+            self.client.table("crawl_runs").update({
+                "status": status,
+                "finished_at": datetime.now(timezone.utc).isoformat(),
+                "new_count": int(stats.get("new", 0)),
+                "updated_count": int(stats.get("updated", 0)),
+                "unchanged_count": int(stats.get("unchanged", 0)),
+                "deleted_count": int(stats.get("deleted", 0)),
+                "error_message": (error_message or "")[:1000] or None,
+            }).eq("id", run_id).execute()
+        except Exception as e:
+            logger.warning(f"crawl_runs 완료 기록 실패: {e}")
+
+    def enqueue_ingestion_job(self, url: str, category: str = None):
+        """변경 URL을 영속 작업 큐에 등록한다(마이그레이션 전에는 안전하게 생략)."""
+        if self._ingestion_queue_supported is False:
+            return None
+        try:
+            result = self.client.rpc("enqueue_ingestion_job", {
+                "job_url": url,
+                "job_category": category,
+            }).execute()
+            self._ingestion_queue_supported = True
+            return result.data
+        except Exception as e:
+            self._ingestion_queue_supported = False
+            logger.warning(f"ingestion_jobs 큐 비활성화(마이그레이션 필요): {e}")
+            return None
+
+    def update_ingestion_jobs(self, urls: list[str], status: str, error_message: str = None):
+        if not urls or self._ingestion_queue_supported is False:
+            return
+        values = {
+            "status": status,
+            "error_message": (error_message or "")[:1000] or None,
+        }
+        now = datetime.now(timezone.utc).isoformat()
+        if status == "running":
+            values.update({"started_at": now, "finished_at": None})
+        elif status in ("succeeded", "failed"):
+            values["finished_at"] = now
+        try:
+            for offset in range(0, len(urls), 100):
+                self.client.table("ingestion_jobs").update(values).in_(
+                    "url", urls[offset:offset + 100]
+                ).execute()
+            self._ingestion_queue_supported = True
+        except Exception as e:
+            self._ingestion_queue_supported = False
+            logger.warning(f"ingestion_jobs 상태 갱신 생략: {e}")
+
+    def ingestion_queue_stats(self) -> dict:
+        """관리 화면용 상태별 작업 수. 테이블 미적용 시 available=False."""
+        try:
+            rows = self.client.table("ingestion_jobs").select("status").range(0, 9999).execute().data or []
+            counts = {"queued": 0, "running": 0, "succeeded": 0, "failed": 0}
+            for row in rows:
+                status = row.get("status")
+                if status in counts:
+                    counts[status] += 1
+            return {"available": True, **counts}
+        except Exception:
+            return {"available": False, "queued": 0, "running": 0, "succeeded": 0, "failed": 0}
+
+    def latest_crawl_run(self) -> dict | None:
+        try:
+            rows = self.client.table("crawl_runs").select(
+                "status,new_count,updated_count,unchanged_count,deleted_count,started_at,finished_at,error_message"
+            ).order("started_at", desc=True).limit(1).execute().data or []
+            return rows[0] if rows else None
+        except Exception:
+            return None
 
     def get_cache_validators(self) -> dict:
         """
@@ -124,7 +230,29 @@ class Database:
 
     def delete_page(self, url: str):
         self.client.table("processed_chunks").delete().eq("url", url).execute()
+        self._delete_documents_by_url(url)
         self.client.table("raw_pages").delete().eq("url", url).execute()
+
+    def _delete_documents_by_url(self, url: str):
+        """원문 변경·삭제 시 이전 벡터가 검색 결과에 남지 않도록 제거한다."""
+        try:
+            self.client.table("documents").delete().eq("metadata->>url", url).execute()
+        except Exception as e:
+            # 구버전 PostgREST에서 JSON 경로 필터가 제한돼도 원문 처리는 계속한다.
+            # 운영 점검 스크립트가 이후 stale document를 다시 정리한다.
+            logger.warning(f"기존 벡터 삭제 실패 ({url}): {e}")
+
+    def delete_stale_derived_for_urls(self, valid_chunk_ids_by_url: dict[str, set[str]]):
+        """새 버전 저장 후 URL별로 더 이상 쓰이지 않는 청크/벡터만 제거한다."""
+        for url, valid_ids in valid_chunk_ids_by_url.items():
+            rows = self.client.table("processed_chunks").select("chunk_id").eq("url", url).execute().data or []
+            stale_ids = [row["chunk_id"] for row in rows if row["chunk_id"] not in valid_ids]
+            for offset in range(0, len(stale_ids), 100):
+                batch = stale_ids[offset:offset + 100]
+                if not batch:
+                    continue
+                self.client.table("processed_chunks").delete().in_("chunk_id", batch).execute()
+                self.client.table("documents").delete().in_("id", batch).execute()
 
     def get_pages_by_urls(self, urls: list) -> list:
         if not urls:
