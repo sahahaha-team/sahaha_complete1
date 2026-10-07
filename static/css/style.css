@@ -223,6 +223,7 @@ body.dark-mode .bot-avatar-img.no { content: url('/static/images/no2.png') !impo
 .message-bubble p:last-child { margin-bottom: 0; }
 .message-bubble strong { font-weight: 700; }
 .message-bubble .answer-highlight { display: inline-block; padding: 0.15em 0.45em; margin: 0.05em 0; border-radius: 8px; background: rgba(255, 193, 7, 0.18); color: var(--text); font-weight: 700; }
+.message-bubble .source-excerpt { margin: 0.8em 0; padding: 0.6em 0.9em; border-left: 3px solid var(--text-secondary, #888); font-size: 0.95em; line-height: 1.65; overflow-wrap: anywhere; }
 .message-bubble ul, .message-bubble ol { margin: 0.5em 0; padding-left: 1.25em; }
 .message-bubble li { margin-bottom: 0.35em; }
 .message-bubble a { color: inherit; }
@@ -367,4 +368,27 @@ body.dark-mode .btn-mic:hover { background: rgba(255, 255, 255, 0.1); }
 @media (max-width: 460px) {
   .system-grid { grid-template-columns: 1fr; }
   .system-panel div { flex-direction: column; gap: 6px; }
+}
+/* The primary reply stays short; the verified source is available on demand. */
+.answer-details {
+    margin-top: 8px;
+    font-size: 0.88rem;
+    color: inherit;
+}
+.answer-details summary {
+    cursor: pointer;
+    padding: 6px 0;
+    font-weight: 600;
+}
+.answer-details summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+.answer-details-body {
+    margin-top: 6px;
+    padding: 12px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
 }

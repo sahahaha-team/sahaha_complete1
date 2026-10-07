@@ -27,4 +27,5 @@ python-dotenv
 tqdm
 apscheduler
 pdfplumber
+openpyxl
 olefile

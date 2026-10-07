@@ -9,8 +9,8 @@ from __future__ import annotations
 import json
 import logging
 import re
-from functools import lru_cache
 from pathlib import Path
+from datetime import datetime, timezone, timedelta
 
 from crawler.staff_directory import OUTPUT_PATH as STAFF_DIRECTORY_PATH, refresh_directory
 
@@ -25,7 +25,6 @@ MANUAL_DEPT_ALIASES = {
     "기획과": "기획실",
     "홍보과": "기획실",
     "전산과": "정보통신과",
-    "ai담당부서": "기획실",
 }
 
 _DIRECTORY_REFRESH_ATTEMPTED = False
@@ -44,13 +43,19 @@ def _default_directory() -> dict:
     }
 
 
-@lru_cache(maxsize=1)
 def _load_directory() -> dict:
     global _DIRECTORY_REFRESH_ATTEMPTED
 
     if STAFF_DIRECTORY_PATH.exists():
         try:
-            return json.loads(STAFF_DIRECTORY_PATH.read_text(encoding="utf-8"))
+            data = json.loads(STAFF_DIRECTORY_PATH.read_text(encoding="utf-8"))
+            checked_at = datetime.fromisoformat(str(data.get("generated_at", "")).replace("Z", "+00:00"))
+            if checked_at.tzinfo is None:
+                checked_at = checked_at.replace(tzinfo=timezone.utc)
+            if checked_at >= datetime.now(timezone.utc) - timedelta(days=7):
+                return data
+            logger.warning("Staff directory cache is older than seven days; ignoring it")
+            return _default_directory()
         except Exception as exc:
             logger.warning("Failed to read staff directory cache: %s", exc)
 
@@ -66,8 +71,9 @@ def _load_directory() -> dict:
 
 def refresh_staff_directory() -> dict:
     """Force a fresh crawl from the official staff directory page."""
-    _load_directory.cache_clear()
     data = refresh_directory(STAFF_DIRECTORY_PATH)
+    from scripts.build_contact_directory import build_contact_directory
+    build_contact_directory(data)
     return data
 
 
@@ -179,26 +185,55 @@ def get_contact(dept: str) -> str:
     return REP_PHONE
 
 
+def is_staff_lookup(query: str) -> bool:
+    """Recognize an explicit request for the office/person responsible for work."""
+    compact = _compact(query)
+    return any(word in compact for word in (
+        "담당부서", "담당자", "담당하는부서", "어느부서", "무슨부서",
+        "부서알려", "부서는", "부서어디", "부서찾", "누가담당", "담당연락처",
+        "담당전화", "담당직원", "계장", "팀장", "주무관", "과장", "실장",
+    )) or ("담당" in compact and any(word in compact for word in ("부서", "연락", "전화", "누구", "어디")))
+
+
+def staff_subject_terms(query: str) -> set[str]:
+    """Extract actual duties rather than generic 'department/contact' words."""
+    text = (query or "").lower()
+    text = re.sub(r"(?<![a-z])a\.?i\.?(?![a-z])|인공지능", " 인공지능 ", text)
+    # Keep '구청장' as a role, while removing the institution name.
+    text = re.sub(r"사하구청(?!장)|사하구|부산광역시", " ", text)
+    for word in (
+        "알려주세요", "알려줘", "안내해주세요", "해주세요", "담당하는", "담당자",
+        "전화번호", "연락처", "담당", "부서", "직원", "업무", "전화", "번호",
+        "어디인가요", "누구인가요", "어느", "무슨", "누구", "어디", "문의",
+        "궁금", "찾아줘", "가르쳐줘", "알려", "구청",
+    ):
+        if word == "구청":
+            text = re.sub(r"구청(?!장)", " ", text)
+        else:
+            text = text.replace(word, " ")
+    terms = set()
+    for token in re.findall(r"[가-힣]{2,}|[a-z]{2,}", text):
+        token = re.sub(r"(?:인가요|하나요|있나요|입니다|알려줘|알려주세요)$", "", token)
+        if len(token) >= 3 and token[-1] in "은는이가을를의":
+            token = token[:-1]
+        if len(token) >= 2 and token not in {"있어", "하는", "대한", "에서", "나요", "인가요"}:
+            terms.add(token)
+    return terms
+
+
+def _subject_text(value: str) -> str:
+    return re.sub(r"(?<![a-z])a\.?i\.?(?![a-z])", "인공지능", (value or "").lower())
+
+
 def search_staff_directory(query: str, limit: int = 5) -> list[dict]:
     """Find the best matching official staff-directory rows for a query."""
     query_text = (query or "").strip()
     if not query_text:
         return []
 
-    q_compact = _compact(query_text)
-    q_lower = query_text.lower()
-    expanded_terms = set()
-    expanded_query = q_lower
-    if "ai" in q_lower or "인공지능" in query_text:
-        expanded_terms.update({"ai", "인공지능", "디지털", "정보화", "전산"})
-    if "연락처" in query_text or "전화" in query_text:
-        expanded_terms.update({"전화번호", "전화", "연락처", "담당", "부서"})
-    tokens = {
-        token
-        for token in re.split(r"[\s,./]+", query_text)
-        if len(token.strip()) >= 2
-    }
-    expanded_terms.update(token.lower() for token in tokens)
+    subjects = staff_subject_terms(query_text)
+    if not subjects:
+        return []
 
     scored: list[tuple[float, dict]] = []
     for row in _row_records():
@@ -209,30 +244,15 @@ def search_staff_directory(query: str, limit: int = 5) -> list[dict]:
         if not dept and not title and not duties:
             continue
 
-        haystack = " ".join([dept, title, duties, phone]).lower()
-        score = 0.0
-
-        if q_compact and q_compact in _compact(dept):
-            score += 5.0
-        if q_compact and q_compact in _compact(title):
-            score += 4.0
-        if q_compact and q_compact in _compact(duties):
-            score += 3.0
-        if q_lower in haystack or expanded_query in haystack:
-            score += 2.5
-        for term in expanded_terms:
-            if term and term in haystack:
-                if term in {"ai", "인공지능", "디지털", "정보화", "전산"}:
-                    score += 2.0
-                else:
-                    score += 0.6
-        if "담당부서" in q_lower and "담당" in haystack:
-            score += 1.0
-
-        for token in tokens:
-            token_lower = token.lower()
-            if token_lower in haystack:
-                score += 0.8
+        fields = [_subject_text(value) for value in (dept, title, duties, phone)]
+        matched = {term for term in subjects if any(term in field for field in fields)}
+        if not matched:
+            continue
+        score = sum(4 * (term in fields[0]) + 8 * (term in fields[1]) +
+                    6 * (term in fields[2]) + (term in fields[3]) for term in matched)
+        # A role that explicitly names the work outranks an incidental mention
+        # of that work in another service (e.g. a library's AI storytelling).
+        score *= len(matched) / len(subjects)
 
         if score > 0:
             scored.append((score, row))
@@ -249,6 +269,8 @@ def search_staff_directory(query: str, limit: int = 5) -> list[dict]:
                 "title": row.get("title", ""),
                 "contact": row.get("phone", "") or get_contact(dept),
                 "duties": row.get("duties", ""),
+                "matched_subjects": sorted(term for term in subjects if term in _subject_text(
+                    " ".join(str(row.get(key) or "") for key in ("department", "title", "duties", "phone")))),
                 "url": row.get("source_url", "") or row.get("url", "") or STAFF_DIRECTORY_PAGE_URL,
             }
         )

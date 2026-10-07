@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
+import tempfile
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -99,21 +101,25 @@ class StaffDirectoryCrawler:
         first_html = self.fetch_page(1)
         first_soup = BeautifulSoup(first_html, "lxml")
         total_pages = self._extract_total_pages(first_soup)
+        count_match = re.search(r"Total\s*([\d,]+)", first_soup.get_text(" ", strip=True))
         logger.info("Staff directory pages detected: %s", total_pages)
 
         all_rows = self.parse_rows(first_html, 1)
+        if not all_rows:
+            raise ValueError("직원업무안내 첫 페이지를 읽을 수 없습니다. 기존 파일을 유지합니다.")
         for page in range(2, total_pages + 1):
             try:
                 html = self.fetch_page(page)
                 rows = self.parse_rows(html, page)
                 if not rows:
-                    logger.info("Stopping staff crawl at page %s because no rows were returned", page)
-                    break
+                    raise ValueError(f"직원업무안내 {page}페이지가 비어 있습니다.")
                 all_rows.extend(rows)
             except Exception as exc:
                 logger.warning("Failed to fetch staff directory page %s: %s", page, exc)
-                break
+                raise RuntimeError(f"직원업무안내 {page}페이지 갱신 실패. 기존 파일을 유지합니다.") from exc
 
+        if count_match and len(all_rows) != int(count_match.group(1).replace(",", "")):
+            raise RuntimeError("직원업무안내 전체 건수가 일치하지 않습니다. 기존 파일을 유지합니다.")
         return all_rows
 
 
@@ -182,7 +188,14 @@ def _is_better_phone_candidate(title: str, phone: str) -> bool:
 
 def save_directory(data: dict, path: Path = OUTPUT_PATH) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent,
+                                     suffix=".tmp", delete=False) as handle:
+        temporary = Path(handle.name)
+        json.dump(data, handle, ensure_ascii=False, indent=2)
+    try:
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
     return path
 
 

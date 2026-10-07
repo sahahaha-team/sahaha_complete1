@@ -7,20 +7,31 @@
 
 import re
 import logging
+import json
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
 from database_db.vector_store import VectorStore
 from database_db.database import Database
-from chatbot.dept_directory import correct_dept, get_contact, search_staff_directory
+from chatbot.dept_directory import (
+    correct_dept, get_contact, search_staff_directory, is_staff_lookup, staff_subject_terms,
+)
 from chatbot.evidence import (
     assess_evidence as evaluate_evidence,
     is_official_document,
     select_grounded_results as filter_grounded_results,
+    filter_time_compatible,
+    is_answerable_document,
+    topic_support,
 )
+from chatbot.query_subject import normalize_query, subject_query, substantive_keywords, fallback_keywords
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
     HYBRID_BM25_TOP_N,
     BM25_FAST_PATH_MIN_SCORE,
     CONFIDENCE_MIN_SIMILARITY,
+    SOURCE_MAX_AGE_DAYS,
+    SOURCE_DYNAMIC_MAX_AGE_DAYS,
 )
 
 logger = logging.getLogger(__name__)
@@ -56,14 +67,15 @@ class HybridRetriever:
     def detect_category(self, query: str) -> dict:
         """질문에서 카테고리/서비스유형 힌트 감지"""
         category_keywords = {
-            "분야별정보": ["분야", "정보", "시정", "행정"],
+            "정보공개": ["정보공개", "공시", "예산", "결산", "감사"],
             "사하복지": ["복지", "지원", "수당", "돌봄", "보육", "장애", "노인", "어르신", "아동"],
             "전자민원": ["민원", "신청", "발급", "증명", "신고", "등록", "허가"],
-            "정보공개": ["정보공개", "공시", "예산", "결산", "감사"],
+            "분야별정보": ["분야별정보", "시정", "행정"],
             "구민참여": ["참여", "제안", "청원", "설문", "공모"],
             "사하소개": ["사하구", "구청장", "조직", "연혁", "위치", "오시는"],
         }
         service_keywords = {
+            "통계": ["통계", "분석", "방문자", "검색어", "청구건수"],
             "민원": ["민원", "신청", "발급", "증명서", "등본", "초본"],
             "복지": ["복지", "지원금", "수당", "바우처", "돌봄"],
             "세금": ["세금", "납부", "세무", "지방세", "재산세", "자동차세"],
@@ -71,6 +83,7 @@ class HybridRetriever:
             "환경": ["환경", "쓰레기", "재활용", "분리수거", "청소"],
             "교육": ["교육", "학교", "평생학습", "강좌", "수강"],
             "문화": ["문화", "축제", "공연", "체육", "도서관"],
+            "보건": ["보건", "건강", "진료", "접종", "검진", "임산부", "치매"],
         }
 
         detected = {}
@@ -87,6 +100,40 @@ class HybridRetriever:
                 break
 
         return detected
+
+    def search_official_url(self, query: str, url: str, k: int = 15) -> dict:
+        """Search the live page named by a verified workbook question."""
+        try:
+            rows = self.db.client.table("documents").select("id,content,metadata").eq(
+                "metadata->>url", url
+            ).execute().data or []
+        except Exception as exc:
+            logger.warning("질문 목록 공식 URL 검색 실패: %s", exc)
+            return {"results": [], "degraded": True, "reason": "faq_source_failed"}
+        keywords = self._content_keywords(query)
+        bm25_scores = {}
+        if self.bm25 and self.bm25.enabled:
+            bm25_scores = {row["id"]: row["bm25_score"] for row in self.bm25.search(query, top_n=100)}
+        ranked = []
+        for row in rows:
+            meta = row.get("metadata") or {}
+            if isinstance(meta, str):
+                try:
+                    meta = json.loads(meta)
+                except ValueError:
+                    meta = {}
+            content = row.get("content") or ""
+            overlap = sum(keyword in f"{meta.get('title', '')} {content}" for keyword in keywords)
+            ranked.append({
+                "id": row["id"], "content": content, "metadata": meta,
+                "similarity": 0.0, "vector_similarity": 0.0,
+                "bm25_score": max(1.0, float(bm25_scores.get(row["id"], 0.0))),
+                "_overlap": overlap,
+            })
+        ranked.sort(key=lambda doc: (doc["_overlap"], doc["bm25_score"]), reverse=True)
+        for doc in ranked:
+            doc.pop("_overlap", None)
+        return {"results": ranked[:k], "degraded": False, "reason": None}
 
     def _hybrid_combine(self, query: str, vector_results: list[dict], k: int) -> list[dict]:
         """
@@ -178,8 +225,10 @@ class HybridRetriever:
                         "service_type": "기타",
                         "department": dept,
                         "contact": phone,
+                        "source_type": "staff_directory",
                     },
                     "similarity": min(1.0, float(hit.get("score", 0.0)) / top_score),
+                    "bm25_score": float(hit.get("score", 0.0)),
                 }
             )
         return docs
@@ -237,8 +286,16 @@ class HybridRetriever:
             - bm25_failed: BM25 인덱스가 비활성 상태라 키워드 보정 불가
               (벡터 결과만으로 응답하므로 정확도가 평소보다 낮을 수 있음)
         """
+        query = normalize_query(query)
         hints = self.detect_category(query)
         logger.info(f"검색 힌트: {hints}")
+
+        # Responsibility questions require a matching duty/role. Re-ranking
+        # with generic board columns such as '담당부서' must not replace them.
+        if is_staff_lookup(query):
+            staff_docs = self._staff_results_to_documents(query, limit=k)
+            return {"results": staff_docs, "degraded": not bool(staff_docs),
+                    "reason": None if staff_docs else "staff_not_found"}
 
         degraded = False
         reason: str | None = None
@@ -249,6 +306,8 @@ class HybridRetriever:
         contact_intent = any(word in query for word in self._CONTACT_INTENT)
         if self.bm25 and self.bm25.enabled and not contact_intent:
             lexical_results = self.bm25.search(query, top_n=max(k, 10))
+            subjects = self._content_keywords(query)
+            lexical_results = [row for row in lexical_results if topic_support(row, subjects)[0]]
             if (
                 lexical_results
                 and lexical_results[0]["bm25_score"] >= BM25_FAST_PATH_MIN_SCORE
@@ -321,13 +380,10 @@ class HybridRetriever:
         return is_official_document(doc)
 
     def assess_evidence(self, query: str, results: list[dict]) -> dict:
-        """검색 근거를 다중 신호로 평가한다.
+        """질문의 핵심 업무를 뒷받침하는 개별 공식 문서가 있는지 평가한다.
 
-        MiniLM의 코사인 유사도는 도메인 밖 질문에도 높게 나올 수 있으므로 유사도
-        하나만으로 통과시키지 않는다. 공식 출처가 존재하고, 다음 중 하나가 있어야 한다.
-        - 질문 핵심어가 문서에 직접 등장
-        - BM25가 실제 어휘 일치를 포착
-        - 행정 의도가 명확하며 벡터 유사도가 임계값 이상
+        지역명과 '신고/신청/방법' 같은 공통 표현은 근거 판정에서 제외한다.
+        벡터 유사도나 BM25 점수만으로 다른 업무의 문서를 통과시키지 않는다.
 
         반환되는 상태값은 사용자에게 백분율 대신 '공식 자료 확인됨/추가 확인 필요'처럼
         근거의 성격을 설명하는 데 사용한다.
@@ -338,7 +394,7 @@ class HybridRetriever:
             word in query_lower for word in self._DOMAIN_INTENT + self._CONTACT_INTENT
         )
         return evaluate_evidence(
-            results,
+            [doc for doc in filter_time_compatible(query, results) if is_answerable_document(query, doc)],
             keywords=keywords,
             domain_intent=domain_intent,
             min_similarity=CONFIDENCE_MIN_SIMILARITY,
@@ -350,18 +406,64 @@ class HybridRetriever:
         return evidence["confident"], evidence["top_similarity"]
 
     def select_grounded_results(self, query: str, results: list[dict], limit: int = 5) -> list[dict]:
-        """LLM에 전달할 문서를 공식 출처와 실제 검색 신호가 있는 결과로 제한한다."""
+        """질문 핵심 업무와 일치하는 공식 문서만 답변에 전달한다."""
         keywords = self._content_keywords(query)
         domain_intent = bool(self.detect_category(query)) or any(
             word in query.lower() for word in self._DOMAIN_INTENT + self._CONTACT_INTENT
         )
         return filter_grounded_results(
-            results,
+            [doc for doc in filter_time_compatible(query, results) if is_answerable_document(query, doc)],
             keywords=keywords,
             domain_intent=domain_intent,
             min_similarity=CONFIDENCE_MIN_SIMILARITY,
             limit=limit,
         )
+
+    def filter_fresh_results(self, query: str, results: list[dict]) -> list[dict]:
+        """Only use web evidence checked recently; historical reports remain dated evidence."""
+        results = filter_time_compatible(query, results)
+        urls = [str((doc.get("metadata") or {}).get("url") or "") for doc in results
+                if (doc.get("metadata") or {}).get("source_type") != "official_report"
+                and (doc.get("metadata") or {}).get("category") != "staff_directory"]
+        checked = {}
+        if urls:
+            try:
+                rows = self.db.client.table("raw_pages").select("url,last_checked_at").in_("url", list(set(urls))).execute().data or []
+                checked = {row["url"]: row.get("last_checked_at") for row in rows}
+            except Exception as exc:
+                logger.warning("출처 확인 시각 조회 실패: %s", exc)
+        dynamic = any(word in (query or "") for word in (
+            "현재", "지금", "올해", "오늘", "최신", "운영", "시간", "수수료",
+            "비용", "금액", "요금", "지원금", "기준", "대상", "기간", "언제",
+            "전화", "연락처", "담당", "주소", "위치", "얼마", "몇 시",
+        ))
+        age_days = SOURCE_DYNAMIC_MAX_AGE_DAYS if dynamic else SOURCE_MAX_AGE_DAYS
+        cutoff = datetime.now(timezone.utc) - timedelta(days=age_days)
+        kept = []
+        for doc in results:
+            meta = doc.get("metadata") or {}
+            if meta.get("source_type") == "official_report":
+                kept.append(doc)
+                continue
+            if meta.get("category") == "staff_directory":
+                try:
+                    from crawler.staff_directory import OUTPUT_PATH
+                    data = json.loads(Path(OUTPUT_PATH).read_text(encoding="utf-8"))
+                    date_value = data.get("generated_at")
+                except Exception:
+                    date_value = None
+            else:
+                date_value = checked.get(meta.get("url"))
+            try:
+                verified = datetime.fromisoformat(str(date_value).replace("Z", "+00:00"))
+                if verified.tzinfo is None:
+                    verified = verified.replace(tzinfo=timezone.utc)
+            except (TypeError, ValueError):
+                continue
+            if verified >= cutoff:
+                doc = {**doc, "metadata": {**meta, "checked_at": verified.date().isoformat()}}
+                kept.append(doc)
+        return kept
 
     # 신뢰도 판정용 불용어 (출처 표시용 _is_relevant_source와 별도 유지)
     _CONF_STOPWORDS = {
@@ -381,20 +483,15 @@ class HybridRetriever:
 
     def _content_keywords(self, query: str) -> set[str]:
         """질문에서 의미 있는 내용어만 추출 (순수 숫자·불용어·짧은 토큰 제외, 조사 제거)."""
-        keywords: set[str] = set()
-        for word in re.split(r"\s+", query.replace("?", " ").replace(".", " ")):
-            word = word.strip()
-            if len(word) < 2 or word in self._CONF_STOPWORDS:
-                continue
-            if word.isdigit():  # 순수 숫자 제외 (전화번호/날짜 부분매칭 오탐 방지)
-                continue
-            word = self._strip_josa(word)
-            if word in self._CONF_STOPWORDS:
-                continue
-            hangul = len(re.findall(r"[가-힣]", word))
-            if hangul >= 2 or (word.isascii() and word.isalpha() and len(word) >= 3):
-                keywords.add(word)
-        return keywords
+        if is_staff_lookup(query):
+            return staff_subject_terms(query)
+        text = subject_query(query)
+        kiwi = getattr(getattr(self, "bm25", None), "kiwi", None)
+        if kiwi is not None:
+            words = [token.form for token in kiwi.tokenize(text)
+                     if token.tag.startswith(("NN", "SL"))]
+            return substantive_keywords(words)
+        return fallback_keywords(text)
 
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:
         """질문 키워드가 문서 제목이나 내용에 실제로 포함되어 있는지 확인"""
@@ -420,8 +517,7 @@ class HybridRetriever:
             return "", []
 
         context_parts = []
-        relevant_sources = []   # 질문 키워드가 실제로 포함된 출처 (우선 제시)
-        fallback_sources = []   # 그 외 상위 결과 (관련 출처가 하나도 없을 때 폴백)
+        sources = []
         seen_urls = set()
 
         for i, doc in enumerate(results, 1):
@@ -429,11 +525,18 @@ class HybridRetriever:
             url = meta.get("url", "")
             title = meta.get("title", "정보")
             content = doc.get("content", "")
-            similarity = doc.get("similarity", 0)
+            is_report = meta.get("source_type") == "official_report"
+            provenance = (
+                f"보고서 작성일: {meta.get('issued_at', '')}; 자료 기준 기간: {meta.get('data_period', '')}; "
+                f"쪽: {meta.get('page_number', '')}"
+                if is_report else f"홈페이지 확인일: {meta.get('checked_at', '')}"
+            )
 
             context_parts.append(
-                f"[참고자료 {i}] (유사도: {similarity:.2f})\n"
+                f"[참고자료 {i}]\n"
                 f"제목: {title}\n"
+                f"출처 구분: {'사하구 공식 분석 보고서 (과거 통계)' if is_report else '사하구 홈페이지'}\n"
+                f"{provenance}\n"
                 f"담당부서: {meta.get('department', '')}\n"
                 f"연락처: {meta.get('contact', '')}\n"
                 f"내용: {content}\n"
@@ -442,8 +545,8 @@ class HybridRetriever:
             if url and url not in seen_urls:
                 seen_urls.add(url)
                 # 담당 부서 (LLM이 본문에서 추출) → 공식 명칭으로 보정 후 연락처 매핑
-                dept = correct_dept(meta.get("department", "") or "")
-                dept, contact = self._resolve_official_source(query, title, content, dept)
+                dept = "" if is_report else correct_dept(meta.get("department", "") or "")
+                dept, contact = ("", "") if is_report else self._resolve_official_source(query, title, content, dept)
                 # 첨부파일 목록 정규화 ([{"name","url"}]만 통과)
                 # documents.metadata는 환경에 따라 list 또는 JSON 문자열로 올 수 있어
                 # 문자열이면 파싱한다 (파싱 실패 시 빈 목록 — 첨부를 조용히 버리지 않도록).
@@ -463,21 +566,20 @@ class HybridRetriever:
                 ]
                 src = {
                     "title": title,
-                    "url": url,
+                    "url": "" if is_report else url,
                     "category": meta.get("category", ""),
-                    "service_type": meta.get("service_type", "기타"),
+                    "service_type": "과거 통계" if is_report else meta.get("service_type", "기타"),
                     "department": dept,
                     # 담당부서 연락처 (확인된 직통번호 없으면 대표전화로 폴백)
-                    "contact": (meta.get("contact") or "").strip() or contact,
+                    "contact": "" if is_report else (meta.get("contact") or "").strip() or contact,
                     "attachments": attachments,
+                    "source_type": meta.get("source_type", "official_page"),
+                    "issued_at": meta.get("issued_at", ""),
+                    "data_period": meta.get("data_period", ""),
+                    "page_number": int(meta.get("page_number") or 0),
+                    "checked_at": meta.get("checked_at", ""),
                 }
-                if self._is_relevant_source(query, title, content):
-                    relevant_sources.append(src)
-                else:
-                    fallback_sources.append(src)
-
-        # 출처는 반드시 함께 제시: 관련성 통과분이 있으면 그것을, 없으면 상위 결과로 폴백.
-        sources = relevant_sources if relevant_sources else fallback_sources[:3]
+                sources.append(src)
 
         context = "\n---\n".join(context_parts)
-        return context, sources
+        return context, sources[:5]

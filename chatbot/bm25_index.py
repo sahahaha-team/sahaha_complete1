@@ -10,6 +10,7 @@ import os
 import shutil
 import logging
 import threading
+import time
 from typing import Optional
 
 from config import SUPABASE_SERVICE_KEY
@@ -74,6 +75,8 @@ class BM25Index:
         self.doc_contents: list[str] = []
         self.doc_metadata: list[dict] = []
         self.enabled = False
+        self._last_built = 0.0
+        self._refresh_lock = threading.RLock()
 
         try:
             self.kiwi = _init_kiwi()
@@ -146,6 +149,7 @@ class BM25Index:
 
             self.bm25 = BM25Okapi(tokenized_corpus)
             self.enabled = True
+            self._last_built = time.monotonic()
             logger.info(f"BM25 인덱스 구축 완료: {len(all_rows)}개 문서")
         except Exception as e:
             logger.warning(f"BM25 인덱스 구축 실패: {e}")
@@ -157,6 +161,14 @@ class BM25Index:
         Returns:
             [{id, content, metadata, bm25_score}, ...] (점수 내림차순, 상위 top_n개)
         """
+        if self.enabled and time.monotonic() - self._last_built > 300:
+            self.rebuild()
+        # Rebuild replaces both the scorer and row arrays. Read them as one
+        # snapshot so a concurrent refresh cannot pair scores with other rows.
+        with self._refresh_lock:
+            return self._search_locked(query, top_n)
+
+    def _search_locked(self, query: str, top_n: int) -> list[dict]:
         if not self.enabled or not self.bm25:
             return []
 
@@ -184,9 +196,12 @@ class BM25Index:
 
     def rebuild(self):
         """인덱스 재구축 (크롤링/임베딩 갱신 후 호출)"""
-        self.doc_ids = []
-        self.doc_contents = []
-        self.doc_metadata = []
-        self.bm25 = None
-        self.enabled = False
-        self._build_from_supabase()
+        with self._refresh_lock:
+            if self.enabled and time.monotonic() - self._last_built < 30:
+                return
+            self.doc_ids = []
+            self.doc_contents = []
+            self.doc_metadata = []
+            self.bm25 = None
+            self.enabled = False
+            self._build_from_supabase()

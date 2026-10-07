@@ -32,6 +32,8 @@ from config import (
     RATE_LIMIT_CHAT,
 )
 from chatbot.ollama_runtime import get_ollama_status
+from chatbot.contact_directory import contact_responder
+from chatbot.emergency_guidance import answer_emergency_question
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +57,11 @@ class Source(BaseModel):
     department: str = ""  # 담당 부서명 (LLM 태깅, 본문 미명시 시 빈 문자열)
     contact: str = ""     # 담당부서 연락처 (직통번호 없으면 대표전화 폴백)
     attachments: list[Attachment] = Field(default_factory=list)  # 게시물 첨부파일(PDF/HWP 등) 다운로드 링크
+    source_type: str = "official_page"
+    issued_at: str = ""
+    data_period: str = ""
+    page_number: int = 0
+    checked_at: str = ""
 
 
 class Evidence(BaseModel):
@@ -65,6 +72,7 @@ class Evidence(BaseModel):
 
 class ChatResponse(BaseModel):
     answer: str
+    answer_details: str = ""
     sources: list[Source] = Field(default_factory=list)
     is_clarification: bool
     # 검색/태깅/LLM 단계의 부분 실패 신호. True면 프론트가 안내 배너 표시.
@@ -273,9 +281,22 @@ async def chat(request: Request, payload: ChatRequest):
     request.session["session_id"] = session_id
 
     try:
+        emergency_result = answer_emergency_question(user_message)
+        if emergency_result is not None:
+            if _chatbot is not None:
+                _chatbot._clear_pending_clarification(session_id)
+            return ChatResponse(**emergency_result)
+        # The local contact file is consulted before accessing models or DB.
+        contact_query = _chatbot.contextual_message(session_id, user_message) if _chatbot is not None else user_message
+        contact_result = await run_in_threadpool(contact_responder.respond, session_id, contact_query)
+        if contact_result is not None:
+            if _chatbot is not None:
+                _chatbot.remember_contact_exchange(session_id, user_message, contact_result)
+            return ChatResponse(**contact_result)
         bot = get_chatbot()
         # 동기 LLM 호출은 워커 스레드로 위임 (이벤트 루프 비차단)
         result = await run_in_threadpool(bot.chat, session_id, user_message)
+        contact_responder.observe(session_id, user_message)
         return ChatResponse(**result)
     except Exception as e:
         logger.error(f"챗봇 오류: {e}", exc_info=True)
@@ -302,9 +323,10 @@ async def clear_chat(request: Request):
     """대화 초기화 API"""
     session_id = request.session.get("session_id")
     if session_id:
+        contact_responder.clear(session_id)
         try:
-            bot = get_chatbot()
-            await run_in_threadpool(bot.clear_session, session_id)
+            if _chatbot is not None:
+                await run_in_threadpool(_chatbot.clear_session, session_id)
         except Exception as e:
             logger.error(f"대화 초기화 오류: {e}")
 

@@ -380,6 +380,12 @@ class SahaCrawler:
 
             if not self._can_fetch(url):
                 logger.info(f"  [SKIP-robots] {url}")
+                if is_known:
+                    # 접근 제한은 삭제 증거가 아니다. orphan 정리에서 보존한다.
+                    results.append(PageData(
+                        url=url, title="", content="", category=menu_name,
+                        transient_fail=True,
+                    ))
                 continue
 
             fetch_result = self.fetch_page(url)

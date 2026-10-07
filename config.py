@@ -42,6 +42,8 @@ MAX_CONVERSATION_HISTORY = 10
 MAX_RETRIEVAL_RESULTS = 5
 CHATBOT_TEMPERATURE = 0.3
 CHATBOT_MAX_TOKENS = int(os.getenv("CHATBOT_MAX_TOKENS", "384"))
+# 기본은 원문 발췌: 소형 모델이 수수료·조건의 관계를 바꾸지 못하게 한다.
+SOURCE_ONLY_ANSWERS = os.getenv("SOURCE_ONLY_ANSWERS", "true").lower() == "true"
 
 # ===== Flask 설정 =====
 FLASK_HOST = os.getenv("FLASK_HOST", "127.0.0.1")
@@ -88,6 +90,8 @@ BM25_FAST_PATH_MIN_SCORE = float(os.getenv("BM25_FAST_PATH_MIN_SCORE", "8.0"))
 # 주의: MiniLM 코사인 유사도는 보통 0.4~0.7 범위라 0.85 같은 값은 거의 모두 차단됨.
 #       발표 자료의 "85%"는 LLM 자가점수가 아니라 이 검색 신뢰도 임계값으로 매핑됨.
 CONFIDENCE_MIN_SIMILARITY = float(os.getenv("CONFIDENCE_MIN_SIMILARITY", "0.45"))
+SOURCE_MAX_AGE_DAYS = int(os.getenv("SOURCE_MAX_AGE_DAYS", "30"))
+SOURCE_DYNAMIC_MAX_AGE_DAYS = int(os.getenv("SOURCE_DYNAMIC_MAX_AGE_DAYS", "7"))
 # 신뢰도 미달 시 출력할 안전 안내 멘트
 LOW_CONFIDENCE_MESSAGE = os.getenv(
     "LOW_CONFIDENCE_MESSAGE",

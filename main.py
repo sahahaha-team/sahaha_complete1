@@ -103,7 +103,11 @@ def run_incremental(menu_filter: str = None):
     menus = {k: v for k, v in TARGET_MENUS.items() if menu_filter is None or k == menu_filter}
 
     # 1. 캐시 검증자 + 메뉴별 known URL 준비
-    validators = db.get_cache_validators()
+    # Local reports share administrative categories with web pages, but they
+    # must never enter the HTTP crawl or its orphan deletion scope.
+    from chatbot.evidence import is_official_document
+    validators = {url: value for url, value in db.get_cache_validators().items()
+                  if is_official_document({"metadata": {"url": url}})}
     crawler.set_cache_validators({
         u: {"etag": v.get("etag"), "last_modified": v.get("last_modified")}
         for u, v in validators.items()

@@ -249,7 +249,7 @@
 
 
     // ===== 메시지 UI 조립 팩토리 =====
-    function createMessageEl(role, content, sources, degraded, degradedReason, evidence, suggestedQuestions) {
+    function createMessageEl(role, content, sources, degraded, degradedReason, evidence, suggestedQuestions, answerDetails) {
         const msg = document.createElement("div");
         msg.className = `message ${role === "user" ? "user-message" : "bot-message"}`;
 
@@ -338,6 +338,18 @@
 
         contentDiv.appendChild(bubble);
 
+        if (role !== "user" && answerDetails) {
+            const details = document.createElement("details");
+            details.className = "answer-details";
+            const summary = document.createElement("summary");
+            summary.textContent = "공식 원문 자세히 보기";
+            const original = document.createElement("div");
+            original.className = "answer-details-body";
+            original.innerHTML = formatBotMessage(answerDetails);
+            details.append(summary, original);
+            contentDiv.appendChild(details);
+        }
+
         if (role !== "user" && evidence) {
             contentDiv.appendChild(createEvidenceEl(evidence));
         }
@@ -417,7 +429,7 @@
 
         const compactLines = [];
         for (const line of lines) {
-            if (compactLines.length === 0 || compactLines[compactLines.length - 1] !== line) {
+            if (/^>(?: |$)/.test(line) || compactLines.length === 0 || compactLines[compactLines.length - 1] !== line) {
                 compactLines.push(line);
             }
         }
@@ -446,6 +458,13 @@
         let listType = null;
         let listItems = [];
         let paragraphCount = 0;
+        let quotedLines = [];
+
+        const flushQuote = () => {
+            if (quotedLines.length === 0) return;
+            chunks.push(`<blockquote class="source-excerpt">${quotedLines.map(escape).join("<br>")}</blockquote>`);
+            quotedLines = [];
+        };
 
         const flushList = () => {
             if (!listType || listItems.length === 0) return;
@@ -456,6 +475,12 @@
         };
 
         for (const rawLine of compactLines) {
+            if (/^>(?: |$)/.test(rawLine)) {
+                flushList();
+                quotedLines.push(rawLine.slice(2));
+                continue;
+            }
+            flushQuote();
             const bulletMatch = rawLine.match(/^(?:[-*]\s+)(.+)$/);
             const numberMatch = rawLine.match(/^(\d+)[.)]\s+(.+)$/);
 
@@ -488,6 +513,7 @@
         }
 
         flushList();
+        flushQuote();
         return chunks.join("");
     }
 
@@ -500,21 +526,27 @@
         container.appendChild(label);
 
         sources.forEach(function (src) {
-            const card = document.createElement("a");
+            const card = document.createElement(src.url ? "a" : "div");
             card.className = "source-card";
-            card.href = src.url;
-            card.target = "_blank";
-            card.rel = "noopener noreferrer";
+            if (src.url) {
+                card.href = src.url;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+            }
 
             const deptLine = src.department
                 ? `<span class="source-dept">🏛️ 담당: ${escapeHtml(src.department)}</span>`
                 : "";
+            const provenance = src.source_type === "official_report"
+                ? `<span class="source-dept">자료 기간: ${escapeHtml(src.data_period || "미상")} · ${escapeHtml(String(src.page_number || ""))}쪽</span>`
+                : (src.checked_at ? `<span class="source-dept">확인일: ${escapeHtml(src.checked_at)}</span>` : "");
 
             card.innerHTML = `
                 <span class="source-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
                 <span class="source-body">
                     <span class="source-title">${escapeHtml(src.title)}</span>
                     ${deptLine}
+                    ${provenance}
                 </span>
                 ${src.service_type ? `<span class="source-badge">${escapeHtml(src.service_type)}</span>` : ""}
             `;
@@ -624,7 +656,7 @@
 
             const botMsg = createMessageEl(
                 "bot", data.answer, data.sources, Boolean(data.degraded), data.degraded_reason,
-                data.evidence, data.suggested_questions
+                data.evidence, data.suggested_questions, data.answer_details
             );
             messagesEl.appendChild(botMsg);
         } catch (err) {

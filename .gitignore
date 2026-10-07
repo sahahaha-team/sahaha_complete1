@@ -4,6 +4,7 @@
 .local/
 __pycache__/
 *.pyc
-data/
+data/*
+!data/department_contacts.json
 .claude/
 .kiwi_model/
