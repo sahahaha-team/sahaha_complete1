@@ -22,7 +22,7 @@
 |------|------|
 | 언어 | Python 3.12 |
 | 웹 서버 | FastAPI + Uvicorn |
-| LLM | 로컬 Ollama (`qwen2.5:1.5b`, 환경변수로 변경 가능) |
+| LLM | 로컬 Ollama (`gemma2:2b`, 환경변수로 변경 가능) |
 | 임베딩 | HuggingFace sentence-transformers (MiniLM-L12-v2) |
 | 벡터 DB | Supabase PostgreSQL + pgvector |
 | 크롤링 | requests + BeautifulSoup (Selenium fallback) |
@@ -115,10 +115,14 @@ pip install -r requirements.txt
 
 ```
 OLLAMA_BASE_URL=http://127.0.0.1:11434
-OLLAMA_MODEL=qwen2.5:1.5b
+OLLAMA_MODEL=gemma2:2b
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_anon_key
 ```
+
+로컬 Ollama 모델에는 API 키가 필요하지 않습니다. `.env.example`을 복사한 뒤
+`SECRET_KEY`를 임의의 긴 문자열로 바꾸세요. 크롤링·임베딩·Worker를 실행하려면
+`SUPABASE_SERVICE_KEY`도 설정해야 합니다.
 
 ### 2. DB 초기화
 
@@ -154,7 +158,7 @@ python quick_pipeline.py
 
 ```bash
 # 최초 1회: Ollama 설치 후 상담용 모델 다운로드
-ollama pull qwen2.5:1.5b
+ollama pull gemma2:2b
 
 # 터미널 1: 주민 상담 전용 웹 서버
 python main.py --mode web

@@ -28,7 +28,7 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")  # anon/public key
 
 # ===== LLM 설정 (로컬 Ollama) =====
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma2:2b")
 OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))
 OLLAMA_NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "4096"))
 OLLAMA_KEEP_ALIVE = os.getenv("OLLAMA_KEEP_ALIVE", "30m")
@@ -44,7 +44,7 @@ CHATBOT_TEMPERATURE = 0.3
 CHATBOT_MAX_TOKENS = int(os.getenv("CHATBOT_MAX_TOKENS", "384"))
 
 # ===== Flask 설정 =====
-FLASK_HOST = os.getenv("FLASK_HOST", "0.0.0.0")
+FLASK_HOST = os.getenv("FLASK_HOST", "127.0.0.1")
 FLASK_PORT = int(os.getenv("FLASK_PORT", "5000"))
 FLASK_DEBUG = os.getenv("FLASK_DEBUG", "false").lower() == "true"
 

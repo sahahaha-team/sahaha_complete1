@@ -211,7 +211,7 @@ conversation_logs (대화 이력)
 ```
 
 **LLM 설정:**
-- 기본 모델: Ollama `qwen3:4b` (`OLLAMA_MODEL`로 변경 가능)
+- 기본 모델: Ollama `gemma2:2b` (`OLLAMA_MODEL`로 변경 가능)
 - Temperature: 0.3 (낮게 설정하여 일관된 답변)
 - 시스템 프롬프트: 6가지 규칙 (사실 기반, 모호한 질문 역질문, 출처 명시, 개인정보 보호, 정보 부족 시 안내, 답변 형식)
 
@@ -288,7 +288,7 @@ Ollama가 일시적으로 사용할 수 없을 때도 메타데이터가 비지 
 
 | 설정 | 값 | 설명 |
 |------|------|------|
-| OLLAMA_MODEL | qwen3:4b | 로컬 LLM 모델 |
+| OLLAMA_MODEL | gemma2:2b | 로컬 LLM 모델 |
 | OLLAMA_BASE_URL | http://127.0.0.1:11434 | Ollama API 주소 |
 | CHUNK_SIZE | 500 | 청크 최대 글자 수 |
 | CHUNK_OVERLAP | 50 | 청크 간 겹침 |

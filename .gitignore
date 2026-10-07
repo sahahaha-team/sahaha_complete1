@@ -1,4 +1,7 @@
 .env
+.venv/
+.conda_pkgs/
+.local/
 __pycache__/
 *.pyc
 data/
