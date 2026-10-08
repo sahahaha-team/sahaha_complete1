@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 
 from chatbot.evidence import is_answerable_document, topic_support
+from chatbot.question_intent import asks_opening_hours, has_opening_hours, asks_location, has_location
+from chatbot.vaccination import vaccination_section, vaccination_place_brief
 
 
 def strip_page_chrome(text: str) -> str:
@@ -44,6 +46,9 @@ def focused_section(query: str, url: str, text: str) -> str | None:
     """
     compact = re.sub(r"\s+", "", query or "")
     body = strip_page_chrome(text)
+    vaccine_section = vaccination_section(query, url, body)
+    if vaccine_section is not None:
+        return vaccine_section
     if "mId=0403080000" in url and "신고" in compact and not any(
             word in compact for word in ("이의", "의견진술", "과태료", "견인", "납부")):
         start = "불법주정차 주민신고제 운영 안내(변경)\n"
@@ -144,6 +149,14 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     if section == "":
         return "", []
     passage = section if section is not None else source_passage(text, lead.get("content") or "")
+    if asks_opening_hours(query) and not has_opening_hours(passage):
+        return "", []
+    if asks_location(query) and not has_location(passage):
+        return "", []
+    if (section is not None and asks_location(query)
+            and any(mid in str(url) for mid in ('mId=0203020000', 'mId=0203020100'))
+            and not vaccination_place_brief(query, str(url), passage.splitlines())):
+        return "", []
     if topic_keywords is not None and not topic_support(
             {"content": passage}, topic_keywords)[0]:
         return "", []

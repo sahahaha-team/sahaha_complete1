@@ -3,13 +3,15 @@ from __future__ import annotations
 
 import re
 from collections.abc import Iterable
+from chatbot.question_intent import opening_hours_subject, location_subject
+from chatbot.vaccination import is_vaccination_query, vaccine_kind
 
 WEAK_WORDS = set("알려 알려줘 알려주세요 뭐야 뭐예요 어떻게 어떻게해 해줘 있어 없어 하고 싶어 인가요 인지 대해 관련 안내 정보 사하 사하구 사하구청 부산 부산광역시 얼마야 얼마 무엇 어디 언제 누구 방법 신고 신청 접수 처리 문의 담당 부서 담당자 인근 근처 주변 주민 민원 사항 내용 업무 가능 필요 경우 절차 준비 최신 현재 지금 오늘 올해 지원 발급 전화 번호 연락처 알려주 자세히 자세한 확인 좀 설명 질문 검색".split())
 # Request formats are checked when selecting the actual source section. Their
 # absence from a heading must not erase a matching service such as 신규 여권.
 WEAK_WORDS.update({"준비물", "준비", "서류", "구비서류", "구비", "성인", "어른", "처음"})
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
-WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai"}
+WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자"}
 
 
 def normalize_query(query: str) -> str:
@@ -25,11 +27,14 @@ def compact(value: str) -> str:
 
 
 def subject_query(query: str) -> str:
-    text = AREA_PATTERN.sub(" ", normalize_query(query))
+    text = AREA_PATTERN.sub(" ", location_subject(opening_hours_subject(normalize_query(query))))
     # Normalize full wording before morphology splits it: 불법주차 must become
     # 불법주정차, rather than leaving the fragment 주차 unmatched by 주정차.
     for alias, target in WORDING_ALIASES.items():
         text = text.replace(alias, target)
+    if vaccine_kind(query) and is_vaccination_query(query):
+        # The type, rather than repeated generic vaccine words, must match.
+        text = re.sub(r'예방접종|접종|백신|예방주사', ' ', text)
     if '여권' in text and any(word in text for word in ('미성년', '아이', '자녀', '18세 미만')):
         text = text.replace('부모', '친권자')
     return text

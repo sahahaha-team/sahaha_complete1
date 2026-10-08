@@ -8,6 +8,9 @@ from functools import lru_cache
 from pathlib import Path
 
 from openpyxl import load_workbook
+from chatbot.question_intent import asks_opening_hours, asks_location
+from chatbot.query_subject import fallback_keywords
+from chatbot.vaccination import vaccine_place_page
 
 WORKBOOK = Path(__file__).resolve().parents[1] / "data" / "official_sources" / "사하구 홈페이지_100개 질문.xlsx"
 
@@ -33,6 +36,19 @@ def _targets() -> list[tuple[str, str]]:
 
 def match_official_page(question: str) -> str | None:
     normalized = _normalize(question)
+    vaccine_url = vaccine_place_page(question)
+    if vaccine_url:
+        return vaccine_url
+    if asks_location(question) and fallback_keywords(question) == {'보건소'}:
+        return 'https://www.saha.go.kr/health/contents.do?mId=0103000000'
+    # The health-center directions page also contains its general clinical
+    # hours. Do not substitute a village health center or a service's hours.
+    if ('보건소' in normalized and asks_opening_hours(question)
+            and not any(word in normalized for word in (
+                '마을건강', '건강생활지원', '보건지소', '치매', '금연', '접종',
+                '검사', '보건증', '건강진단', '검진', '모자보건', '구강', '물리치료',
+            ))):
+        return 'https://www.saha.go.kr/health/contents.do?mId=0103000000'
     # Confirmed service + question goal selects its verified guide directly.
     # Conversational qualifiers like '성인이야/처음이야' must not let an
     # unrelated adult vaccination page crowd the passport guide out of top 5.

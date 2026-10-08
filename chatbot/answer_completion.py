@@ -48,6 +48,12 @@ def can_continue(text: str) -> bool:
     return (not balanced(text) or bool(_DANGLING.search(plain))) and len(plain) >= 6
 
 
+def starts_label(text: str) -> bool:
+    """The colon in 09:00 is a clock, not the start of a new source field."""
+    match = re.match(r"^([^:：]{1,30})[:：]", text)
+    return bool(match and not match.group(1).rstrip()[-1].isdigit())
+
+
 def complete_source_units(lines: list[str]) -> list[str]:
     units: list[str] = []
     for line in lines:
@@ -56,9 +62,12 @@ def complete_source_units(lines: list[str]) -> list[str]:
             continue
         if line.startswith((':', '：')) and units and len(units[-1]) < 20:
             units[-1] += ' ' + line
+        elif (units and re.fullmatch(r"[^:：]{1,30}[:：]\s*", units[-1])
+              and line != OMISSION and not QUALIFICATION.match(line) and not starts_label(line)):
+            units[-1] += ' ' + line
         elif (units and can_continue(units[-1]) and line != OMISSION
               and not QUALIFICATION.match(line)
-              and not re.match(r"^(?:[-•❖]|\d+[.)]|[^:：]{1,30}[:：])", line)
+              and not re.match(r"^(?:[-•❖]|\d+[.)])", line) and not starts_label(line)
               and (len(line) >= 12 or sentence_complete(line) or not balanced(units[-1]))):
             units[-1] += ' ' + line
         else:

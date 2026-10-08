@@ -24,6 +24,7 @@ from chatbot.evidence import (
     topic_support,
 )
 from chatbot.query_subject import normalize_query, subject_query, substantive_keywords, fallback_keywords
+from chatbot.question_intent import asks_opening_hours, asks_location
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
@@ -432,7 +433,7 @@ class HybridRetriever:
                 checked = {row["url"]: row.get("last_checked_at") for row in rows}
             except Exception as exc:
                 logger.warning("출처 확인 시각 조회 실패: %s", exc)
-        dynamic = any(word in (query or "") for word in (
+        dynamic = asks_opening_hours(query) or asks_location(query) or any(word in (query or "") for word in (
             "현재", "지금", "올해", "오늘", "최신", "운영", "시간", "수수료",
             "비용", "금액", "요금", "지원금", "기준", "대상", "기간", "언제",
             "전화", "연락처", "담당", "주소", "위치", "얼마", "몇 시",

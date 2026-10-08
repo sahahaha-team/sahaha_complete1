@@ -1,6 +1,8 @@
 """외부 API나 DB 없이 실행 가능한 대화 UX 보조 로직."""
 
 import re
+from chatbot.vaccination import needs_vaccine_kind, vaccine_kind
+from chatbot.question_intent import asks_location, location_subject
 
 
 def clarification_question(answer: str, questions: list[str], reply_terms: list[str]) -> dict:
@@ -18,6 +20,12 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     for topic in ("여권", "보건증", "폐기물", "복지", "주차", "화재", "출산", "건축", "세금", "등본"):
         if topic in current and topic not in previous:
             return message
+    # A named vaccine plus a new question goal starts that question; a bare
+    # type such as '독감' still answers our pending place clarification.
+    if vaccine_kind(message):
+        for goal in ('비용', '수수료', '얼마', '운영시간', '접종시간', '시기', '대상', '조건', '준비물', '서류'):
+            if goal in current and goal not in previous:
+                return message
     if len(current) <= 35 and any(term in current for term in pending.get("reply_terms", [])):
         return pending["query"] + " " + message
     return message
@@ -38,6 +46,13 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
+
+    if needs_vaccine_kind(user_message):
+        return clarification_question(
+            "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
+            ['독감 접종 장소 알려줘', '폐렴구균 접종 장소 알려줘', 'B형간염 접종 장소 알려줘'],
+            ['독감', '인플루엔자', '폐렴', '간염', '코로나', 'HPV', 'hpv', '유두종', '자궁경부암',
+             '대상포진', '파상풍', '장티푸스', 'BCG', 'bcg', '홍역', '뇌염', '수두', '로타', '황열', '콜레라', 'RSV', 'rsv'])
 
     # One missing condition per turn. Suggestions are questions, not promises
     # that a particular service or eligibility rule exists.
@@ -180,6 +195,10 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     previous = recent_user_messages[-1] if recent_user_messages else ""
     if any(word in current for word in ("수수료", "비용", "얼마")):
         previous = re.sub(r"준비물|준비서류|구비서류|서류|준비|기간|며칠", "", previous)
+        previous = location_subject(previous)
     elif any(word in current for word in ("기간", "시간", "며칠")):
         previous = re.sub(r"준비물|준비서류|구비서류|서류|준비|수수료|비용|얼마", "", previous)
+        previous = location_subject(previous)
+    elif asks_location(current):
+        previous = re.sub(r"준비물|준비서류|구비서류|서류|준비|기간|시간|며칠|수수료|비용|얼마", "", previous)
     return (previous + " " + current).strip()

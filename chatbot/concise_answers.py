@@ -4,6 +4,10 @@ from __future__ import annotations
 import re
 
 from chatbot.query_subject import compact, substantive_keywords
+from chatbot.question_intent import (
+    asks_opening_hours, has_opening_hours, asks_location, has_location_unit, location_source_units,
+)
+from chatbot.vaccination import vaccination_place_brief, is_vaccination_query
 from chatbot.answer_completion import (
     OMISSION, QUALIFICATION, complete_source_units, source_unit_complete, can_continue,
 )
@@ -65,8 +69,10 @@ def _source_units(lines: list[str]) -> list[str]:
 
 
 def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | None:
-    units = _source_units(lines)
+    location = asks_location(query)
+    units = location_source_units(lines) if location else _source_units(lines)
     topics = substantive_keywords(keywords)
+    opening_hours = asks_opening_hours(query)
     intent = []
     if any(word in query for word in ("방법", "신청", "접수", "신고")):
         intent = ["방법", "접수", "예약", "신고", "신청"]
@@ -74,12 +80,20 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | No
         intent = ["대상", "조건", "자격"]
     elif any(word in query for word in ("시간", "기간", "며칠")):
         intent = ["시간", "기간", "일정"]
+    if intent and any(word in query for word in ("배출", "재활용", "분리수거")):
+        intent += ["배출", "분리"]
     # Only complete factual prose/label-value units. Standalone cells such as
     # '58면', '52,000원' cannot be reassigned to another row or condition.
     candidates = []
     for i, unit in enumerate(units):
         label_value = bool(re.search(r"[:：]\s*[가-힣 ]{6,}", unit))
-        if (len(unit) < 22 and not label_value) or len(unit) > 350 or unit.startswith(("Q.", "[…]")):
+        hours_unit = has_opening_hours(unit)
+        place_unit = has_location_unit(unit)
+        if (len(unit) < 22 and not label_value and not hours_unit and not place_unit) or len(unit) > 350 or unit.startswith(("Q.", "[…]")):
+            continue
+        if opening_hours and not hours_unit:
+            continue
+        if location and not place_unit:
             continue
         if not source_unit_complete(unit):
             continue
@@ -94,7 +108,9 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | No
         value = compact(unit)
         topic_hits = sum(word in value for word in topics)
         goal_hits = sum(word in value for word in intent)
-        if topic_hits or goal_hits:
+        if intent and not goal_hits and not (opening_hours and hours_unit):
+            continue
+        if topic_hits or goal_hits or (opening_hours and hours_unit) or (location and place_unit):
             candidates.append((goal_hits * 3 + topic_hits, i))
     if not candidates:
         return None
@@ -132,7 +148,10 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
     lines = source_lines(original_answer)
     body = "\n".join(lines)
     url = str((documents[0].get("metadata") or {}).get("url") or "") if documents else ""
-    answer = None
+    answer = vaccination_place_brief(query, url, lines)
+    if (asks_location(query) and is_vaccination_query(query)
+            and any(mid in url for mid in ('mId=0203020000', 'mId=0203020100')) and not answer):
+        return scope_question(query, body)
     if documents and documents[0].get("metadata", {}).get("category") == "staff_directory":
         meta = documents[0]['metadata']
         answer = f"**{meta.get('department', '')}** · **{meta.get('contact', '')}**\n{meta.get('title', '')}"
