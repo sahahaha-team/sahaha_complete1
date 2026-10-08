@@ -3,7 +3,8 @@ from __future__ import annotations
 
 import re
 
-from chatbot.query_subject import compact, substantive_keywords
+from chatbot.query_subject import compact, substantive_keywords, SERVICE_NAMES
+from chatbot.answer_goal import answer_goal, GOAL_WORDS
 from chatbot.question_intent import (
     asks_opening_hours, has_opening_hours, asks_location, has_location_unit, location_source_units,
 )
@@ -65,21 +66,54 @@ def _waste(query: str, body: str) -> str | None:
 
 
 def _source_units(lines: list[str]) -> list[str]:
-    return complete_source_units(lines)
+    units = complete_source_units(lines)
+    # A standalone method/eligibility heading followed by complete prose is
+    # a source field. Never join arbitrary monetary or multi-column cells.
+    headings = {"신청방법", "접수방법", "이용방법", "신고방법", "지원대상", "교육대상", "준비물", "진료절차", "대상", "진료내용", "지원내용", "신청자격"}
+    list_headings = {"운영내용", "사업내용", "서비스내용", "진료내용", "지원내용"}
+    output = []
+    index = 0
+    while index < len(units):
+        if compact(units[index]) in list_headings:
+            items = []
+            end = index + 1
+            while end < len(units) and len(items) < 5:
+                item = units[end]
+                if (any(word in compact(item) for word in ("운영시간", "신청방법", "신청대상", "지원대상", "수수료", "전화번호", "위치", "준비물"))
+                        or QUALIFICATION.match(item) or can_continue(item) or item == OMISSION
+                        or re.fullmatch(r"[\d, .]+(?:원|명|세)?", item) or len(item) < 8):
+                    break
+                items.append(item)
+                end += 1
+            if items and len(" · ".join(items)) <= 300:
+                output.append(units[index] + " : " + " · ".join(items))
+                index = end
+                continue
+        if (compact(units[index]) in headings and index + 1 < len(units)
+                and (source_unit_complete(units[index + 1]) or
+                     (len(units[index + 1]) >= 8 and not can_continue(units[index + 1])
+                      and not re.fullmatch(r"[\d, .]+(?:원|명|세)?", units[index + 1])
+                      and units[index + 1] != OMISSION))
+                and not QUALIFICATION.match(units[index + 1])):
+            output.append(units[index] + " : " + units[index + 1])
+            index += 2
+        else:
+            output.append(units[index])
+            index += 1
+    return output
 
 
-def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | None:
-    location = asks_location(query)
+def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str = "") -> str | None:
+    location = answer_goal(query) == "location"
     units = location_source_units(lines) if location else _source_units(lines)
     topics = substantive_keywords(keywords)
     opening_hours = asks_opening_hours(query)
-    intent = []
-    if any(word in query for word in ("방법", "신청", "접수", "신고")):
-        intent = ["방법", "접수", "예약", "신고", "신청"]
-    elif any(word in query for word in ("대상", "조건", "자격")):
-        intent = ["대상", "조건", "자격"]
-    elif any(word in query for word in ("시간", "기간", "며칠")):
-        intent = ["시간", "기간", "일정"]
+    goal = answer_goal(query)
+    intent = list(GOAL_WORDS.get(goal, ()))
+    heading = compact(title + " " + " ".join(lines[:3]))
+    anchors = topics.intersection(SERVICE_NAMES)
+    heading_scope = not title or (bool(anchors) and anchors.issubset({word for word in anchors if word in heading})) or (
+        not anchors and sum(word in heading for word in topics) >= max(1, len(topics) * .75))
     if intent and any(word in query for word in ("배출", "재활용", "분리수거")):
         intent += ["배출", "분리"]
     # Only complete factual prose/label-value units. Standalone cells such as
@@ -107,21 +141,45 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | No
             continue
         value = compact(unit)
         topic_hits = sum(word in value for word in topics)
-        goal_hits = sum(word in value for word in intent)
-        if intent and not goal_hits and not (opening_hours and hours_unit):
+        goal_hits = sum(compact(word) in value for word in intent)
+        if goal == "method" and re.search(r"(?:하세요|하십시오|마세요|해야 합니다)[.!]?$", unit):
+            goal_hits += 1
+        if goal == "schedule" and any(word in query for word in ("자주", "주기", "몇 번")):
+            goal_hits = int(bool(re.search(r"(?:연|월|주|일)\s*\d+\s*회|매(?:년|월|주|일)", unit)))
+        local = compact(" ".join(units[max(0, i - 12):i + 13]))
+        local_scope = bool(topics) and all(word in local for word in (anchors or topics))
+        if not topic_hits and not heading_scope and not local_scope:
             continue
-        if topic_hits or goal_hits or (opening_hours and hours_unit) or (location and place_unit):
-            candidates.append((goal_hits * 3 + topic_hits, i))
+        if intent and not goal_hits and not (opening_hours and hours_unit) and not (location and place_unit):
+            continue
+        if topic_hits or goal_hits or (opening_hours and hours_unit) or (location and place_unit) or (not intent and heading_scope):
+            field_bonus = 8 if goal == "services" and re.match(r"(?:운영|사업|서비스|진료|지원)내용\s*:", unit) else 0
+            candidates.append((topic_hits * 4 + goal_hits + int(heading_scope) + field_bonus, i))
     if not candidates:
         return None
     for _, start in sorted(candidates, key=lambda item: (-item[0], item[1])):
         chosen = [units[start]]
+        if goal == "method" and start and source_unit_complete(units[start - 1]):
+            previous = units[start - 1]
+            if (not QUALIFICATION.match(previous) and any(word in previous for word in ("통합", "인터넷", "예약"))
+                    and len(previous) + len(units[start]) < 300):
+                chosen.insert(0, previous)
         # Keep adjacent exceptions whole; never shorten away a condition.
         for unit in units[start + 1:]:
             if QUALIFICATION.match(unit):
                 chosen.append(unit)
             else:
                 break
+        if goal == "method" and "무상" in topics:
+            # A free-service exclusion may follow its product table rather
+            # than the application field. Include only an explicit exclusion
+            # naming the same subject, never another product's exceptions.
+            subjects = topics - {"무상", "수거", "보건소"}
+            for unit in units[start + 1:start + 81]:
+                if (QUALIFICATION.match(unit) and unit not in chosen
+                        and any(word in compact(unit) for word in subjects)
+                        and any(word in unit for word in ("제외", "않음", "불가", "유상", "부담"))):
+                    chosen.append(unit)
         if any(not source_unit_complete(unit) for unit in chosen):
             continue
         answer = "\n".join("- " + line for line in chosen)
@@ -135,6 +193,12 @@ def scope_question(query: str, body: str) -> dict:
               ("비용", ("수수료", "요금", "비용")), ("운영시간", ("시간", "일정")),
               ("준비 서류", ("서류", "준비"))]
     choices = [label for label, words in fields if any(word in body for word in words)][:3]
+    # A clear request must not be sent back to choose the same field again.
+    goal = answer_goal(query)
+    if goal:
+        return {"answer": "어떤 신청 유형이나 대상에 관한 문의인지 조금 더 알려주시겠어요?",
+            "answer_details": "", "is_clarification": True,
+            "suggested_questions": [], "reply_terms": ["유형", "대상"]}
     if not choices:
         choices = ["대상이나 사업명"]
     answer = "안내 범위를 좁혀볼게요. **" + "·".join(choices) + "** 중 어떤 내용을 확인하시겠어요?"
@@ -148,6 +212,10 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
     lines = source_lines(original_answer)
     body = "\n".join(lines)
     url = str((documents[0].get("metadata") or {}).get("url") or "") if documents else ""
+    if answer_goal(query) == "reference" and documents:
+        title = str((documents[0].get("metadata") or {}).get("title") or "공식 안내")
+        return {"answer": f"사하구청 공식 「{title}」 페이지에서 확인할 수 있습니다.",
+            "answer_details": original_answer, "is_clarification": False, "suggested_questions": []}
     answer = vaccination_place_brief(query, url, lines)
     if (asks_location(query) and is_vaccination_query(query)
             and any(mid in url for mid in ('mId=0203020000', 'mId=0203020100')) and not answer):
@@ -162,10 +230,19 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
     elif "대형폐기물" in compact(body) and "대형폐기물" in compact(query):
         answer = _waste(query, body)
     if not answer:
-        answer = _extract_brief(query, lines, keywords)
+        answer = _extract_brief(query, lines, keywords, str((documents[0].get("metadata") or {}).get("title") or "") if documents else "")
     if not answer:
         return scope_question(query, body)
     meta = (documents[0].get("metadata") or {}) if documents else {}
+    title = str(meta.get("title") or "")
+    if title and not any(word in compact(answer) for word in substantive_keywords(keywords)):
+        answer = f"**{title}** 안내:\n" + answer
+    elif title and answer_goal(query) == "method" and compact(title) not in compact(answer):
+        # A channel name is essential when the actual instruction only says
+        # 'apply online'. Display the verified page title beside that field.
+        answer = f"**{title}** 안내:\n" + answer
+    if len(answer) > MAX_BRIEF_LENGTH:
+        return scope_question(query, body)
     if meta.get("source_type") == "official_report":
         answer = f"자료 기준: {meta.get('data_period', '미상')}\n\n" + answer
     return {"answer": answer, "answer_details": original_answer, "is_clarification": False,

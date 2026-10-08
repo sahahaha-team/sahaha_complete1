@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import re
 
-from chatbot.evidence import is_answerable_document, topic_support
+from chatbot.evidence import is_answerable_document, topic_support, is_service_source
+from chatbot.answer_goal import answer_goal
 from chatbot.question_intent import asks_opening_hours, has_opening_hours, asks_location, has_location
 from chatbot.vaccination import vaccination_section, vaccination_place_brief
 
@@ -94,13 +95,27 @@ def focused_section(query: str, url: str, text: str) -> str | None:
     return None
 
 
-def build_source_answer(documents: list[dict], client, *, query: str = "", topic_keywords: set[str] | None = None) -> tuple[str, list[dict]]:
+def build_source_answer(documents: list[dict], client, *, query: str = "", topic_keywords: set[str] | None = None,
+                        require_brief: bool = False) -> tuple[str, list[dict]]:
     """Try the next relevant source if the leading chunk's original is unsuitable."""
-    for document in documents[:5]:
+    fallback = ("", [])
+    seen = set()
+    for document in documents:
+        url = (document.get("metadata") or {}).get("url")
+        if url in seen:
+            continue
+        seen.add(url)
         answer, used = _build_one_source_answer([document], client, query=query, topic_keywords=topic_keywords)
         if answer:
-            return answer, used
-    return "", []
+            if not require_brief:
+                return answer, used
+            from chatbot.concise_answers import concise_source_answer
+            brief = concise_source_answer(query, answer, used, topic_keywords or set())
+            if not brief["is_clarification"]:
+                return answer, used
+            if not fallback[0]:
+                fallback = answer, used
+    return fallback
 
 
 def _build_one_source_answer(documents: list[dict], client, *, query: str = "", topic_keywords: set[str] | None = None) -> tuple[str, list[dict]]:
@@ -114,6 +129,8 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     lead = documents[0]
     meta = lead.get("metadata") or {}
     url = meta.get("url")
+    if topic_keywords is not None and not is_service_source(query, lead, topic_keywords):
+        return "", []
     if meta.get("category") == "staff_directory":
         dept = str(meta.get("department") or "").strip()
         role = str(meta.get("title") or "").strip()
@@ -143,22 +160,26 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     if not is_answerable_document(query, {"content": text, "metadata": meta}):
         return "", []
     if topic_keywords is not None and not topic_support(
-            {"content": strip_page_chrome(text)}, topic_keywords)[0]:
+            {"content": strip_page_chrome(text), "metadata": {"url": url}}, topic_keywords)[0]:
         return "", []
     section = focused_section(query, str(url or ""), text)
     if section == "":
         return "", []
-    passage = section if section is not None else source_passage(text, lead.get("content") or "")
+    passage = section if section is not None else source_passage(text, lead.get("content") or "",
+        budget=12000 if meta.get("source_type") == "crawled_page" else 2400)
     if asks_opening_hours(query) and not has_opening_hours(passage):
         return "", []
-    if asks_location(query) and not has_location(passage):
+    if answer_goal(query) == "location" and not has_location(passage):
         return "", []
     if (section is not None and asks_location(query)
             and any(mid in str(url) for mid in ('mId=0203020000', 'mId=0203020100'))
             and not vaccination_place_brief(query, str(url), passage.splitlines())):
         return "", []
+    passage_meta = {"url": url}
+    if topic_keywords and topic_keywords.issubset({"구청", "보건소"}):
+        passage_meta["title"] = meta.get("title") or ""
     if topic_keywords is not None and not topic_support(
-            {"content": passage}, topic_keywords)[0]:
+            {"content": passage, "metadata": passage_meta}, topic_keywords)[0]:
         return "", []
     title = str(meta.get("title") or "사하구청 안내")
     if meta.get("source_type") == "official_report":

@@ -3,6 +3,21 @@
 import re
 from chatbot.vaccination import needs_vaccine_kind, vaccine_kind
 from chatbot.question_intent import asks_location, location_subject
+from chatbot.query_subject import AREA_PATTERN
+from chatbot.answer_goal import answer_goal
+
+
+def _broad_support_request(message: str) -> bool:
+    """Ask a welfare scope question only when no service name remains."""
+    text = AREA_PATTERN.sub("", message or "")
+    text = re.sub(r"[\s?!.,·]", "", text)
+    text = re.sub(r"어르신|노인|장애인|아동|보육|청년|주민|구민", "", text)
+    text = re.sub(r"\d+세(?:이상|이하|미만)?", "", text)
+    text = re.sub(r"지원금|복지|지원|혜택|서비스|제도|사업|신청|방법|조건|대상|자격|도움|필요", "", text)
+    text = re.sub(r"알려(?:주세요|줘)?|받고싶(?:어요|어)?|받을수|받으려면|있(?:나요|어요|어)|"
+        r"어떤(?:거|것)?|무슨|뭐가|어떻게|하고싶(?:어요|어)?|이용|찾고|싶(?:어요|어)?", "", text)
+    text = re.sub(r"에서|에게|으로|에는|에|은|는|이|가|을|를|의|요", "", text)
+    return not text
 
 
 def clarification_question(answer: str, questions: list[str], reply_terms: list[str]) -> dict:
@@ -62,7 +77,7 @@ def build_clarification(user_message: str) -> dict | None:
         new = any(word in compact for word in ("신규", "처음", "새로"))
         renew = "재발급" in compact
         docs = any(word in compact for word in ("준비", "서류", "구비"))
-        goal = any(word in compact for word in ("준비", "서류", "구비", "수수료", "비용", "얼마", "기간", "며칠", "시간", "장소", "어디", "사진", "전화", "담당", "번호"))
+        goal = bool(answer_goal(user_message)) or any(word in compact for word in ("준비", "서류", "구비", "수수료", "비용", "얼마", "기간", "며칠", "시간", "장소", "어디", "사진", "전화", "담당", "번호"))
         if docs and not (adult or minor):
             return clarification_question("여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
                 ["성인 신규 여권 준비물 알려줘", "성인 여권 재발급 준비물 알려줘", "미성년자 여권 준비물 알려줘"],
@@ -98,7 +113,9 @@ def build_clarification(user_message: str) -> dict | None:
             ["무인민원발급기 위치 알려줘", "무인민원발급기 운영시간 알려줘", "무인민원발급기 수수료 알려줘"], ["위치", "어디", "시간", "수수료", "비용"])
 
     specific_support = any(word in compact for word in ("출산", "양육", "아동수당", "부모급여", "기초연금", "기초생활", "장애인연금", "장애수당", "활동지원", "장학", "일자리", "생활비", "돌봄"))
-    if ("복지" in compact or "지원" in compact or "혜택" in compact) and not specific_support and not any(word in compact for word in ("담당", "전화", "부서", "연락")):
+    if (("복지" in compact or "지원" in compact or "혜택" in compact)
+            and not specific_support and _broad_support_request(user_message)
+            and not any(word in compact for word in ("담당", "전화", "부서", "연락"))):
         audience = next((word for word in ("어르신", "노인", "장애인", "아동", "보육", "청년") if word in compact), "")
         if not audience:
             return clarification_question("**누구를 위한 지원**을 찾으시나요? 어르신·아동·장애인 등 대상을 알려주세요.",

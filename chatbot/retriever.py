@@ -22,8 +22,10 @@ from chatbot.evidence import (
     filter_time_compatible,
     is_answerable_document,
     topic_support,
+    is_service_source,
 )
-from chatbot.query_subject import normalize_query, subject_query, substantive_keywords, fallback_keywords
+from chatbot.query_subject import normalize_query, subject_query, query_keywords, fallback_keywords
+from chatbot.crawled_pages import CrawledPageIndex, page_rank
 from chatbot.question_intent import asks_opening_hours, asks_location
 from config import (
     HYBRID_VECTOR_WEIGHT,
@@ -56,6 +58,7 @@ class HybridRetriever:
     def __init__(self):
         self.vs = VectorStore()
         self.db = Database()
+        self.page_index = CrawledPageIndex(self.db.client)
 
         # BM25 인덱스 사전 로딩 (지연 로딩하면 첫 질문 시 수 초 지연)
         try:
@@ -109,8 +112,9 @@ class HybridRetriever:
                 "metadata->>url", url
             ).execute().data or []
         except Exception as exc:
-            logger.warning("질문 목록 공식 URL 검색 실패: %s", exc)
-            return {"results": [], "degraded": True, "reason": "faq_source_failed"}
+            logger.warning("질문 목록 공식 URL 검색 실패")
+            pages = self.search_crawled_pages(query, k=k, url=url)
+            return {"results": pages, "degraded": True, "reason": "faq_source_failed"}
         keywords = self._content_keywords(query)
         bm25_scores = {}
         if self.bm25 and self.bm25.enabled:
@@ -134,7 +138,12 @@ class HybridRetriever:
         ranked.sort(key=lambda doc: (doc["_overlap"], doc["bm25_score"]), reverse=True)
         for doc in ranked:
             doc.pop("_overlap", None)
-        return {"results": ranked[:k], "degraded": False, "reason": None}
+        pages = self.search_crawled_pages(query, k=k, url=url)
+        return {"results": pages + ranked[:k], "degraded": False, "reason": None}
+
+    def search_crawled_pages(self, query: str, k: int = 15, url: str | None = None) -> list[dict]:
+        index = getattr(self, "page_index", None)
+        return index.search(query, self._content_keywords(query), limit=k, url=url) if index else []
 
     def _hybrid_combine(self, query: str, vector_results: list[dict], k: int) -> list[dict]:
         """
@@ -298,6 +307,16 @@ class HybridRetriever:
             return {"results": staff_docs, "degraded": not bool(staff_docs),
                     "reason": None if staff_docs else "staff_not_found"}
 
+        # The original contains fields and qualifications that embedding
+        # chunks can omit. Search every crawler page, not just workbook URLs.
+        pages = self.search_crawled_pages(query, k=k)
+        if pages:
+            lexical = self.bm25.search(query, top_n=max(k, 30)) if self.bm25 and self.bm25.enabled else []
+            subjects = self._content_keywords(query)
+            return {"results": sorted(pages + lexical,
+                key=lambda doc: page_rank(query, doc, subjects), reverse=True),
+                "degraded": False, "reason": None}
+
         degraded = False
         reason: str | None = None
 
@@ -395,7 +414,7 @@ class HybridRetriever:
             word in query_lower for word in self._DOMAIN_INTENT + self._CONTACT_INTENT
         )
         return evaluate_evidence(
-            [doc for doc in filter_time_compatible(query, results) if is_answerable_document(query, doc)],
+            [doc for doc in filter_time_compatible(query, results) if is_answerable_document(query, doc) and is_service_source(query, doc, keywords)],
             keywords=keywords,
             domain_intent=domain_intent,
             min_similarity=CONFIDENCE_MIN_SIMILARITY,
@@ -413,7 +432,7 @@ class HybridRetriever:
             word in query.lower() for word in self._DOMAIN_INTENT + self._CONTACT_INTENT
         )
         return filter_grounded_results(
-            [doc for doc in filter_time_compatible(query, results) if is_answerable_document(query, doc)],
+            [doc for doc in filter_time_compatible(query, results) if is_answerable_document(query, doc) and is_service_source(query, doc, keywords)],
             keywords=keywords,
             domain_intent=domain_intent,
             min_similarity=CONFIDENCE_MIN_SIMILARITY,
@@ -491,7 +510,7 @@ class HybridRetriever:
         if kiwi is not None:
             words = [token.form for token in kiwi.tokenize(text)
                      if token.tag.startswith(("NN", "SL"))]
-            return substantive_keywords(words)
+            return query_keywords(query, words)
         return fallback_keywords(text)
 
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:

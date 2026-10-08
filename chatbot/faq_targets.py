@@ -41,6 +41,8 @@ def match_official_page(question: str) -> str | None:
         return vaccine_url
     if asks_location(question) and fallback_keywords(question) == {'보건소'}:
         return 'https://www.saha.go.kr/health/contents.do?mId=0103000000'
+    if asks_location(question) and fallback_keywords(question) == {'구청'}:
+        return 'https://www.saha.go.kr/portal/contents.do?mId=0604050000'
     # The health-center directions page also contains its general clinical
     # hours. Do not substitute a village health center or a service's hours.
     if ('보건소' in normalized and asks_opening_hours(question)

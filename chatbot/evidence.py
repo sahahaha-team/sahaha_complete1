@@ -3,7 +3,7 @@
 import re
 import math
 from urllib.parse import urlparse
-from chatbot.query_subject import compact, substantive_keywords
+from chatbot.query_subject import compact, substantive_keywords, SERVICE_NAMES
 
 
 def is_official_document(doc: dict) -> bool:
@@ -72,6 +72,9 @@ def is_listing_document(doc: dict) -> bool:
 def is_answerable_document(query: str, doc: dict) -> bool:
     """A notice index is evidence for listing requests, not for an office's duty."""
     url = str((doc.get("metadata") or {}).get("url") or "")
+    if urlparse(url).path.endswith("/main.do"):
+        # Landing-page menus are not a service's instructions.
+        return False
     if "/deptIntro/" in url and not any(word in query for word in ("담당", "부서", "업무", "직원", "연락", "전화", "조직")):
         return False
     if not is_listing_document(doc):
@@ -101,8 +104,27 @@ def topic_support(doc: dict, keywords: set[str]) -> tuple[bool, set[str]]:
     meta = doc.get("metadata") or {}
     haystack = compact(f"{meta.get('title', '')} {doc.get('content', '')}")
     matched = {word for word in topics if word in haystack}
+    # The health-site scope establishes the institution; its body must still
+    # establish the actual service. A health URL alone cannot answer its hours.
+    if "보건소" in topics and len(topics) > 1 and urlparse(str(meta.get("url") or "")).path.startswith("/health/"):
+        matched.add("보건소")
+    # Generic conditions must not outvote the name of the actual service.
+    anchors = topics.intersection(SERVICE_NAMES)
+    if not anchors.issubset(matched):
+        return False, matched
     required = len(topics) if len(topics) <= 2 else math.ceil(len(topics) * 0.75)
     return len(matched) >= required, matched
+
+
+def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
+    """A certificate required by another benefit is not its issuance guide."""
+    from chatbot.answer_goal import answer_goal
+    title = compact(str((doc.get("metadata") or {}).get("title") or ""))
+    certificates = {"주민등록등본", "주민등록초본", "건강진단결과서"}.intersection(keywords)
+    if certificates and answer_goal(query) in ("method", "cost", "documents") and title:
+        return any(name in title for name in certificates) or any(
+            word in title for word in ("정부24", "무인민원", "민원실", "제증명", "발급안내"))
+    return True
 
 
 def assess_evidence(
@@ -174,4 +196,15 @@ def select_grounded_results(
     if not official:
         return []
 
-    return [result for result in official if topic_support(result, keywords)[0]][:limit]
+    selected, seen = [], set()
+    for result in official:
+        if not topic_support(result, keywords)[0]:
+            continue
+        url = (result.get("metadata") or {}).get("url")
+        if url in seen:
+            continue
+        seen.add(url)
+        selected.append(result)
+        if len(selected) >= limit:
+            break
+    return selected

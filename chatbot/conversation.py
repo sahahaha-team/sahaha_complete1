@@ -360,8 +360,12 @@ class ChatBot:
             self.retriever.search_official_url(search_query, target_url, k=15)
             if target_url else self.retriever.search(search_query, k=15)
         )
+        if target_url and not search_outcome["results"]:
+            search_outcome = self.retriever.search(search_query, k=15)
         fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
-        results = self.retriever.select_grounded_results(search_query, fresh_results, limit=5)
+        results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
+        logger.info("상담 근거 단계: 검색=%s, 최근 확인=%s, 서로 다른 근거 URL=%s",
+            len(search_outcome["results"]), len(fresh_results), len(results))
         degraded = search_outcome["degraded"]
         degraded_reason = search_outcome["reason"]
 
@@ -387,10 +391,10 @@ class ChatBot:
                 "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
             }
 
-        grounded_results = self.retriever.select_grounded_results(search_query, results)
+        grounded_results = self.retriever.select_grounded_results(search_query, results, limit=15)
         if SOURCE_ONLY_ANSWERS:
             answer, used_results = build_source_answer(grounded_results, self.retriever.db.client,
-                query=search_query, topic_keywords=self.retriever._content_keywords(search_query))
+                query=search_query, topic_keywords=self.retriever._content_keywords(search_query), require_brief=True)
             if answer:
                 concise = concise_source_answer(search_query, answer, used_results,
                     self.retriever._content_keywords(search_query))

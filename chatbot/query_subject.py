@@ -10,8 +10,17 @@ WEAK_WORDS = set("알려 알려줘 알려주세요 뭐야 뭐예요 어떻게 �
 # Request formats are checked when selecting the actual source section. Their
 # absence from a heading must not erase a matching service such as 신규 여권.
 WEAK_WORDS.update({"준비물", "준비", "서류", "구비서류", "구비", "성인", "어른", "처음"})
+# These describe the request, not the administrative service. They are checked
+# against answer fields later, rather than required in every retrieval chunk.
+WEAK_WORDS.update("이용 서비스 날짜 기준 각종 제도 도움 때문 어려움 부담 혜택 종류 비용 요금 수수료 금액 기간 시간 운영 대상 조건 자격 부모 특보 절약 주기".split())
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
-WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자"}
+WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철"}
+# Keep names intact when morphology splits a service into generic nouns. These
+# are vocabulary, not answers or question-to-URL exceptions.
+SERVICE_NAMES = ("전입신고", "주민등록등본", "주민등록초본", "정부24", "전자민원",
+    "정보공개청구", "건강진단결과서", "물리치료", "방문건강", "건강생활지원센터",
+    "국가암검진", "조상땅", "탄소포인트", "탄소중립포인트", "소아암", "암환자",
+    "대형폐기물", "무인민원발급", "인플루엔자", "폐렴구균")
 
 
 def normalize_query(query: str) -> str:
@@ -23,11 +32,14 @@ def compact(value: str) -> str:
     value = re.sub(r"[^가-힣a-z0-9]", "", normalize_query(value).lower())
     for alias, target in WORDING_ALIASES.items():
         value = value.replace(alias, target)
+    value = value.replace("주민등록표등본", "주민등록등본").replace("주민등록등초본", "주민등록등본주민등록초본")
     return value
 
 
 def subject_query(query: str) -> str:
-    text = AREA_PATTERN.sub(" ", location_subject(opening_hours_subject(normalize_query(query))))
+    text = location_subject(opening_hours_subject(normalize_query(query)))
+    # 구청 is a facility in directions questions, not just a region name.
+    text = AREA_PATTERN.sub(" ", text.replace("사하구청", "구청"))
     # Normalize full wording before morphology splits it: 불법주차 must become
     # 불법주정차, rather than leaving the fragment 주차 unmatched by 주정차.
     for alias, target in WORDING_ALIASES.items():
@@ -38,6 +50,29 @@ def subject_query(query: str) -> str:
     if '여권' in text and any(word in text for word in ('미성년', '아이', '자녀', '18세 미만')):
         text = text.replace('부모', '친권자')
     return text
+
+
+def query_keywords(query: str, words: Iterable[str]) -> set[str]:
+    text = compact(subject_query(query))
+    names = {name for name in SERVICE_NAMES if name in text}
+    topics = substantive_keywords(words)
+    if names:
+        topics = {word for word in topics if not any(word in name for name in names)} | names
+    if "정부24" in names:
+        topics.discard("구청")  # '구청에 가지 않고' is not another service.
+    elif len(topics) > 1:
+        topics.discard("구청")
+    if "방문건강" in names:
+        topics -= {"거동", "불편", "관리"}
+    if "조상" in topics and "땅" in query:
+        topics.discard("조상")
+        topics.add("조상땅")
+    if "구청" in text and not topics:
+        topics.add("구청")
+    if ("민원" in text and "인터넷" in text):
+        topics.discard("인터넷")
+        topics.add("전자민원")
+    return substantive_keywords(topics)
 
 
 def substantive_keywords(words: Iterable[str]) -> set[str]:
@@ -60,4 +95,4 @@ def fallback_keywords(query: str) -> set[str]:
     for word in re.findall(r"[가-힣A-Za-z0-9]+", text):
         word = re.sub(r"(?:으로|에서|에게|은|는|을|를|이|가|의|에|요)$", "", word) if len(word) >= 3 else word
         words.append(word)
-    return substantive_keywords(words)
+    return query_keywords(query, words)
