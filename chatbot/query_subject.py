@@ -25,7 +25,11 @@ SERVICE_NAMES = ("전입신고", "주민등록등본", "주민등록초본", "�
 
 def normalize_query(query: str) -> str:
     """Correct 화제 only in an explicit fire incident/reporting context."""
-    return re.sub(r"(?<!영)화제(?=\s*(?:가\s*)?(?:신고|발생|났|나고|진압|대피|현장))", "화재", query or "")
+    text = query or ""
+    # Colloquial questions insert words such as '어떻게' between the typo and
+    # '신고', and often omit spaces. News and film festivals are not incidents.
+    return re.sub(r"(?<!영)화제(?!가\s*된|의|로\s*떠|성)(?=[^.!?\n]{0,30}(?:신고|발생|났|나고|진압|대피|119))",
+                  "화재", text)
 
 
 def compact(value: str) -> str:
@@ -56,6 +60,8 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     text = compact(subject_query(query))
     names = {name for name in SERVICE_NAMES if name in text}
     topics = substantive_keywords(words)
+    if re.search(r'일반\s*(?:주민|구민|시민)', query):
+        topics.discard('일반')  # Audience condition, distinct from 일반쓰레기.
     if names:
         topics = {word for word in topics if not any(word in name for name in names)} | names
     if "정부24" in names:

@@ -15,7 +15,7 @@ def doc(title, content, *, bm25=30, similarity=.95):
 
 class EmergencyRoutingTests(unittest.TestCase):
     def test_actual_reported_question_and_fire_variants(self):
-        for query in ("당리동 인근 공장 화제 신고는 어떻게해?", "당리동 공장 화재 신고 전화번호", "공장 불났어 어디 신고해?", "괴정동 뒷산에 불이 났어요", "공장 화재 신고 담당부서 알려줘"):
+        for query in ("당리동 인근 공장화제 어떻게신고해", "공장 화제는 어디에 신고해야 돼?", "공장에서 화제 났는데 어떻게 해?", "당리동 인근 공장 화제 신고는 어떻게해?", "당리동 공장 화재 신고 전화번호", "공장 불났어 어디 신고해?", "괴정동 뒷산에 불이 났어요", "공장 화재 신고 담당부서 알려줘"):
             with self.subTest(query=query):
                 result = answer_emergency_question(query)
                 self.assertIn("119", result["answer"])
@@ -25,7 +25,7 @@ class EmergencyRoutingTests(unittest.TestCase):
                 self.assertNotIn("주정차", result["answer"])
 
     def test_news_and_fire_admin_queries_are_not_emergency_reporting(self):
-        for query in ("화제가 된 사하구 행사 알려줘", "영화제 신고 방법", "공장 설립 신고 방법", "소방시설 안전점검 담당부서", "화재 피해 지원금", "화재 발생 피해 지원금", "불이 난 공장 피해 보상", "화재 발생 건수는 어디서 봐?", "화재 신고 통계 건수", "화재 예방 교육 신청", "불법주차 신고 방법"):
+        for query in ("화제가 된 행사는 어떻게 신고해?", "소방 안전 교육 어디서 들어", "화제가 된 사하구 행사 알려줘", "영화제 신고 방법", "공장 설립 신고 방법", "소방시설 안전점검 담당부서", "화재 피해 지원금", "화재 발생 피해 지원금", "불이 난 공장 피해 보상", "화재 발생 건수는 어디서 봐?", "화재 신고 통계 건수", "화재 예방 교육 신청", "불법주차 신고 방법"):
             self.assertIsNone(answer_emergency_question(query), query)
 
     def test_fire_typo_normalization_has_context(self):

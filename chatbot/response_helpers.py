@@ -29,6 +29,10 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     if not pending:
         return message
     current = re.sub(r"\s+", "", message)
+    if pending.get('affirmative_context') and current.rstrip('.!?') in ('네', '예', '응', '맞아', '맞아요'):
+        return pending['query'] + ' ' + pending['affirmative_context']
+    if pending.get('negative_context') and current.rstrip('.!?') in ('아니', '아니요', '아니야'):
+        return pending['query'] + ' ' + pending['negative_context']
     if message in pending.get("suggested_questions", []):
         return message  # Buttons already contain a complete, narrowed question.
     previous = re.sub(r"\s+", "", pending.get("query", ""))

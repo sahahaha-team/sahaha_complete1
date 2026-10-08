@@ -14,6 +14,54 @@ from chatbot.answer_completion import (
 )
 
 MAX_BRIEF_LENGTH = 480
+SCOPE_FIELD = re.compile(r"^(?:교육)?(?:대\s*상|신청자격|지원대상|이용대상|조건)\s*[:：]")
+
+
+def section_bounds(units: list[str], index: int) -> tuple[int, int]:
+    """Separate named activities from the next activity on a multi-service page."""
+    headings = [i for i, unit in enumerate(units)
+                if 6 <= len(unit) <= 60 and not source_unit_complete(unit)
+                and re.search(r'(?:교육|프로그램|사업|서비스)$', unit)]
+    start = max((i for i in headings if i <= index), default=0)
+    end = min((i for i in headings if i > index), default=len(units))
+    return start, end
+
+
+def condition_indices(units: list[str], indices: list[int]) -> list[int]:
+    """Keep field scope and adjacent exceptions beside a selected fact."""
+    chosen = set(indices)
+    for index in indices:
+        section_start, section_end = section_bounds(units, index)
+        for pos in range(index + 1, min(section_end, index + 6)):
+            if QUALIFICATION.match(units[pos]):
+                chosen.add(pos)
+            else:
+                break
+        for pos in sorted(range(max(section_start, index - 4), min(section_end, index + 5)),
+                          key=lambda p: abs(p - index)):
+            if SCOPE_FIELD.match(units[pos]):
+                chosen.add(pos)
+                break
+    return sorted(chosen)
+
+
+def course_scope_result(query: str, audience: str | None) -> dict | None:
+    """Clarify a documented course's audience once; do not repeat after a no."""
+    if not audience or not any(word in query for word in ('교육', '훈련', '강좌')):
+        return None
+    value = re.split(r'[:：]', audience, maxsplit=1)[-1].strip()
+    if any(word in compact(query) and word in compact(value)
+           for word in ('공동주택', '관리자', '책임자', '다중이용', '어린이', '학생', '사업주', '근로자')):
+        return None
+    if any(word in compact(query) for word in ('일반', '주민', '구민')):
+        if not any(word in value for word in ('주민', '구민', '누구나', '시민')):
+            return {"answer": f"확인된 교육은 {value} 대상입니다. 일반 주민이 신청할 수 있는 교육의 장소·일정은 이 자료에서 확인되지 않았습니다.",
+                    "is_clarification": False, "suggested_questions": []}
+        return None
+    return {"answer": f"확인된 교육은 {value} 대상입니다.\n이 대상의 교육을 찾으시나요?",
+            "answer_details": "", "is_clarification": True, "suggested_questions": [],
+            "affirmative_context": value, "negative_context": "일반 주민",
+            "reply_terms": ["네", "맞아", "아니", "일반", "주민", "관리", "책임자"]}
 
 
 def source_lines(original_answer: str) -> list[str]:
@@ -146,7 +194,8 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
             goal_hits += 1
         if goal == "schedule" and any(word in query for word in ("자주", "주기", "몇 번")):
             goal_hits = int(bool(re.search(r"(?:연|월|주|일)\s*\d+\s*회|매(?:년|월|주|일)", unit)))
-        local = compact(" ".join(units[max(0, i - 12):i + 13]))
+        section_start, section_end = section_bounds(units, i)
+        local = compact(" ".join(units[max(section_start, i - 12):min(section_end, i + 13)]))
         local_scope = bool(topics) and all(word in local for word in (anchors or topics))
         if not topic_hits and not heading_scope and not local_scope:
             continue
@@ -158,7 +207,7 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
     if not candidates:
         return None
     for _, start in sorted(candidates, key=lambda item: (-item[0], item[1])):
-        chosen = [units[start]]
+        chosen = [units[index] for index in condition_indices(units, [start])]
         if goal == "method" and start and source_unit_complete(units[start - 1]):
             previous = units[start - 1]
             if (not QUALIFICATION.match(previous) and any(word in previous for word in ("통합", "인터넷", "예약"))
@@ -167,7 +216,8 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
         # Keep adjacent exceptions whole; never shorten away a condition.
         for unit in units[start + 1:]:
             if QUALIFICATION.match(unit):
-                chosen.append(unit)
+                if unit not in chosen:
+                    chosen.append(unit)
             else:
                 break
         if goal == "method" and "무상" in topics:
@@ -233,6 +283,15 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
         answer = _extract_brief(query, lines, keywords, str((documents[0].get("metadata") or {}).get("title") or "") if documents else "")
     if not answer:
         return scope_question(query, body)
+    audience = next((line.removeprefix('- ').strip() for line in answer.splitlines()
+                     if SCOPE_FIELD.match(line.removeprefix('- ').strip())), None)
+    course_scope = course_scope_result(query, audience)
+    if course_scope:
+        if course_scope['is_clarification']:
+            return course_scope
+        answer = course_scope['answer']
+    if answer_goal(query) in ('location', 'hours', 'schedule') and re.search(r'예정|미정|잠정|추후', answer):
+        answer = "공식 자료에 예정·미정으로 표시되어 있어 현재 확정 정보는 확인되지 않습니다.\n" + answer
     meta = (documents[0].get("metadata") or {}) if documents else {}
     title = str(meta.get("title") or "")
     if title and not any(word in compact(answer) for word in substantive_keywords(keywords)):

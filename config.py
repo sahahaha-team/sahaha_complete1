@@ -42,8 +42,8 @@ MAX_CONVERSATION_HISTORY = 10
 MAX_RETRIEVAL_RESULTS = 5
 CHATBOT_TEMPERATURE = 0.3
 CHATBOT_MAX_TOKENS = int(os.getenv("CHATBOT_MAX_TOKENS", "384"))
-# 기본은 원문 발췌: 소형 모델이 수수료·조건의 관계를 바꾸지 못하게 한다.
-SOURCE_ONLY_ANSWERS = os.getenv("SOURCE_ONLY_ANSWERS", "true").lower() == "true"
+# 기본은 Gemma의 근거 선택: 출력 사실은 검증된 원문 단위에서 가져온다.
+SOURCE_ONLY_ANSWERS = os.getenv("SOURCE_ONLY_ANSWERS", "false").lower() == "true"
 
 # ===== Flask 설정 =====
 FLASK_HOST = os.getenv("FLASK_HOST", "127.0.0.1")

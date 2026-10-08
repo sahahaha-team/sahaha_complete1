@@ -65,6 +65,8 @@ class Source(BaseModel):
 
 
 class Evidence(BaseModel):
+    # Evaluation metadata; the resident UI does not display implementation details.
+    answer_method: str = ""
     status: str = "unavailable"
     label: str = "근거 상태를 확인할 수 없음"
     official_source_count: int = 0
