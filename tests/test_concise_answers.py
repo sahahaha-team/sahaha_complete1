@@ -126,6 +126,40 @@ class ConciseAnswerTests(unittest.TestCase):
         self.assertIn('전화예약 후 방문상담', result['answer'])
 
 
+class HouseholdDisposalAnswerTests(unittest.TestCase):
+    RULE = ('일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 '
+            '대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.')
+    WARNING = ('재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과), '
+               '재활용품은 반드시 품목별로 분리하여 요일별로 지정된 쓰레기만 배출하여야 합니다.')
+
+    def test_household_method_uses_direct_rule_with_time_and_location_conditions(self):
+        for query in ('일반쓰레기 배출 방법 알려줘', '음식물쓰레기 배출 방법 알려줘',
+                      '쓰레기 배출 일반쓰레기', '쓰레기 배출 음식물', '사하구 일반쓰레기 어떻게 버려?',
+                      '쓰레기 배출 방법 알려줘 일반쓰레기'):
+            with self.subTest(query=query):
+                source = original(self.RULE + '\n' + self.WARNING)
+                result = concise_source_answer(query, source, [{'metadata': {}}], {'쓰레기', '일반쓰레기'})
+                self.assertFalse(result['is_clarification'])
+                self.assertIn(self.RULE, result['answer'])
+                self.assertNotIn('혼합배출시 과태료', result['answer'])
+
+    def test_recycling_warning_does_not_substitute_for_missing_household_rule(self):
+        result = concise_source_answer('일반쓰레기 배출 방법 알려줘', original(self.WARNING),
+                                       [{'metadata': {}}], {'쓰레기', '일반쓰레기'})
+        self.assertTrue(result['is_clarification'])
+
+    def test_recycling_method_uses_direct_rule_instead_of_background_definition(self):
+        definition = '쓰레기 종량제는 재활용품을 최대한 분리 배출하도록 한 제도입니다.'
+        query = '재활용품 분리배출 방법 알려줘'
+        result = concise_source_answer(query, original(definition + '\n' + self.WARNING),
+                                       [{'metadata': {}}], {'재활용품'})
+        self.assertIn(self.WARNING, result['answer'])
+        self.assertNotIn('제도입니다', result['answer'])
+        self.assertEqual(match_official_page(query), 'https://www.saha.go.kr/portal/contents.do?mId=0405050101')
+        for specific in ('사업장 재활용품 처리 방법', '재활용품 수거업체 전화번호', '음식물쓰레기 배출 시간', '일반쓰레기 과태료 얼마야'):
+            self.assertNotEqual(match_official_page(specific), 'https://www.saha.go.kr/portal/contents.do?mId=0405050101')
+
+
 class ClarificationFlowTests(unittest.TestCase):
     def make_bot(self):
         bot = object.__new__(ChatBot)
@@ -146,6 +180,38 @@ class ClarificationFlowTests(unittest.TestCase):
     def test_precise_question_is_answered_without_more_questions(self):
         for query in ('성인 신규 여권 준비물 알려줘', '보건증 발급 수수료', '대형폐기물 배출 방법', '공장 화재 신고 방법', '기초연금 신청 조건'):
             self.assertIsNone(build_clarification(query), query)
+
+    def test_broad_waste_disposal_asks_type_before_searching(self):
+        for query in ('쓰레기 배출', '쓰레기 배출 방법 알려줘', '생활쓰레기 어떻게 버려?', '사하구에서 폐기물 배출 안내'):
+            with self.subTest(query=query):
+                bot = self.make_bot()
+                with patch('chatbot.contact_directory.contact_responder.respond', return_value=None):
+                    result = bot.chat('waste', query)
+                self.assertTrue(result['is_clarification'])
+                self.assertIn('어떤 종류', result['answer'])
+                self.assertEqual(result['sources'], [])
+                self.assertEqual(result['evidence']['status'], 'clarification')
+                self.assertFalse(result['degraded'])
+                bot.retriever.search.assert_not_called()
+                bot.retriever.search_official_url.assert_not_called()
+
+    def test_precise_waste_questions_are_not_replaced_by_type_prompt(self):
+        for query in ('쓰레기 배출 요일 알려줘', '쓰레기 배출 시간 알려줘', '수요일 분리수거 품목',
+                      '일반쓰레기 배출 방법', '음식물쓰레기 배출 방법', '대형폐기물 배출 방법',
+                      '쓰레기 불법투기 신고 방법', '사업장 폐기물 처리 방법', '폐기물 처리 통계'):
+            with self.subTest(query=query):
+                self.assertIsNone(build_clarification(query))
+
+    def test_short_waste_type_keeps_pending_disposal_goal(self):
+        clarification = build_clarification('쓰레기 배출')
+        pending = {'query': '쓰레기 배출', **clarification}
+        for reply in ('일반쓰레기', '음식물', '재활용품', '대형폐기물'):
+            with self.subTest(reply=reply):
+                resolved = resolve_clarification_reply(reply, pending)
+                self.assertIn('쓰레기 배출', resolved)
+                self.assertIn(reply, resolved)
+                self.assertIsNone(build_clarification(resolved))
+        self.assertEqual(resolve_clarification_reply('여권 준비물 알려줘', pending), '여권 준비물 알려줘')
 
     def test_typing_short_choices_keeps_question_context(self):
         bot = self.make_bot()

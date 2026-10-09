@@ -74,6 +74,32 @@ class ContactDirectoryTests(unittest.TestCase):
                 self.assertIn("미디어홍보과", result["answer"])
                 self.assertIn("051-220-0133", result["answer"])
 
+    def test_natural_contact_question_grammar_is_not_an_unknown_duty(self):
+        for query in (
+            "사하구청에서 ai를 담당하는곳이 어디야?",
+            "사하구청에서는 AI를 담당하는 부서가 어디인가요?",
+            "인공지능을 담당하고 있는 팀은 어디예요?",
+            "미디어홍보과에서 AI를 담당하는 곳이 어디야?",
+            "보건증을 담당하는 곳이 어디야?",
+        ):
+            with self.subTest(query=query):
+                result = self.ask(query)
+                expected = "051-220-5763" if "보건증" in query else "051-220-0133"
+                self.assertIn(expected, result["answer"])
+                self.assertFalse(result["is_clarification"])
+                self.assertTrue(result["sources"])
+
+    def test_natural_wording_keeps_unsupported_duties(self):
+        for query in (
+            "사하구청에서 AI 양자컴퓨팅을 담당하는 곳이 어디야?",
+            "사하구청에서 양자컴퓨팅을 담당하는 곳이 어디야?",
+            "인공지능을 담당하는 곳에 양자컴퓨팅도 전화로 문의하고 싶어",
+        ):
+            with self.subTest(query=query):
+                result = self.ask(query)
+                self.assertTrue(result["is_clarification"])
+                self.assertFalse(result["sources"])
+
     def test_alias_is_wording_only(self):
         self.assertIn("051-220-5763", self.ask("보건증 문의 전화")["answer"])
         self.assertIn("051-220-5763", self.ask("보건증을 발급받으려는데 어디에 전화해야하나요?")["answer"])
@@ -148,6 +174,17 @@ class ContactDirectoryTests(unittest.TestCase):
             self.assertEqual(client.post("/api/clear").status_code, 200)
         self.assertEqual(result.status_code, 200)
         self.assertIn("051-220-4581", result.json()["answer"])
+
+    def test_api_natural_contact_route_never_initializes_chatbot(self):
+        import app as web
+        from fastapi.testclient import TestClient
+        with patch.object(web, "contact_responder", self.responder), patch.object(web, "_chatbot", None), patch.object(web, "get_chatbot", side_effect=AssertionError("Heavy services accessed")):
+            client = TestClient(web.app)
+            result = client.post("/api/chat", json={"message": "사하구청에서 ai를 담당하는곳이 어디야?"})
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("미디어홍보과", result.json()["answer"])
+        self.assertIn("051-220-0133", result.json()["answer"])
+        self.assertFalse(result.json()["is_clarification"])
 
     def test_failed_crawl_does_not_accept_partial_pages(self):
         crawler = StaffDirectoryCrawler()

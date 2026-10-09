@@ -247,8 +247,11 @@ async def system_status():
     ollama = await run_in_threadpool(get_ollama_status)
     try:
         db = get_db()
-        vs = get_vector_store()
-        vector_stats = await run_in_threadpool(vs.collection_stats)
+        # Status needs only a row count, not a second embedding model in RAM.
+        def vector_count():
+            result = db.client.table('documents').select('id', count='exact').execute()
+            return {'total_vectors': result.count or 0}
+        vector_stats = await run_in_threadpool(vector_count)
         queue_stats = await run_in_threadpool(db.ingestion_queue_stats)
         latest_crawl = await run_in_threadpool(db.latest_crawl_run)
         search_ready = vector_stats.get("total_vectors", 0) > 0
@@ -258,13 +261,22 @@ async def system_status():
         queue_stats = {"available": False, "queued": 0, "running": 0, "succeeded": 0, "failed": 0}
         latest_crawl = None
         search_ready = False
+    try:
+        from pathlib import Path
+        import json
+        coverage = json.loads(Path("data/site_sync_report.json").read_text(encoding="utf-8"))
+        coverage = {key: coverage.get(key) for key in
+                    ("reported_at", "phase", "counts", "by_site", "pending_index", "complete_site_claim")}
+    except (OSError, ValueError):
+        coverage = None
     return {
-        "status": "ok" if ollama["model_ready"] and search_ready and queue_stats["available"] else "degraded",
+        "status": "ok" if ollama["model_ready"] and search_ready else "degraded",
         "web": {"ready": True},
         "ollama": ollama,
         "search": {"ready": search_ready, **vector_stats},
-        "queue": queue_stats,
+        "queue": {**queue_stats, "required": False, "processing_mode": "direct_site_sync"},
         "latest_crawl": latest_crawl,
+        "site_coverage": coverage,
         "privacy": {"conversation_persistence": False},
     }
 

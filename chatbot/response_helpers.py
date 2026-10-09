@@ -3,6 +3,8 @@
 import re
 from chatbot.vaccination import needs_vaccine_kind, vaccine_kind
 from chatbot.question_intent import asks_location, location_subject
+from chatbot.service_navigation import navigation_clarification, navigation_reply
+from chatbot.query_subject import normalize_query
 
 
 def clarification_question(answer: str, questions: list[str], reply_terms: list[str]) -> dict:
@@ -13,12 +15,24 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     """Only attach a short answer to the specific question we just asked."""
     if not pending:
         return message
+    selected = navigation_reply(message, pending.get("query", ""))
+    if selected:
+        return selected
+    if navigation_clarification(pending.get("query", "")):
+        return message  # A new category/full question must not join the old menu.
     current = re.sub(r"\s+", "", message)
     if message in pending.get("suggested_questions", []):
         return message  # Buttons already contain a complete, narrowed question.
+    for term, query in pending.get("reply_queries", {}).items():
+        if re.fullmatch(re.escape(term) + r"(?:이요|이야|요|으로|으로알려줘|알려줘)?", current):
+            return query
+    if any(term in current for term in pending.get("reply_queries", {})):
+        return message  # A new program question must not inherit the broad topic.
     previous = re.sub(r"\s+", "", pending.get("query", ""))
     for topic in ("여권", "보건증", "폐기물", "복지", "주차", "화재", "출산", "건축", "세금", "등본"):
         if topic in current and topic not in previous:
+            if topic == "폐기물" and any(word in previous for word in ("쓰레기", "재활용")):
+                continue  # A waste type answers the pending disposal question.
             return message
     # A named vaccine plus a new question goal starts that question; a bare
     # type such as '독감' still answers our pending place clarification.
@@ -45,7 +59,18 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
 
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
-    compact = re.sub(r"[\s?!.,]", "", user_message or "")
+    user_message = normalize_query(user_message)
+    compact = re.sub(r"[\s?!.,]", "", user_message)
+
+    navigation = navigation_clarification(user_message)
+    if navigation:
+        return navigation
+
+    if re.fullmatch(r"(?:주민등록)?등본발급(?:방법)?(?:알려줘|알려주세요)?", compact):
+        return clarification_question(
+            "등본을 **온라인**으로 발급받으시나요, **무인민원발급기**를 이용하시나요?",
+            ["주민등록등본 온라인 발급 방법 알려줘", "주민등록등본 무인민원발급기 발급 방법 알려줘"],
+            ["온라인", "인터넷", "정부24", "무인", "발급기"])
 
     if needs_vaccine_kind(user_message):
         return clarification_question(
@@ -53,6 +78,22 @@ def build_clarification(user_message: str) -> dict | None:
             ['독감 접종 장소 알려줘', '폐렴구균 접종 장소 알려줘', 'B형간염 접종 장소 알려줘'],
             ['독감', '인플루엔자', '폐렴', '간염', '코로나', 'HPV', 'hpv', '유두종', '자궁경부암',
              '대상포진', '파상풍', '장티푸스', 'BCG', 'bcg', '홍역', '뇌염', '수두', '로타', '황열', '콜레라', 'RSV', 'rsv'])
+
+    # Ask about the waste type before searching a broad disposal request.
+    # Full matching keeps specific time/day, item and reporting questions intact.
+    waste_query = re.sub(r"^(?:부산광역시)?(?:사하구청|사하구)(?:에서는|에서|의)?", "", compact)
+    if re.fullmatch(
+        r"(?:생활쓰레기|쓰레기|폐기물)(?:를|은|는)?"
+        r"(?:배출(?:방법|요령|안내)?|처리(?:방법)?|버리(?:기|는법|는방법)"
+        r"|어떻게버리(?:나요|면돼)|어떻게버려)?"
+        r"(?:을|를|이|가)?(?:알려(?:줘|주세요)|안내해(?:줘|주세요)|어떻게(?:해|하나요)|궁금해(?:요)?)?",
+        waste_query,
+    ):
+        return clarification_question(
+            "어떤 종류의 쓰레기를 버리시나요? **일반쓰레기·음식물·재활용품·대형폐기물** 중에서 알려주세요.",
+            ["일반쓰레기 배출 방법 알려줘", "음식물쓰레기 배출 방법 알려줘", "재활용품 분리배출 방법 알려줘"],
+            ["일반", "종량제", "음식물", "재활용", "대형", "가구", "가전"],
+        )
 
     # One missing condition per turn. Suggestions are questions, not promises
     # that a particular service or eligibility rule exists.
@@ -62,7 +103,7 @@ def build_clarification(user_message: str) -> dict | None:
         new = any(word in compact for word in ("신규", "처음", "새로"))
         renew = "재발급" in compact
         docs = any(word in compact for word in ("준비", "서류", "구비"))
-        goal = any(word in compact for word in ("준비", "서류", "구비", "수수료", "비용", "얼마", "기간", "며칠", "시간", "장소", "어디", "사진", "전화", "담당", "번호"))
+        goal = any(word in compact for word in ("준비", "서류", "구비", "수수료", "비용", "얼마", "기간", "며칠", "시간", "장소", "어디", "사진", "전화", "담당", "번호", "주소지", "영문", "성명", "표기", "신청할", "신청가능"))
         if docs and not (adult or minor):
             return clarification_question("여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
                 ["성인 신규 여권 준비물 알려줘", "성인 여권 재발급 준비물 알려줘", "미성년자 여권 준비물 알려줘"],
@@ -97,12 +138,30 @@ def build_clarification(user_message: str) -> dict | None:
         return clarification_question("무인민원발급기의 **위치·운영시간·수수료** 중 무엇이 궁금하신가요?",
             ["무인민원발급기 위치 알려줘", "무인민원발급기 운영시간 알려줘", "무인민원발급기 수수료 알려줘"], ["위치", "어디", "시간", "수수료", "비용"])
 
+    if (any(word in compact for word in ("어르신", "노인")) and "생활비" in compact
+            and not any(word in compact for word in ("기초연금", "생계급여", "기초생활", "긴급복지", "긴급지원"))):
+        questions = ["기초연금 지원 대상 조건 알려줘", "생계급여 지원 대상 조건 알려줘"]
+        result = clarification_question(
+            "어르신 생활비 지원은 사업마다 조건이 달라요. **기초연금**과 **생계급여(기초생활보장)** 중 어느 지원이 궁금하신가요?",
+            questions, ["기초연금", "생계급여", "기초생활보장"])
+        result["reply_queries"] = {"기초연금": questions[0], "생계급여": questions[1], "기초생활보장": questions[1]}
+        return result
+
     specific_support = any(word in compact for word in ("출산", "양육", "아동수당", "부모급여", "기초연금", "기초생활", "장애인연금", "장애수당", "활동지원", "장학", "일자리", "생활비", "돌봄"))
-    if ("복지" in compact or "지원" in compact or "혜택" in compact) and not specific_support and not any(word in compact for word in ("담당", "전화", "부서", "연락")):
+    broad_support = re.fullmatch(
+        r"(?:부산광역시)?(?:사하구(?:청)?(?:에서|의)?)?"
+        r"(?:어르신|노인|장애인|아동|보육|청년|·)*(?:을위한)?"
+        r"(?:복지|지원|혜택|복지지원|복지서비스)(?:에는|은|는|이|가)?"
+        r"(?:뭐가있(?:어|나요)|무엇이있나요|알려줘|알려주세요|안내해줘)?", compact)
+    if broad_support and not specific_support:
         audience = next((word for word in ("어르신", "노인", "장애인", "아동", "보육", "청년") if word in compact), "")
         if not audience:
             return clarification_question("**누구를 위한 지원**을 찾으시나요? 어르신·아동·장애인 등 대상을 알려주세요.",
                 ["어르신 복지 지원 알려줘", "아동·보육 지원 알려줘", "장애인 복지 지원 알려줘"], ["어르신", "노인", "아동", "보육", "장애인", "청년"])
+        if audience in ("아동", "보육"):
+            return clarification_question("아동·보육 지원 중 **부모급여·보육료·돌봄** 등 어떤 도움이 필요하신가요?",
+                ["부모급여 신청 방법 알려줘", "보육료 지원 신청 방법 알려줘", "아동 돌봄 지원 알려줘"],
+                ["부모급여", "보육료", "돌봄"])
         return clarification_question(f"{audience} 지원 중 **생활비·돌봄·일자리** 등 어떤 도움이 필요하신가요?",
             [f"{audience} 생활비 지원 조건 알려줘", f"{audience} 돌봄 지원 신청 방법 알려줘", f"{audience} 일자리 신청 방법 알려줘"], ["생활비", "돌봄", "일자리", "연금", "수당"])
 

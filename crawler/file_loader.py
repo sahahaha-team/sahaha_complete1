@@ -12,11 +12,14 @@
 지원 형식:
   .pdf   : pdfplumber (텍스트 레이어 기반, 스캔 이미지 PDF는 추출 불가)
   .hwpx  : 표준 zip + XML (의존성 없음, 권장)
-  .hwp   : olefile 기반 PrvText 우선, 실패 시 best-effort (표/서식 누락 가능)
+  .hwp   : olefile 기반 BodyText 전체 단락, 없으면 PrvText 보조 (표/서식 누락 가능)
 """
 
 import logging
 import zipfile
+import struct
+import zlib
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -90,9 +93,9 @@ def _extract_hwpx(path: Path) -> str:
 
 def _extract_hwp(path: Path) -> str:
     """
-    구버전 HWP(바이너리/OLE). PrvText(미리보기 텍스트) 스트림을 우선 사용.
-    PrvText는 UTF-16LE 평문이라 의존성 없이 안전하게 읽힌다(서식/표는 누락).
-    더 정밀한 추출이 필요하면 pyhwp/hwp5 설치 후 확장 가능.
+    구버전 HWP(바이너리/OLE)의 모든 BodyText 단락을 먼저 읽고,
+    본문 스트림이 없으면 PrvText 미리보기를 보조로 사용한다.
+    표의 배치·이미지·복잡한 서식은 텍스트로 완전히 재현되지 않을 수 있다.
     """
     try:
         import olefile
@@ -106,6 +109,34 @@ def _extract_hwp(path: Path) -> str:
             return ""
         ole = olefile.OleFileIO(str(path))
         try:
+            # PrvText is only a preview and can omit most of a long HWP.
+            # Extract paragraph-text records from every BodyText section first.
+            header = ole.openstream('FileHeader').read() if ole.exists('FileHeader') else b''
+            flags = struct.unpack_from('<I', header, 36)[0] if len(header) >= 40 else 0
+            if flags & 2:
+                logger.warning('암호화된 HWP 본문 제외: %s', path.name)
+                return ''
+            sections = sorted(stream for stream in ole.listdir() if len(stream) == 2 and
+                              stream[0] == 'BodyText' and stream[1].startswith('Section'))
+            paragraphs = []
+            for section in sections:
+                data = ole.openstream(section).read()
+                if flags & 1:
+                    data = zlib.decompress(data, -15)
+                offset = 0
+                while offset + 4 <= len(data):
+                    record = struct.unpack_from('<I', data, offset)[0]; offset += 4
+                    tag, size = record & 0x3ff, (record >> 20) & 0xfff
+                    if size == 0xfff:
+                        if offset + 4 > len(data): break
+                        size = struct.unpack_from('<I', data, offset)[0]; offset += 4
+                    payload = data[offset:offset+size]; offset += size
+                    if tag == 67:  # HWPTAG_PARA_TEXT
+                        text = payload.decode('utf-16-le', errors='ignore')
+                        text = re.sub(r'[\x00-\x08\x0b-\x1f]', ' ', text).strip()
+                        if text: paragraphs.append(text)
+            if paragraphs:
+                return '\n'.join(paragraphs)
             if ole.exists("PrvText"):
                 raw = ole.openstream("PrvText").read()
                 return raw.decode("utf-16-le", errors="ignore").strip()

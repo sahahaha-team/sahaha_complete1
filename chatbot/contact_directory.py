@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from chatbot.privacy import detect_personal_info
+from chatbot.service_navigation import is_council_location_query
 
 DIRECTORY_PATH = Path(__file__).resolve().parents[1] / "data" / "department_contacts.json"
 MAX_AGE = timedelta(days=7)
@@ -24,6 +25,13 @@ SYNONYMS = {
 INTENT = re.compile(r"연락처|전화|담당부서|담당자|담당.*(?:알려|누구|어디)|문의처|연결|어느(?:부서|과)|어떤부서|부서.*(?:알려|어디)|(?:번호|문의).*(?:알려|어디|뭐|어떻게|할곳)")
 FILLER = re.compile(r"사하구청|사하구|부산광역시|부산|담당부서|담당자|담당|대표전화|대표번호|대표|전화번호|연락처|전화|번호|부서|문의처|업무내용|업무|문의|알려(?:주실수있(?:나요|어요)|주세요|줘|주실래|줄래)?|어떻게(?:돼|되나요|되는지|되요)?|뭐(?:야|예요|에요|지)?|몇번(?:인가요|이야|인지)?|어디로|어디에|어디|어느과|어느|어떤|무슨|연결|관련|관한|알고싶(?:어요|어)|알수있(?:을까요|을까|나요)|해야(?:해|하나요)|할수있(?:나요|어요)|부탁(?:해|드려요)|인가요|있나요|주세요|필요해요|궁금해요|좀|신고|신청|접수|발급|처리")
 PARTICLES = re.compile(r"(?:으로|에서|에게|까지|하고|좀|하는|하려고|하려면|하려|할때|은|는|이|가|을|를|의|로|에|도|요)$")
+# Remove complete contact-question phrases before individual filler words.
+# Otherwise '담당하는 곳이 어디야' leaves '하는곳이야' as an unknown duty.
+CONTACT_PHRASES = re.compile(
+    r"(?:사하구청|사하구|부산광역시|부산)(?:에서는|에서|의|에)"
+    r"|담당(?:하고있는|하는)(?:곳|부서|팀|과)(?:이|가|은|는)?"
+    r"|어디(?:인가요|인지|예요|에요|야|죠|니)"
+)
 
 
 def duty_excerpt(duties: str, terms: set[str]) -> str:
@@ -164,6 +172,8 @@ class ContactDirectoryResponder:
         return response(f"현재 공식 파일에서 **{dept['name']} 대표번호**를 확인할 수 없습니다. 사하구청 대표전화 **051-220-4000**에서 연결받아 주세요.", reason="contact_not_verified")
 
     def respond(self, session_id: str, query: str) -> dict | None:
+        if is_council_location_query(query):
+            return None  # Location + phone is a building guide, not a staff duty.
         text = compact(query)
         # Phone-number administration is a procedure question, unless it also
         # explicitly asks which office to contact.
@@ -199,9 +209,9 @@ class ContactDirectoryResponder:
         departments = [d for d in self.departments if compact(d["name"]) in text]
         # Longer official names take precedence when one is contained in another.
         departments = [d for d in departments if not any(d["name"] != e["name"] and d["name"] in e["name"] for e in departments)]
-        subject = text
+        subject = CONTACT_PHRASES.sub("", text)
         for dept in departments:
-            subject = subject.replace(compact(dept["name"]), "")
+            subject = re.sub(re.escape(compact(dept["name"])) + r"(?:에서는|에서|의|에)?", "", subject)
         subject = FILLER.sub("", subject)
         subject = re.sub(r"(?:받|하)(?:으려는데요?|려고하는데|려는데요?|으려면|려고|려면|려는|려고해|고싶어요?|고싶은데요?)", "", subject)
         if contextual:

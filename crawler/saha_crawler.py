@@ -208,10 +208,12 @@ class SahaCrawler:
         soup = BeautifulSoup(html, "lxml")
 
         title = self._extract_title(soup)
-        content = self._extract_content(soup)
         sub_category = self._extract_sub_category(soup)
         links = self._extract_links(soup, url)
         attachments = self._extract_attachments(soup, url)
+        # _extract_content removes navigation nodes. Discover links first so
+        # site-wide menus are not lost before the crawl frontier sees them.
+        content = self._extract_content(soup)
 
         return PageData(
             url=url,

@@ -3,9 +3,10 @@ from __future__ import annotations
 
 import re
 
-from chatbot.query_subject import compact, substantive_keywords
+from chatbot.query_subject import compact, substantive_keywords, disposal_method_kind
 from chatbot.question_intent import (
-    asks_opening_hours, has_opening_hours, asks_location, has_location_unit, location_source_units,
+    asks_opening_hours, has_opening_hours, asks_location, has_location_unit, location_source_units, asks_navigation,
+    asks_eligibility, asks_tax_liability, requested_field_score,
 )
 from chatbot.vaccination import vaccination_place_brief, is_vaccination_query
 from chatbot.answer_completion import (
@@ -36,7 +37,7 @@ def _passport(query: str, body: str) -> str | None:
         return None
     answer = f"준비물은 **여권발급신청서 1부·신분증·여권용 사진 {photo.group(1)}**입니다."
     answer += "\n\n사진 기준: " + photo.group(2) + "."
-    if "유효기간 남은 여권은 지참" in body:
+    if re.search(r'유효기간.*(?:남은|남아|남아있|만료되지).*여권.*(?:지참|제출)|유효한.*여권', body):
         answer += "\n유효기간이 남은 기존 여권도 지참하세요."
     return answer
 
@@ -73,11 +74,15 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | No
     units = location_source_units(lines) if location else _source_units(lines)
     topics = substantive_keywords(keywords)
     opening_hours = asks_opening_hours(query)
+    disposal_kind = disposal_method_kind(query)
+    household_method = disposal_kind in ('일반', '음식물')
     intent = []
-    if any(word in query for word in ("방법", "신청", "접수", "신고")):
+    if asks_tax_liability(query):
+        intent = ["과세기준일", "기준일", "현재", "보유", "소유", "납세의무"]
+    elif asks_eligibility(query):
+        intent = ["대상", "조건", "자격", "선정기준", "소득인정액"]
+    elif any(word in query for word in ("방법", "신청", "접수", "신고")):
         intent = ["방법", "접수", "예약", "신고", "신청"]
-    elif any(word in query for word in ("대상", "조건", "자격")):
-        intent = ["대상", "조건", "자격"]
     elif any(word in query for word in ("시간", "기간", "며칠")):
         intent = ["시간", "기간", "일정"]
     if intent and any(word in query for word in ("배출", "재활용", "분리수거")):
@@ -85,6 +90,7 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | No
     # Only complete factual prose/label-value units. Standalone cells such as
     # '58면', '52,000원' cannot be reassigned to another row or condition.
     candidates = []
+    single_field = sum(source_unit_complete(unit) for unit in units) == 1
     for i, unit in enumerate(units):
         label_value = bool(re.search(r"[:：]\s*[가-힣 ]{6,}", unit))
         hours_unit = has_opening_hours(unit)
@@ -108,6 +114,21 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str]) -> str | No
         value = compact(unit)
         topic_hits = sum(word in value for word in topics)
         goal_hits = sum(word in value for word in intent)
+        # A generic '신청' or '지원내용' in another program is not an answer.
+        # Structured sections below can safely establish topic in their heading.
+        if topics and not topic_hits and not (
+                (opening_hours and hours_unit) or (location and place_unit)
+                or (single_field and goal_hits)):
+            continue
+        if household_method:
+            # A recycling warning merely mentioning mixed household waste is
+            # not the household disposal instruction. Keep the direct rule.
+            if not re.search(r"(?:일반쓰레기|음식물쓰레기)(?:는|은)", value):
+                continue
+            if any(word in value for word in ("내어놓", "내놓", "담아", "넣어", "배출")):
+                goal_hits += 1
+        if disposal_kind == '재활용' and not re.match(r"재활용품(?:은|는|을|를|배출|분리)", value):
+            continue  # A definition of the volume-rate system is not a recycling rule.
         if intent and not goal_hits and not (opening_hours and hours_unit):
             continue
         if topic_hits or goal_hits or (opening_hours and hours_unit) or (location and place_unit):
@@ -149,6 +170,10 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
     body = "\n".join(lines)
     url = str((documents[0].get("metadata") or {}).get("url") or "") if documents else ""
     answer = vaccination_place_brief(query, url, lines)
+    if asks_navigation(query) and documents:
+        title = documents[0].get('metadata', {}).get('title') or '해당 서비스'
+        return {'answer': f'**{title}** 안내에서 확인할 수 있습니다. 아래 공식 출처를 눌러 확인하세요.',
+                'answer_details': original_answer, 'is_clarification': False, 'suggested_questions': []}
     if (asks_location(query) and is_vaccination_query(query)
             and any(mid in url for mid in ('mId=0203020000', 'mId=0203020100')) and not answer):
         return scope_question(query, body)
@@ -161,8 +186,37 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
         answer = _parking(query, body)
     elif "대형폐기물" in compact(body) and "대형폐기물" in compact(query):
         answer = _waste(query, body)
+    if not answer and documents and asks_eligibility(query):
+        meta = documents[0].get('metadata') or {}
+        heading, section = str(meta.get('section_heading') or ''), str(meta.get('section_text') or '')
+        topics = substantive_keywords(keywords)
+        # Eligibility is a group of age/income/exclusion rules. Preserve the
+        # whole verified field instead of picking one attractive sentence.
+        if (topics and all(word in compact(str(meta.get('title') or '')) for word in topics)
+                and requested_field_score(query, heading) and section
+                and body.strip() == (heading + '\n' + section).strip()
+                and len(heading + section) <= MAX_BRIEF_LENGTH and OMISSION not in section):
+            answer = '**' + heading + '**\n\n' + section
+    if not answer and documents and documents[0].get('metadata', {}).get('navigation_catalog'):
+        answer = '다음 서비스를 이용할 수 있습니다.\n\n' + body + '\n\n아래 공식 출처에서 세부 이용 방법을 확인하세요.'
+    if not answer:
+        meta = (documents[0].get('metadata') or {}) if documents else {}
+        if meta.get('page_document'):
+            from chatbot.page_answers import page_brief
+            answer = page_brief(query, body, str(meta.get('title') or '공식 안내'))
     if not answer:
         answer = _extract_brief(query, lines, keywords)
+    if not answer and documents:
+        meta = documents[0].get('metadata') or {}
+        heading = str(meta.get('section_heading') or '')
+        section = str(meta.get('section_text') or '')
+        topics = substantive_keywords(keywords)
+        heading_matches = topics and sum(word in compact(heading) for word in topics) >= min(2, len(topics))
+        # Copy a whole, bounded source section including its table headers and
+        # exceptions. Never attach an isolated amount to a different program.
+        if heading_matches and section and len(heading + section) <= 900 and not any(
+                value in section for value in (OMISSION, '검색어를 입력', '게시판 목록')):
+            answer = '**' + heading + '**\n\n' + section
     if not answer:
         return scope_question(query, body)
     meta = (documents[0].get("metadata") or {}) if documents else {}

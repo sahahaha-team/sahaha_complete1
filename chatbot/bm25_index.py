@@ -11,12 +11,46 @@ import shutil
 import logging
 import threading
 import time
+from functools import lru_cache
 from typing import Optional
 
 from config import SUPABASE_SERVICE_KEY
 from database_db import get_supabase
 
 logger = logging.getLogger(__name__)
+
+
+def page_sections_by_url(metadata_rows):
+    sections, seen = {}, set()
+    for meta in metadata_rows:
+        url, heading, body = meta.get('url'), meta.get('section_heading'), meta.get('section_text')
+        version = meta.get('content_hash')
+        key = (url, heading, body, version)
+        if not (url and heading and body) or key in seen:
+            continue
+        seen.add(key)
+        sections.setdefault(url, []).append({'heading': heading, 'text': body, 'hash': version})
+    return sections
+
+
+def read_search_documents(client):
+    """Stable primary-key pagination while the collector updates documents."""
+    rows, after, page_size = [], None, 1000
+    while True:
+        query = client.table('documents').select('id, content, metadata').order('id').limit(page_size)
+        if after is not None:
+            query = query.gt('id', after)
+        try:
+            batch = query.execute().data or []
+        except Exception as exc:
+            if ('57014' in str(exc) or 'statement timeout' in str(exc).lower()) and page_size > 25:
+                page_size = max(25, page_size // 2)
+                continue
+            raise
+        rows.extend(batch)
+        if len(batch) < page_size:
+            return rows
+        after = batch[-1]['id']
 
 # 형태소 분석에서 제외할 품사 (조사, 어미 등 의미 없는 토큰)
 EXCLUDED_POS_PREFIXES = ("J", "E", "X", "S")  # 조사/어미/접사/기호
@@ -75,8 +109,10 @@ class BM25Index:
         self.doc_contents: list[str] = []
         self.doc_metadata: list[dict] = []
         self.enabled = False
+        self.pages = None
         self._last_built = 0.0
         self._refresh_lock = threading.RLock()
+        self._refresh_pending = False
 
         try:
             self.kiwi = _init_kiwi()
@@ -89,6 +125,7 @@ class BM25Index:
         self._build_from_supabase()
         self._initialized = True
 
+    @lru_cache(maxsize=12000)
     def _tokenize(self, text: str) -> list[str]:
         """한국어 형태소 분석 → 의미 토큰만 반환 (조사·어미 제외)"""
         if not text or self.kiwi is None:
@@ -111,22 +148,7 @@ class BM25Index:
             admin = bool(SUPABASE_SERVICE_KEY)
             client = get_supabase(admin=admin)
 
-            # 페이지네이션 (Supabase 기본 1000건 제한)
-            all_rows = []
-            offset = 0
-            page_size = 1000
-            while True:
-                result = client.table("documents") \
-                    .select("id, content, metadata") \
-                    .range(offset, offset + page_size - 1) \
-                    .execute()
-                rows = result.data or []
-                if not rows:
-                    break
-                all_rows.extend(rows)
-                if len(rows) < page_size:
-                    break
-                offset += page_size
+            all_rows = read_search_documents(client)
 
             if not all_rows:
                 logger.warning("BM25 인덱스: documents 테이블 비어있음")
@@ -134,6 +156,7 @@ class BM25Index:
 
             logger.info(f"BM25 인덱스 구축 중 ({len(all_rows)}개 문서)...")
             tokenized_corpus = []
+            title_tokens = {}
             for row in all_rows:
                 self.doc_ids.append(row["id"])
                 self.doc_contents.append(row.get("content", ""))
@@ -145,9 +168,21 @@ class BM25Index:
                     except Exception:
                         meta = {}
                 self.doc_metadata.append(meta)
-                tokenized_corpus.append(self._tokenize(row.get("content", "")))
+                title = str(meta.get('title') or '')
+                if title not in title_tokens:
+                    title_tokens[title] = self._tokenize(title)
+                tokenized_corpus.append(title_tokens[title] + self._tokenize(row.get("content", "")))
 
             self.bm25 = BM25Okapi(tokenized_corpus)
+            from chatbot.page_index import OfficialPageIndex
+            from database_db.database import Database
+            sections_by_url = page_sections_by_url(self.doc_metadata)
+            try:
+                raw_rows = Database(admin=admin)._all_rows('raw_pages', 'url,title,content,category,attachments,last_checked_at')
+                self.pages = OfficialPageIndex(raw_rows, sections_by_url, self._tokenize)
+            except Exception as exc:
+                logger.warning('원문 검색 인덱스 구축 실패; 청크 검색 유지: %s', type(exc).__name__)
+                self.pages = None
             self.enabled = True
             self._last_built = time.monotonic()
             logger.info(f"BM25 인덱스 구축 완료: {len(all_rows)}개 문서")
@@ -195,13 +230,33 @@ class BM25Index:
         return results
 
     def rebuild(self):
-        """인덱스 재구축 (크롤링/임베딩 갱신 후 호출)"""
+        """Refresh off the request thread; publish a complete snapshot at once."""
         with self._refresh_lock:
-            if self.enabled and time.monotonic() - self._last_built < 30:
+            if self._refresh_pending or (self.enabled and time.monotonic() - self._last_built < 30):
                 return
-            self.doc_ids = []
-            self.doc_contents = []
-            self.doc_metadata = []
-            self.bm25 = None
-            self.enabled = False
-            self._build_from_supabase()
+            self._refresh_pending = True
+        def refresh():
+            try:
+                candidate = object.__new__(BM25Index)
+                candidate.kiwi = self.kiwi
+                candidate._tokenize = self._tokenize
+                candidate.doc_ids, candidate.doc_contents, candidate.doc_metadata = [], [], []
+                candidate.bm25, candidate.pages, candidate.enabled = None, None, False
+                candidate._last_built = 0.0
+                candidate._build_from_supabase()
+                if candidate.enabled:
+                    with self._refresh_lock:
+                        for name in ('doc_ids', 'doc_contents', 'doc_metadata', 'bm25', 'pages', 'enabled', '_last_built'):
+                            setattr(self, name, getattr(candidate, name))
+                else:
+                    self._last_built = time.monotonic()
+            finally:
+                with self._refresh_lock:
+                    self._refresh_pending = False
+        threading.Thread(target=refresh, name='official-search-refresh', daemon=True).start()
+
+    def search_pages(self, query: str, keywords: set[str], top_n: int = 30) -> list[dict]:
+        if self.enabled and time.monotonic() - self._last_built > 300:
+            self.rebuild()
+        with self._refresh_lock:
+            return self.pages.search(query, keywords, top_n) if self.pages else []

@@ -38,6 +38,8 @@ def is_vaccination_query(query: str) -> bool:
 
 
 def needs_vaccine_kind(query: str) -> bool:
+    if re.search(r'어린이|아이|아기|영유아|국가예방접종|국가필수', query or ''):
+        return False  # The general children's program has its own institution list.
     return (asks_location(query) and is_vaccination_query(query) and not vaccine_kind(query)
             and '예방접종실' not in re.sub(r'\s+', '', query))
 

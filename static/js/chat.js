@@ -537,7 +537,9 @@
             const deptLine = src.department
                 ? `<span class="source-dept">🏛️ 담당: ${escapeHtml(src.department)}</span>`
                 : "";
-            const provenance = src.source_type === "official_report"
+            const provenance = src.source_type === "official_ocr"
+                ? `<span class="source-dept">이미지 문자 인식 자료 · 숫자와 조건은 원문 확인 필요</span>`
+                : src.source_type === "official_report"
                 ? `<span class="source-dept">자료 기간: ${escapeHtml(src.data_period || "미상")} · ${escapeHtml(String(src.page_number || ""))}쪽</span>`
                 : (src.checked_at ? `<span class="source-dept">확인일: ${escapeHtml(src.checked_at)}</span>` : "");
 
@@ -652,6 +654,17 @@
                 body: JSON.stringify({ message: text }),
             });
             const data = await response.json();
+            if (!response.ok) {
+                const limited = response.status === 429;
+                data.answer = limited
+                    ? "잠시 동안 문의가 많아 요청이 제한됐어요. 약 1분 후에 같은 버튼을 다시 눌러주세요."
+                    : "요청을 처리하지 못했어요. 잠시 후 다시 시도해 주세요.";
+                data.sources = [];
+                data.suggested_questions = [];
+                data.degraded = true;
+                data.degraded_reason = limited ? "rate_limited" : "request_failed";
+                data.evidence = { status: "unavailable", label: limited ? "잠시 후 다시 시도" : "요청 처리 실패" };
+            }
             removeTypingIndicator();
 
             const botMsg = createMessageEl(

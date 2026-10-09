@@ -316,7 +316,7 @@ class ChatBot:
                 "suggested_questions": ["사하구 민원 안내해줘", "사하구 복지 지원 알려줘"],
             }
 
-        resolved_message = self.contextual_message(session_id, user_message)
+        resolved_message = normalize_query(self.contextual_message(session_id, user_message))
         self._clear_pending_clarification(session_id)
         from chatbot.contact_directory import contact_responder
         contact_result = contact_responder.respond(session_id, resolved_message)
@@ -342,7 +342,7 @@ class ChatBot:
                 "degraded_reason": None if verified["verified"] else "unverified_table",
                 "evidence": {
                     "status": "official" if verified["verified"] else "insufficient",
-                    "label": "최근 공식 표의 해당 항목 확인됨" if verified["verified"] else "현재 표의 항목 확인 필요",
+                    "label": "최근 공식 자료에서 확인됨" if verified["verified"] else "현재 자료의 항목 확인 필요",
                     "official_source_count": len(verified["sources"]),
                 },
                 "suggested_questions": [],
@@ -361,7 +361,8 @@ class ChatBot:
             if target_url else self.retriever.search(search_query, k=15)
         )
         fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
-        results = self.retriever.select_grounded_results(search_query, fresh_results, limit=5)
+        result_limit = 8 if fresh_results and fresh_results[0].get('metadata', {}).get('navigation_catalog') else 5
+        results = self.retriever.select_grounded_results(search_query, fresh_results, limit=result_limit)
         degraded = search_outcome["degraded"]
         degraded_reason = search_outcome["reason"]
 
@@ -387,7 +388,7 @@ class ChatBot:
                 "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
             }
 
-        grounded_results = self.retriever.select_grounded_results(search_query, results)
+        grounded_results = self.retriever.select_grounded_results(search_query, results, limit=result_limit)
         if SOURCE_ONLY_ANSWERS:
             answer, used_results = build_source_answer(grounded_results, self.retriever.db.client,
                 query=search_query, topic_keywords=self.retriever._content_keywords(search_query))

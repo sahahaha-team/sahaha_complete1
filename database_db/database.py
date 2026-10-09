@@ -27,6 +27,29 @@ class Database:
         self._last_checked_supported = None
         self._ingestion_queue_supported = None
 
+    def _all_rows(self, table: str, columns: str = "*", **filters) -> list:
+        """Read beyond PostgREST's default 1000-row response limit."""
+        rows, offset, page_size = [], 0, 1000
+        while True:
+            query = self.client.table(table).select(columns).order("url" if table == "raw_pages" else "chunk_id")
+            for key, value in filters.items():
+                query = query.eq(key, value)
+            try:
+                batch = query.range(offset, offset + page_size - 1).execute().data or []
+            except Exception as exc:
+                # Large attachment bodies can exceed the database statement
+                # timeout. Retry the same offset with a smaller response,
+                # without skipping rows or changing access privileges.
+                if (str(getattr(exc, 'code', '')) == '57014' or 'statement timeout' in str(exc).lower()) and page_size > 25:
+                    page_size = max(25, page_size // 2)
+                    logger.warning('DB 원문 조회 크기를 %s건으로 줄여 재시도', page_size)
+                    continue
+                raise
+            rows.extend(batch)
+            if len(batch) < page_size:
+                return rows
+            offset += page_size
+
     # ===== 크롤링 데이터 =====
 
     def save_raw_page(self, page_data) -> bool:
@@ -212,11 +235,9 @@ class Database:
         증분 크롤링용: 전체 URL의 캐시 검증자(+카테고리)를 dict로 반환.
         반환: {url: {"etag": str|None, "last_modified": str|None, "category": str}}
         """
-        result = self.client.table("raw_pages") \
-            .select("url, etag, last_modified, category") \
-            .execute()
+        rows = self._all_rows("raw_pages", "url, etag, last_modified, category")
         out: dict = {}
-        for r in result.data or []:
+        for r in rows:
             out[r["url"]] = {
                 "etag": r.get("etag"),
                 "last_modified": r.get("last_modified"),
@@ -225,8 +246,7 @@ class Database:
         return out
 
     def get_all_urls(self) -> set:
-        result = self.client.table("raw_pages").select("url").execute()
-        return {r["url"] for r in result.data}
+        return {r["url"] for r in self._all_rows("raw_pages", "url")}
 
     def delete_page(self, url: str):
         self.client.table("processed_chunks").delete().eq("url", url).execute()
@@ -265,8 +285,7 @@ class Database:
         return pages
 
     def get_all_raw_pages(self) -> list:
-        result = self.client.table("raw_pages").select("*").execute()
-        return [_DictObj(r) for r in result.data]
+        return [_DictObj(r) for r in self._all_rows("raw_pages")]
 
     # ===== 청크 데이터 =====
 
@@ -301,8 +320,7 @@ class Database:
         logger.info(f"DB 저장 완료: {len(rows)}개 청크")
 
     def get_unembedded_chunks(self) -> list:
-        result = self.client.table("processed_chunks").select("*").eq("embedded", False).execute()
-        return [_DictObj(r) for r in result.data]
+        return [_DictObj(r) for r in self._all_rows("processed_chunks", embedded=False)]
 
     def mark_embedded(self, chunk_ids: list[str]):
         for i in range(0, len(chunk_ids), 50):

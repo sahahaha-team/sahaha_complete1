@@ -25,11 +25,18 @@
     </section>
 
     <section class="system-panel">
-      <div><span>최근 증분 크롤링</span><strong id="crawlState">기록 없음</strong></div>
+      <div><span>최근 수집 작업</span><strong id="crawlState">기록 없음</strong></div>
+      <div><span>수집 작업 시각</span><strong id="crawlTime">기록 없음</strong></div>
       <div><span>개인정보 정책</span><strong>대화 영구 저장 안 함</strong></div>
       <div><span>구성</span><strong>Web · Worker · Ollama · Supabase</strong></div>
     </section>
     <p id="statusMessage" class="system-message">상태 정보를 불러오는 중입니다.</p>
+    <section class="system-panel" aria-live="polite">
+      <h2>공식 사이트 수집 현황</h2>
+      <p id="coverageSummary">확인 중</p>
+      <p>본문 수집과 검색 반영은 별도 단계입니다. 접근 제한·추출 실패가 있으면 홈페이지 전체 수집 완료를 의미하지 않습니다.</p>
+      <table style="width:100%;text-align:left"><thead><tr><th>분야</th><th>발견</th><th>본문 수집</th><th>검색 반영</th><th>수집 제한</th></tr></thead><tbody id="coverageRows"></tbody></table>
+    </section>
   </main>
   <script>
     const setState = (id, ready, okText = '정상', badText = '확인 필요') => {
@@ -37,7 +44,7 @@
       el.textContent = ready ? okText : badText;
       el.className = ready ? 'state-ok' : 'state-warn';
     };
-    fetch('/api/system-status')
+    function refreshStatus() { fetch('/api/system-status')
       .then(response => response.json())
       .then(data => {
         setState('webState', data.web.ready);
@@ -45,18 +52,36 @@
         document.getElementById('ollamaModel').textContent = data.ollama.model;
         setState('searchState', data.search.ready);
         document.getElementById('vectorCount').textContent = `${data.search.total_vectors || 0}개 벡터`;
-        setState('queueState', data.queue.available, '사용 가능', 'SQL 적용 필요');
+        setState('queueState', data.queue.available || data.queue.required === false, data.queue.available ? '사용 가능' : '직접 처리');
         document.getElementById('queueCount').textContent = data.queue.available
-          ? `대기 ${data.queue.queued} · 실패 ${data.queue.failed}` : 'ingestion_jobs 미적용';
+          ? `대기 ${data.queue.queued} · 실패 ${data.queue.failed}` : '공식 사이트 수집기가 직접 검색 데이터 반영';
         const crawl = data.latest_crawl;
+        const crawlStates = {running: '진행 중', failed: '실패', succeeded: '완료'};
+        const localTime = value => value ? new Date(value).toLocaleString('ko-KR', {timeZone: 'Asia/Seoul'}) : '기록 없음';
         document.getElementById('crawlState').textContent = crawl
-          ? `${crawl.status} · 신규 ${crawl.new_count} · 수정 ${crawl.updated_count}` : '마이그레이션 적용 후 표시';
+          ? `${crawlStates[crawl.status] || crawl.status} · 신규 ${crawl.new_count} · 반영 확인 ${crawl.updated_count}` : '마이그레이션 적용 후 표시';
+        document.getElementById('crawlTime').textContent = crawl
+          ? `시작 ${localTime(crawl.started_at)} · 종료 ${localTime(crawl.finished_at)}` : '기록 없음';
         document.getElementById('statusMessage').textContent = data.status === 'ok'
-          ? '모든 핵심 구성요소가 준비됐습니다.' : '경고 항목을 확인해 주세요.';
+          ? '상담 구성요소가 준비됐습니다. 자료 수집 진행 상황은 아래에서 확인하세요.' : '경고 항목을 확인해 주세요.';
+        const coverage = data.site_coverage;
+        const phases = {discovering: '본문 수집 중', indexing: '검색 반영 중', index_failed: '검색 반영 실패',
+          interrupted_or_failed: '중단 또는 실패', partial: '수집 미완료', finished: '탐색 종료'};
+        document.getElementById('coverageSummary').textContent = coverage
+          ? `최근 진행 기록 ${localTime(coverage.reported_at)} · ${phases[coverage.phase] || coverage.phase} · 수집 대기 ${coverage.counts.pending || 0} · 검색 반영 대기 ${coverage.pending_index || 0} · 실패 ${coverage.counts.failed || 0} · 자동 수집 제한 ${coverage.counts.robots_blocked || 0}`
+          : '수집 실행 기록 없음';
+        const rows = document.getElementById('coverageRows'); rows.replaceChildren();
+        Object.entries(coverage?.by_site || {}).forEach(([site, stats]) => {
+          const row = document.createElement('tr');
+          [site, stats.discovered, stats.fetched, stats.indexed, stats.robots_blocked].forEach(value => {
+            const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell);
+          }); rows.appendChild(row);
+        });
       })
       .catch(() => {
         document.getElementById('statusMessage').textContent = '상태 정보를 불러오지 못했습니다.';
-      });
+      }); }
+    refreshStatus(); setInterval(refreshStatus, 15000);
   </script>
 </body>
 </html>

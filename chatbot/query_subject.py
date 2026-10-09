@@ -10,13 +10,33 @@ WEAK_WORDS = set("알려 알려줘 알려주세요 뭐야 뭐예요 어떻게 �
 # Request formats are checked when selecting the actual source section. Their
 # absence from a heading must not erase a matching service such as 신규 여권.
 WEAK_WORDS.update({"준비물", "준비", "서류", "구비서류", "구비", "성인", "어른", "처음"})
+WEAK_WORDS.update({"기준", "날짜", "조건", "자격", "대상", "수급", "어떤"})
+WEAK_WORDS.update({"서비스", "사업", "종류", "이용", "사람", "가정", "내용", "가구", "살", "이상", "이하", "자주", "주기", "인터넷", "온라인", "곳", "것", "때", "내", "수", "누가", "원", "회", "도움", "어려움", "문제", "전", "후", "비용", "기간", "제도"})
+WEAK_WORDS.update({'구청', '위치', '주소', '홈페이지', '차량', '부과', '기관', '제출'})
+WEAK_WORDS.update({'혜택', '행동', '도심', '부담', '특보', '발령', '거동', '불편'})
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
-WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자"}
+WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", '간판': '옥외광고물', '법정한도': '법정상한', '도시철도': '지하철', '국가건강검진': '일반건강검진'}
 
 
 def normalize_query(query: str) -> str:
-    """Correct 화제 only in an explicit fire incident/reporting context."""
-    return re.sub(r"(?<!영)화제(?=\s*(?:가\s*)?(?:신고|발생|났|나고|진압|대피|현장))", "화재", query or "")
+    """Normalize unambiguous typos without changing the requested service."""
+    text = re.sub(r"어른신", "어르신", query or "")
+    return re.sub(r"(?<!영)화제(?=\s*(?:가\s*)?(?:신고|발생|났|나고|진압|대피|현장))", "화재", text)
+
+
+def disposal_method_kind(query: str) -> str | None:
+    """Recognize a basic disposal request, including a narrowed short reply."""
+    value = re.sub(r"[\s?!.,]", "", query or "")
+    value = re.sub(r"^(?:부산광역시)?사하구(?:청)?(?:에서는|에서|의)?", "", value)
+    match = re.fullmatch(
+        r"(?:쓰레기배출(?:방법|요령|안내)?(?:알려(?:줘|주세요))?)?"
+        r"(?P<kind>일반쓰레기|음식물(?:쓰레기)?|재활용품|재활용|분리수거|분리배출)"
+        r"(?:은|는|을|를)?(?:분리배출|분리수거|배출|버리는|어떻게버려)?"
+        r"(?:방법|요령|법)?(?:알려(?:줘|주세요))?", value)
+    if not match:
+        return None
+    kind = match['kind']
+    return '일반' if kind == '일반쓰레기' else '음식물' if kind.startswith('음식물') else '재활용'
 
 
 def compact(value: str) -> str:

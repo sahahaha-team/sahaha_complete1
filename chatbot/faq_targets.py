@@ -9,7 +9,7 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 from chatbot.question_intent import asks_opening_hours, asks_location
-from chatbot.query_subject import fallback_keywords
+from chatbot.query_subject import fallback_keywords, disposal_method_kind
 from chatbot.vaccination import vaccine_place_page
 
 WORKBOOK = Path(__file__).resolve().parents[1] / "data" / "official_sources" / "사하구 홈페이지_100개 질문.xlsx"
@@ -36,6 +36,8 @@ def _targets() -> list[tuple[str, str]]:
 
 def match_official_page(question: str) -> str | None:
     normalized = _normalize(question)
+    if disposal_method_kind(question):
+        return 'https://www.saha.go.kr/portal/contents.do?mId=0405050101'
     vaccine_url = vaccine_place_page(question)
     if vaccine_url:
         return vaccine_url

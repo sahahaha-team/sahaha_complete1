@@ -3,19 +3,16 @@
 from __future__ import annotations
 
 import re
+import hashlib
 
 from chatbot.evidence import is_answerable_document, topic_support
 from chatbot.question_intent import asks_opening_hours, has_opening_hours, asks_location, has_location
 from chatbot.vaccination import vaccination_section, vaccination_place_brief
+from chatbot.source_text import clean_source_text
 
 
 def strip_page_chrome(text: str) -> str:
-    text = (text or "").replace("\r", "")
-    if "인쇄하기\n" in text:
-        text = text.split("인쇄하기\n", 1)[1]
-    if "\n만족도조사\n" in text:
-        text = text.split("\n만족도조사\n", 1)[0]
-    return re.sub(r"[ \t]+", " ", text).strip()
+    return clean_source_text(text)
 
 
 def source_passage(text: str, anchor: str, *, budget: int = 2400) -> str:
@@ -82,7 +79,9 @@ def focused_section(query: str, url: str, text: str) -> str | None:
             start, end = "신규발급\n일반여권\n", "\n만18세 미만 미성년자의 여권 신청"
             if start not in body or end not in body:
                 return ""
-            return start + body.split(start, 1)[1].split(end, 1)[0]
+            result = start + body.split(start, 1)[1].split(end, 1)[0]
+            existing = next((line for line in body.splitlines() if re.search(r'유효기간\s*남은\s*여권.*지참', line)), '')
+            return result + ('\n' + existing if existing else '')
     if "mId=0309060000" in url and "법률상담" in compact and "사하구" in compact:
         if "\n기타 법률상담 안내" not in body:
             return ""
@@ -96,6 +95,16 @@ def focused_section(query: str, url: str, text: str) -> str | None:
 
 def build_source_answer(documents: list[dict], client, *, query: str = "", topic_keywords: set[str] | None = None) -> tuple[str, list[dict]]:
     """Try the next relevant source if the leading chunk's original is unsuitable."""
+    if documents and documents[0].get('metadata', {}).get('navigation_catalog'):
+        selected = []
+        for document in documents:
+            words = set(document['metadata'].get('navigation_topics') or topic_keywords or [])
+            answer, used = _build_one_source_answer([document], client, query=query, topic_keywords=words)
+            if answer and used:
+                selected.append(document)
+        if selected:
+            body = '\n'.join('> - ' + d['metadata']['navigation_catalog'] for d in selected)
+            return '공식 홈페이지의 서비스 안내입니다.\n\n' + body + '\n\n아래 공식 출처에서 이용 안내를 확인하세요.', selected
     for document in documents[:5]:
         answer, used = _build_one_source_answer([document], client, query=query, topic_keywords=topic_keywords)
         if answer:
@@ -132,7 +141,7 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
         return answer, [lead]
     else:
         try:
-            rows = client.table("raw_pages").select("content").eq("url", url).limit(1).execute().data or []
+            rows = client.table("raw_pages").select("content,title").eq("url", url).limit(1).execute().data or []
             text = rows[0].get("content") or "" if rows else ""
         except Exception:
             text = ""
@@ -142,23 +151,49 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     # original too, so pagination/search fields cannot masquerade as an answer.
     if not is_answerable_document(query, {"content": text, "metadata": meta}):
         return "", []
+    current_title = str(rows[0].get('title') or '')
+    if meta.get('page_document') and meta.get('content_hash') == hashlib.sha256(text.encode()).hexdigest():
+        current_title += ' ' + str(meta.get('title') or '')
     if topic_keywords is not None and not topic_support(
-            {"content": strip_page_chrome(text)}, topic_keywords)[0]:
+            {"content": strip_page_chrome(text), 'metadata': {'title': current_title}}, topic_keywords)[0]:
         return "", []
     section = focused_section(query, str(url or ""), text)
     if section == "":
         return "", []
-    passage = section if section is not None else source_passage(text, lead.get("content") or "")
+    if meta.get('page_document') and section is None:
+        from chatbot.page_answers import select_sections
+        current_version = meta.get('content_hash') == hashlib.sha256(text.encode()).hexdigest()
+        current_sections = (meta.get('page_sections') or []) if current_version else []
+        section, heading = select_sections(query, text, current_sections,
+                                           topic_keywords or set(), meta.get('query_tokens') or [])
+        meta = {**meta, 'selected_page_heading': heading}
+        if not current_version:
+            meta = {**meta, 'title': current_title, 'page_sections': []}
+        lead = {**lead, 'metadata': meta}
+    structured = strip_page_chrome(str(meta.get('section_text') or ''))
+    if structured != meta.get('section_text', ''):
+        meta = {**meta, 'section_text': structured}
+        lead = {**lead, 'metadata': meta}
+    if (section is None and structured and len(structured) >= 35 and
+            meta.get('content_hash') == hashlib.sha256(text.encode()).hexdigest()):
+        passage = str(meta.get('section_heading') or '') + '\n' + structured
+    else:
+        passage = section if section is not None else source_passage(text, lead.get("content") or "")
     if asks_opening_hours(query) and not has_opening_hours(passage):
         return "", []
-    if asks_location(query) and not has_location(passage):
+    if asks_location(query) and not has_location(passage) and not meta.get('page_document'):
         return "", []
     if (section is not None and asks_location(query)
             and any(mid in str(url) for mid in ('mId=0203020000', 'mId=0203020100'))
             and not vaccination_place_brief(query, str(url), passage.splitlines())):
         return "", []
-    if topic_keywords is not None and not topic_support(
-            {"content": passage}, topic_keywords)[0]:
+    from chatbot.question_intent import asks_navigation
+    # Complete pages were validated against the current original above.
+    # A selected date/age field can use pronouns or omit the service name;
+    # requiring every topic again would discard the correct field and fall
+    # through to an unrelated attachment that merely repeats those names.
+    if topic_keywords is not None and not meta.get('page_document') and not asks_navigation(query) and not topic_support(
+            {"content": passage, "metadata": {'title': meta.get('title','')}}, topic_keywords)[0]:
         return "", []
     title = str(meta.get("title") or "사하구청 안내")
     if meta.get("source_type") == "official_report":

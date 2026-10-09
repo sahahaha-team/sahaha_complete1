@@ -29,3 +29,5 @@ apscheduler
 pdfplumber
 openpyxl
 olefile
+python-docx
+pymupdf

@@ -9,6 +9,7 @@ import re
 import logging
 import json
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from database_db.vector_store import VectorStore
 from database_db.database import Database
@@ -23,8 +24,8 @@ from chatbot.evidence import (
     is_answerable_document,
     topic_support,
 )
-from chatbot.query_subject import normalize_query, subject_query, substantive_keywords, fallback_keywords
-from chatbot.question_intent import asks_opening_hours, asks_location
+from chatbot.query_subject import normalize_query, subject_query, substantive_keywords, fallback_keywords, compact
+from chatbot.question_intent import asks_opening_hours, asks_location, requested_field_score
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
@@ -36,6 +37,20 @@ from config import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def rank_service_sources(query: str, results: list[dict], subjects: set[str]) -> list[dict]:
+    """Direct program headings outrank incidental mentions in other services."""
+    topics = substantive_keywords(subjects)
+    def key(row):
+        meta = row.get('metadata') or {}
+        heading = str(meta.get('section_heading') or '')
+        label = compact(str(meta.get('title') or '') + ' ' + heading)
+        direct = bool(topics) and all(word in label for word in topics)
+        field_text = heading + '\n' + str(row.get('content') or '')[:400]
+        return (direct, requested_field_score(query, heading),
+                requested_field_score(query, field_text), row.get('bm25_score', 0))
+    return sorted(results, key=key, reverse=True)
 
 
 def _normalize_scores(scored_items: list[tuple[str, float]]) -> dict[str, float]:
@@ -103,7 +118,15 @@ class HybridRetriever:
         return detected
 
     def search_official_url(self, query: str, url: str, k: int = 15) -> dict:
-        """Search the live page named by a verified workbook question."""
+        """Search a service guide, retaining its complete current context."""
+        pages = getattr(getattr(self, 'bm25', None), 'pages', None)
+        if pages is not None:
+            page = next((row for row in pages.rows if row['metadata']['url'] == url), None)
+            if page is not None:
+                meta = {**page['metadata'], 'query_tokens': self.bm25._tokenize(query)}
+                return {'results': [{**page, 'metadata': meta, 'bm25_score': 100.0,
+                                     'similarity': 0.0, 'vector_similarity': 0.0}],
+                        'degraded': False, 'reason': None}
         try:
             rows = self.db.client.table("documents").select("id,content,metadata").eq(
                 "metadata->>url", url
@@ -306,9 +329,26 @@ class HybridRetriever:
         # 벡터+BM25 하이브리드 경로를 그대로 탄다.
         contact_intent = any(word in query for word in self._CONTACT_INTENT)
         if self.bm25 and self.bm25.enabled and not contact_intent:
-            lexical_results = self.bm25.search(query, top_n=max(k, 10))
+            if asks_location(query) and re.search(r'(?:시설|센터|장소)이나|또는', query):
+                choices = []
+                for part in re.split(r'이나|또는', query):
+                    words = self._content_keywords(part)
+                    found = self.bm25.search_pages(part, words, top_n=1) if hasattr(self.bm25, 'search_pages') else []
+                    if found:
+                        row = found[0]
+                        choices.append({**row, 'metadata': {**row['metadata'],
+                            'navigation_catalog': row['metadata']['title'].split('|')[0].strip(),
+                            'navigation_topics': sorted(words)}})
+                if len({r['metadata']['url'] for r in choices}) >= 2:
+                    return {'results': choices, 'degraded': False, 'reason': None}
             subjects = self._content_keywords(query)
+            pages = self.bm25.search_pages(query, subjects, top_n=k) if hasattr(self.bm25, 'search_pages') else []
+            if pages and pages[0]['bm25_score'] >= BM25_FAST_PATH_MIN_SCORE:
+                return {'results': [{**row, 'similarity': 0.0, 'vector_similarity': 0.0} for row in pages],
+                        'degraded': False, 'reason': None}
+            lexical_results = self.bm25.search(query, top_n=max(k * 4, 80))
             lexical_results = [row for row in lexical_results if topic_support(row, subjects)[0]]
+            lexical_results = rank_service_sources(query, lexical_results, subjects)
             if (
                 lexical_results
                 and lexical_results[0]["bm25_score"] >= BM25_FAST_PATH_MIN_SCORE
@@ -462,7 +502,7 @@ class HybridRetriever:
             except (TypeError, ValueError):
                 continue
             if verified >= cutoff:
-                doc = {**doc, "metadata": {**meta, "checked_at": verified.date().isoformat()}}
+                doc = {**doc, "metadata": {**meta, "checked_at": verified.astimezone(ZoneInfo('Asia/Seoul')).date().isoformat()}}
                 kept.append(doc)
         return kept
 
@@ -491,7 +531,45 @@ class HybridRetriever:
         if kiwi is not None:
             words = [token.form for token in kiwi.tokenize(text)
                      if token.tag.startswith(("NN", "SL"))]
-            return substantive_keywords(words)
+            topics = substantive_keywords(words)
+            # Facility names establish scope only when no service is named.
+            if len(topics) > 1:
+                topics.discard('보건소')
+            for name in ('정부24', '국가암검진', '일반건강검진', '암환자', '소아암'):
+                if name in compact(query):
+                    topics = {w for w in topics if w not in compact(name)} | {name}
+            numeric_names = re.findall(r'\d+(?:인가구|진료실)', compact(query))
+            if numeric_names:
+                topics = set(numeric_names)
+            if re.search(r'어린이|아이|아기|영유아', query) and '예방접종' in compact(query):
+                topics = {'어린이예방접종'}
+            # Service names are discovered from official titles and headings,
+            # not from a fixed list of evaluation questions or source URLs.
+            pages = getattr(getattr(self, 'bm25', None), 'pages', None)
+            if pages is not None:
+                topics = pages.focus_keywords(query, topics)
+            value = compact(query)
+            if '성인' in value and '예방접종' in value:
+                return {'성인예방접종'}
+            if '지방세' in value and re.search(r'내지않|미납|체납|납부하지않', value):
+                return {'지방세', '체납'}
+            if '출산' in value and '축하' in value:
+                return {'출산축하'}
+            if '해외여행' in value:
+                return {'해외여행'}
+            if re.search(r'결혼|신혼|예비부부', value) and '건강검진' in value:
+                return {'예비부모', '건강검진'}
+            if '수수료' in value and '면제' in value:
+                return {'수수료', '면제'}
+            if re.search(r'이미.*서류|서류.*(?:다시제출|재제출)', value):
+                return {'행정정보공동이용'}
+            if '조상' in value and '땅' in value:
+                return {'조상땅찾기'}
+            if re.search(r'(?:디지털|컴퓨터).*교육', value):
+                return {'정보화교육'}
+            if '전자민원' in value or (re.search(r'(?:온라인|전자|인터넷).*민원|민원.*(?:온라인|인터넷)', value) and not topics):
+                return {'전자민원'}
+            return topics
         return fallback_keywords(text)
 
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:

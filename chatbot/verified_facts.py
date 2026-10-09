@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 
 from config import SOURCE_DYNAMIC_MAX_AGE_DAYS
 from chatbot.answer_completion import balanced
+from chatbot.service_navigation import is_council_location_query
 
 _BIRTH_URL = "https://www.saha.go.kr/portal/contents.do?mId=0510070100"
 _HEALTH_FEE_URL = "https://www.saha.go.kr/health/contents.do?mId=0301030000"
@@ -15,6 +16,56 @@ _KIOSK_URL = "https://www.saha.go.kr/portal/contents.do?mId=0103040000"
 _PASSPORT_URL = "https://www.saha.go.kr/portal/contents.do?mId=0104020000"
 _WASTE_URL = "https://www.saha.go.kr/portal/contents.do?mId=0405050103"
 _RECYCLING_URL = "https://www.saha.go.kr/portal/contents.do?mId=0405050101"
+_COUNCIL_URL = "https://www.saha.go.kr/portal/contents.do?mId=0604050000"
+_ONLINE_URL = "https://www.saha.go.kr/portal/contents.do?mId=0102010000"
+
+
+def parse_council_location(content: str) -> str | None:
+    section = content.split("주소 및 전화 안내\n", 1)
+    if len(section) != 2:
+        return None
+    section = section[1].split("교통편 안내", 1)[0]
+    address = re.search(r"주소\s*[:：]\s*([^\n]+)", section)
+    phone = re.search(r"대표전화\s*[:：]\s*(051-\d{3,4}-\d{4})", section)
+    if not address or not phone:
+        return None
+    return f"**사하구청 본관**\n\n- 주소: {address.group(1).strip()}\n- 대표전화: **{phone.group(1)}**"
+
+
+def parse_kiosk_location(content: str) -> str | None:
+    # Read the complete main-building row, never a following facility's hours.
+    row = re.search(
+        r"사하구청 본관\n\(민원실\)\n\d+\n(?P<hours>24시간|\d{2}:\d{2}~\d{2}:\d{2})\n"
+        r"(?P<city>부산 사하구)\n(?P<street>[가-힣0-9 -]+(?:길|로) [0-9-]+)\n"
+        r"(?P<dong>\(당리동\))\n부동산등기부등본 및\n가족관계증명\n발급가능\n사하구청 본관우측", content)
+    if not row:
+        return None
+    return ("**사하구청 본관 민원실 무인민원발급기**\n\n"
+            f"- 주소: {row['city']} {row['street']} {row['dong']}\n"
+            f"- 운영시간: **{row['hours']}**\n\n다른 설치장소와 운영시간은 아래 공식 원문에서 확인할 수 있어요.")
+
+
+def parse_online_resident_copy(content: str) -> str | None:
+    body = re.sub(r"\s+", "", content)
+    if not all(term in body for term in ("정부24민원서비스", "주민등록등·초본", "인터넷을이용", "신청·열람·발급", "실명인증")):
+        return None
+    return ("주민등록 등·초본은 **정부24에서 온라인으로 발급**할 수 있습니다.\n\n"
+            "정부24의 신청 화면에서 본인 확인 안내에 따라 진행하세요.")
+
+
+def parse_kiosk_resident_copy(content: str) -> str | None:
+    body = re.sub(r"\s+", "", content)
+    if "주민등록등본" not in body:
+        return None
+    procedure = next((line.strip() for line in content.splitlines()
+                      if line.startswith("발급받고자 하는 증명종류 선택 →") and line.endswith("증명서 발급")), None)
+    caution = next((line.strip().removeprefix("※ ") for line in content.splitlines()
+                    if line.startswith("※ 주민등록증의 지문") and line.endswith("바랍니다.")), None)
+    if not procedure or not caution:
+        return None
+    return ("**무인민원발급기 화면에서** 주민등록등본을 선택해 발급하세요.\n\n"
+            + procedure.split(" → 자료처리", 1)[0]
+            + "\n이후 발급기 화면의 안내에 따라 진행하세요.\n\n" + caution)
 
 
 def parse_disposal_schedule(content: str, query: str) -> str | None:
@@ -165,7 +216,17 @@ def parse_bed_fee(content: str, query: str) -> str | None:
 def answer_verified_table_question(query: str, client) -> dict | None:
     """Return None for other topics, or a sourced answer / safe abstention."""
     compact = re.sub(r"\s+", "", query or "")
-    if "출산지원금" in compact and any(term in compact for term in ("얼마", "금액", "얼마나")):
+    if is_council_location_query(query):
+        url, title, parser = _COUNCIL_URL, "구청오시는 길", parse_council_location
+    elif re.fullmatch(r"무인민원발급기(?:위치|장소)(?:알려줘|알려주세요)?", compact):
+        url, title, parser = _KIOSK_URL, "무인민원발급안내", parse_kiosk_location
+    elif (re.fullmatch(r"(?:주민등록)?등본발급(?:방법)?(?:알려줘|알려주세요)?(?:온라인|인터넷|정부24)", compact)
+          or re.fullmatch(r"(?:주민등록)?등본(?:온라인|인터넷|정부24)발급(?:방법)?(?:알려줘|알려주세요)?", compact)):
+        url, title, parser = _ONLINE_URL, "정부24", parse_online_resident_copy
+    elif (re.fullmatch(r"(?:주민등록)?등본발급(?:방법)?(?:알려줘|알려주세요)?(?:무인|무인민원발급기|발급기)", compact)
+          or re.fullmatch(r"(?:주민등록)?등본무인민원발급기발급(?:방법)?(?:알려줘|알려주세요)?", compact)):
+        url, title, parser = _KIOSK_URL, "무인민원발급안내", parse_kiosk_resident_copy
+    elif "출산지원금" in compact and any(term in compact for term in ("얼마", "금액", "얼마나")):
         url, title, parser = _BIRTH_URL, "출산장려정책", parse_birth_support
     elif "보건증" in compact and any(term in compact for term in ("비용", "수수료", "얼마", "기간")):
         url, title, parser = _HEALTH_FEE_URL, "2026년도 각종검사 및 제증명 수수료 내역", parse_health_certificate_fee
@@ -188,7 +249,7 @@ def answer_verified_table_question(query: str, client) -> dict | None:
         return {"answer": "질문하신 연도의 공식 표를 확인하지 못했습니다. 공식 안내 페이지를 확인해 주세요.",
                 "sources": [], "verified": False}
 
-    if url in (_BIRTH_URL, _HEALTH_FEE_URL, _KIOSK_URL) and "2026" not in compact and datetime.now(ZoneInfo("Asia/Seoul")).year != 2026:
+    if parser in (parse_birth_support, parse_health_certificate_fee, parse_kiosk_fee) and "2026" not in compact and datetime.now(ZoneInfo("Asia/Seoul")).year != 2026:
         return {"answer": "현재 연도의 공식 수수료·지원금 표를 확인하지 못했습니다. 공식 안내 페이지를 확인해 주세요.",
                 "sources": [], "verified": False}
 
@@ -199,16 +260,18 @@ def answer_verified_table_question(query: str, client) -> dict | None:
     checked_at = _fresh(rows[0].get("last_checked_at")) if rows else None
     answer = parser(rows[0].get("content") or "") if checked_at else None
     if not answer:
-        detail = "요일별 배출 품목" if url == _RECYCLING_URL else "해당 금액과 기간"
+        detail = ("요일별 배출 품목" if url == _RECYCLING_URL else
+                  "요청하신 위치·발급 안내" if parser in (parse_council_location, parse_kiosk_location, parse_online_resident_copy, parse_kiosk_resident_copy)
+                  else "해당 금액과 기간")
         return {"answer": f"현재 공식 자료에서 {detail}을 확인하지 못했습니다. 공식 안내 페이지에서 확인해 주세요.",
                 "sources": [], "verified": False}
     return {
         "answer": answer,
-        "answer_details": "\n".join('> ' + line for line in rows[0]['content'].splitlines()) if url in (_WASTE_URL, _RECYCLING_URL) else "",
+        "answer_details": "\n".join('> ' + line for line in rows[0]['content'].splitlines()) if url in (_WASTE_URL, _RECYCLING_URL, _COUNCIL_URL, _KIOSK_URL, _ONLINE_URL) else "",
         "sources": [{
             "title": title, "url": url,
-            "category": "환경/청소" if url in (_WASTE_URL, _RECYCLING_URL) else ("사하복지" if url == _BIRTH_URL else ("전자민원" if url in (_KIOSK_URL, _PASSPORT_URL) else "보건소")),
-            "service_type": "환경" if url in (_WASTE_URL, _RECYCLING_URL) else ("복지" if url == _BIRTH_URL else ("민원" if url in (_KIOSK_URL, _PASSPORT_URL) else "보건")),
+            "category": "환경/청소" if url in (_WASTE_URL, _RECYCLING_URL) else ("사하복지" if url == _BIRTH_URL else ("전자민원" if url in (_KIOSK_URL, _PASSPORT_URL, _ONLINE_URL, _COUNCIL_URL) else "보건소")),
+            "service_type": "환경" if url in (_WASTE_URL, _RECYCLING_URL) else ("복지" if url == _BIRTH_URL else ("민원" if url in (_KIOSK_URL, _PASSPORT_URL, _ONLINE_URL, _COUNCIL_URL) else "보건")),
             "checked_at": checked_at, "source_type": "verified_page",
         }],
         "verified": True,

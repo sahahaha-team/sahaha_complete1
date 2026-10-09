@@ -57,6 +57,8 @@ def filter_time_compatible(query: str, results: list[dict]) -> list[dict]:
 
 
 def is_listing_document(doc: dict) -> bool:
+    if '_listing_document' in doc:
+        return doc['_listing_document']
     meta = doc.get("metadata") or {}
     if meta.get("category") == "staff_directory" or meta.get("source_type") == "official_report":
         return False
@@ -99,7 +101,9 @@ def topic_support(doc: dict, keywords: set[str]) -> tuple[bool, set[str]]:
     if not topics:
         return False, set()
     meta = doc.get("metadata") or {}
-    haystack = compact(f"{meta.get('title', '')} {doc.get('content', '')}")
+    if meta.get('navigation_catalog') and meta.get('navigation_topics'):
+        topics = substantive_keywords(meta['navigation_topics'])
+    haystack = doc.get('_topic_text') or compact(f"{meta.get('title', '')} {meta.get('section_heading', '')} {doc.get('content', '')}")
     matched = {word for word in topics if word in haystack}
     required = len(topics) if len(topics) <= 2 else math.ceil(len(topics) * 0.75)
     return len(matched) >= required, matched

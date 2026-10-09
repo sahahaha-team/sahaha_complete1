@@ -6,6 +6,8 @@ Supabase pgvector 벡터 스토어 (무료 티어)
 
 import json
 import logging
+import os
+import time
 
 from config import SUPABASE_SERVICE_KEY
 from database_db import get_supabase
@@ -16,8 +18,32 @@ EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 EMBEDDING_DIM = 384  # MiniLM-L12-v2 출력 차원
 
 
+def upsert_vectors(client, rows, *, retry=0):
+    """Split timed-out writes; retrying the same chunk IDs is idempotent."""
+    try:
+        client.table('documents').upsert(rows).execute()
+    except Exception as exc:
+        transient = (getattr(exc, 'code', '') in ('57014', '53300', '40001')
+                     or 'statement timeout' in str(exc).lower()
+                     or 'timeout' in type(exc).__name__.lower())
+        if not transient:
+            raise
+        if len(rows) > 1:
+            middle = len(rows) // 2
+            logger.warning('벡터 쓰기 지연: %s개 배치를 분할하여 재시도', len(rows))
+            upsert_vectors(client, rows[:middle])
+            upsert_vectors(client, rows[middle:])
+        elif retry < 2:
+            time.sleep(1 + retry)
+            upsert_vectors(client, rows, retry=retry + 1)
+        else:
+            raise
+
+
 class VectorStore:
     def __init__(self, admin: bool = None):
+        import torch
+        torch.set_num_threads(max(1, int(os.getenv("EMBEDDING_CPU_THREADS", "4"))))
         # langchain-huggingface 우선, 미설치 시 langchain-community 폴백
         try:
             from langchain_huggingface import HuggingFaceEmbeddings
@@ -25,11 +51,18 @@ class VectorStore:
             from langchain_community.embeddings import HuggingFaceEmbeddings
 
         logger.info(f"임베딩 모델 로딩 중: {EMBED_MODEL}")
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name=EMBED_MODEL,
-            model_kwargs={"device": "cpu"},
-            encode_kwargs={"normalize_embeddings": True},
-        )
+        try:
+            self.embeddings = HuggingFaceEmbeddings(
+                model_name=EMBED_MODEL,
+                model_kwargs={"device": "cpu", "local_files_only": True},
+                encode_kwargs={"normalize_embeddings": True},
+            )
+        except (OSError, ValueError):
+            logger.info("로컬 임베딩 캐시 없음: 최초 모델 다운로드")
+            self.embeddings = HuggingFaceEmbeddings(
+                model_name=EMBED_MODEL, model_kwargs={"device": "cpu"},
+                encode_kwargs={"normalize_embeddings": True},
+            )
 
         if admin is None:
             admin = bool(SUPABASE_SERVICE_KEY)
@@ -71,7 +104,7 @@ class VectorStore:
                 "metadata": safe_meta,
             })
 
-        self.supabase.table("documents").upsert(rows).execute()
+        upsert_vectors(self.supabase, rows)
 
         if db:
             db.mark_embedded([c.chunk_id for c, _ in chunks_with_meta])
@@ -79,7 +112,7 @@ class VectorStore:
         logger.info(f"벡터 저장 완료: {len(texts)}개")
         return ids
 
-    def add_chunks_batch(self, chunks_with_meta: list, batch_size: int = 50, db=None):
+    def add_chunks_batch(self, chunks_with_meta: list, batch_size: int = 25, db=None):
         """배치 단위 임베딩 저장"""
         total = len(chunks_with_meta)
         for i in range(0, total, batch_size):

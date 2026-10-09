@@ -487,7 +487,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="사하구청 AI 상담사")
     parser.add_argument(
         "--mode",
-        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web", "worker", "ingest-files"],
+        choices=["crawl", "incremental", "process", "embed", "all", "stats", "web", "worker", "ingest-files", "sync-site"],
         default="web",
         help="실행 모드 (기본: web)",
     )
@@ -501,6 +501,9 @@ if __name__ == "__main__":
         run_web()
     elif args.mode == "worker":
         run_worker()
+    elif args.mode == "sync-site":
+        from crawler.site_sync import run_site_sync
+        run_site_sync()
     elif args.mode == "stats":
         show_stats()
     elif args.mode == "crawl":
