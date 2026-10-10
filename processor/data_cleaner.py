@@ -79,7 +79,8 @@ class DataCleaner:
         text = re.sub(r"[ \t]{2,}", " ", text)
 
         # 특수문자 정리 (한글, 영문, 숫자, 기본 문장부호 유지)
-        text = re.sub(r"[^\w\s가-힣.,!?;:()\-\[\]\"\'%/]", " ", text)
+        # 구조화 파서가 만든 제목(#), 표(|), 문서 경로(>) 표시는 유지한다.
+        text = re.sub(r"[^\w\s가-힣.,!?;:()\-\[\]\"\'%/#|>~]", " ", text)
 
         # 반복 문자 제거
         text = re.sub(r"(.)\1{4,}", r"\1\1", text)
@@ -114,19 +115,67 @@ class DataCleaner:
             return False
         return True
 
+    def split_structured_text(self, text: str) -> list[str]:
+        """HTML에서 보존한 제목 경계를 따라 나누고, 큰 섹션만 글자 단위로 분할한다."""
+        lines = [line.strip() for line in (text or "").splitlines() if line.strip()]
+        if not any(re.match(r"^#{1,6}\s+", line) for line in lines):
+            return self.splitter.split_text(text)
+
+        heading_stack: list[str] = []
+        sections: list[tuple[str, str]] = []
+        body: list[str] = []
+
+        def flush() -> None:
+            if not body:
+                return
+            path = " > ".join(heading_stack)
+            sections.append((path, "\n".join(body).strip()))
+            body.clear()
+
+        for line in lines:
+            match = re.match(r"^(#{1,6})\s+(.+)$", line)
+            if not match:
+                body.append(line)
+                continue
+            flush()
+            level = len(match.group(1))
+            heading = match.group(2).strip()
+            heading_stack[:] = heading_stack[:level - 1]
+            heading_stack.append(heading)
+        flush()
+
+        chunks: list[str] = []
+        for path, section_body in sections:
+            prefix = f"문서 위치: {path}\n" if path else ""
+            available = max(120, CHUNK_SIZE - len(prefix))
+            local_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=available,
+                chunk_overlap=min(CHUNK_OVERLAP, max(0, available // 5)),
+                separators=["\n표 | ", "\n- ", "\n", ". ", " ", ""],
+            )
+            pieces = local_splitter.split_text(section_body)
+            chunks.extend((prefix + piece).strip() for piece in pieces if piece.strip())
+        return chunks or self.splitter.split_text(text)
+
     def process(self, page_data) -> list[CleanedChunk]:
         """PageData → CleanedChunk 리스트 변환"""
         if is_non_page_url(getattr(page_data, "url", "")):
             logger.info(f"  비페이지 URL 제외: {page_data.url}")
             return []
-        cleaned = self.clean_text(page_data.content)
+        text = page_data.content
+        if getattr(page_data, 'raw_html', ''):
+            from bs4 import BeautifulSoup
+            from crawler.saha_crawler import SahaCrawler
+            crawler = object.__new__(SahaCrawler)
+            text = crawler._extract_content(BeautifulSoup(page_data.raw_html, 'lxml'), page_data.url)
+        cleaned = self.clean_text(text)
 
         if not self.is_valid_content(cleaned):
             return []
         if self.is_duplicate(cleaned):
             return []
 
-        chunks = self.splitter.split_text(cleaned)
+        chunks = self.split_structured_text(cleaned)
         result = []
         skipped = 0
         attachments = getattr(page_data, "attachments", None) or []

@@ -291,6 +291,12 @@ class EvidenceGateTests(unittest.TestCase):
         )
         self.assertEqual([row["id"] for row in selected], [matched["id"]])
 
+    def test_admin_intent_still_requires_actual_service_evidence(self):
+        results = [document(title="온라인 처리 안내", content="필요한 절차와 준비사항", similarity=0.62)]
+        evidence = assess_evidence(results, keywords={"민원", "신청"}, domain_intent=True, min_similarity=0.45)
+        self.assertFalse(evidence["confident"])
+        self.assertEqual(evidence["status"], "insufficient")
+
 
 class ConversationUxTests(unittest.TestCase):
     def test_obvious_financial_prediction_is_blocked_before_retrieval(self):
@@ -333,6 +339,17 @@ class ConversationUxTests(unittest.TestCase):
         history = [{"role": "user", "content": "정보공개청구 통계를 알려줘"}]
         query = build_contextual_search_query("2026년 출산지원금은 얼마인가요?", history)
         self.assertEqual(query, "2026년 출산지원금은 얼마인가요?")
+
+    def test_new_complete_question_drops_previous_topic(self):
+        history = [
+            {"role": "user", "content": "기초생활수급자 민원 수수료 면제 알려줘"},
+            {"role": "assistant", "content": "면제 대상을 안내해드렸습니다"},
+        ]
+        question = "주민세 사업소분이나 종업원분은 인터넷으로 신고할 수 있나요?"
+        self.assertEqual(build_contextual_search_query(question, history), question)
+
+    def test_vague_service_request_preserves_one_scope_question(self):
+        self.assertIsNotNone(build_clarification("지원받고 싶어요"))
 
 
 class PrivacyTests(unittest.TestCase):
@@ -489,6 +506,31 @@ class HybridRankingTests(unittest.TestCase):
         outcome = retriever.search("대형 폐기물 침대 수수료", k=5)
         self.assertEqual(outcome["results"][0]["id"], "exact")
         self.assertFalse(outcome["degraded"])
+
+    def test_fee_waiver_question_is_not_treated_as_staff_lookup(self):
+        question = "기초생활수급자나 한부모가족은 민원 수수료를 면제받을 수 있나요?"
+        self.assertFalse(HybridRetriever._has_staff_lookup_intent(question))
+        self.assertFalse(HybridRetriever._has_staff_lookup_intent("주민등록번호 확인 방법"))
+        self.assertTrue(HybridRetriever._has_staff_lookup_intent("대형폐기물 담당자 전화번호"))
+
+    def test_unrelated_staff_document_is_not_used_as_source(self):
+        retriever = object.__new__(HybridRetriever)
+        results = [{
+            "id": "staff-noise",
+            "content": "감천1동 행정 업무",
+            "metadata": {
+                "title": "주무관",
+                "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+                "category": "staff_directory",
+                "department": "감천1동",
+            },
+            "similarity": 0.9,
+        }]
+        context, sources = retriever.format_context(
+            "기초생활수급자 민원 수수료 면제", results
+        )
+        self.assertEqual(context, "")
+        self.assertEqual(sources, [])
 
 
 if __name__ == "__main__":

@@ -11,8 +11,20 @@ from openpyxl import load_workbook
 from chatbot.question_intent import asks_opening_hours, asks_location
 from chatbot.query_subject import fallback_keywords
 from chatbot.vaccination import vaccine_place_page
+from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH
 
 WORKBOOK = Path(__file__).resolve().parents[1] / "data" / "official_sources" / "사하구 홈페이지_100개 질문.xlsx"
+
+
+@lru_cache(maxsize=1)
+def _question_indexes() -> tuple[OfficialFAQIndex, OfficialFAQIndex]:
+    return OfficialFAQIndex(), OfficialFAQIndex(PRIORITY_SERVICE_PATH)
+
+
+def find_official_question(question: str) -> dict | None:
+    """FAQ similarity is a navigation hint, never proof of a draft answer."""
+    matches = [index.find_best(question, min_score=0.88) for index in _question_indexes()]
+    return max((match for match in matches if match), key=lambda match: match['score'], default=None)
 
 
 def _normalize(question: str) -> str:
@@ -21,10 +33,13 @@ def _normalize(question: str) -> str:
 
 @lru_cache(maxsize=1)
 def _targets() -> list[tuple[str, str]]:
+    # Committed JSON keeps the official question routes usable on a new PC.
+    output = [(_normalize(str(item['question'])), str(item['url']))
+              for index in _question_indexes() for item in index.items
+              if str(item.get('url', '')).startswith('https://www.saha.go.kr/')]
     if not WORKBOOK.is_file():
-        return []
+        return output
     book = load_workbook(WORKBOOK, read_only=True, data_only=True)
-    output = []
     try:
         for _number, question, _draft_answer, url in book["예상질문답변"].iter_rows(min_row=2, values_only=True):
             if question and url and str(url).startswith("https://www.saha.go.kr/"):
@@ -39,6 +54,9 @@ def match_official_page(question: str) -> str | None:
     vaccine_url = vaccine_place_page(question)
     if vaccine_url:
         return vaccine_url
+    from chatbot.official_faq import required_faq_ids
+    if required_faq_ids(question) == {1, 2}:
+        return 'https://www.saha.go.kr/portal/contents.do?mId=0604050000'
     if asks_location(question) and fallback_keywords(question) == {'보건소'}:
         return 'https://www.saha.go.kr/health/contents.do?mId=0103000000'
     if asks_location(question) and fallback_keywords(question) == {'구청'}:
@@ -66,6 +84,9 @@ def match_official_page(question: str) -> str | None:
     for candidate, url in targets:
         if normalized == candidate:
             return url
+    match = find_official_question(question)
+    if match and str(match.get('url', '')).startswith('https://www.saha.go.kr/'):
+        return match['url']
     # Minor spelling/wording changes are allowed; unrelated topics stay in RAG.
     close = [(SequenceMatcher(None, normalized, candidate).ratio(), url) for candidate, url in targets]
     if not close:

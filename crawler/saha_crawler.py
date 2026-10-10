@@ -7,7 +7,7 @@
 import time
 import logging
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from collections import deque
 from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.robotparser import RobotFileParser
@@ -208,7 +208,9 @@ class SahaCrawler:
         soup = BeautifulSoup(html, "lxml")
 
         title = self._extract_title(soup)
-        content = self._extract_content(soup)
+        # Keep the full original text for verified row/condition readers;
+        # DataCleaner derives structured search chunks from raw_html.
+        content = self._extract_plain_content(soup)
         sub_category = self._extract_sub_category(soup)
         links = self._extract_links(soup, url)
         attachments = self._extract_attachments(soup, url)
@@ -231,7 +233,8 @@ class SahaCrawler:
                 return el.get_text(strip=True)
         return soup.title.get_text(strip=True) if soup.title else ""
 
-    def _extract_content(self, soup: BeautifulSoup) -> str:
+    @staticmethod
+    def _content_root(soup: BeautifulSoup) -> Tag:
         # 불필요한 태그 제거
         for tag in soup.select("script, style, nav, header, footer, .gnb, .lnb, .side_menu, #footer"):
             tag.decompose()
@@ -240,9 +243,83 @@ class SahaCrawler:
         for selector in [".cont_area", "#contents", ".content_area", ".board_view", "main", "article"]:
             el = soup.select_one(selector)
             if el:
-                return el.get_text(separator="\n", strip=True)
+                return el
 
-        return soup.get_text(separator="\n", strip=True)
+        return soup
+
+    def _extract_plain_content(self, soup: BeautifulSoup) -> str:
+        return self._content_root(soup).get_text(separator='\n', strip=True)
+
+    def _extract_content(self, soup: BeautifulSoup, base_url: str = "") -> str:
+        return self._extract_structured_text(self._content_root(soup), base_url)
+
+    @staticmethod
+    def _extract_structured_text(root: Tag, base_url: str = "") -> str:
+        """제목·목록·표·업무 링크의 관계를 보존한 검색용 텍스트를 만든다.
+
+        단순 get_text()는 표의 열 관계와 소제목 경계를 없애므로 담당자·요일·금액이
+        서로 섞일 수 있다. 검색에 필요한 블록만 Markdown과 유사한 형태로 직렬화한다.
+        """
+        lines: list[str] = []
+        seen: set[str] = set()
+
+        def add(value: str) -> None:
+            value = " ".join((value or "").split()).strip()
+            if value and value not in seen:
+                seen.add(value)
+                lines.append(value)
+
+        nodes = root.find_all(
+            ["h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "tr", "dt", "dd"],
+            recursive=True,
+        )
+        for node in nodes:
+            name = (node.name or "").lower()
+            if name == "tr":
+                cells = [
+                    " ".join(cell.get_text(" ", strip=True).split())
+                    for cell in node.find_all(["th", "td"], recursive=False)
+                ]
+                cells = [cell for cell in cells if cell]
+                if cells:
+                    add("표 | " + " | ".join(cells))
+                continue
+            if node.find_parent("table") is not None:
+                continue
+            text = node.get_text(" ", strip=True)
+            if not text:
+                continue
+            if name.startswith("h"):
+                level = min(6, max(1, int(name[1])))
+                add(f"{'#' * level} {text}")
+            elif name == "li":
+                if node.find_parent("li") is None:
+                    add(f"- {text}")
+            elif name == "dt":
+                add(f"항목: {text}")
+            elif name == "dd":
+                add(f"내용: {text}")
+            else:
+                add(text)
+
+        # 본문에 문단 태그가 거의 없는 레거시 페이지는 전체 텍스트로 폴백한다.
+        structured = "\n".join(lines).strip()
+        if len(structured) < 50:
+            structured = root.get_text(separator="\n", strip=True)
+
+        # 예약·신청 등 실제 행동 링크는 링크명과 URL의 관계를 별도 행으로 보존한다.
+        link_lines = []
+        for anchor in root.find_all("a", href=True):
+            label = " ".join(anchor.get_text(" ", strip=True).split())
+            href = (anchor.get("href") or "").strip()
+            if not label or not href or href.lower().startswith(("javascript:", "#")):
+                continue
+            if any(word in label for word in ("신청", "예약", "접수", "조회", "다운로드")):
+                link_lines.append(f"관련 링크 | {label} | {urljoin(base_url, href)}")
+
+        if link_lines:
+            structured = structured + "\n" + "\n".join(dict.fromkeys(link_lines))
+        return structured.strip()
 
     def _extract_sub_category(self, soup: BeautifulSoup) -> str:
         breadcrumb = soup.select_one(".breadcrumb, .location, #location")

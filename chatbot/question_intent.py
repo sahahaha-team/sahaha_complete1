@@ -26,7 +26,7 @@ _PLACE_ENTITY = re.compile(
 def asks_location(query: str) -> bool:
     # Do not concatenate '공장 소음' into a spurious '장소' request.
     return bool(re.search(
-        r"어디|(?:장소|위치|주소)(?:\s|[?？!]|$|[은는이가을를]|알려)|"
+        r"어디|(?:장소|위치|주소)(?:\s|[?？!]|$|[은는이가을를와과도]|알려)|"
         r"(?:하는|할|받는|맞는|접종|발급|신청)\s*(?:곳|데)", query or '',
     ))
 

@@ -74,6 +74,8 @@ def refresh_staff_directory() -> dict:
     data = refresh_directory(STAFF_DIRECTORY_PATH)
     from scripts.build_contact_directory import build_contact_directory
     build_contact_directory(data)
+    from chatbot.contact_directory import save_contact_payload
+    save_contact_payload(data)
     return data
 
 

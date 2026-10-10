@@ -27,6 +27,7 @@ from chatbot.evidence import (
 from chatbot.query_subject import normalize_query, subject_query, query_keywords, fallback_keywords
 from chatbot.crawled_pages import CrawledPageIndex, page_rank
 from chatbot.question_intent import asks_opening_hours, asks_location
+from chatbot.faq_targets import find_official_question, match_official_page
 from config import (
     HYBRID_VECTOR_WEIGHT,
     HYBRID_BM25_WEIGHT,
@@ -67,6 +68,20 @@ class HybridRetriever:
         except Exception as e:
             logger.warning(f"BM25 인덱스 사전 로딩 실패: {e}")
             self.bm25 = None
+
+    @staticmethod
+    def find_official_question(query: str) -> dict | None:
+        return find_official_question(query)
+
+    @classmethod
+    def _has_staff_lookup_intent(cls, query: str) -> bool:
+        from chatbot.contact_directory import is_contact_lookup_question
+        return is_staff_lookup(query) or is_contact_lookup_question(query)
+
+    @staticmethod
+    def _is_staff_document(doc: dict) -> bool:
+        meta = doc.get('metadata') or {}
+        return meta.get('category') == 'staff_directory' or 'staff/list.do' in str(meta.get('url', ''))
 
     def detect_category(self, query: str) -> dict:
         """질문에서 카테고리/서비스유형 힌트 감지"""
@@ -307,6 +322,14 @@ class HybridRetriever:
             return {"results": staff_docs, "degraded": not bool(staff_docs),
                     "reason": None if staff_docs else "staff_not_found"}
 
+        # Resolve the team's FAQ aliases to current crawler originals. Draft
+        # answers and manually entered verification dates are not evidence.
+        target = match_official_page(query)
+        if target:
+            pages = self.search_crawled_pages(query, k=k, url=target)
+            if pages:
+                return {"results": pages, "degraded": False, "reason": None}
+
         # The original contains fields and qualifications that embedding
         # chunks can omit. Search every crawler page, not just workbook URLs.
         pages = self.search_crawled_pages(query, k=k)
@@ -323,11 +346,12 @@ class HybridRetriever:
         # 행정 용어·품목명이 정확히 일치하는 질문은 CPU 벡터 임베딩(수십 초)을
         # 기다리지 않고 BM25 결과를 사용한다. 점수가 약한 자연어 질문은 아래의
         # 벡터+BM25 하이브리드 경로를 그대로 탄다.
-        contact_intent = any(word in query for word in self._CONTACT_INTENT)
+        contact_intent = self._has_staff_lookup_intent(query)
         if self.bm25 and self.bm25.enabled and not contact_intent:
             lexical_results = self.bm25.search(query, top_n=max(k, 10))
             subjects = self._content_keywords(query)
             lexical_results = [row for row in lexical_results if topic_support(row, subjects)[0]]
+            lexical_results = [row for row in lexical_results if not self._is_staff_document(row)]
             if (
                 lexical_results
                 and lexical_results[0]["bm25_score"] >= BM25_FAST_PATH_MIN_SCORE
@@ -379,10 +403,12 @@ class HybridRetriever:
         # 직원업무안내(staff) 문서는 "담당/연락처/부서/직원" 등 인물·연락 의도가 있는
         # 질문에서만 상위에 끼워 넣는다. 그렇지 않으면 staff가 "사하구청장"처럼 지명만으로
         # 매칭돼 콘텐츠 페이지(예: 안내도·자료)를 밀어내므로 제외한다.
-        if any(w in query for w in self._CONTACT_INTENT):
+        if contact_intent:
             official_docs = self._staff_results_to_documents(query, limit=max(k, 3))
             if official_docs:
                 results = official_docs + results
+        else:
+            results = [doc for doc in results if not self._is_staff_document(doc)]
 
         # BM25 비활성 상태이면 벡터 결과만 사용하면서 degraded 표시
         if not self.bm25 or not self.bm25.enabled:
@@ -541,6 +567,8 @@ class HybridRetriever:
         seen_urls = set()
 
         for i, doc in enumerate(results, 1):
+            if self._is_staff_document(doc) and not self._has_staff_lookup_intent(query):
+                continue
             meta = doc.get("metadata", {})
             url = meta.get("url", "")
             title = meta.get("title", "정보")
@@ -565,8 +593,9 @@ class HybridRetriever:
             if url and url not in seen_urls:
                 seen_urls.add(url)
                 # 담당 부서 (LLM이 본문에서 추출) → 공식 명칭으로 보정 후 연락처 매핑
-                dept = "" if is_report else correct_dept(meta.get("department", "") or "")
-                dept, contact = ("", "") if is_report else self._resolve_official_source(query, title, content, dept)
+                is_faq = meta.get('category') == 'official_faq'
+                dept = "" if is_report or is_faq else correct_dept(meta.get("department", "") or "")
+                dept, contact = ("", "") if is_report or is_faq else self._resolve_official_source(query, title, content, dept)
                 # 첨부파일 목록 정규화 ([{"name","url"}]만 통과)
                 # documents.metadata는 환경에 따라 list 또는 JSON 문자열로 올 수 있어
                 # 문자열이면 파싱한다 (파싱 실패 시 빈 목록 — 첨부를 조용히 버리지 않도록).

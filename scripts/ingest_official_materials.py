@@ -27,6 +27,7 @@ from database_db.database import Database
 from database_db.vector_store import VectorStore
 from processor.data_cleaner import CleanedChunk, DataCleaner
 from processor.metadata_defaults import fallback_keywords
+from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH
 
 logger = logging.getLogger(__name__)
 DEFAULT_DIR = Path("data/official_sources")
@@ -64,6 +65,16 @@ def workbook_targets(path: Path) -> list[tuple[str, str]]:
     return targets
 
 
+def official_page_targets(source_dir: Path) -> list[tuple[str, str]]:
+    """Refresh the team's extra services and work without the private workbook."""
+    workbook = source_dir / '사하구 홈페이지_100개 질문.xlsx'
+    targets = workbook_targets(workbook) if workbook.is_file() else [
+        (item['question'], item['url']) for item in OfficialFAQIndex().items]
+    targets.extend((item['question'], item['url'])
+                   for item in OfficialFAQIndex(PRIORITY_SERVICE_PATH).items)
+    return list({url: (question, url) for question, url in targets if _official_url(url)}.values())
+
+
 def _fetch_page(target: tuple[str, str]):
     question, url = target
     try:
@@ -74,13 +85,13 @@ def _fetch_page(target: tuple[str, str]):
         response.encoding = response.apparent_encoding or "utf-8"
         soup = BeautifulSoup(response.text, "lxml")
         crawler = object.__new__(SahaCrawler)
-        content = crawler._extract_content(soup)
+        content = crawler._extract_plain_content(soup)
         title = crawler._extract_title(soup)
         attachments = crawler._extract_attachments(soup, url)
         if len(content.strip()) < 80:
             raise ValueError("본문이 너무 짧음")
         return {"question": question, "url": url, "title": title,
-                "content": content, "attachments": attachments,
+                "content": content, "attachments": attachments, "raw_html": response.text,
                 "checked_at": datetime.now(timezone.utc).isoformat()}
     except Exception as exc:
         logger.warning("공식 페이지 갱신 실패 (%s): %s", url, exc)
@@ -172,6 +183,7 @@ def _index_page(db: Database, vs: VectorStore, row: dict, *, force: bool = False
     page.category = row["category"]
     page.sub_category = "공식 분석 보고서" if is_report else "100개 질문 관련 공식 페이지"
     page.attachments = row.get('attachments') or []
+    page.raw_html = row.get('raw_html') or ''
 
     status = db.upsert_raw_page(page)
     if not is_report:
@@ -235,14 +247,11 @@ def ingest(source_dir: Path, *, reports: bool = True, pages: bool = True,
     fetched = []
     failed_urls = []
     if pages:
-        workbook = source_dir / "사하구 홈페이지_100개 질문.xlsx"
-        if not workbook.is_file():
-            raise FileNotFoundError(workbook)
-        targets = workbook_targets(workbook)
+        targets = official_page_targets(source_dir)
         if only_url:
             targets = [target for target in targets if target[1] == only_url]
             if not targets:
-                raise ValueError("엑셀에 해당 공식 URL이 없습니다")
+                raise ValueError("질문·서비스 목록에 해당 공식 URL이 없습니다")
         fetched = fetch_pages(targets)
         failed_urls = sorted(set(url for _question, url in targets) - {row["url"] for row in fetched})
         if not fetched:

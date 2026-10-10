@@ -204,6 +204,37 @@ Ollama 앱이나 서비스가 이미 실행 중이면 `ollama serve`는 생략�
 
 Supabase Dashboard > SQL Editor에서 `setup_supabase.sql`을 실행합니다.
 
+팀 `main`의 FAQ·HTML 수집 기능을 병합한 기존 DB에는
+`scripts/migration_official_faq_and_html.sql`을 한 번 적용하면 원본 HTML과
+FAQ 관리용 테이블을 저장할 수 있습니다. 미적용 DB에서도 웹 상담과 기존 텍스트
+크롤링은 동작하며, HTML 컬럼이 없으면 텍스트 저장으로 이어집니다.
+
+```bash
+# 선택: FAQ 초안을 DB 관리용 테이블에 동기화 (마이그레이션 적용 후)
+python scripts/sync_official_faq.py --apply
+python scripts/check_migration.py
+
+# 직원 자료를 팀의 경량 인덱스 형식으로 내보내기
+python scripts/build_department_contacts.py
+
+# 100문항 질문/URL 매칭 검사 (전체 상담 정답률과는 다름)
+python scripts/evaluate_official_faq.py
+```
+
+`resources/official_faq.json`과 `resources/priority_services.json`의 질문·유사 표현을
+공식 페이지 검색에 활용합니다. 파일에 있는 예상 답변과 수동 확인일은 현재 행정정보의
+근거로 바로 사용하지 않으며, 상담 답변은 최근 확인된 크롤링 원문에서 검증합니다.
+원본 엑셀이 없는 새 PC에서도 JSON의 질문·URL 목록을 이용할 수 있습니다.
+`scripts/ingest_official_materials.py --pages-only`와 Worker의 공식 페이지 갱신은
+이 JSON 목록 및 우선 서비스의 추가 URL도 수집합니다. 유효 본문이 없는 URL은
+답변 근거로 사용하지 않습니다.
+제목·표 구조는 원본 HTML에서 검색 청크로 만들고, 전체 원문 텍스트도 함께 유지하여
+기존 수수료·요일 표 조회와 조건 검증을 보존합니다.
+
+`scripts/build_department_contacts.py`는 팀의 `resources/department_contacts.json`을
+내보내는 도구입니다. 실제 주민 상담용 번호와 공식 대표번호를 갱신할 때는
+아래의 `scripts/build_contact_directory.py --refresh`를 사용합니다.
+
 기존 운영 DB를 갱신할 때는 `scripts/migration_crawl_audit_and_security.sql`을
 한 번 실행합니다. 이 마이그레이션은 대화 로그의 anon 접근을 차단하고
 증분 크롤링 실행 이력 및 페이지 마지막 확인 시각을 추가합니다.
@@ -402,7 +433,7 @@ Worker는 `Asia/Seoul` 시간대에서 실행하며 해당 시각에 프로세�
 |---|---|
 | 03:00 | 증분 크롤링·정제·태깅·임베딩 (`CRAWL_HOUR`, `CRAWL_MINUTE`로 변경) |
 | 04:00 | 대화 로그 보관 기간에 따른 정리 (`CLEANUP_HOUR`, `CLEANUP_MINUTE`로 변경) |
-| 04:15 | 질문 엑셀의 공식 URL 갱신 (원본 엑셀 파일이 있을 때 실행) |
+| 04:15 | 질문 엑셀 또는 JSON 목록 및 우선 서비스의 공식 URL 갱신 |
 | 04:45 | 직원업무안내·대표전화와 연락처 전용 파일 갱신 |
 
 `WORKER_RUN_ON_START=true`이면 시작 직후 증분 크롤링도 실행합니다. 기본값은

@@ -22,10 +22,8 @@ def cleanup_job() -> None:
 
 def official_sources_job() -> None:
     from scripts.ingest_official_materials import DEFAULT_DIR, ingest
-    workbook = DEFAULT_DIR / "사하구 홈페이지_100개 질문.xlsx"
-    if workbook.is_file():
-        logger.info("공식 페이지 100건 갱신 시작")
-        logger.info("공식 페이지 갱신 결과: %s", ingest(DEFAULT_DIR, reports=False))
+    logger.info("질문 목록·우선 서비스의 공식 페이지 갱신 시작")
+    logger.info("공식 페이지 갱신 결과: %s", ingest(DEFAULT_DIR, reports=False))
 
 
 def staff_directory_job() -> None:

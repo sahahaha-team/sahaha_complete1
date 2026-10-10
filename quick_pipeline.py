@@ -23,6 +23,8 @@ for raw in tqdm(raw_pages, desc="정제 중"):
         url = raw.url
         title = raw.title
         content = raw.content
+        raw_html = getattr(raw, 'raw_html', '')
+        attachments = getattr(raw, 'attachments', None) or []
         category = raw.category
         sub_category = raw.sub_category
 

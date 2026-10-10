@@ -50,6 +50,8 @@ alter table raw_pages add column if not exists last_modified text;
 alter table raw_pages add column if not exists last_checked_at timestamp with time zone default now();
 -- 게시물 첨부파일 목록 [{"name","url"}] (JSONB)
 alter table raw_pages add column if not exists attachments jsonb default '[]'::jsonb;
+-- 원문 구조 재처리용 HTML. 일반 사용자에게는 공개하지 않는다.
+alter table raw_pages add column if not exists raw_html text;
 
 create index if not exists ix_raw_pages_category on raw_pages(category);
 
@@ -105,6 +107,23 @@ create index if not exists ix_chunks_embedded on processed_chunks(embedded);
 create index if not exists ix_chunks_url on processed_chunks(url);
 
 -- ============================================
+-- 4-1. 구청 제공 공식 예상질문 정답셋
+-- ============================================
+create table if not exists official_faq (
+  id integer primary key,
+  question text not null unique,
+  approved_answer text not null,
+  source_url text not null,
+  category text not null default '기타',
+  keywords jsonb not null default '[]'::jsonb,
+  is_time_sensitive boolean not null default false,
+  verified_at date,
+  updated_at timestamp with time zone not null default now()
+);
+
+create index if not exists ix_official_faq_category on official_faq(category);
+
+-- ============================================
 -- 5. 대화 이력 (conversation_logs)
 -- ============================================
 create table if not exists conversation_logs (
@@ -130,6 +149,7 @@ alter table raw_pages enable row level security;
 alter table processed_chunks enable row level security;
 alter table conversation_logs enable row level security;
 alter table crawl_runs enable row level security;
+alter table official_faq enable row level security;
 
 -- documents: 챗봇 검색을 위한 SELECT만 허용
 drop policy if exists "documents_anon_select" on documents;
@@ -144,6 +164,13 @@ drop policy if exists "raw_pages_anon_no_access" on raw_pages;
 drop policy if exists "processed_chunks_anon_select" on processed_chunks;
 create policy "processed_chunks_anon_select" on processed_chunks
   for select to anon using (true);
+
+drop policy if exists "official_faq_anon_select" on official_faq;
+create policy "official_faq_anon_select" on official_faq
+  for select to anon, authenticated using (true);
+
+revoke insert, update, delete on official_faq from anon, authenticated;
+grant select on official_faq to anon, authenticated;
 
 -- conversation_logs:
 --   - 서명 쿠키의 session_id는 PostgreSQL이 직접 검증할 수 없으므로 anon 정책을

@@ -204,6 +204,7 @@ def run_incremental(menu_filter: str = None):
                     url = raw.url
                     title = raw.title
                     content = raw.content
+                    raw_html = getattr(raw, 'raw_html', '')
                     category = raw.category
                     sub_category = raw.sub_category
                     attachments = getattr(raw, "attachments", None) or []
@@ -380,6 +381,7 @@ def run_process():
             url = raw.url
             title = raw.title
             content = raw.content
+            raw_html = getattr(raw, 'raw_html', '')
             category = raw.category
             sub_category = raw.sub_category
             attachments = getattr(raw, "attachments", None) or []

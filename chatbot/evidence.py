@@ -8,6 +8,8 @@ from chatbot.query_subject import compact, substantive_keywords, SERVICE_NAMES
 
 def is_official_document(doc: dict) -> bool:
     meta = doc.get("metadata") or {}
+    if meta.get('source_type') == 'faq_draft' or meta.get('category') == 'official_faq':
+        return False  # A linked official URL does not validate a draft's facts.
     url = str(meta.get("url") or "")
     if meta.get("source_type") == "official_report":
         return url.startswith("file://official_reports/")
@@ -72,7 +74,8 @@ def is_listing_document(doc: dict) -> bool:
 def is_answerable_document(query: str, doc: dict) -> bool:
     """A notice index is evidence for listing requests, not for an office's duty."""
     url = str((doc.get("metadata") or {}).get("url") or "")
-    if urlparse(url).path.endswith("/main.do"):
+    path = urlparse(url).path
+    if path.endswith('/main.do') or path in ('/welfare.do', '/reserve', '/reserve/'):
         # Landing-page menus are not a service's instructions.
         return False
     if "/deptIntro/" in url and not any(word in query for word in ("담당", "부서", "업무", "직원", "연락", "전화", "조직")):

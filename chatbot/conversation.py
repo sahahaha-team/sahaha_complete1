@@ -379,6 +379,14 @@ class ChatBot:
             if source.get("category") != "staff_directory":
                 source["department"] = ""
                 source["contact"] = ""
+        # The team's compound office query keeps both requested fields.
+        # Append the organization's number only from the current contact file.
+        from chatbot.official_faq import required_faq_ids
+        if required_faq_ids(search_query) == {1, 2}:
+            organization = contact_responder.respond(session_id, '사하구청 대표전화')
+            if organization and organization.get('sources') and not organization.get('degraded'):
+                answer += '\n\n' + organization['answer']
+                sources.extend(organization['sources'])
         self._save_conversation_safe(session_id, "user", user_message, search_query=search_query)
         self._save_conversation_safe(session_id, "assistant", answer,
             sources=json.dumps([source["url"] for source in sources], ensure_ascii=False))

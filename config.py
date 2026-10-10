@@ -45,6 +45,12 @@ CHATBOT_MAX_TOKENS = int(os.getenv("CHATBOT_MAX_TOKENS", "384"))
 # 기본은 Gemma의 근거 선택: 출력 사실은 검증된 원문 단위에서 가져온다.
 SOURCE_ONLY_ANSWERS = os.getenv("SOURCE_ONLY_ANSWERS", "false").lower() == "true"
 
+# ===== 구청 공식 예상질문 근거셋 =====
+# 자료 작성·평가용 FAQ 검색 임계값. 상담은 질문/URL로 현재 원문을 조회한다.
+OFFICIAL_FAQ_RETRIEVAL_MIN_SCORE = float(
+    os.getenv("OFFICIAL_FAQ_RETRIEVAL_MIN_SCORE", "0.58")
+)
+
 # ===== Flask 설정 =====
 FLASK_HOST = os.getenv("FLASK_HOST", "127.0.0.1")
 FLASK_PORT = int(os.getenv("FLASK_PORT", "5000"))

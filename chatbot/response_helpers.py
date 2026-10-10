@@ -66,6 +66,17 @@ def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
 
+    from chatbot.official_faq import required_faq_ids
+    if required_faq_ids(user_message) == {1, 2}:
+        return None
+    if re.fullmatch(r"(?:담당자|담당부서)?(?:전화번호|연락처)(?:알려줘|알려주세요)?", compact):
+        return clarification_question('어떤 민원이나 업무의 연락처가 필요한가요?',
+            ['여권 담당 부서 연락처', '대형폐기물 담당 부서 연락처'], ['여권', '폐기물', '민원처리', '단속'])
+    if re.fullmatch(r'(?:통합)?예약(?:하고싶어요|하고싶어|안내해줘|알려줘|방법알려줘|어떻게해|하고싶은데어디서해)?', compact):
+        return clarification_question('어떤 예약이 필요한가요? **교육·체험 프로그램 또는 시설명**을 알려주세요.',
+            ['작은도서관 프로그램 예약 방법 알려줘', '소방특화 들락날락 체험 예약 방법 알려줘'],
+            ['도서관', '들락날락', '소방', '시설', '교육', '체험'])
+
     if needs_vaccine_kind(user_message):
         return clarification_question(
             "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
@@ -206,6 +217,12 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
             or re.search(r"(은요|는요|도요|그때는|수수료는|비용은)[?？]?$", compact)
         )
     )
+    # A short reply to an actual contact choice can omit its work topic.
+    # Complete questions such as '보건소 위치' keep their own topic.
+    last_reply = next((str(m.get('content') or '') for m in reversed(history or [])
+                       if m.get('role') == 'assistant'), '')
+    if len(compact) <= 12 and any(word in last_reply for word in ('알려주세요', '어떤 업무', '어느 업무', '어느 부서')):
+        is_follow_up = is_follow_up or compact in ('민원처리', '단속')
     if not is_follow_up:
         return current
     recent_user_messages = [

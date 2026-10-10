@@ -50,6 +50,10 @@ def course_scope_result(query: str, audience: str | None) -> dict | None:
     if not audience or not any(word in query for word in ('교육', '훈련', '강좌')):
         return None
     value = re.split(r'[:：]', audience, maxsplit=1)[-1].strip()
+    if re.fullmatch(r'(?:사하)?구민|(?:사하구)?주민|시민|누구나', compact(value)):
+        # A general resident program has no missing age/role choice. Retain
+        # its audience in the answer instead of asking a redundant question.
+        return None
     if any(word in compact(query) and word in compact(value)
            for word in ('공동주택', '관리자', '책임자', '다중이용', '어린이', '학생', '사업주', '근로자')):
         return None
