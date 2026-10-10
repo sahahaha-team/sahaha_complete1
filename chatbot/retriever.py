@@ -68,6 +68,7 @@ class HybridRetriever:
         except Exception as e:
             logger.warning(f"BM25 인덱스 사전 로딩 실패: {e}")
             self.bm25 = None
+        self.page_index._snapshot()
 
     @staticmethod
     def find_official_question(query: str) -> dict | None:
@@ -122,13 +123,18 @@ class HybridRetriever:
 
     def search_official_url(self, query: str, url: str, k: int = 15) -> dict:
         """Search the live page named by a verified workbook question."""
+        # A validated complete original already contains the conditions that
+        # chunks could omit. A known URL needs neither a global BM25 search
+        # nor loading every crawler page.
+        pages = self.search_crawled_pages(query, k=k, url=url)
+        if pages:
+            return {"results": pages, "degraded": False, "reason": None}
         try:
             rows = self.db.client.table("documents").select("id,content,metadata").eq(
                 "metadata->>url", url
             ).execute().data or []
         except Exception as exc:
             logger.warning("질문 목록 공식 URL 검색 실패")
-            pages = self.search_crawled_pages(query, k=k, url=url)
             return {"results": pages, "degraded": True, "reason": "faq_source_failed"}
         keywords = self._content_keywords(query)
         bm25_scores = {}
@@ -153,7 +159,6 @@ class HybridRetriever:
         ranked.sort(key=lambda doc: (doc["_overlap"], doc["bm25_score"]), reverse=True)
         for doc in ranked:
             doc.pop("_overlap", None)
-        pages = self.search_crawled_pages(query, k=k, url=url)
         return {"results": pages + ranked[:k], "degraded": False, "reason": None}
 
     def search_crawled_pages(self, query: str, k: int = 15, url: str | None = None) -> list[dict]:
@@ -471,11 +476,13 @@ class HybridRetriever:
         urls = [str((doc.get("metadata") or {}).get("url") or "") for doc in results
                 if (doc.get("metadata") or {}).get("source_type") != "official_report"
                 and (doc.get("metadata") or {}).get("category") != "staff_directory"]
-        checked = {}
+        originals = {}
         if urls:
             try:
-                rows = self.db.client.table("raw_pages").select("url,last_checked_at").in_("url", list(set(urls))).execute().data or []
-                checked = {row["url"]: row.get("last_checked_at") for row in rows}
+                rows = self.db.client.table("raw_pages").select(
+                    "url,last_checked_at,content,attachments"
+                ).in_("url", list(set(urls))).execute().data or []
+                originals = {row["url"]: row for row in rows}
             except Exception as exc:
                 logger.warning("출처 확인 시각 조회 실패: %s", exc)
         dynamic = asks_opening_hours(query) or asks_location(query) or any(word in (query or "") for word in (
@@ -499,7 +506,7 @@ class HybridRetriever:
                 except Exception:
                     date_value = None
             else:
-                date_value = checked.get(meta.get("url"))
+                date_value = originals.get(meta.get("url"), {}).get('last_checked_at')
             try:
                 verified = datetime.fromisoformat(str(date_value).replace("Z", "+00:00"))
                 if verified.tzinfo is None:
@@ -508,6 +515,16 @@ class HybridRetriever:
                 continue
             if verified >= cutoff:
                 doc = {**doc, "metadata": {**meta, "checked_at": verified.date().isoformat()}}
+                if meta.get('category') != 'staff_directory':
+                    original = originals[meta.get('url')]
+                    doc['_raw_page'] = original
+                    if meta.get('source_type') == 'crawled_page':
+                        # Refresh the candidate's full body too. A worker may
+                        # change it while the background index still holds
+                        # an older snapshot with a recent check timestamp.
+                        from chatbot.source_answers import strip_page_chrome
+                        doc['content'] = strip_page_chrome(original.get('content') or '')
+                        doc['metadata']['attachments'] = original.get('attachments') or []
                 kept.append(doc)
         return kept
 

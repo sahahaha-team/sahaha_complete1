@@ -308,6 +308,7 @@ class ChatBot:
 
         # 3. 하이브리드 검색 (문맥 포함 검색어 구성)
         search_query = normalize_query(build_contextual_search_query(resolved_message, history))
+        search_started = time.perf_counter()
 
         target_url = None if is_staff_lookup(search_query) else match_official_page(search_query)
         search_outcome = (
@@ -320,6 +321,7 @@ class ChatBot:
         results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
         logger.info("상담 근거 단계: 검색=%s, 최근 확인=%s, 서로 다른 근거 URL=%s",
             len(search_outcome["results"]), len(fresh_results), len(results))
+        logger.info("상담 검색 시간: %.3fs", time.perf_counter() - search_started)
         degraded = search_outcome["degraded"]
         degraded_reason = search_outcome["reason"]
 
@@ -345,7 +347,8 @@ class ChatBot:
                 "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
             }
 
-        grounded_results = self.retriever.select_grounded_results(search_query, results, limit=15)
+        from chatbot.source_pages import hydrate_source_documents
+        grounded_results = hydrate_source_documents(results, self.retriever.db.client)
         # General questions use Gemma to choose complete evidence and conditions.
         # Static emergency/contact/table routes above keep their fast response.
         planned = None if SOURCE_ONLY_ANSWERS else answer_with_grounded_model(

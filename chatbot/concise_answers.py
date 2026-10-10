@@ -17,14 +17,43 @@ MAX_BRIEF_LENGTH = 480
 SCOPE_FIELD = re.compile(r"^(?:교육)?(?:대\s*상|신청자격|지원대상|이용대상|조건)\s*[:：]")
 
 
+def _section_headings(units: list[str]) -> list[int]:
+    headings = []
+    for i, unit in enumerate(units):
+        # Some headings include their own hours after an arrow. Those hours
+        # belong to the new service, not to the previous clinic's table.
+        heading = re.split(r'\s*[▹▷]', unit, maxsplit=1)[0].strip()
+        if 6 <= len(heading) <= 60 and (
+                (not source_unit_complete(unit) and re.search(r'(?:교육|프로그램|사업|서비스)$', heading))
+                or (not re.search(r'[:：\d]', heading) and re.search(
+                    r'(?:클리닉\s*(?:운영)?|상담전화\s*안내)(?:\s*\([^)]*\))?$', heading))):
+            headings.append(i)
+    return headings
+
+
 def section_bounds(units: list[str], index: int) -> tuple[int, int]:
     """Separate named activities from the next activity on a multi-service page."""
-    headings = [i for i, unit in enumerate(units)
-                if 6 <= len(unit) <= 60 and not source_unit_complete(unit)
-                and re.search(r'(?:교육|프로그램|사업|서비스)$', unit)]
+    headings = _section_headings(units)
     start = max((i for i in headings if i <= index), default=0)
     end = min((i for i in headings if i > index), default=len(units))
     return start, end
+
+
+def named_section_bounds(units: list[str], query: str) -> tuple[int, int] | None:
+    """Prefer the longest explicitly requested program heading on this page."""
+    matches = []
+    headings = _section_headings(units)
+    for pos, start in enumerate(headings):
+        name = re.split(r'[▹▷(（]', units[start], maxsplit=1)[0].strip()
+        name = compact(re.sub(r'\s*(?:운영|안내)$', '', name))
+        if len(name) >= 4 and name in compact(query):
+            end = headings[pos + 1] if pos + 1 < len(headings) else len(units)
+            matches.append((len(name), start, end))
+    if not matches:
+        return None
+    best = max(length for length, _, _ in matches)
+    winners = [(start, end) for length, start, end in matches if length == best]
+    return winners[0] if len(winners) == 1 else None
 
 
 def condition_indices(units: list[str], indices: list[int]) -> list[int]:
@@ -158,6 +187,7 @@ def _source_units(lines: list[str]) -> list[str]:
 def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str = "") -> str | None:
     location = answer_goal(query) == "location"
     units = location_source_units(lines) if location else _source_units(lines)
+    requested_section = named_section_bounds(units, query)
     topics = substantive_keywords(keywords)
     opening_hours = asks_opening_hours(query)
     goal = answer_goal(query)
@@ -172,6 +202,8 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
     # '58면', '52,000원' cannot be reassigned to another row or condition.
     candidates = []
     for i, unit in enumerate(units):
+        if requested_section and not requested_section[0] <= i < requested_section[1]:
+            continue
         label_value = bool(re.search(r"[:：]\s*[가-힣 ]{6,}", unit))
         hours_unit = has_opening_hours(unit)
         place_unit = has_location_unit(unit)
@@ -305,6 +337,11 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
         # A channel name is essential when the actual instruction only says
         # 'apply online'. Display the verified page title beside that field.
         answer = f"**{title}** 안내:\n" + answer
+    if (not course_scope and meta.get('category') != 'staff_directory'
+            and meta.get('source_type') != 'official_report'
+            and not re.search(r'예정|미정|잠정|추후', answer)):
+        from chatbot.answer_enrichment import enrich_answer
+        answer = enrich_answer(query, answer, body, keywords, title)
     if len(answer) > MAX_BRIEF_LENGTH:
         return scope_question(query, body)
     if meta.get("source_type") == "official_report":

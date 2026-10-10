@@ -10,6 +10,9 @@ _DANGLING = re.compile(r"(?:[,，:：/·]|[을를] 이용|(?:하여|하며|이�
 
 
 def balanced(text: str) -> bool:
+    # Official Korean pages also write phone area codes as 051) 220-5716.
+    # That closing parenthesis is phone notation, not unfinished prose.
+    text = re.sub(r'(?<![\d(])(0\d{1,2})\)\s*(?=\d)', r'(\1)', text)
     stack = []
     pairs = {')': '(', ']': '[', '}': '{', '）': '（'}
     for char in text:
@@ -37,7 +40,7 @@ def source_unit_complete(text: str) -> bool:
         return False
     label_value = bool(re.match(r"[^:：]{1,30}[:：]\s*\S", plain))
     nominal = re.sub(r"\s*\([^()]*\)\s*$", "", plain)
-    noun_list = bool(re.search(r"(?:가능|불가|금지|제출|접수|방문상담|신청|예약|지참|제외|포함|부과|배출|운영|지원|문의|필요|이내|이상|미만|수거|처리|상담|발급|제공|기여|있음|없음|않음|됨|함)$", nominal))
+    noun_list = bool(re.search(r"(?:가능|불가|금지|제출|접수|방문상담|신청|예약|지참|제외|포함|부과|배출|운영|지원|문의|필요|필수|이내|이상|미만|수거|처리|상담|발급|제공|기여|있음|없음|않음|됨|함)$", nominal))
     return label_value or noun_list
 
 
@@ -57,11 +60,21 @@ def starts_label(text: str) -> bool:
 
 def complete_source_units(lines: list[str]) -> list[str]:
     units: list[str] = []
-    for line in lines:
+    for index, line in enumerate(lines):
         line = re.sub(r"\.\s*\.$", ".", line.strip())
         if not line:
             continue
-        if line.startswith((':', '：')) and units and len(units[-1]) < 20:
+        if (units and not source_unit_complete(units[-1]) and len(line) < 80
+                and index + 1 < len(lines)
+                and re.match(r'^(?:[을를은는이가]|으로|로)\s', lines[index + 1].strip())):
+            # HTML anchors often split a sentence into prefix / link name /
+            # particle + ending. Rejoin adjacent text; no missing words are
+            # generated, and headings/conditions keep their normal barriers.
+            units[-1] += ' ' + line
+        elif (units and not source_unit_complete(units[-1])
+                and re.match(r'^(?:[을를은는이가]|으로|로)\s', line)):
+            units[-1] += ' ' + line
+        elif line.startswith((':', '：')) and units and len(units[-1]) < 20:
             units[-1] += ' ' + line
         elif (units and re.fullmatch(r"[^:：]{1,30}[:：]\s*", units[-1])
               and line != OMISSION and not QUALIFICATION.match(line) and not starts_label(line)):

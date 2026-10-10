@@ -77,6 +77,10 @@ class BM25Index:
         self.enabled = False
         self._last_built = 0.0
         self._refresh_lock = threading.RLock()
+        self._build_lock = threading.Lock()
+        self._tokenize_lock = threading.Lock()
+        self._refreshing = False
+        self._last_attempt = 0.0
 
         try:
             self.kiwi = _init_kiwi()
@@ -93,7 +97,8 @@ class BM25Index:
         """한국어 형태소 분석 → 의미 토큰만 반환 (조사·어미 제외)"""
         if not text or self.kiwi is None:
             return []
-        tokens = self.kiwi.tokenize(text)
+        with self._tokenize_lock:
+            tokens = self.kiwi.tokenize(text)
         return [
             tok.form for tok in tokens
             if not tok.tag.startswith(EXCLUDED_POS_PREFIXES) and len(tok.form) > 1
@@ -128,15 +133,12 @@ class BM25Index:
                     break
                 offset += page_size
 
-            if not all_rows:
-                logger.warning("BM25 인덱스: documents 테이블 비어있음")
-                return
-
             logger.info(f"BM25 인덱스 구축 중 ({len(all_rows)}개 문서)...")
             tokenized_corpus = []
+            doc_ids, doc_contents, doc_metadata = [], [], []
             for row in all_rows:
-                self.doc_ids.append(row["id"])
-                self.doc_contents.append(row.get("content", ""))
+                doc_ids.append(row["id"])
+                doc_contents.append(row.get("content", ""))
                 meta = row.get("metadata") or {}
                 if isinstance(meta, str):
                     import json
@@ -144,16 +146,20 @@ class BM25Index:
                         meta = json.loads(meta)
                     except Exception:
                         meta = {}
-                self.doc_metadata.append(meta)
+                doc_metadata.append(meta)
                 tokenized_corpus.append(self._tokenize(row.get("content", "")))
 
-            self.bm25 = BM25Okapi(tokenized_corpus)
-            self.enabled = True
-            self._last_built = time.monotonic()
+            scorer = BM25Okapi(tokenized_corpus) if tokenized_corpus else None
+            # Build off to the side. Queries retain the previous complete
+            # index until the scorer and its rows can be swapped together.
+            with self._refresh_lock:
+                self.doc_ids, self.doc_contents, self.doc_metadata = doc_ids, doc_contents, doc_metadata
+                self.bm25 = scorer
+                self.enabled = scorer is not None
+                self._last_built = time.monotonic()
             logger.info(f"BM25 인덱스 구축 완료: {len(all_rows)}개 문서")
         except Exception as e:
             logger.warning(f"BM25 인덱스 구축 실패: {e}")
-            self.bm25 = None
 
     def search(self, query: str, top_n: int = 30) -> list[dict]:
         """
@@ -161,8 +167,7 @@ class BM25Index:
         Returns:
             [{id, content, metadata, bm25_score}, ...] (점수 내림차순, 상위 top_n개)
         """
-        if self.enabled and time.monotonic() - self._last_built > 300:
-            self.rebuild()
+        self._refresh_if_due()
         # Rebuild replaces both the scorer and row arrays. Read them as one
         # snapshot so a concurrent refresh cannot pair scores with other rows.
         with self._refresh_lock:
@@ -196,12 +201,21 @@ class BM25Index:
 
     def rebuild(self):
         """인덱스 재구축 (크롤링/임베딩 갱신 후 호출)"""
-        with self._refresh_lock:
-            if self.enabled and time.monotonic() - self._last_built < 30:
-                return
-            self.doc_ids = []
-            self.doc_contents = []
-            self.doc_metadata = []
-            self.bm25 = None
-            self.enabled = False
+        with self._build_lock:
             self._build_from_supabase()
+
+    def _refresh_if_due(self):
+        with self._refresh_lock:
+            now = time.monotonic()
+            if self._refreshing or now - max(self._last_built, self._last_attempt) < 300:
+                return
+            self._refreshing = True
+            self._last_attempt = now
+        threading.Thread(target=self._background_rebuild, daemon=True, name="bm25-refresh").start()
+
+    def _background_rebuild(self):
+        try:
+            self.rebuild()
+        finally:
+            with self._refresh_lock:
+                self._refreshing = False

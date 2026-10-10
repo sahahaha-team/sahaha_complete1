@@ -38,26 +38,37 @@ class CrawledPageIndex:
         self._lock = threading.RLock()
         self._pages = []
         self._loaded_at = None
+        self._refreshing = False
+
+    def _load_pages(self):
+        pages = []
+        try:
+            for start in range(0, 100000, 1000):
+                rows = self.client.table("raw_pages").select(
+                    "url,title,content,category,last_checked_at,attachments"
+                ).order("url").range(start, start + 999).execute().data or []
+                pages.extend(rows)
+                if len(rows) < 1000:
+                    break
+            with self._lock:
+                self._pages = pages
+            logger.info("크롤링 원문 검색 갱신: %s개 페이지", len(pages))
+        except Exception:
+            logger.warning("크롤링 원문 검색 갱신 실패")
+        finally:
+            with self._lock:
+                self._loaded_at = time.monotonic()
+                self._refreshing = False
 
     def _snapshot(self):
         with self._lock:
-            if self._loaded_at is None or time.monotonic() - self._loaded_at >= 300:
-                pages = []
-                try:
-                    for start in range(0, 100000, 1000):
-                        rows = self.client.table("raw_pages").select(
-                            "url,title,content,category,last_checked_at,attachments"
-                        ).order("url").range(start, start + 999).execute().data or []
-                        pages.extend(rows)
-                        if len(rows) < 1000:
-                            break
-                    self._pages = pages
-                    self._loaded_at = time.monotonic()
-                    logger.info("크롤링 원문 검색 갱신: %s개 페이지", len(pages))
-                except Exception:
-                    # Do not repeatedly hit a failing DB for every request.
-                    self._loaded_at = time.monotonic()
-                    logger.warning("크롤링 원문 검색 갱신 실패")
+            if self._loaded_at is None:
+                # Only the first load waits; subsequent refreshes leave the
+                # previous snapshot available to concurrent consultations.
+                self._load_pages()
+            elif time.monotonic() - self._loaded_at >= 300 and not self._refreshing:
+                self._refreshing = True
+                threading.Thread(target=self._load_pages, daemon=True, name="page-refresh").start()
             return list(self._pages)
 
     def search(self, query: str, keywords: set[str], *, limit: int = 15, url: str | None = None) -> list[dict]:
@@ -69,7 +80,17 @@ class CrawledPageIndex:
         cutoff = datetime.now(timezone.utc) - timedelta(
             days=SOURCE_DYNAMIC_MAX_AGE_DAYS if dynamic else SOURCE_MAX_AGE_DAYS)
         results = []
-        for page in self._snapshot():
+        if url:
+            try:
+                pages = self.client.table("raw_pages").select(
+                    "url,title,content,category,last_checked_at,attachments"
+                ).eq("url", url).limit(1).execute().data or []
+            except Exception:
+                logger.warning("공식 URL 원문 조회 실패")
+                pages = []
+        else:
+            pages = self._snapshot()
+        for page in pages:
             if url and page.get("url") != url:
                 continue
             try:

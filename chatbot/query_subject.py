@@ -12,7 +12,7 @@ WEAK_WORDS = set("알려 알려줘 알려주세요 뭐야 뭐예요 어떻게 �
 WEAK_WORDS.update({"준비물", "준비", "서류", "구비서류", "구비", "성인", "어른", "처음"})
 # These describe the request, not the administrative service. They are checked
 # against answer fields later, rather than required in every retrieval chunk.
-WEAK_WORDS.update("이용 서비스 날짜 기준 각종 제도 도움 때문 어려움 부담 혜택 종류 비용 요금 수수료 금액 기간 시간 운영 대상 조건 자격 부모 특보 절약 주기".split())
+WEAK_WORDS.update("이용 제공 서비스 날짜 기준 각종 제도 도움 때문 어려움 부담 혜택 종류 비용 요금 수수료 금액 기간 시간 운영 대상 조건 자격 부모 특보 절약 주기".split())
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
 WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철"}
 # Keep names intact when morphology splits a service into generic nouns. These
@@ -71,6 +71,7 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
         topics.discard('일반')  # Audience condition, distinct from 일반쓰레기.
     if names:
         topics = {word for word in topics if not any(word in name for name in names)} | names
+        topics -= {'홈페이지', '웹사이트', '사이트'}
     if "정부24" in names:
         topics.discard("구청")  # '구청에 가지 않고' is not another service.
     elif len(topics) > 1:

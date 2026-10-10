@@ -107,6 +107,13 @@ def topic_support(doc: dict, keywords: set[str]) -> tuple[bool, set[str]]:
     meta = doc.get("metadata") or {}
     haystack = compact(f"{meta.get('title', '')} {doc.get('content', '')}")
     matched = {word for word in topics if word in haystack}
+    # Breadcrumbs are removed from originals. An actual online civil-service
+    # instruction can establish 전자민원 without repeating the menu's name.
+    body = compact(str(doc.get('content') or ''))
+    if '전자민원' in topics and (re.search(
+            r'(?:온라인|인터넷).{0,100}(?:민원|서류).{0,80}(?:상담|접수|발급|신청)', body)
+            or re.search(r'(?:민원|서류).{0,80}(?:상담|접수|발급|신청).{0,100}(?:온라인|인터넷)', body)):
+        matched.add('전자민원')
     # The health-site scope establishes the institution; its body must still
     # establish the actual service. A health URL alone cannot answer its hours.
     if "보건소" in topics and len(topics) > 1 and urlparse(str(meta.get("url") or "")).path.startswith("/health/"):

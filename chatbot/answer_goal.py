@@ -14,12 +14,14 @@ GOAL_WORDS = {
     "schedule": ("시간", "기간", "일정", "주기", "매년", "매월", "연 ", "월 ", "일", "년"),
     "location": ("장소", "주소", "위치", "방문", "기관"),
     "hours": ("시간", "휴무", "평일", "주말"),
-    "services": ("내용", "운영", "진료", "검사", "상담", "제공", "지원"),
+    "services": ("내용", "운영", "진료", "검사", "상담", "제공", "지원", "발급", "접수", "신청", "예약"),
 }
 
 
 def answer_goal(query: str) -> str | None:
-    if any(word in query.replace(" ", "") for word in ("어떤서비스", "어떤진료", "무슨서비스", "어떤지원")):
+    compact_query = query.replace(' ', '')
+    if (any(word in compact_query for word in ("어떤서비스", "어떤진료", "무슨서비스", "어떤지원"))
+            or re.search(r'(?:어떤|무슨).{0,20}(?:서비스|진료)|서비스(?:에는|는|가)?(?:무엇|뭐|어떤|종류)', compact_query)):
         return "services"
     link_requested = "링크" in query and not re.search(r'링크\s*(?:는|가|도)?\s*(?:말고|필요\s*없|제외|빼고)', query)
     if (link_requested or ("어디" in query and any(word in query for word in (
@@ -44,3 +46,16 @@ def answer_goal(query: str) -> str | None:
     if "받을 수" in query:
         return "eligibility"
     return None
+
+
+def requested_goals(query: str) -> tuple[str, ...]:
+    """Keep both requested facility fields when hours and location are asked."""
+    primary = answer_goal(query)
+    if primary == 'reference':
+        return (primary,)
+    goals = [primary] if primary else []
+    if asks_opening_hours(query) and 'hours' not in goals:
+        goals.append('hours')
+    if asks_location(query) and 'location' not in goals:
+        goals.append('location')
+    return tuple(goals)

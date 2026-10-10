@@ -151,14 +151,9 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
             answer += "\n\n담당 업무:\n" + "\n".join("> " + line for line in duties[1].splitlines())
         return answer, [lead]
     else:
-        try:
-            rows = client.table("raw_pages").select("content,attachments").eq("url", url).limit(1).execute().data or []
-            text = rows[0].get("content") or "" if rows else ""
-            if rows and 'attachments' in rows[0]:
-                meta = {**meta, 'attachments': rows[0].get('attachments') or []}
-                lead = {**lead, 'metadata': meta}
-        except Exception:
-            text = ""
+        from chatbot.source_pages import source_document
+        text, lead = source_document(lead, client)
+        meta = lead.get('metadata') or {}
     if not text.strip():
         return "", []
     # A later retrieval chunk may omit the board header. Check the complete
