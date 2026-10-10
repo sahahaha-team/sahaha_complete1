@@ -43,6 +43,12 @@ MAX_RETRIEVAL_RESULTS = 5
 CHATBOT_TEMPERATURE = 0.3
 CHATBOT_MAX_TOKENS = int(os.getenv("CHATBOT_MAX_TOKENS", "384"))
 
+# ===== 구청 공식 예상질문 근거셋 =====
+# 유사 질문의 승인 답변을 최우선 검색 근거로 LLM에 전달한다.
+OFFICIAL_FAQ_RETRIEVAL_MIN_SCORE = float(
+    os.getenv("OFFICIAL_FAQ_RETRIEVAL_MIN_SCORE", "0.58")
+)
+
 # ===== Flask 설정 =====
 FLASK_HOST = os.getenv("FLASK_HOST", "0.0.0.0")
 FLASK_PORT = int(os.getenv("FLASK_PORT", "5000"))

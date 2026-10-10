@@ -11,6 +11,7 @@ import re
 import json
 import threading
 import logging
+from chatbot.priority_guard import enforce_priority_facts
 try:
     from langchain_ollama import ChatOllama
 except ImportError:  # 구버전 환경 호환
@@ -26,6 +27,7 @@ from config import (
 )
 from database_db.database import Database
 from chatbot.retriever import HybridRetriever
+from chatbot.contact_directory import ContactDirectory
 from chatbot.dept_directory import normalize_dept_names, REP_PHONE
 from chatbot.response_helpers import (
     build_clarification,
@@ -51,6 +53,7 @@ SYSTEM_PROMPT = """당신은 부산광역시 사하구청 공식 AI 상담사입
 5. **개인정보 보호**: 사용자가 주민등록번호, 전화번호 등 개인정보를 입력하면, 저장하지 않으며 입력하지 말 것을 안내하세요.
 6. **정보 부족 시**: 참고자료에서 답을 찾을 수 없으면, 솔직히 "해당 정보를 찾지 못했습니다"라고 안내하고, 사하구청 대표전화(051-220-4000)나 홈페이지 방문을 권장하세요.
 7. **답변 형식 및 하이라이트(강조) 규칙**: 핵심 내용을 먼저 간결하게 답한 뒤, 세부사항을 보충하세요. 단, **인사말이나 첫 문장, 단순 개요에는 절대 볼드체(강조)를 사용하지 마세요.** 구민에게 실질적으로 필요한 **핵심 데이터(전화번호, 담당 부서명, 필수 지참 서류, 기한, 장소, 금액 등)에만** 제한적으로 볼드체를 적용하세요.
+8. **공식 예상질문 활용**: 참고자료에 "공식 답변"이 있으면 이를 최우선 사실 근거로 삼아 자연스러운 문장으로 답하세요. 문장을 그대로 복사할 필요는 없지만 전화번호, 주소, 날짜, 시간, 금액, 대상, 절차 같은 사실은 바꾸거나 추측하지 마세요. 질문이 여러 공식 문항의 내용을 함께 요구하면 관련된 내용을 빠짐없이 합쳐 답하세요.
 
 
 ## 참고자료
@@ -148,10 +151,12 @@ class ChatBot:
             keep_alive=OLLAMA_KEEP_ALIVE,
         )
         self.retriever = HybridRetriever()
+        self.contact_directory = ContactDirectory()
         # 기본은 개인정보 최소수집을 위해 프로세스 메모리에서만 문맥을 유지한다.
         # 영구 저장을 명시적으로 켠 경우에만 service role로 DB에 기록한다.
         self.db = Database(admin=True) if PERSIST_CONVERSATIONS else None
         self._memory_history: dict[str, list[dict]] = {}
+        self._pending_clarifications: dict[str, dict] = {}
         self._history_lock = threading.RLock()
 
         self.prompt = ChatPromptTemplate.from_messages([
@@ -253,9 +258,140 @@ class ChatBot:
                 "suggested_questions": ["사하구 민원 안내해줘", "사하구 복지 지원 알려줘"],
             }
 
+        # 역질문 다음의 짧은 답(예: "민원처리", "어르신")을 직전 질문과
+        # 연결하기 위해 검색 분기 전에 문맥을 읽는다.
+        history = self._get_history_safe(session_id)
+        langchain_history = self._build_history(history)
+
+        # 역질문의 원 질문은 DB 저장 성공 여부와 무관하게 세션 메모리에 보관한다.
+        # 사용자가 짧게 답한 경우에만 결합하고, 완전한 새 질문이면 이전 조건은 버린다.
+        with self._history_lock:
+            pending = self._pending_clarifications.pop(session_id, None)
+        effective_message = user_message.strip()
+        if pending:
+            effective_message = build_contextual_search_query(
+                user_message,
+                [{"role": "user", "content": pending.get("query", "")}],
+            )
+
         # 1-2. 너무 포괄적인 요청은 임의로 답하지 않고 먼저 범위를 좁힌다.
-        clarification = build_clarification(user_message)
+        # 구청이 제공한 100개 예상질문은 아래 검색 단계에서 최우선 근거로
+        # LLM에 전달하며, 승인 답변을 그대로 반환하는 고정 응답으로 사용하지 않는다.
+        official_question = self.retriever.find_official_question(effective_message)
+
+        # 부서·업무 전화번호는 경량 전용 파일만 검색한다. 정확한 근거를 고른 뒤
+        # 최종 문장은 다른 답변과 동일하게 LLM이 작성하고 번호는 후처리로 검증한다.
+        contact_query = (
+            effective_message
+            if effective_message != user_message.strip()
+            else build_contextual_search_query(user_message, history)
+        )
+        contact_lookup = (
+            {"status": "none", "results": []}
+            if official_question
+            else self.contact_directory.lookup(contact_query)
+        )
+        if contact_lookup["status"] == "match":
+            contact = contact_lookup["results"][0]
+            department = contact["department"]
+            duty = contact["duties"]
+            phone = contact["phone"]
+            if contact.get("title") == "부서 대표번호":
+                source_title = f"{department} 공식 연락처"
+                fallback_answer = f"**{department}** 공식 전화번호는 **{phone}**입니다."
+            else:
+                duty_label = duty[:-2].strip() if duty.endswith("업무") else duty
+                fallback_answer = (
+                    f"공식 직원업무안내 기준, **{department}**에서 "
+                    f"{duty_label} 업무를 담당합니다. 전화번호는 **{phone}**입니다."
+                )
+                source_title = f"{department} {duty_label} 담당 연락처"
+            source = {
+                "title": source_title,
+                "url": contact["source_url"],
+                "category": "staff_directory",
+                "service_type": "부서·전화번호",
+                "department": department,
+                "contact": phone,
+                "attachments": [],
+            }
+            contact_context = (
+                "[공식 직원업무안내]\n"
+                f"담당부서: {department}\n"
+                f"담당업무: {duty}\n"
+                f"공식 전화번호: {phone}\n"
+                "위 정보만 사용하고 전화번호를 변경하지 마세요."
+            )
+            contact_degraded = False
+            contact_degraded_reason = None
+            try:
+                response = self.chain.invoke({
+                    "context": contact_context,
+                    "history": langchain_history,
+                    "question": user_message,
+                })
+                answer = response.content
+                answer = normalize_dept_names(answer)
+                answer = enforce_official_contact(answer, contact_query, [source])
+                answer = strip_foreign_script(answer)
+            except Exception as exc:
+                logger.error(f"연락처 LLM 답변 생성 실패 (검증된 답변으로 폴백): {exc}")
+                answer = fallback_answer
+                contact_degraded = True
+                contact_degraded_reason = "contact_llm_failed"
+            self._save_conversation_safe(session_id, "user", user_message)
+            self._save_conversation_safe(
+                session_id,
+                "assistant",
+                answer,
+                sources=json.dumps([source["url"]], ensure_ascii=False),
+            )
+            return {
+                "answer": answer,
+                "sources": [source],
+                "is_clarification": False,
+                "degraded": contact_degraded,
+                "degraded_reason": contact_degraded_reason,
+                "evidence": {
+                    "status": "official_contact",
+                    "label": "공식 부서 연락처 확인됨",
+                    "official_source_count": 1,
+                },
+                "suggested_questions": [],
+            }
+
+        if contact_lookup["status"] == "ambiguous":
+            contact_clarification = self.contact_directory.clarification(contact_lookup)
+            with self._history_lock:
+                self._pending_clarifications[session_id] = {
+                    "type": "contact",
+                    "query": contact_query,
+                }
+            self._save_conversation_safe(session_id, "user", user_message)
+            self._save_conversation_safe(
+                session_id, "assistant", contact_clarification["answer"]
+            )
+            return {
+                "answer": contact_clarification["answer"],
+                "sources": [],
+                "is_clarification": True,
+                "degraded": False,
+                "degraded_reason": None,
+                "evidence": {
+                    "status": "clarification",
+                    "label": "업무 한 가지 확인 필요",
+                    "official_source_count": 0,
+                },
+                "suggested_questions": contact_clarification["suggested_questions"],
+            }
+
+        clarification = None if official_question else build_clarification(effective_message)
         if clarification:
+            with self._history_lock:
+                self._pending_clarifications[session_id] = {
+                    "type": "general",
+                    "query": effective_message,
+                }
             self._save_conversation_safe(session_id, "user", user_message)
             self._save_conversation_safe(session_id, "assistant", clarification["answer"])
             return {
@@ -268,12 +404,18 @@ class ChatBot:
                 "suggested_questions": clarification["suggested_questions"],
             }
 
-        # 2. 대화 이력 조회
-        history = self._get_history_safe(session_id)
-        langchain_history = self._build_history(history)
-
         # 3. 하이브리드 검색 (문맥 포함 검색어 구성)
-        search_query = build_contextual_search_query(user_message, history)
+        # 공식 예상질문과 일치하는 독립 질문은 이전 대화 주제를 섞지 않는다.
+        # 그 외에도 build_contextual_search_query가 짧은 후속 질문만 결합한다.
+        search_query = (
+            effective_message
+            if official_question
+            else (
+                effective_message
+                if effective_message != user_message.strip()
+                else build_contextual_search_query(user_message, history)
+            )
+        )
 
         search_outcome = self.retriever.search(search_query)
         results = search_outcome["results"]
@@ -282,7 +424,7 @@ class ChatBot:
 
         # 3-1. 신뢰도 게이트: 키워드 겹침 + 유사도 바닥값을 함께 보고, 신뢰 불가 시
         #      LLM을 호출하지 않고 안전 안내 멘트를 출력한다 (환각 방지 + API 절약).
-        evidence = self.retriever.assess_evidence(user_message, results)
+        evidence = self.retriever.assess_evidence(search_query, results)
         if not evidence["confident"]:
             top_sim = evidence["top_similarity"]
             logger.info(f"신뢰도 미달 (최상위 유사도={top_sim:.2f}, 임계값={CONFIDENCE_MIN_SIMILARITY}, 키워드겹침 실패 또는 유사도 부족) → 안전 안내 출력")
@@ -302,11 +444,28 @@ class ChatBot:
                 "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
             }
 
-        grounded_results = self.retriever.select_grounded_results(user_message, results)
-        context, sources = self.retriever.format_context(user_message, grounded_results)
+        grounded_results = self.retriever.select_grounded_results(search_query, results)
+        context, sources = self.retriever.format_context(search_query, grounded_results)
 
-        if not context:
-            context = "(관련 참고자료를 찾지 못했습니다)"
+        # 화면에 제시할 수 있는 관련 공식 출처가 없으면 LLM도 호출하지 않는다.
+        # 답변과 무관한 상위 검색 문서를 억지로 출처 카드에 붙이는 것보다
+        # 자료 부족을 명확히 알리는 편이 환각 방지 원칙에 맞다.
+        if not context or not sources:
+            self._save_conversation_safe(session_id, "user", user_message)
+            self._save_conversation_safe(session_id, "assistant", LOW_CONFIDENCE_MESSAGE)
+            return {
+                "answer": LOW_CONFIDENCE_MESSAGE,
+                "sources": [],
+                "is_clarification": False,
+                "degraded": True,
+                "degraded_reason": "no_relevant_source",
+                "evidence": {
+                    "status": "insufficient",
+                    "label": "정확한 자료를 찾지 못함",
+                    "official_source_count": 0,
+                },
+                "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
+            }
 
         # 4. 로컬 Ollama 답변 생성 (외부 API 키·무료 티어 제한 없음)
         try:
@@ -347,6 +506,9 @@ class ChatBot:
         answer = enforce_official_contact(answer, user_message, sources)
 
         answer = strip_foreign_script(answer)
+        # 다빈도 핵심 업무는 LLM 문장을 그대로 신뢰하지 않는다. 공식 정답의
+        # 필수 요일·시간·전화번호가 하나라도 빠지면 검증된 전체 답변으로 교정한다.
+        answer = enforce_priority_facts(answer, grounded_results)
         # 7. LLM 응답 PII 마스킹 (크롤링 데이터에 섞여 들어온 개인정보 차단)
         # 전화·이메일·주민번호 등 명시 패턴은 즉시 마스킹한다. 범용 NER는 CPU에서
         # 응답마다 수십 초가 걸리고 공개 담당자명까지 오탐할 수 있어 기본 응답 경로에서는
@@ -378,6 +540,8 @@ class ChatBot:
 
     def clear_session(self, session_id: str):
         """대화 초기화"""
+        with self._history_lock:
+            self._pending_clarifications.pop(session_id, None)
         if self.db is None:
             with self._history_lock:
                 self._memory_history.pop(session_id, None)

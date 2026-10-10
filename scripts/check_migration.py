@@ -5,8 +5,9 @@ Supabase 마이그레이션 적용 점검.
   - raw_pages.etag
   - raw_pages.last_modified
   - raw_pages.last_checked_at
+  - raw_pages.raw_html
   - processed_chunks.department
-  - crawl_runs / ingestion_jobs 테이블
+  - crawl_runs / ingestion_jobs / official_faq 테이블
   - conversation_logs / crawl_runs / ingestion_jobs 익명 SELECT 차단
 
 각 컬럼이 실제로 존재하는지 SELECT 한 줄로 검증하고,
@@ -75,9 +76,11 @@ def main():
         ("raw_pages", "etag"),
         ("raw_pages", "last_modified"),
         ("raw_pages", "last_checked_at"),
+        ("raw_pages", "raw_html"),
         ("processed_chunks", "department"),
         ("crawl_runs", "id"),
         ("ingestion_jobs", "id"),
+        ("official_faq", "id"),
     ]
 
     all_ok = True
@@ -90,8 +93,21 @@ def main():
 
     if not all_ok:
         print("\n누락된 테이블 또는 컬럼이 있습니다.")
-        print("scripts/migration_crawl_audit_and_security.sql을 SQL Editor에서 실행해주세요.")
+        print("누락 항목에 따라 아래 마이그레이션을 SQL Editor에서 실행해주세요.")
+        print("- scripts/migration_crawl_audit_and_security.sql")
+        print("- scripts/migration_official_faq_and_html.sql")
         sys.exit(1)
+
+    faq_count = (
+        admin_client.table("official_faq")
+        .select("id", count="exact", head=True)
+        .execute()
+        .count
+        or 0
+    )
+    print(f"[{'OK ' if faq_count == 100 else 'FAIL'}] official_faq rows: {faq_count}/100")
+    if faq_count != 100:
+        all_ok = False
 
     print("\n--- RLS / anon 접근 차단 ---")
     protected_tables = ["conversation_logs", "crawl_runs", "ingestion_jobs"]

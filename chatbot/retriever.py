@@ -10,6 +10,7 @@ import logging
 from database_db.vector_store import VectorStore
 from database_db.database import Database
 from chatbot.dept_directory import correct_dept, get_contact, search_staff_directory
+from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH
 from chatbot.evidence import (
     assess_evidence as evaluate_evidence,
     is_official_document,
@@ -21,6 +22,7 @@ from config import (
     HYBRID_BM25_TOP_N,
     BM25_FAST_PATH_MIN_SCORE,
     CONFIDENCE_MIN_SIMILARITY,
+    OFFICIAL_FAQ_RETRIEVAL_MIN_SCORE,
 )
 
 logger = logging.getLogger(__name__)
@@ -44,6 +46,8 @@ class HybridRetriever:
     def __init__(self):
         self.vs = VectorStore()
         self.db = Database()
+        self.official_faq = OfficialFAQIndex()
+        self.priority_services = OfficialFAQIndex(PRIORITY_SERVICE_PATH)
 
         # BM25 인덱스 사전 로딩 (지연 로딩하면 첫 질문 시 수 초 지연)
         try:
@@ -52,6 +56,31 @@ class HybridRetriever:
         except Exception as e:
             logger.warning(f"BM25 인덱스 사전 로딩 실패: {e}")
             self.bm25 = None
+
+    def find_official_question(self, query: str) -> dict | None:
+        """승인 문항과 거의 같은 질문인지 확인하되 답변 생성은 LLM에 맡긴다."""
+        priority = self.priority_services.find_best(query, min_score=0.82)
+        if priority:
+            return priority
+        return self.official_faq.find_best(query, min_score=0.88)
+
+    @staticmethod
+    def _merge_official_faq(faq_results: list[dict], results: list[dict], k: int) -> list[dict]:
+        """공식 FAQ를 일반 크롤링 문서보다 우선하되 URL 중복은 제거한다."""
+        merged = []
+        seen = set()
+        for doc in faq_results + results:
+            url = (doc.get("metadata") or {}).get("url") or doc.get("id")
+            if url in seen:
+                continue
+            seen.add(url)
+            if doc.get("faq_score") is not None:
+                # 공식 FAQ는 구청이 승인한 질문·답변·URL 세트이므로 일반 검색보다 우선한다.
+                doc = {**doc, "similarity": 0.75 + 0.25 * float(doc["faq_score"])}
+            merged.append(doc)
+            if len(merged) >= k:
+                break
+        return merged
 
     def detect_category(self, query: str) -> dict:
         """질문에서 카테고리/서비스유형 힌트 감지"""
@@ -178,6 +207,7 @@ class HybridRetriever:
                         "service_type": "기타",
                         "department": dept,
                         "contact": phone,
+                        "staff_score": float(hit.get("score", 0.0)),
                     },
                     "similarity": min(1.0, float(hit.get("score", 0.0)) / top_score),
                 }
@@ -191,7 +221,7 @@ class HybridRetriever:
 
         # 직원·연락처를 직접 묻는 질문에서만 직원업무안내를 이용해 부서를
         # 추론한다. 일반 정보 질문에서는 비슷한 업무명만으로 부서를 붙이지 않는다.
-        if any(word in (query or "") for word in self._CONTACT_INTENT):
+        if self._has_staff_lookup_intent(query):
             lookup_text = " ".join(part for part in [query, title, content] if part)
             hits = search_staff_directory(lookup_text, limit=1)
             if hits:
@@ -204,16 +234,40 @@ class HybridRetriever:
 
     # 인물/연락처 의도 표현 (이때만 직원업무안내 문서를 상위에 노출)
     _CONTACT_INTENT = (
-        "담당", "부서", "연락처", "전화", "번호", "문의", "누구", "과장",
+        "담당", "부서", "연락처", "전화", "문의처", "누구", "과장",
         "팀장", "계장", "주무관", "청장", "직원", "담당자", "소장", "과는",
     )
+
+    _STAFF_ROLE_INTENT = (
+        "담당자", "담당부서", "담당 부서", "어느 부서", "무슨 부서", "주무관",
+        "직원", "과장", "팀장", "계장", "소장", "누가 담당", "누구에게",
+    )
+    _STAFF_CONTACT_INTENT = (
+        "연락처", "전화번호", "전화 번호", "대표전화", "문의처", "연락하고",
+        "전화하고", "어디에 문의", "어디로 문의",
+    )
+
+    @classmethod
+    def _has_staff_lookup_intent(cls, query: str) -> bool:
+        """단순 '번호/문의'가 아닌 실제 직원·부서 조회 요청만 판별한다."""
+        value = (query or "").lower()
+        return any(term in value for term in cls._STAFF_ROLE_INTENT + cls._STAFF_CONTACT_INTENT)
+
+    @staticmethod
+    def _is_staff_document(doc: dict) -> bool:
+        meta = doc.get("metadata") or {}
+        return (
+            meta.get("category") == "staff_directory"
+            or "staff/list.do" in str(meta.get("url") or "")
+        )
 
     # 행정 상담 도메인임을 명확히 드러내는 표현. 벡터 유사도만 높은 도메인 밖
     # 질문이 신뢰도 게이트를 통과하지 않도록 보조 신호로 사용한다.
     _DOMAIN_INTENT = (
         "사하", "구청", "민원", "신청", "발급", "신고", "복지", "지원",
         "수당", "세금", "납부", "주차", "도로", "교통", "쓰레기", "폐기물",
-        "재활용", "청소", "보육", "교육", "도서관", "축제", "체육", "부서",
+        "재활용", "청소", "보육", "교육", "도서관", "축제", "체육", "예약",
+        "체험", "보건소", "건강", "진료", "검사", "부서",
         "담당", "공무원", "행정", "주민", "전입", "등본", "증명서",
     )
 
@@ -246,9 +300,41 @@ class HybridRetriever:
         # 행정 용어·품목명이 정확히 일치하는 질문은 CPU 벡터 임베딩(수십 초)을
         # 기다리지 않고 BM25 결과를 사용한다. 점수가 약한 자연어 질문은 아래의
         # 벡터+BM25 하이브리드 경로를 그대로 탄다.
-        contact_intent = any(word in query for word in self._CONTACT_INTENT)
+        contact_intent = self._has_staff_lookup_intent(query)
+
+        # 담당자·부서·전화번호 질문은 전체 홈페이지를 검색하지 않고 공식 직원
+        # 업무안내만 검색한다. 일반 연락 의도어만 있고 실제 업무 키워드가 없으면
+        # 아래 검색 대신 빈 결과를 반환해 역질문/안전 안내가 동작하게 한다.
+        if contact_intent:
+            staff_results = self._staff_results_to_documents(query, limit=max(k, 3))
+            confident_staff = [
+                row for row in staff_results
+                if float((row.get("metadata") or {}).get("staff_score", 0.0)) >= 1.2
+            ]
+            if confident_staff:
+                return {"results": confident_staff[:k], "degraded": False, "reason": None}
+
+        faq_index = getattr(self, "official_faq", None)
+        priority_index = getattr(self, "priority_services", None)
+        priority_results = priority_index.search_documents(
+            query,
+            limit=k,
+            min_score=0.60,
+        ) if priority_index is not None else []
+        faq_results = faq_index.search_documents(
+            query,
+            limit=k,
+            min_score=OFFICIAL_FAQ_RETRIEVAL_MIN_SCORE,
+        ) if faq_index is not None else []
+        faq_results = self._merge_official_faq(priority_results, faq_results, k)
+        if faq_results and faq_results[0].get("faq_score", 0.0) >= 0.80:
+            return {"results": faq_results[:k], "degraded": False, "reason": None}
+
         if self.bm25 and self.bm25.enabled and not contact_intent:
             lexical_results = self.bm25.search(query, top_n=max(k, 10))
+            lexical_results = [
+                row for row in lexical_results if not self._is_staff_document(row)
+            ]
             if (
                 lexical_results
                 and lexical_results[0]["bm25_score"] >= BM25_FAST_PATH_MIN_SCORE
@@ -295,25 +381,39 @@ class HybridRetriever:
                 results = self.vs.similarity_search(query, k=k * 2)
         except Exception as e:
             logger.warning(f"벡터 검색 실패: {e}")
-            return {"results": [], "degraded": True, "reason": "vector_search_failed"}
+            return {
+                "results": faq_results[:k],
+                "degraded": not bool(faq_results),
+                "reason": None if faq_results else "vector_search_failed",
+            }
 
         # 직원업무안내(staff) 문서는 "담당/연락처/부서/직원" 등 인물·연락 의도가 있는
         # 질문에서만 상위에 끼워 넣는다. 그렇지 않으면 staff가 "사하구청장"처럼 지명만으로
         # 매칭돼 콘텐츠 페이지(예: 안내도·자료)를 밀어내므로 제외한다.
-        if any(w in query for w in self._CONTACT_INTENT):
+        if contact_intent:
             official_docs = self._staff_results_to_documents(query, limit=max(k, 3))
             if official_docs:
                 results = official_docs + results
+        else:
+            results = [row for row in results if not self._is_staff_document(row)]
 
         # BM25 비활성 상태이면 벡터 결과만 사용하면서 degraded 표시
         if not self.bm25 or not self.bm25.enabled:
             degraded = True
             reason = "bm25_failed"
-            return {"results": results[:k], "degraded": degraded, "reason": reason}
+            return {
+                "results": self._merge_official_faq(faq_results, results, k),
+                "degraded": degraded,
+                "reason": reason,
+            }
 
         # BM25 결합 재랭킹
         combined = self._hybrid_combine(query, results, k=k)
-        return {"results": combined, "degraded": degraded, "reason": reason}
+        return {
+            "results": self._merge_official_faq(faq_results, combined, k),
+            "degraded": degraded,
+            "reason": reason,
+        }
 
     @staticmethod
     def _is_official_document(doc: dict) -> bool:
@@ -398,21 +498,12 @@ class HybridRetriever:
 
     def _is_relevant_source(self, query: str, title: str, content: str) -> bool:
         """질문 키워드가 문서 제목이나 내용에 실제로 포함되어 있는지 확인"""
-        stopwords = {"알려줘", "알려주세요", "뭐야", "어떻게", "해줘", "있어", "없어",
-                     "하고", "싶어", "인가요", "인지", "대해", "관련", "안내", "정보",
-                     "사하구", "사하구청", "부산"}
-
-        query_keywords = set()
-        for word in query.replace("?", "").replace(".", "").split():
-            word = word.strip()
-            if len(word) >= 2 and word not in stopwords:
-                query_keywords.add(word)
-
+        query_keywords = self._content_keywords(query)
         if not query_keywords:
             return True
 
-        combined = title + " " + content
-        return any(kw in combined for kw in query_keywords)
+        combined = (title + " " + content).lower()
+        return any(keyword.lower() in combined for keyword in query_keywords)
 
     def format_context(self, query: str, results: list[dict]) -> tuple[str, list[dict]]:
         """검색 결과를 LLM 컨텍스트 + 출처 목록으로 변환"""
@@ -421,11 +512,15 @@ class HybridRetriever:
 
         context_parts = []
         relevant_sources = []   # 질문 키워드가 실제로 포함된 출처 (우선 제시)
-        fallback_sources = []   # 그 외 상위 결과 (관련 출처가 하나도 없을 때 폴백)
         seen_urls = set()
+        staff_intent = self._has_staff_lookup_intent(query)
 
         for i, doc in enumerate(results, 1):
             meta = doc.get("metadata", {})
+            # 일반 민원 질문에는 직원업무안내 문서를 LLM 참고자료나 출처 카드로
+            # 사용하지 않는다. 직위명(주무관 등)이 무관한 출처로 노출되는 것을 차단한다.
+            if self._is_staff_document(doc) and not staff_intent:
+                continue
             url = meta.get("url", "")
             title = meta.get("title", "정보")
             content = doc.get("content", "")
@@ -443,7 +538,13 @@ class HybridRetriever:
                 seen_urls.add(url)
                 # 담당 부서 (LLM이 본문에서 추출) → 공식 명칭으로 보정 후 연락처 매핑
                 dept = correct_dept(meta.get("department", "") or "")
-                dept, contact = self._resolve_official_source(query, title, content, dept)
+                # 구청 제공 공식 FAQ는 질문·답변·URL 자체가 승인된 근거다.
+                # 사용자의 "연락처" 표현만으로 직원업무안내를 다시 조회하면
+                # 구청 위치 문항에 무관한 부서·직통번호가 붙을 수 있으므로 건너뛴다.
+                if meta.get("category") == "official_faq":
+                    contact = (meta.get("contact") or "").strip()
+                else:
+                    dept, contact = self._resolve_official_source(query, title, content, dept)
                 # 첨부파일 목록 정규화 ([{"name","url"}]만 통과)
                 # documents.metadata는 환경에 따라 list 또는 JSON 문자열로 올 수 있어
                 # 문자열이면 파싱한다 (파싱 실패 시 빈 목록 — 첨부를 조용히 버리지 않도록).
@@ -471,13 +572,14 @@ class HybridRetriever:
                     "contact": (meta.get("contact") or "").strip() or contact,
                     "attachments": attachments,
                 }
-                if self._is_relevant_source(query, title, content):
+                if (
+                    meta.get("category") == "official_faq"
+                    or self._is_relevant_source(query, title, content)
+                ):
                     relevant_sources.append(src)
-                else:
-                    fallback_sources.append(src)
 
-        # 출처는 반드시 함께 제시: 관련성 통과분이 있으면 그것을, 없으면 상위 결과로 폴백.
-        sources = relevant_sources if relevant_sources else fallback_sources[:3]
+        # 관련성이 확인되지 않은 문서를 억지로 출처 카드에 표시하지 않는다.
+        sources = relevant_sources
 
         context = "\n---\n".join(context_parts)
         return context, sources

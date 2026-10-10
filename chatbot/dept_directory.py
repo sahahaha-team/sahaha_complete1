@@ -13,6 +13,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from crawler.staff_directory import OUTPUT_PATH as STAFF_DIRECTORY_PATH, refresh_directory
+from chatbot.contact_directory import save_contact_payload
 
 logger = logging.getLogger(__name__)
 
@@ -68,6 +69,7 @@ def refresh_staff_directory() -> dict:
     """Force a fresh crawl from the official staff directory page."""
     _load_directory.cache_clear()
     data = refresh_directory(STAFF_DIRECTORY_PATH)
+    save_contact_payload(data)
     return data
 
 
@@ -191,14 +193,21 @@ def search_staff_directory(query: str, limit: int = 5) -> list[dict]:
     expanded_query = q_lower
     if "ai" in q_lower or "인공지능" in query_text:
         expanded_terms.update({"ai", "인공지능", "디지털", "정보화", "전산"})
-    if "연락처" in query_text or "전화" in query_text:
-        expanded_terms.update({"전화번호", "전화", "연락처", "담당", "부서"})
+    # '전화', '담당', '부서' 같은 의도어는 모든 직원 행과 쉽게 겹쳐 오검색을
+    # 만든다. 실제 업무·부서·직위에 해당하는 내용어만 점수에 사용한다.
+    staff_stopwords = {
+        "담당", "담당자", "담당부서", "부서", "연락처", "전화", "전화번호",
+        "번호", "문의", "누구", "알려줘", "알려주세요", "어디", "사하구", "사하구청",
+    }
     tokens = {
         token
         for token in re.split(r"[\s,./]+", query_text)
-        if len(token.strip()) >= 2
+        if len(token.strip()) >= 2 and token.strip() not in staff_stopwords
     }
     expanded_terms.update(token.lower() for token in tokens)
+
+    if not expanded_terms:
+        return []
 
     scored: list[tuple[float, dict]] = []
     for row in _row_records():

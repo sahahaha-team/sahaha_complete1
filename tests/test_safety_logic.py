@@ -80,10 +80,8 @@ class ConversationUxTests(unittest.TestCase):
         self.assertTrue(is_obviously_out_of_domain("오늘 삼성전자 주가를 예측해줘"))
         self.assertFalse(is_obviously_out_of_domain("사하구 지방세 납부 방법 알려줘"))
 
-    def test_vague_request_produces_clarification_and_choices(self):
-        result = build_clarification("지원받고 싶어요")
-        self.assertIsNotNone(result)
-        self.assertEqual(len(result["suggested_questions"]), 3)
+    def test_vague_service_request_answers_before_clarifying(self):
+        self.assertIsNone(build_clarification("지원받고 싶어요"))
 
     def test_specific_request_does_not_trigger_clarification(self):
         self.assertIsNone(build_clarification("장애인 복지 지원 신청 방법 알려줘"))
@@ -111,6 +109,14 @@ class ConversationUxTests(unittest.TestCase):
         query = build_contextual_search_query("침대는요?", history)
         self.assertIn("대형 폐기물", query)
         self.assertTrue(query.endswith("침대는요?"))
+
+    def test_new_complete_question_drops_previous_topic(self):
+        history = [
+            {"role": "user", "content": "기초생활수급자 민원 수수료 면제 알려줘"},
+            {"role": "assistant", "content": "면제 대상을 안내해드렸습니다"},
+        ]
+        question = "주민세 사업소분이나 종업원분은 인터넷으로 신고할 수 있나요?"
+        self.assertEqual(build_contextual_search_query(question, history), question)
 
 
 class PrivacyTests(unittest.TestCase):
@@ -207,6 +213,31 @@ class IncrementalCrawlerTests(unittest.TestCase):
 
 
 class HybridRankingTests(unittest.TestCase):
+    def test_fee_waiver_question_is_not_treated_as_staff_lookup(self):
+        question = "기초생활수급자나 한부모가족은 민원 수수료를 면제받을 수 있나요?"
+        self.assertFalse(HybridRetriever._has_staff_lookup_intent(question))
+        self.assertFalse(HybridRetriever._has_staff_lookup_intent("주민등록번호 확인 방법"))
+        self.assertTrue(HybridRetriever._has_staff_lookup_intent("대형폐기물 담당자 전화번호"))
+
+    def test_unrelated_staff_document_is_not_used_as_source(self):
+        retriever = object.__new__(HybridRetriever)
+        results = [{
+            "id": "staff-noise",
+            "content": "감천1동 행정 업무",
+            "metadata": {
+                "title": "주무관",
+                "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+                "category": "staff_directory",
+                "department": "감천1동",
+            },
+            "similarity": 0.9,
+        }]
+        context, sources = retriever.format_context(
+            "기초생활수급자 민원 수수료 면제", results
+        )
+        self.assertEqual(context, "")
+        self.assertEqual(sources, [])
+
     def test_exact_bm25_match_can_beat_unrelated_vector_candidate(self):
         class FakeBm25:
             enabled = True

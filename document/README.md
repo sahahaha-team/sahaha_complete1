@@ -128,6 +128,17 @@ Supabase Dashboard > SQL Editor에서 `setup_supabase.sql`을 실행합니다.
 한 번 실행합니다. 이 마이그레이션은 대화 로그의 anon 접근을 차단하고
 증분 크롤링 실행 이력 및 페이지 마지막 확인 시각을 추가합니다.
 
+구청 제공 100개 예상질문과 HTML 원문 구조 저장을 사용할 때는
+`scripts/migration_official_faq_and_html.sql`도 한 번 실행한 뒤 동기화합니다.
+
+```bash
+python scripts/sync_official_faq.py --apply
+python scripts/check_migration.py
+
+# 직원업무안내 갱신 후 부서·전화번호 빠른 조회 파일 재생성
+python scripts/build_department_contacts.py
+```
+
 ### 3. 데이터 파이프라인
 
 ```bash
@@ -148,6 +159,9 @@ python scripts/reconcile_vector_store.py --apply
 
 # 경량 파이프라인 (태깅 생략, API 할당량 부족 시)
 python quick_pipeline.py
+
+# 구청 공식 100문항 검색·출처·LLM 답변 유사도 회귀 테스트
+python scripts/evaluate_official_faq.py --in-process
 ```
 
 ### 4. 웹 서버

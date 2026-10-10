@@ -26,6 +26,37 @@ class Database:
         self.client = get_supabase(admin=admin)
         self._last_checked_supported = None
         self._ingestion_queue_supported = None
+        self._raw_html_supported = None
+
+    def _with_raw_html(self, payload: dict, page_data) -> dict:
+        """마이그레이션 적용 환경에서는 원본 HTML도 저장한다."""
+        if self._raw_html_supported is not False:
+            payload["raw_html"] = getattr(page_data, "raw_html", "") or ""
+        return payload
+
+    def _write_raw_page(self, operation: str, payload: dict, url: str = ""):
+        """raw_html 미적용 구버전 DB에서도 크롤링이 중단되지 않도록 폴백한다."""
+        query = self.client.table("raw_pages")
+        try:
+            if operation == "insert":
+                result = query.insert(payload).execute()
+            else:
+                result = query.update(payload).eq("url", url).execute()
+            if "raw_html" in payload:
+                self._raw_html_supported = True
+            return result
+        except Exception as exc:
+            # 네트워크·인증 오류까지 스키마 문제로 오인하면 원인을 숨기므로,
+            # 실제 오류가 raw_html 컬럼을 가리킬 때만 구버전 폴백을 허용한다.
+            if "raw_html" not in payload or "raw_html" not in str(exc).lower():
+                raise
+            fallback = dict(payload)
+            fallback.pop("raw_html", None)
+            self._raw_html_supported = False
+            logger.warning("raw_pages.raw_html 미적용 DB 감지: 텍스트 저장으로 계속합니다.")
+            if operation == "insert":
+                return self.client.table("raw_pages").insert(fallback).execute()
+            return self.client.table("raw_pages").update(fallback).eq("url", url).execute()
 
     # ===== 크롤링 데이터 =====
 
@@ -36,7 +67,7 @@ class Database:
         if existing.data:
             return False
 
-        self.client.table("raw_pages").insert({
+        payload = self._with_raw_html({
             "url": page_data.url,
             "title": page_data.title,
             "content": page_data.content,
@@ -46,7 +77,8 @@ class Database:
             "etag": getattr(page_data, "etag", None),
             "last_modified": getattr(page_data, "last_modified", None),
             "attachments": getattr(page_data, "attachments", None) or [],
-        }).execute()
+        }, page_data)
+        self._write_raw_page("insert", payload)
         return True
 
     def upsert_raw_page(self, page_data) -> str:
@@ -55,7 +87,7 @@ class Database:
         existing = self.client.table("raw_pages").select("id, content_hash").eq("url", page_data.url).execute()
 
         if not existing.data:
-            self.client.table("raw_pages").insert({
+            payload = self._with_raw_html({
                 "url": page_data.url,
                 "title": page_data.title,
                 "content": page_data.content,
@@ -65,7 +97,8 @@ class Database:
                 "etag": getattr(page_data, "etag", None),
                 "last_modified": getattr(page_data, "last_modified", None),
                 "attachments": getattr(page_data, "attachments", None) or [],
-            }).execute()
+            }, page_data)
+            self._write_raw_page("insert", payload)
             return "new"
 
         row = existing.data[0]
@@ -74,7 +107,7 @@ class Database:
             self._update_cache_validators_if_present(page_data)
             return "unchanged"
 
-        self.client.table("raw_pages").update({
+        payload = self._with_raw_html({
             "title": page_data.title,
             "content": page_data.content,
             "sub_category": page_data.sub_category,
@@ -83,7 +116,8 @@ class Database:
             "last_modified": getattr(page_data, "last_modified", None),
             "attachments": getattr(page_data, "attachments", None) or [],
             "updated_at": datetime.now(timezone.utc).isoformat(),
-        }).eq("url", page_data.url).execute()
+        }, page_data)
+        self._write_raw_page("update", payload, page_data.url)
 
         # 파생 청크/벡터는 새 버전의 처리와 임베딩이 성공한 뒤 정리한다.
         # 여기서 먼저 삭제하면 태깅 모델·임베딩 모델 장애 시 검색 가능한

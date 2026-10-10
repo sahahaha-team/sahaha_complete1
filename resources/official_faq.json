@@ -1,0 +1,1586 @@
+[
+  {
+    "id": 1,
+    "question": "사하구청은 어디에 있나요?",
+    "answer": "사하구청은 부산광역시 사하구 낙동대로398번길 12(당리동)에 있습니다. 도시철도 이용 시 당리역 5번 출구를 이용할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+    "category": "교통·안전",
+    "keywords": [
+      "사하구청은",
+      "어디에"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 2,
+    "question": "사하구청 대표전화는 몇 번인가요?",
+    "answer": "사하구청 대표전화는 051-220-4000입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+    "category": "기타",
+    "keywords": [
+      "대표전화는",
+      "번인가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 3,
+    "question": "사하구청 민원실 창구가 어디에 있는지 확인할 수 있나요?",
+    "answer": "사하구 홈페이지의 민원실 배치도에서 여권, 가족관계등록, 통합민원 등 민원 창구의 위치를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
+    "category": "민원·여권",
+    "keywords": [
+      "민원실",
+      "창구가",
+      "어디에",
+      "있는지",
+      "확인할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 4,
+    "question": "사하구 홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?",
+    "answer": "정부24, 종합민원안내, 여권민원, 세무민원, 지적민원, e-조회 서비스, 전자민원창구 등 주요 전자민원 서비스를 이용할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+    "category": "민원·여권",
+    "keywords": [
+      "홈페이지에서",
+      "이용할",
+      "있는",
+      "전자민원",
+      "서비스에는",
+      "무엇이"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 5,
+    "question": "사하구청 민원실 이용 안내는 어디에서 확인하나요?",
+    "answer": "사하구 홈페이지의 민원실 이용안내에서 민원실 운영과 주요 창구·업무 관련 안내를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
+    "category": "민원·여권",
+    "keywords": [
+      "민원실",
+      "이용",
+      "안내는",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 6,
+    "question": "사하구 무인민원발급기 수수료는 얼마인가요?",
+    "answer": "2026년 1월 1일부터 무인민원발급기 발급 수수료는 무료입니다. 다만 부동산등기부등본은 1,000원이며 현금만 가능합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+    "category": "세금·부동산",
+    "keywords": [
+      "무인민원발급기",
+      "수수료는",
+      "얼마인가요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 7,
+    "question": "정부24를 이용하면 구청에 가지 않고도 민원서류를 발급받을 수 있나요?",
+    "answer": "정부24는 1년 365일 24시간 인터넷으로 민원을 신청·열람·발급할 수 있는 서비스입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+    "category": "민원·여권",
+    "keywords": [
+      "정부24를",
+      "이용하면",
+      "구청에",
+      "가지",
+      "않고도",
+      "민원서류를",
+      "발급받을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 8,
+    "question": "행정기관이 이미 가지고 있는 서류도 민원 신청할 때 다시 제출해야 하나요?",
+    "answer": "행정정보 공동이용 대상 정보라면 민원 신청 시 해당 서류를 별도로 제출하지 않아도 됩니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+    "category": "민원·여권",
+    "keywords": [
+      "행정기관이",
+      "이미",
+      "가지고",
+      "있는",
+      "서류도",
+      "민원",
+      "신청할",
+      "다시"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 9,
+    "question": "사하구청에 온라인으로 민원을 신청하려면 어떻게 하나요?",
+    "answer": "사하구의 온라인 민원상담은 국민권익위원회가 운영하는 국민신문고로 통합되어 있으며, 사하구 전자민원창구에서 민원신청과 나의 민원 확인 경로를 안내합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+    "category": "민원·여권",
+    "keywords": [
+      "사하구청에",
+      "온라인으로",
+      "민원을",
+      "신청하려면",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 10,
+    "question": "기초생활수급자나 한부모가족은 민원 수수료를 면제받을 수 있나요?",
+    "answer": "민원 종류에 따라 면제됩니다. 주민등록 등·초본, 인감증명서, 가족관계등록사항별증명서, 출입국사실증명 등은 기초생활수급자와 한부모가족 등이 면제 대상에 포함됩니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0103090000",
+    "category": "복지·돌봄",
+    "keywords": [
+      "기초생활수급자나",
+      "한부모가족은",
+      "민원",
+      "수수료를",
+      "면제받을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 11,
+    "question": "성인이 여권을 새로 만들 때 무엇을 준비해야 하나요?",
+    "answer": "여권발급신청서, 신분증, 최근 6개월 이내 촬영한 여권용 컬러사진 2매를 준비해야 하며, 유효기간이 남은 기존 여권이 있으면 함께 지참해야 합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+    "category": "민원·여권",
+    "keywords": [
+      "성인이",
+      "여권을",
+      "새로",
+      "만들",
+      "무엇을",
+      "준비해야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 12,
+    "question": "재산세는 어떤 날짜를 기준으로 누가 내나요?",
+    "answer": "매년 6월 1일 현재 토지, 건축물, 주택, 선박, 항공기 등을 사실상 소유하고 있는 사람이 재산세 납세의무자입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020100",
+    "category": "세금·부동산",
+    "keywords": [
+      "재산세는",
+      "어떤",
+      "날짜를",
+      "기준으로",
+      "누가",
+      "내나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 13,
+    "question": "부동산이나 차량을 취득하면 취득세는 언제까지 신고해야 하나요?",
+    "answer": "취득한 날부터 60일 이내에 과세물건 소재지 관할 구청에 신고하고 산출된 취득세를 납부해야 합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+    "category": "세금·부동산",
+    "keywords": [
+      "부동산이나",
+      "차량을",
+      "취득하면",
+      "취득세는",
+      "언제까지",
+      "신고해야",
+      "하나요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 14,
+    "question": "자동차세는 누가 내나요?",
+    "answer": "지방자치단체 관할구역에 등록 또는 신고되어 있는 자동차를 소유한 사람이 자동차세를 납부합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020600",
+    "category": "세금·부동산",
+    "keywords": [
+      "자동차세는",
+      "누가",
+      "내나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 15,
+    "question": "주민세 사업소분이나 종업원분은 인터넷으로 신고할 수 있나요?",
+    "answer": "위택스에서 인터넷 신고·납부할 수 있으며, 구청에 신고서를 제출하고 납부서를 발급받아 납부하는 방법도 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105030400",
+    "category": "민원·여권",
+    "keywords": [
+      "주민세",
+      "사업소분이나",
+      "종업원분은",
+      "인터넷으로",
+      "신고할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 16,
+    "question": "가구나 소파 같은 대형폐기물은 어떻게 버리나요?",
+    "answer": "대형폐기물은 처리업체인 맑은사하환경에 전화 또는 문자로 접수하거나 카카오톡 플러스친구 '맑은사하환경' 1:1톡으로 접수할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+    "category": "환경·폐기물",
+    "keywords": [
+      "가구나",
+      "소파",
+      "같은",
+      "대형폐기물은",
+      "버리나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 17,
+    "question": "냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?",
+    "answer": "대상 품목은 무상 방문수거가 가능합니다. 콜센터 1599-0903 또는 폐가전 무상방문수거 서비스 인터넷으로 신청할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+    "category": "기타",
+    "keywords": [
+      "냉장고나",
+      "세탁기",
+      "같은",
+      "대형",
+      "폐가전은",
+      "무료로",
+      "수거해",
+      "주나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 18,
+    "question": "음식물쓰레기는 물기를 빼고 버려야 하나요?",
+    "answer": "네. 음식물쓰레기는 물기를 최대한 제거한 후 배출해야 합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050102",
+    "category": "환경·폐기물",
+    "keywords": [
+      "음식물쓰레기는",
+      "물기를",
+      "빼고",
+      "버려야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 19,
+    "question": "일반 생활쓰레기는 어떤 봉투에 버려야 하나요?",
+    "answer": "생활폐기물은 종량제 규격봉투를 사용해 배출해야 합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+    "category": "환경·폐기물",
+    "keywords": [
+      "일반",
+      "생활쓰레기는",
+      "어떤",
+      "봉투에",
+      "버려야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 20,
+    "question": "정화조는 얼마나 자주 청소해야 하나요?",
+    "answer": "개인하수처리시설인 오수처리시설과 정화조는 연 1회 이상 내부청소를 해야 합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405140000",
+    "category": "환경·폐기물",
+    "keywords": [
+      "정화조는",
+      "얼마나",
+      "자주",
+      "청소해야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 21,
+    "question": "환경개선부담금은 어떤 차량에 부과되나요?",
+    "answer": "자동차관리법에 따라 등록된 경유 사용 차량에 환경개선부담금이 부과됩니다. 일반적으로 연 2회 부과됩니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
+    "category": "환경·폐기물",
+    "keywords": [
+      "환경개선부담금은",
+      "어떤",
+      "차량에",
+      "부과되나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 22,
+    "question": "도심에서 멧돼지를 마주치면 어떻게 해야 하나요?",
+    "answer": "소리를 지르거나 갑자기 움직이지 말고, 등을 보이며 달아나지 않으며, 주변의 나무나 바위 같은 은폐물로 신속히 몸을 피하는 것이 안내된 대처요령입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405060500",
+    "category": "환경·폐기물",
+    "keywords": [
+      "도심에서",
+      "멧돼지를",
+      "마주치면",
+      "해야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 23,
+    "question": "불법주정차 과태료를 사전통지 기간에 자진 납부하면 감면받을 수 있나요?",
+    "answer": "과태료 사전통지서를 받은 뒤 자진 납부하면 과태료의 20%를 감면받을 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0403080000",
+    "category": "기타",
+    "keywords": [
+      "불법주정차",
+      "과태료를",
+      "사전통지",
+      "기간에",
+      "자진",
+      "납부하면",
+      "감면받을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 24,
+    "question": "사하구 공영주차장 위치는 어디에서 확인할 수 있나요?",
+    "answer": "사하구 홈페이지 '분야별정보 > 교통정보 > 공영주차장안내'에서 유료 공영주차장의 위치, 주차면수, 급지, 관리기관 등을 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0403030000",
+    "category": "교통·안전",
+    "keywords": [
+      "공영주차장",
+      "위치는",
+      "어디에서",
+      "확인할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 25,
+    "question": "사하구 자전거도로는 어디에서 확인할 수 있나요?",
+    "answer": "사하구 홈페이지 '분야별정보 > 교통정보 > 자전거 도로 현황도'에서 감천로부터 다대포해수욕장, 낙동강하구둑 일대 자전거도로 정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0403020000",
+    "category": "교통·안전",
+    "keywords": [
+      "자전거도로는",
+      "어디에서",
+      "확인할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 26,
+    "question": "기초생활보장 수급자는 어떤 기준으로 선정되나요?",
+    "answer": "국가의 보장이 필요한 가구 중 소득인정액이 급여 종류별 선정기준 이하인 가구가 대상이며, 급여별로 부양의무자 기준 적용 여부가 다릅니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
+    "category": "복지·돌봄",
+    "keywords": [
+      "기초생활보장",
+      "수급자는",
+      "어떤",
+      "기준으로",
+      "선정되나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 27,
+    "question": "기초생활보장 수급자가 받을 수 있는 급여에는 무엇이 있나요?",
+    "answer": "생계급여, 의료급여, 주거급여, 교육급여 등으로 구분되며 급여별 기준에 따라 지원됩니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0501010200",
+    "category": "복지·돌봄",
+    "keywords": [
+      "기초생활보장",
+      "수급자가",
+      "있는",
+      "급여에는",
+      "무엇이"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 28,
+    "question": "갑자기 생계가 어려워졌을 때 긴급복지지원을 받을 수 있나요?",
+    "answer": "위기사유가 발생하고 소득기준 등 긴급복지지원 요건을 충족하면 지원을 받을 수 있습니다. 2026년 소득기준은 기준 중위소득 75% 이하입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0501040800",
+    "category": "복지·돌봄",
+    "keywords": [
+      "갑자기",
+      "생계가",
+      "어려워졌을",
+      "긴급복지지원을"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 29,
+    "question": "장애인연금은 누가 신청할 수 있나요?",
+    "answer": "장애인연금법상 중증장애인에 해당하고 본인과 배우자의 소득인정액이 선정기준액 이하인 사람이 대상입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0504020200",
+    "category": "복지·돌봄",
+    "keywords": [
+      "장애인연금은",
+      "누가",
+      "신청할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 30,
+    "question": "아이돌봄 지원사업은 몇 살까지 이용할 수 있나요?",
+    "answer": "생후 3개월 이상부터 12세 이하 아동이 대상이며, 양육공백이 있는 가정에 아이돌보미가 찾아가는 돌봄 서비스를 제공합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0503030400",
+    "category": "복지·돌봄",
+    "keywords": [
+      "아이돌봄",
+      "지원사업은",
+      "살까지",
+      "이용할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 31,
+    "question": "청소년부모 가정은 어떤 지원을 받을 수 있나요?",
+    "answer": "기준 중위소득 65% 이하이면서 부모가 모두 24세 이하인 청소년부모 가구는 자녀 1명당 월 25만원의 아동양육비 지원 대상이 될 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0510060200",
+    "category": "복지·돌봄",
+    "keywords": [
+      "청소년부모",
+      "가정은",
+      "어떤",
+      "지원을"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 32,
+    "question": "첫만남이용권은 얼마를 받을 수 있나요?",
+    "answer": "2025년 이후 출생아 기준 첫째는 200만원, 둘째 이후는 300만원을 국민행복카드 포인트로 지급합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0510070100",
+    "category": "기타",
+    "keywords": [
+      "첫만남이용권은",
+      "얼마를"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 33,
+    "question": "둘째 이상 아이를 낳으면 사하구에서 출산축하 지원이 있나요?",
+    "answer": "둘째 이후 출산가정은 다자녀 출산축하 지원사업 대상입니다. 둘째는 손세정제, 셋째는 물티슈, 넷째 이후는 밑반찬서비스가 안내되어 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0510070200",
+    "category": "복지·돌봄",
+    "keywords": [
+      "둘째",
+      "이상",
+      "아이를",
+      "낳으면",
+      "사하구에서",
+      "출산축하",
+      "지원이"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 34,
+    "question": "사하구보건소에서 보건증을 발급받으려면 비용과 기간이 얼마나 드나요?",
+    "answer": "건강진단결과서(구 보건증) 수수료는 3,000원이며 처리기간은 토·공휴일을 제외하고 5일입니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0301010000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소에서",
+      "보건증을",
+      "발급받으려면",
+      "비용과",
+      "기간이",
+      "얼마나",
+      "드나요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 35,
+    "question": "보건증을 보건소에 다시 가지 않고 온라인으로 발급받을 수 있나요?",
+    "answer": "검사 결과가 정상인 경우 공공보건포털에서 건강진단결과서(보건증), 건강진단서, 예방접종증명서, 일반건강진단서를 온라인으로 발급받을 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0304010000",
+    "category": "보건·의료",
+    "keywords": [
+      "보건증을",
+      "보건소에",
+      "다시",
+      "가지",
+      "않고",
+      "온라인으로",
+      "발급받을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 36,
+    "question": "사하구보건소 진료시간과 위치는 어떻게 되나요?",
+    "answer": "평일 월~금 09:00~18:00 운영하며 점심시간은 12:00~13:00입니다. 위치는 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)입니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소",
+      "진료시간과",
+      "위치는",
+      "되나요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 37,
+    "question": "사하구 임산부 등록은 누가 할 수 있고 무엇을 가져가야 하나요?",
+    "answer": "주민등록상 사하구에 거주하는 임산부가 대상이며, 신분증과 분만예정일이 적힌 임신확인서 또는 임산부 수첩을 준비해야 합니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402010100",
+    "category": "보건·의료",
+    "keywords": [
+      "임산부",
+      "등록은",
+      "누가",
+      "있고",
+      "무엇을",
+      "가져가야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 38,
+    "question": "사하구보건소 금연클리닉은 누가 이용할 수 있나요?",
+    "answer": "금연을 희망하는 지역주민이 이용할 수 있으며, 보건소 2층 통합건강증진센터 내 금연클리닉에서 평일 09:00~18:00 운영합니다. 점심시간은 12:00~13:00입니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404000000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소",
+      "금연클리닉은",
+      "누가",
+      "이용할"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 39,
+    "question": "사하구보건소 성인 예방접종은 언제 받을 수 있나요?",
+    "answer": "사하구보건소 1층 예방접종실에서 오전 09:00~11:30, 오후 13:00~17:30에 접수합니다. 접종 종류별 대상과 비용은 다릅니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소",
+      "성인",
+      "예방접종은",
+      "언제"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 40,
+    "question": "영양플러스 사업은 누가 신청할 수 있나요?",
+    "answer": "사하구민 중 만 6세 이하 영유아, 임신부, 출산부 또는 수유부이면서 영양위험요인이 있고 가구 소득이 기준 중위소득 80% 이하인 경우 신청 대상이 될 수 있습니다. 임신부는 영양위험요인 판정 없이 가능합니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402090000",
+    "category": "복지·돌봄",
+    "keywords": [
+      "영양플러스",
+      "사업은",
+      "누가",
+      "신청할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 41,
+    "question": "고위험 임산부 의료비는 얼마나 지원받을 수 있나요?",
+    "answer": "지원 대상 질환으로 입원치료를 받은 경우 급여 중 전액본인부담금과 비급여 진료비의 90%를 1인당 최대 300만원까지 지원합니다. 신청기간은 분만일로부터 6개월 이내입니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402100000",
+    "category": "보건·의료",
+    "keywords": [
+      "고위험",
+      "임산부",
+      "의료비는",
+      "얼마나",
+      "지원받을"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 42,
+    "question": "사하구보건소에서 구강건강 상담도 받을 수 있나요?",
+    "answer": "사하구 지역주민은 보건소 2층 구강보건실에서 생애주기별 구강보건상담과 교육, 관련 사업 안내를 받을 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0400000000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소에서",
+      "구강건강",
+      "상담도"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 43,
+    "question": "돌아가신 부모님이나 조상의 땅을 찾을 수 있는 서비스가 있나요?",
+    "answer": "사하구의 '조상 땅 찾기' 서비스를 통해 본인 또는 사망한 직계 존·비속의 토지소유 정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
+    "category": "세금·부동산",
+    "keywords": [
+      "돌아가신",
+      "부모님이나",
+      "조상의",
+      "땅을",
+      "찾을",
+      "있는",
+      "서비스가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 44,
+    "question": "개별공시지가는 무엇이고 언제 공시되나요?",
+    "answer": "개별공시지가는 구청장이 조사·산정해 결정·공시하는 개별 토지의 ㎡당 가격입니다. 1월 1일 기준은 5월 말, 7월 1일 기준은 10월 말에 결정·공시합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+    "category": "세금·부동산",
+    "keywords": [
+      "개별공시지가는",
+      "무엇이고",
+      "언제",
+      "공시되나요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 45,
+    "question": "개별공시지가에 대한 의견을 정해진 기간이 아니어도 낼 수 있나요?",
+    "answer": "사하구는 '개별공시지가 365 의견제출'을 운영하고 있어 토지소유자와 이해관계인이 연중 의견을 제출할 수 있습니다. 법정기간 외 제출분은 다음 연도 의견제출 기간에 일괄 접수해 처리합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404010300",
+    "category": "세금·부동산",
+    "keywords": [
+      "개별공시지가에",
+      "의견을",
+      "정해진",
+      "기간이",
+      "아니어도"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 46,
+    "question": "개별주택가격과 공동주택가격은 언제 공시되나요?",
+    "answer": "1월 1일 기준 가격은 매년 4월 말, 6월 1일 기준 가격은 매년 9월 말에 결정·공시됩니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0106010000",
+    "category": "세금·부동산",
+    "keywords": [
+      "개별주택가격과",
+      "공동주택가격은",
+      "언제",
+      "공시되나요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 47,
+    "question": "부동산 중개보수를 법정 한도보다 많이 받으면 어디에 신고하나요?",
+    "answer": "사하구청 토지정보과에 신고할 수 있습니다. 신고 시 부동산 임대·매매계약서 사본과 중개대상물 확인설명서 사본이 필요합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404020000",
+    "category": "세금·부동산",
+    "keywords": [
+      "부동산",
+      "중개보수를",
+      "법정",
+      "한도보다",
+      "많이",
+      "받으면",
+      "어디에",
+      "신고하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 48,
+    "question": "사하구 일자리지원센터에서 구직 등록은 어떻게 하나요?",
+    "answer": "본인이 일자리지원센터 등을 방문해 신분증을 제시하고 구직표를 작성한 뒤 상담·구직등록·조건검색·업체알선 절차로 이용할 수 있습니다. 구직등록 유효기간은 3개월입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
+    "category": "교육·일자리",
+    "keywords": [
+      "일자리지원센터에서",
+      "구직",
+      "등록은",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 49,
+    "question": "사하구 평생학습관 프로그램 수강료는 얼마인가요?",
+    "answer": "평생학습관 프로그램 수강료는 무료이며 교재비, 재료비, 시험응시료 등은 별도입니다. 사하구민과 관내 근로자 등이 대상이고 사하구민을 우선 접수합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0408000000",
+    "category": "교육·일자리",
+    "keywords": [
+      "평생학습관",
+      "프로그램",
+      "수강료는",
+      "얼마인가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 50,
+    "question": "사하구청에서 무료 법률상담을 받을 수 있나요?",
+    "answer": "가능합니다. 사하구청 본관 2층 상황실에서 매월 둘째·넷째 수요일 14:00~17:00 생활법률 상담을 운영하며, 051-220-4035로 사전 전화예약이 필요합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0309060000",
+    "category": "기타",
+    "keywords": [
+      "사하구청에서",
+      "무료",
+      "법률상담을"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 51,
+    "question": "사하구민은 구민안전보험에 따로 가입해야 하나요?",
+    "answer": "사하구에 주민등록이 되어 있는 모든 구민과 등록외국인은 자동 가입되며 별도 가입절차가 없습니다. 보험료는 사하구에서 일괄 납부합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0410120000",
+    "category": "교통·안전",
+    "keywords": [
+      "사하구민은",
+      "구민안전보험에",
+      "따로",
+      "가입해야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 52,
+    "question": "여권은 주소지와 관계없이 사하구청에서 신청할 수 있나요?",
+    "answer": "네. 여권 발급 신청은 주소지와 관계없이 전국 여권사무 대행기관에서 할 수 있으며, 일반적으로 본인이 직접 방문하여 신청합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
+    "category": "민원·여권",
+    "keywords": [
+      "여권은",
+      "주소지와",
+      "관계없이",
+      "사하구청에서",
+      "신청할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 53,
+    "question": "여권 영문성명은 어떻게 표기하나요?",
+    "answer": "여권 영문성명은 대문자로 표기하고, 가족관계등록부의 한글 성명을 음역에 맞게 로마자로 표기합니다. 발급 후 영문성명 변경은 법령에서 허용하는 사유가 있는 경우로 제한됩니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
+    "category": "민원·여권",
+    "keywords": [
+      "여권",
+      "영문성명은",
+      "표기하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 54,
+    "question": "지방세를 기한 내에 내지 않으면 어떤 불이익이 있나요?",
+    "answer": "지방세를 체납하면 재산 압류·공매, 자동차 번호판 영치, 관허사업 제한 등의 불이익이 발생할 수 있으며 가산금 등 추가 부담이 생길 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
+    "category": "세금·부동산",
+    "keywords": [
+      "지방세를",
+      "기한",
+      "내에",
+      "내지",
+      "않으면",
+      "어떤",
+      "불이익이"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 55,
+    "question": "부당한 지방세 처분 때문에 어려움이 있을 때 도움을 받을 수 있나요?",
+    "answer": "납세자보호관에게 지방세 고충민원이나 권리보호를 요청할 수 있습니다. 위법·부당한 처분이나 세무조사·체납처분 과정에서 권리가 침해된 경우 관련 절차를 안내받을 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+    "category": "세금·부동산",
+    "keywords": [
+      "부당한",
+      "지방세",
+      "처분",
+      "때문에",
+      "어려움이",
+      "있을",
+      "도움을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 56,
+    "question": "세무사 비용이 부담되는데 무료 세무상담을 받을 수 있나요?",
+    "answer": "사하구 마을세무사를 통해 세무사 이용이 어려운 구민이 국세·지방세 관련 무료 상담을 받을 수 있습니다. 전화·팩스·이메일 상담이 안내되어 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105060000",
+    "category": "세금·부동산",
+    "keywords": [
+      "세무사",
+      "비용이",
+      "부담되는데",
+      "무료",
+      "세무상담을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 57,
+    "question": "지방세나 공시지가, 주정차 과태료 같은 정보를 온라인에서 찾아볼 수 있나요?",
+    "answer": "사하구 e-조회 서비스 페이지에서 지방세 인터넷납부, 개별공시지가, 부동산 관련 조회, 자동차 검사와 주정차위반 과태료 조회 등 관련 서비스로 이동할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
+    "category": "세금·부동산",
+    "keywords": [
+      "지방세나",
+      "공시지가",
+      "주정차",
+      "과태료",
+      "같은",
+      "정보를",
+      "온라인에서",
+      "찾아볼"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 58,
+    "question": "사하구에서 토익이나 토익스피킹 응시료 지원을 받을 수 있나요?",
+    "answer": "사하구는 정기 토익·토익스피킹 시험 응시료 지원사업을 안내하고 있습니다. 지원대상, 지원금액, 신청기간과 신청방법은 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0402060000",
+    "category": "교육·일자리",
+    "keywords": [
+      "사하구에서",
+      "토익이나",
+      "토익스피킹",
+      "응시료",
+      "지원을"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 59,
+    "question": "사하구 공공근로사업은 어떤 사업인가요?",
+    "answer": "공공근로사업은 취업취약계층 등의 생계안정과 근로기회 제공을 위한 공공일자리 사업입니다. 참여자격, 모집시기, 근무조건 등은 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0402020000",
+    "category": "교육·일자리",
+    "keywords": [
+      "공공근로사업은",
+      "어떤",
+      "사업인가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 60,
+    "question": "사하구를 지나는 버스나 도시철도 정보를 어디에서 확인하나요?",
+    "answer": "사하구 대중교통안내 페이지에서 버스 노선별 출발지·경유지·도착지와 사하구 내 도시철도역 및 주요 목적지 정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0403010000",
+    "category": "교통·안전",
+    "keywords": [
+      "사하구를",
+      "지나는",
+      "버스나",
+      "도시철도",
+      "정보를",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 61,
+    "question": "외국인이 이용할 수 있는 사하구 부동산 중개사무소가 있나요?",
+    "answer": "사하구 글로벌 중개사무소 안내에서 외국어 상담이 가능한 중개사무소의 상호, 주소, 전화번호와 지원 언어를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+    "category": "세금·부동산",
+    "keywords": [
+      "외국인이",
+      "이용할",
+      "있는",
+      "부동산",
+      "중개사무소가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 62,
+    "question": "민간임대주택 임대사업자 등록제도는 무엇인가요?",
+    "answer": "개인이나 법인이 주택을 임대사업 물건으로 등록하고 공적 의무를 준수하는 제도입니다. 등록제도의 개요와 관련 등록시스템 이용 안내를 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
+    "category": "세금·부동산",
+    "keywords": [
+      "민간임대주택",
+      "임대사업자",
+      "등록제도는",
+      "무엇인가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 63,
+    "question": "아파트 등 공동주택 관리에 필요한 정보는 어디에서 확인하나요?",
+    "answer": "사하구 공동주택 관리 안내 페이지에서 공동주택 관리와 관련한 주요 제도와 행정 안내를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+    "category": "세금·부동산",
+    "keywords": [
+      "아파트",
+      "공동주택",
+      "관리에",
+      "필요한",
+      "정보는",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 64,
+    "question": "전기·수도·도시가스를 절약하면 탄소포인트 혜택을 받을 수 있나요?",
+    "answer": "탄소중립포인트제는 전기·상수도·도시가스 사용량을 줄여 온실가스를 감축한 가정과 상업시설 등에 포인트와 인센티브를 제공하는 제도입니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405020000",
+    "category": "환경·폐기물",
+    "keywords": [
+      "전기",
+      "수도",
+      "도시가스를",
+      "절약하면",
+      "탄소포인트",
+      "혜택을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 65,
+    "question": "오존경보가 발령되면 어떻게 행동해야 하나요?",
+    "answer": "사하구 맑은공기 페이지에서 오존경보 기준과 단계별 주민 행동요령을 확인할 수 있습니다. 경보 시에는 장시간 또는 무리한 야외활동을 줄이는 등 안내된 행동요령을 따르는 것이 좋습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405030000",
+    "category": "환경·폐기물",
+    "keywords": [
+      "오존경보가",
+      "발령되면",
+      "행동해야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 66,
+    "question": "석면이 무엇이고 왜 관리가 필요한가요?",
+    "answer": "석면은 불에 잘 타지 않고 마찰에 강한 섬유상 광물이지만 인체에 유해할 수 있어 관리가 필요합니다. 사하구 석면관리 페이지에서 석면의 특성과 관련 관리정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405070000",
+    "category": "환경·폐기물",
+    "keywords": [
+      "석면이",
+      "무엇이고",
+      "관리가",
+      "필요한가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 67,
+    "question": "가게 간판을 설치하기 전에 허가나 신고가 필요한가요?",
+    "answer": "옥외광고물은 종류와 규모 등에 따라 허가 또는 신고가 필요할 수 있습니다. 사하구 옥외광고물 설치안내에서 설치 전에 확인해야 할 기준과 절차를 안내합니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
+    "category": "기타",
+    "keywords": [
+      "가게",
+      "간판을",
+      "설치하기",
+      "전에",
+      "허가나",
+      "신고가",
+      "필요한가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 68,
+    "question": "사하구에서 자전거를 무료로 빌릴 수 있는 곳이 있나요?",
+    "answer": "사하구 자전거무료대여소 페이지에서 무료대여소의 위치와 이용방법 등 운영정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0407020000",
+    "category": "교통·안전",
+    "keywords": [
+      "사하구에서",
+      "자전거를",
+      "무료로",
+      "빌릴",
+      "있는",
+      "곳이"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 69,
+    "question": "사하구에서 디지털·컴퓨터 교육을 받을 수 있나요?",
+    "answer": "사하구 정보화교육 페이지에서 구민을 위한 디지털·정보화 교육의 과정, 신청방법과 운영정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
+    "category": "교육·일자리",
+    "keywords": [
+      "사하구에서",
+      "디지털",
+      "컴퓨터",
+      "교육을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 70,
+    "question": "사하구 민방위 대피시설이나 비상급수시설은 어디에 있나요?",
+    "answer": "사하구 민방위 비상시설 안내 페이지에서 지역별 민방위 대피시설과 비상급수시설 정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0409020000",
+    "category": "교통·안전",
+    "keywords": [
+      "민방위",
+      "대피시설이나",
+      "비상급수시설은",
+      "어디에"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 71,
+    "question": "사하구 지진 옥외대피장소는 어디에서 확인하나요?",
+    "answer": "사하구 재난안전의 지진대피장소 페이지에서 지역별 지진 옥외대피장소를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0410100000",
+    "category": "교통·안전",
+    "keywords": [
+      "지진",
+      "옥외대피장소는",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 72,
+    "question": "폭염특보가 있을 때 주민은 어떻게 행동해야 하나요?",
+    "answer": "폭염 시에는 야외활동을 줄이고 물을 충분히 마시며, 가장 더운 시간대에는 휴식을 취하는 등 사하구가 안내하는 폭염 국민행동요령을 따르는 것이 좋습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0410060000",
+    "category": "교통·안전",
+    "keywords": [
+      "폭염특보가",
+      "있을",
+      "주민은",
+      "행동해야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 73,
+    "question": "사하구 1인가구가 받을 수 있는 지원은 어디에서 확인하나요?",
+    "answer": "사하구 1인가구지원사업 페이지에서 건강·돌봄, 자립·생계, 주거·안전, 사회적 관계 등 분야별 지원사업과 문의처를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0509020000",
+    "category": "보건·의료",
+    "keywords": [
+      "1인가구가",
+      "있는",
+      "지원은",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 74,
+    "question": "사하구 통합돌봄은 어떤 사람을 위한 사업인가요?",
+    "answer": "통합돌봄은 돌봄이 필요한 주민이 살던 곳에서 의료·요양·돌봄 등 필요한 서비스를 연계받을 수 있도록 지원하는 사업입니다. 사업대상과 이용절차는 사하구 통합돌봄 사업개요에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+    "category": "복지·돌봄",
+    "keywords": [
+      "통합돌봄은",
+      "어떤",
+      "사람을",
+      "위한",
+      "사업인가요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 75,
+    "question": "사하구 고향사랑기부제는 어떻게 이용하나요?",
+    "answer": "고향사랑기부제는 개인이 지방자치단체에 기부하고 세액공제와 답례품 등의 혜택을 받을 수 있는 제도입니다. 사하구의 기부방법과 답례품 등 자세한 내용은 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
+    "category": "기타",
+    "keywords": [
+      "고향사랑기부제는",
+      "이용하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 76,
+    "question": "사하구보건소 1진료실에서는 어떤 진료를 받을 수 있나요?",
+    "answer": "1진료실에서는 만 15세 이상 주민을 대상으로 일반 1차진료를 하며, 고혈압·당뇨·고지혈증 등 만성질환과 감기 등의 진료 안내를 제공하고 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0201010000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소",
+      "1진료실에서는",
+      "어떤",
+      "진료를"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 77,
+    "question": "사하구보건소에서 물리치료를 받을 수 있나요?",
+    "answer": "네. 사하구보건소 물리치료실 페이지에서 물리치료 대상, 치료내용, 이용시간과 접수방법을 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0201020000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소에서",
+      "물리치료를"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 78,
+    "question": "결핵이 의심될 때 사하구보건소에서 검사나 상담을 받을 수 있나요?",
+    "answer": "사하구보건소 결핵진료실에서 결핵 상담과 검사 관련 안내를 받을 수 있습니다. 검사대상과 이용절차는 결핵진료실 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0201030000",
+    "category": "보건·의료",
+    "keywords": [
+      "결핵이",
+      "의심될",
+      "사하구보건소에서",
+      "검사나",
+      "상담을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 79,
+    "question": "해외여행 전에 필요한 예방접종이나 건강정보를 보건소에서 확인할 수 있나요?",
+    "answer": "네. 사하구보건소 해외여행클리닉 페이지에서 해외여행 전 필요한 예방접종과 감염병 예방 등 건강관리 정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
+    "category": "보건·의료",
+    "keywords": [
+      "해외여행",
+      "전에",
+      "필요한",
+      "예방접종이나",
+      "건강정보를",
+      "보건소에서",
+      "확인할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 80,
+    "question": "국가건강검진 대상과 검진방법은 어디에서 확인하나요?",
+    "answer": "사하구보건소 국민건강보험공단 건강검진 페이지에서 건강검진 대상, 검진주기와 검진기관 이용 관련 안내를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0202020000",
+    "category": "보건·의료",
+    "keywords": [
+      "국가건강검진",
+      "대상과",
+      "검진방법은",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 81,
+    "question": "결혼을 앞두거나 신혼인 부부가 보건소 건강검진을 받을 수 있나요?",
+    "answer": "사하구보건소는 예비부모 건강검진을 안내하고 있습니다. 대상, 검사항목, 준비서류와 이용방법은 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0202030000",
+    "category": "보건·의료",
+    "keywords": [
+      "결혼을",
+      "앞두거나",
+      "신혼인",
+      "부부가",
+      "보건소",
+      "건강검진을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 82,
+    "question": "아이 국가예방접종은 어디에서 받을 수 있나요?",
+    "answer": "어린이 국가필수예방접종은 전국 지정 의료기관에서 지원받을 수 있으며, 사하구보건소 페이지에서 지원대상, 백신 종류와 접종기관 확인방법을 안내합니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0203010000",
+    "category": "보건·의료",
+    "keywords": [
+      "아이",
+      "국가예방접종은",
+      "어디에서"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 83,
+    "question": "사하구보건소 각종 검사 비용은 어디에서 확인하나요?",
+    "answer": "보건소 검사비용안내 페이지에서 시행하는 검사 종류별 수수료와 관련 안내를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0301030000",
+    "category": "보건·의료",
+    "keywords": [
+      "사하구보건소",
+      "각종",
+      "검사",
+      "비용은",
+      "어디에서",
+      "확인하나요"
+    ],
+    "is_time_sensitive": true,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 84,
+    "question": "보건소에서 받은 검사 결과를 온라인으로 확인할 수 있나요?",
+    "answer": "네. 검사결과 온라인조회 페이지에서 건강검진과 각종 검사 결과 등 본인의 진료·검사 결과를 온라인으로 조회하는 방법을 안내합니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
+    "category": "보건·의료",
+    "keywords": [
+      "보건소에서",
+      "받은",
+      "검사",
+      "결과를",
+      "온라인으로",
+      "확인할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 85,
+    "question": "출산 후 산모와 신생아를 돌봐주는 지원서비스가 있나요?",
+    "answer": "산모신생아 건강관리지원은 출산가정에 건강관리사가 방문해 산모와 신생아의 건강관리를 돕는 서비스입니다. 지원대상과 신청방법은 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402020000",
+    "category": "보건·의료",
+    "keywords": [
+      "출산",
+      "산모와",
+      "신생아를",
+      "돌봐주는",
+      "지원서비스가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 86,
+    "question": "미숙아나 선천성이상아의 의료비 지원을 받을 수 있나요?",
+    "answer": "사하구보건소는 미숙아 및 선천성이상아 의료비 지원사업을 안내하고 있습니다. 지원대상, 지원범위와 신청방법은 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
+    "category": "보건·의료",
+    "keywords": [
+      "미숙아나",
+      "선천성이상아의",
+      "의료비",
+      "지원을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 87,
+    "question": "영유아 건강검진은 언제 어떻게 받아야 하나요?",
+    "answer": "영유아 건강검진 페이지에서 월령별 검진 시기, 검진항목, 대상자와 검진기관 이용방법을 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402130000",
+    "category": "보건·의료",
+    "keywords": [
+      "영유아",
+      "건강검진은",
+      "언제",
+      "받아야",
+      "하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 88,
+    "question": "거동이 불편하거나 건강관리가 필요한 주민에게 방문건강서비스가 있나요?",
+    "answer": "방문건강관리 전문인력이 취약계층 등 건강관리가 필요한 가정을 방문해 건강상태를 확인하고 질병예방·건강증진 서비스와 필요한 자원 연계를 제공합니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+    "category": "보건·의료",
+    "keywords": [
+      "거동이",
+      "불편하거나",
+      "건강관리가",
+      "필요한",
+      "주민에게",
+      "방문건강서비스가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 89,
+    "question": "우울감이나 정신건강 문제를 상담받을 곳이 있나요?",
+    "answer": "사하구 정신건강복지센터에서 정신건강 상담과 평가, 정신건강증진 프로그램, 치료·복지자원 연계 등을 제공하며 사전 전화예약 후 이용할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403020000",
+    "category": "보건·의료",
+    "keywords": [
+      "우울감이나",
+      "정신건강",
+      "문제를",
+      "상담받을",
+      "곳이"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 90,
+    "question": "치매검사나 치매지원 서비스는 어디에서 받을 수 있나요?",
+    "answer": "사하구 치매관리 페이지에서 치매안심센터의 치매검사, 상담, 등록관리와 가족지원 등 관련 서비스를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403030000",
+    "category": "보건·의료",
+    "keywords": [
+      "치매검사나",
+      "치매지원",
+      "서비스는",
+      "어디에서"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 91,
+    "question": "장애인이 보건소 재활서비스를 받을 수 있나요?",
+    "answer": "지역사회중심재활사업을 통해 장애인과 주민을 대상으로 재활상담, 방문형 재활, 재활운동 프로그램, 장애예방교육과 재활보조기구 대여 등을 안내합니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
+    "category": "보건·의료",
+    "keywords": [
+      "장애인이",
+      "보건소",
+      "재활서비스를"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 92,
+    "question": "보건소에서 운동이나 영양관리 프로그램도 운영하나요?",
+    "answer": "사하구보건소 운동·영양프로그램 페이지에서 주민의 건강생활 실천을 위한 운동과 영양교육 프로그램의 운영내용을 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404020000",
+    "category": "보건·의료",
+    "keywords": [
+      "보건소에서",
+      "운동이나",
+      "영양관리",
+      "프로그램도",
+      "운영하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 93,
+    "question": "대사증후군 검사를 받거나 건강상담을 받을 수 있나요?",
+    "answer": "사하구보건소 대사증후군 관리 페이지에서 혈압·혈당·복부비만 등 건강위험요인 확인과 상담·관리 프로그램 관련 정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404030000",
+    "category": "보건·의료",
+    "keywords": [
+      "대사증후군",
+      "검사를",
+      "받거나",
+      "건강상담을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 94,
+    "question": "고혈압·당뇨 등 심뇌혈관질환 예방관리는 어떻게 받을 수 있나요?",
+    "answer": "심뇌혈관질환 예방관리 페이지에서 혈압·혈당 관리, 건강상담과 예방교육 등 관련 서비스를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404040000",
+    "category": "보건·의료",
+    "keywords": [
+      "고혈압",
+      "당뇨",
+      "심뇌혈관질환",
+      "예방관리는"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 95,
+    "question": "집 가까운 곳에서 건강상담을 받을 수 있는 마을건강센터가 있나요?",
+    "answer": "사하구 하하 마을건강센터 안내에서 지역별 센터의 건강측정, 건강상담과 건강프로그램 등 이용정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
+    "category": "보건·의료",
+    "keywords": [
+      "가까운",
+      "곳에서",
+      "건강상담을",
+      "있는",
+      "마을건강센터가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 96,
+    "question": "사하구 건강생활지원센터에서는 어떤 서비스를 이용할 수 있나요?",
+    "answer": "건강생활지원센터 운영 페이지에서 주민을 위한 건강측정, 상담, 운동·영양 등 건강증진 프로그램과 센터 이용정보를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404060000",
+    "category": "보건·의료",
+    "keywords": [
+      "건강생활지원센터에서는",
+      "어떤",
+      "서비스를",
+      "이용할"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 97,
+    "question": "법정감염병에는 어떤 종류가 있나요?",
+    "answer": "사하구보건소 감염병 안내 페이지에서 법정감염병을 급별로 구분한 분류와 주요 감염병 종류를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
+    "category": "보건·의료",
+    "keywords": [
+      "법정감염병에는",
+      "어떤",
+      "종류가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 98,
+    "question": "암환자 의료비 지원을 받을 수 있나요?",
+    "answer": "사하구보건소 암환자 의료비지원 페이지에서 지원대상, 지원범위, 신청에 필요한 서류와 절차를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0406020000",
+    "category": "보건·의료",
+    "keywords": [
+      "암환자",
+      "의료비",
+      "지원을"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 99,
+    "question": "소아암 환자의 의료비 지원제도가 있나요?",
+    "answer": "사하구보건소는 소아암환자 의료비지원 사업을 안내하고 있습니다. 지원대상, 지원한도와 신청절차는 해당 페이지에서 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0406030000",
+    "category": "보건·의료",
+    "keywords": [
+      "소아암",
+      "환자의",
+      "의료비",
+      "지원제도가"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  },
+  {
+    "id": 100,
+    "question": "국가암검진 대상인지 어떻게 확인하나요?",
+    "answer": "사하구보건소 국가암검진사업 페이지에서 암종별 검진대상, 검진주기와 검진방법 등 국가암검진 관련 안내를 확인할 수 있습니다.",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0408010000",
+    "category": "보건·의료",
+    "keywords": [
+      "국가암검진",
+      "대상인지",
+      "확인하나요"
+    ],
+    "is_time_sensitive": false,
+    "verified_at": "2026-10-06"
+  }
+]
