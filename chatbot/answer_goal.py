@@ -1,9 +1,12 @@
 """Requested answer fields, kept separate from service-topic evidence."""
 from __future__ import annotations
 
+import re
+
 from chatbot.question_intent import asks_location, asks_opening_hours
 
 GOAL_WORDS = {
+    "reference": ("홈페이지", "페이지", "링크", "현황도", "지도", "조회", "확인", "자세히보기", "다운로드"),
     "method": ("방법", "접수", "예약", "신고", "신청", "이용", "발급", "절차", "제출", "등록", "로그인", "회원가입", "전화", "콜센터", "인터넷", "인증", "표기", "작성", "선택", "입력", "조회"),
     "eligibility": ("대상", "조건", "자격", "해당", "소유", "보유", "이상", "이하"),
     "cost": ("수수료", "요금", "비용", "금액", "원", "무료", "무상", "유료"),
@@ -18,7 +21,9 @@ GOAL_WORDS = {
 def answer_goal(query: str) -> str | None:
     if any(word in query.replace(" ", "") for word in ("어떤서비스", "어떤진료", "무슨서비스", "어떤지원")):
         return "services"
-    if "어디" in query and any(word in query for word in ("확인", "찾아볼", "조회")):
+    link_requested = "링크" in query and not re.search(r'링크\s*(?:는|가|도)?\s*(?:말고|필요\s*없|제외|빼고)', query)
+    if (link_requested or ("어디" in query and any(word in query for word in (
+            "확인", "찾아볼", "찾아보", "조회", "볼 수", "볼수", "보나요", "현황도", "지도", "사이트")))):
         return "reference"
     if asks_opening_hours(query):
         return "hours"

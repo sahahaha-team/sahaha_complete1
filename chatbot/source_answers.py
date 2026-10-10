@@ -16,7 +16,10 @@ def strip_page_chrome(text: str) -> str:
         text = text.split("인쇄하기\n", 1)[1]
     if "\n만족도조사\n" in text:
         text = text.split("\n만족도조사\n", 1)[0]
-    return re.sub(r"[ \t]+", " ", text).strip()
+    # Standalone icon/escape remnants are not administrative source content.
+    lines = [line for line in text.splitlines()
+             if not re.fullmatch(r'(?:svg|img|[>\\ ]+)', line.strip(), re.IGNORECASE)]
+    return re.sub(r"[ \t]+", " ", '\n'.join(lines)).strip()
 
 
 def source_passage(text: str, anchor: str, *, budget: int = 2400) -> str:
@@ -149,8 +152,11 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
         return answer, [lead]
     else:
         try:
-            rows = client.table("raw_pages").select("content").eq("url", url).limit(1).execute().data or []
+            rows = client.table("raw_pages").select("content,attachments").eq("url", url).limit(1).execute().data or []
             text = rows[0].get("content") or "" if rows else ""
+            if rows and 'attachments' in rows[0]:
+                meta = {**meta, 'attachments': rows[0].get('attachments') or []}
+                lead = {**lead, 'metadata': meta}
         except Exception:
             text = ""
     if not text.strip():
@@ -170,7 +176,9 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     if asks_opening_hours(query) and not has_opening_hours(passage):
         return "", []
     if answer_goal(query) == "location" and not has_location(passage):
-        return "", []
+        from chatbot.reference_answers import reference_answer
+        if not reference_answer(query, lead, passage, topic_keywords or set()):
+            return "", []
     if (section is not None and asks_location(query)
             and any(mid in str(url) for mid in ('mId=0203020000', 'mId=0203020100'))
             and not vaccination_place_brief(query, str(url), passage.splitlines())):

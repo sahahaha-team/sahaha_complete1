@@ -262,10 +262,11 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
     lines = source_lines(original_answer)
     body = "\n".join(lines)
     url = str((documents[0].get("metadata") or {}).get("url") or "") if documents else ""
-    if answer_goal(query) == "reference" and documents:
-        title = str((documents[0].get("metadata") or {}).get("title") or "공식 안내")
-        return {"answer": f"사하구청 공식 「{title}」 페이지에서 확인할 수 있습니다.",
-            "answer_details": original_answer, "is_clarification": False, "suggested_questions": []}
+    if documents:
+        from chatbot.reference_answers import reference_answer
+        reference = reference_answer(query, documents[0], body, keywords, original_answer)
+        if reference:
+            return reference
     answer = vaccination_place_brief(query, url, lines)
     if (asks_location(query) and is_vaccination_query(query)
             and any(mid in url for mid in ('mId=0203020000', 'mId=0203020100')) and not answer):

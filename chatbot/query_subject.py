@@ -60,6 +60,13 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     text = compact(subject_query(query))
     names = {name for name in SERVICE_NAMES if name in text}
     topics = substantive_keywords(words)
+    from chatbot.answer_goal import answer_goal
+    if answer_goal(query) == 'reference':
+        # Requested display formats are not extra services that every body
+        # must mention. Keep them for map-only queries without a real subject.
+        navigation = {'지도', '현황도', '링크', '사이트', '페이지', '조회', '다운로드'}
+        if topics - navigation:
+            topics -= navigation
     if re.search(r'일반\s*(?:주민|구민|시민)', query):
         topics.discard('일반')  # Audience condition, distinct from 일반쓰레기.
     if names:

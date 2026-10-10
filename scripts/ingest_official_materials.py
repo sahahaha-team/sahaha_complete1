@@ -76,10 +76,12 @@ def _fetch_page(target: tuple[str, str]):
         crawler = object.__new__(SahaCrawler)
         content = crawler._extract_content(soup)
         title = crawler._extract_title(soup)
+        attachments = crawler._extract_attachments(soup, url)
         if len(content.strip()) < 80:
             raise ValueError("본문이 너무 짧음")
         return {"question": question, "url": url, "title": title,
-                "content": content, "checked_at": datetime.now(timezone.utc).isoformat()}
+                "content": content, "attachments": attachments,
+                "checked_at": datetime.now(timezone.utc).isoformat()}
     except Exception as exc:
         logger.warning("공식 페이지 갱신 실패 (%s): %s", url, exc)
         return None
@@ -157,6 +159,7 @@ def _make_chunks(cleaner: DataCleaner, page) -> list[CleanedChunk]:
         url=page.url, title=page.title, content=content,
         category=page.category, sub_category=page.sub_category,
         chunk_index=index, total_chunks=len(text_chunks),
+        attachments=getattr(page, 'attachments', None) or [],
     ) for index, content in enumerate(text_chunks)]
 
 
@@ -168,7 +171,7 @@ def _index_page(db: Database, vs: VectorStore, row: dict, *, force: bool = False
     page.content = row["content"]
     page.category = row["category"]
     page.sub_category = "공식 분석 보고서" if is_report else "100개 질문 관련 공식 페이지"
-    page.attachments = []
+    page.attachments = row.get('attachments') or []
 
     status = db.upsert_raw_page(page)
     if not is_report:
@@ -179,7 +182,8 @@ def _index_page(db: Database, vs: VectorStore, row: dict, *, force: bool = False
         (existing[0].get("metadata") or {}).get("source_type") == row["source_type"] and
         (existing[0].get("metadata") or {}).get("service_type") ==
             ("통계" if is_report else _service_type(page.category)) and
-        (existing[0].get("metadata") or {}).get("content_hash") == content_hash)
+        (existing[0].get("metadata") or {}).get("content_hash") == content_hash and
+        ((existing[0].get("metadata") or {}).get('attachments') or []) == page.attachments)
     if status == "unchanged" and already_indexed and not force:
         return 0
 
@@ -198,6 +202,7 @@ def _index_page(db: Database, vs: VectorStore, row: dict, *, force: bool = False
             "sub_category": page.sub_category, "service_type": metadata["service_type"],
             "department": "", "keywords": metadata["keywords"],
             "source_type": row["source_type"], "content_hash": content_hash,
+            "attachments": chunk.attachments,
         }
         if is_report:
             vector_meta.update({key: row[key] for key in

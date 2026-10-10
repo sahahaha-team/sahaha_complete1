@@ -15,6 +15,7 @@ from chatbot.concise_answers import _source_units, MAX_BRIEF_LENGTH, condition_i
 from chatbot.evidence import topic_support, is_answerable_document, is_service_source
 from chatbot.query_subject import compact, SERVICE_NAMES
 from chatbot.source_answers import strip_page_chrome, focused_section
+from chatbot.reference_answers import reference_answer
 
 logger = logging.getLogger(__name__)
 SCOPE = SCOPE_FIELD
@@ -44,8 +45,11 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
             text = doc.get("content") or ""
         else:
             try:
-                rows = client.table("raw_pages").select("content").eq("url", url).limit(1).execute().data or []
+                rows = client.table("raw_pages").select("content,attachments").eq("url", url).limit(1).execute().data or []
                 text = rows[0].get("content") or "" if rows else ""
+                if rows and 'attachments' in rows[0]:
+                    meta = {**meta, 'attachments': rows[0].get('attachments') or []}
+                    doc = {**doc, 'metadata': meta}
             except Exception:
                 text = ""
         if not text or not is_answerable_document(query, {"content": text, "metadata": meta}):
@@ -225,6 +229,14 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
 
 def answer_with_grounded_model(query: str, documents: list[dict], client, keywords: set[str], llm) -> dict | None:
     candidates = prepare_evidence(query, documents, client, keywords)
+    # Navigation has an answer in verified page/file metadata. Selecting prose
+    # cannot recover links removed by get_text(), and may choose a slogan.
+    for packet in candidates:
+        title = (packet['document'].get('metadata') or {}).get('title') or ''
+        original = f'{title}의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + line for line in packet['body'].splitlines())
+        reference = reference_answer(query, packet['document'], packet['body'], keywords, original)
+        if reference:
+            return reference
     for packet in candidates:
         packet['eligible_ids'] = eligible_ids(query, packet, keywords)
     context, packets = plan_context(candidates)

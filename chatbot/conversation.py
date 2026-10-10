@@ -356,7 +356,7 @@ class ChatBot:
         if planned:
             concise = planned
             used_results = planned["documents"]
-            method = "grounded_model"
+            method = planned.get('answer_method') or "grounded_model"
         else:
             original, used_results = build_source_answer(grounded_results, self.retriever.db.client,
                 query=search_query, topic_keywords=self.retriever._content_keywords(search_query), require_brief=True)
@@ -371,7 +371,7 @@ class ChatBot:
                 self.retriever._content_keywords(search_query))
             if concise["is_clarification"]:
                 return self._clarification_result(session_id, user_message, search_query, concise)
-            method = "source_extract" if SOURCE_ONLY_ANSWERS else "source_fallback"
+            method = concise.get('answer_method') or ("source_extract" if SOURCE_ONLY_ANSWERS else "source_fallback")
         answer, _ = mask_personal_info(concise["answer"], use_ner=False)
         details, _ = mask_personal_info(concise.get("answer_details", ""), use_ner=False)
         _context, sources = self.retriever.format_context(search_query, used_results)

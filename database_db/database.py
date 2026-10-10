@@ -52,7 +52,7 @@ class Database:
     def upsert_raw_page(self, page_data) -> str:
         content_hash = hashlib.md5(page_data.content.encode()).hexdigest()
 
-        existing = self.client.table("raw_pages").select("id, content_hash").eq("url", page_data.url).execute()
+        existing = self.client.table("raw_pages").select("id, content_hash, title, attachments").eq("url", page_data.url).execute()
 
         if not existing.data:
             self.client.table("raw_pages").insert({
@@ -69,8 +69,11 @@ class Database:
             return "new"
 
         row = existing.data[0]
-        if row["content_hash"] == content_hash:
-            # 본문 미변경 — etag/last_modified만 새로 받았다면 갱신해 다음 회차 GET을 절약
+        attachments = getattr(page_data, 'attachments', None) or []
+        if (row["content_hash"] == content_hash and row.get('title') == page_data.title
+                and (row.get('attachments') or []) == attachments):
+            # 본문과 첨부 링크가 모두 같을 때만 재처리를 생략한다.
+            # 링크가 바뀌어도 get_text()의 본문 해시는 같을 수 있다.
             self._update_cache_validators_if_present(page_data)
             return "unchanged"
 
