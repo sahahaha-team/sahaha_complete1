@@ -17,6 +17,13 @@ GOAL_WORDS = {
     "services": ("내용", "운영", "진료", "검사", "상담", "제공", "지원", "발급", "접수", "신청", "예약"),
 }
 
+DETAIL_CUES = ("자세히", "상세히", "상세하게", "구체적으로", "더알려", "더설명", "추가정보", "내용더")
+
+
+def asks_for_detail(query: str) -> bool:
+    value = re.sub(r"\s+", "", query or "")
+    return any(cue in value for cue in DETAIL_CUES)
+
 
 def answer_goal(query: str) -> str | None:
     compact_query = query.replace(' ', '')

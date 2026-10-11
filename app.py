@@ -10,9 +10,10 @@ import logging
 import time
 from contextlib import asynccontextmanager
 from typing import Optional
+from urllib.parse import quote
 
 from fastapi import FastAPI, Request, HTTPException, Depends, Header
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,6 +35,7 @@ from config import (
 from chatbot.ollama_runtime import get_ollama_status
 from chatbot.contact_directory import contact_responder
 from chatbot.emergency_guidance import answer_emergency_question
+from chatbot.attachment_download import fetch_official_attachment
 
 logger = logging.getLogger(__name__)
 
@@ -334,6 +336,27 @@ async def clear_chat(request: Request):
 
     request.session["session_id"] = str(uuid.uuid4())
     return ClearResponse()
+
+
+@app.get("/api/attachments/download")
+@limiter.limit("30 per minute")
+async def download_attachment(request: Request, url: str, name: str = "첨부파일"):
+    """Download a verified Saha attachment directly from the chat UI."""
+    try:
+        content, media_type, filename = await run_in_threadpool(
+            fetch_official_attachment, url, name
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.warning("공식 첨부파일 다운로드 실패: %s", exc)
+        raise HTTPException(status_code=502, detail="첨부파일을 내려받지 못했습니다.") from exc
+    disposition = f"attachment; filename=attachment; filename*=UTF-8''{quote(filename)}"
+    return Response(
+        content=content,
+        media_type=media_type,
+        headers={"Content-Disposition": disposition, "Cache-Control": "private, max-age=300"},
+    )
 
 
 @app.get("/api/stats")

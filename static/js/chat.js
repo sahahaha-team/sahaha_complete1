@@ -518,12 +518,16 @@
     }
 
     function createSourcesEl(sources) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "source-results";
         const container = document.createElement("div");
         container.className = "sources-container";
         const label = document.createElement("div");
         label.className = "sources-label";
         label.textContent = "참고 출처";
         container.appendChild(label);
+        const attachments = [];
+        const attachmentUrls = new Set();
 
         sources.forEach(function (src) {
             const card = document.createElement(src.url ? "a" : "div");
@@ -552,25 +556,45 @@
             `;
             container.appendChild(card);
 
-            // 첨부파일(PDF/HWP 등) 다운로드 링크 — 카드 anchor 중첩을 피해 별도 블록으로 렌더
+            // 출처 카드 안에 섞지 않고 아래의 독립 다운로드 구역에 모은다.
             if (src.attachments && src.attachments.length > 0) {
-                const attWrap = document.createElement("div");
-                attWrap.className = "source-attachments";
                 src.attachments.forEach(function (att) {
                     if (!att || !att.url) return;
-                    const link = document.createElement("a");
-                    link.className = "attachment-link";
-                    link.href = att.url;
-                    link.target = "_blank";
-                    link.rel = "noopener noreferrer";
-                    link.innerHTML = `<span class="attachment-icon">📎</span><span class="attachment-name">${escapeHtml(att.name || "첨부파일")}</span>`;
-                    attWrap.appendChild(link);
+                    if (attachmentUrls.has(att.url)) return;
+                    attachmentUrls.add(att.url);
+                    attachments.push(att);
                 });
-                container.appendChild(attWrap);
             }
         });
 
-        return container;
+        wrapper.appendChild(container);
+        if (attachments.length > 0) {
+            const downloadSection = document.createElement("div");
+            downloadSection.className = "attachments-container";
+            const downloadLabel = document.createElement("div");
+            downloadLabel.className = "attachments-label";
+            downloadLabel.textContent = "첨부파일 다운로드";
+            downloadSection.appendChild(downloadLabel);
+
+            const downloadList = document.createElement("div");
+            downloadList.className = "attachment-list";
+            attachments.forEach(function (att) {
+                const link = document.createElement("a");
+                link.className = "attachment-link";
+                link.href = `/api/attachments/download?url=${encodeURIComponent(att.url)}&name=${encodeURIComponent(att.name || "첨부파일")}`;
+                link.setAttribute("download", att.name || "첨부파일");
+                link.innerHTML = `
+                    <span class="attachment-icon">📥</span>
+                    <span class="attachment-name">${escapeHtml(att.name || "첨부파일")}</span>
+                    <span class="attachment-action">다운로드</span>
+                `;
+                downloadList.appendChild(link);
+            });
+            downloadSection.appendChild(downloadList);
+            wrapper.appendChild(downloadSection);
+        }
+
+        return wrapper;
     }
 
     function showTypingIndicator() {

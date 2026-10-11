@@ -4,7 +4,7 @@ import re
 from chatbot.vaccination import needs_vaccine_kind, vaccine_kind
 from chatbot.question_intent import asks_location, location_subject
 from chatbot.query_subject import AREA_PATTERN
-from chatbot.answer_goal import answer_goal
+from chatbot.answer_goal import answer_goal, asks_for_detail
 
 
 def _broad_support_request(message: str) -> bool:
@@ -211,12 +211,38 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     """생략된 후속 질문에만 직전 주제를 보충한다."""
     current = (user_message or "").strip()
     compact = re.sub(r"\s+", "", current)
-    is_follow_up = (
-        len(compact) <= 16 and (
-            compact.startswith(("그건", "그럼", "그거", "그것", "그러면", "그경우"))
-            or re.search(r"(은요|는요|도요|그때는|수수료는|비용은)[?？]?$", compact)
+    # "음식물쓰레기는?", "온라인 신청은?", "장애인은?"처럼 주제나
+    # 조건만 바꾼 짧은 문장은 직전 질문의 의도(언제/어디서/얼마/어떻게)를
+    # 생략한 후속 질문이다. 조사 뒤에 '요'가 없어도 문맥을 이어받는다.
+    bare_contrast_follow_up = bool(
+        len(compact) <= 20
+        and re.search(r"(?:은|는|도|말고|대신)(?:요)?[?？]?$", compact)
+    )
+    intent_only_follow_up = bool(
+        len(compact) <= 20
+        and re.match(
+            r"(?:신청|예약|비용|수수료|대상|조건|자격|일정|시간|장소|위치|연락처|전화번호|"
+            r"언제|어디서|어떻게)(?:은|는|이|가|도)?",
+            compact,
         )
     )
+    detail_follow_up = len(compact) <= 24 and asks_for_detail(current)
+    is_follow_up = (
+        len(compact) <= 20 and (
+            compact.startswith(("그건", "그럼", "그거", "그것", "그러면", "그경우", "그중",
+                                "다른", "또다른", "또뭐", "그외", "그밖", "이외"))
+            or re.search(r"(은요|는요|도요|그때는|수수료는|비용은)[?？]?$", compact)
+            or bare_contrast_follow_up
+            or intent_only_follow_up
+            or detail_follow_up
+        )
+    )
+    # 짧더라도 자체적으로 대상과 위치를 모두 밝힌 질문은 새 질문이다.
+    # 예: 직전 대화가 무엇이든 "보건소 위치는?"는 그대로 검색한다.
+    if asks_location(current) and not compact.startswith(("그건", "그럼", "그거", "그것", "그러면")):
+        location_words = ("보건소", "구청", "도서관", "주민센터", "행정복지센터", "발급기", "소방서")
+        if any(word in compact for word in location_words):
+            is_follow_up = False
     # A short reply to an actual contact choice can omit its work topic.
     # Complete questions such as '보건소 위치' keep their own topic.
     last_reply = next((str(m.get('content') or '') for m in reversed(history or [])

@@ -11,12 +11,13 @@ import re
 import time
 
 from chatbot.answer_completion import source_unit_complete, QUALIFICATION
-from chatbot.answer_goal import answer_goal, requested_goals, GOAL_WORDS
+from chatbot.answer_goal import answer_goal, requested_goals, GOAL_WORDS, asks_for_detail
 from chatbot.concise_answers import _source_units, MAX_BRIEF_LENGTH, condition_indices, SCOPE_FIELD, section_bounds, named_section_bounds, course_scope_result
 from chatbot.evidence import topic_support, is_answerable_document, is_service_source
 from chatbot.query_subject import compact, SERVICE_NAMES
 from chatbot.source_answers import strip_page_chrome, focused_section
 from chatbot.reference_answers import reference_answer
+from chatbot.program_answers import program_overview_answer
 from chatbot.source_pages import source_document
 from chatbot.model_plan_cache import model_plan_cache, plan_key
 
@@ -28,6 +29,7 @@ PROMPT = """질문에 맞는 공식 원문 항목을 한 자료에서 최대 3�
 서비스 종류 질문에는 실제 제공 업무를 고르세요. 소개 문구나 연락처만 고르지 마세요.
 대상·예외를 검토하고 대상 확인이 필요하면 clarify, 답할 수 있으면 answer, 근거가 없으면 unavailable.
 예정·미정·과거 일정은 현재 확정 정보가 아닙니다. 문장을 지어내지 마세요.
+기본은 최대 3개를 고르고, 사용자가 자세히·상세히 요청한 경우에만 최대 6개를 고르세요.
 JSON만 출력: {{"mode":"answer","source":0,"units":[1,2]}}. source는 자료 번호, units는 원문 번호(정수)입니다.
 질문: {question}
 자료:
@@ -157,8 +159,9 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
         return None
     source = plan.get("source")
     ids = plan.get("units")
+    max_units = 6 if asks_for_detail(query) else 3
     if (type(source) is not int or not 0 <= source < len(packets) or not isinstance(ids, list)
-            or not 1 <= len(ids) <= 3 or any(type(i) is not int for i in ids)):
+            or not 1 <= len(ids) <= max_units or any(type(i) is not int for i in ids)):
         return None
     packet = packets[source]
     units = packet["units"]
@@ -236,7 +239,7 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
         from chatbot.answer_enrichment import enrich_answer
         answer = enrich_answer(query, answer,
             packet.get('section_body') or '\n'.join(units), keywords, str(title))
-    if len(answer) > MAX_BRIEF_LENGTH:
+    if len(answer) > (900 if asks_for_detail(query) else MAX_BRIEF_LENGTH):
         return None
     return {"answer": answer, "is_clarification": False, "documents": [packet["document"]],
             "answer_details": f"{title}의 공식 안내 원문입니다.\n\n" + "\n".join("> " + line for line in packet["body"].splitlines())}
@@ -252,6 +255,9 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         reference = reference_answer(query, packet['document'], packet['body'], keywords, original)
         if reference:
             return reference
+        program = program_overview_answer(query, packet['document'], packet['body'])
+        if program:
+            return program
     for packet in candidates:
         packet['eligible_ids'] = eligible_ids(query, packet, keywords)
     context, packets = plan_context(candidates)
@@ -270,13 +276,14 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         if not allowed_ids:
             return None
         choices = []
+        max_units = 6 if asks_for_detail(query) else 3
         for source, packet in enumerate(packets):
             ids = [i for i in packet['visible_ids'] if i in packet['eligible_ids']]
             if ids:
                 choices.append({"type": "object", "properties": {
                     "mode": {"type": "string", "enum": ["answer", "clarify", "unavailable"]},
                     "source": {"type": "integer", "enum": [source]},
-                    "units": {"type": "array", "items": {"type": "integer", "enum": ids}, "maxItems": 3}},
+                    "units": {"type": "array", "items": {"type": "integer", "enum": ids}, "maxItems": max_units}},
                     "required": ["mode", "source", "units"], "additionalProperties": False})
         schema = choices[0] if len(choices) == 1 else {"oneOf": choices}
         selector = llm.model_copy(update={"format": schema, "temperature": 0, "num_predict": 100})

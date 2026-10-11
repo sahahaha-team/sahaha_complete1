@@ -25,9 +25,14 @@ _PLACE_ENTITY = re.compile(
 
 def asks_location(query: str) -> bool:
     # Do not concatenate '공장 소음' into a spurious '장소' request.
+    # A bare connective ending such as '프로그램이 있다고 하는데' is not a
+    # location request. '데' denotes a place only when it carries a place
+    # particle/question (하는 데가/데에서/데 어디), while '곳' is explicit.
     return bool(re.search(
         r"어디|(?:장소|위치|주소)(?:\s|[?？!]|$|[은는이가을를와과도]|알려)|"
-        r"(?:하는|할|받는|맞는|접종|발급|신청)\s*(?:곳|데)", query or '',
+        r"(?:하는|할|받는|맞는|접종|발급|신청)\s*곳|"
+        r"(?:하는|할|받는|맞는|접종|발급|신청)\s*데(?:가|는|에서|에|로|인지|어디)",
+        query or '',
     ))
 
 

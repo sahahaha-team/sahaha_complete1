@@ -39,6 +39,9 @@ from chatbot.verified_facts import answer_verified_table_question
 from chatbot.faq_targets import match_official_page
 from chatbot.source_answers import build_source_answer
 from chatbot.emergency_guidance import answer_emergency_question
+from chatbot.office_basics import answer_office_basics
+from chatbot.waste_schedule import answer_waste_schedule
+from chatbot.program_answers import answer_program_alternatives
 from chatbot.query_subject import normalize_query
 from chatbot.response_helpers import resolve_clarification_reply
 from chatbot.concise_answers import concise_source_answer, scope_question
@@ -196,8 +199,10 @@ class ChatBot:
                 pending = None
             if pending:
                 return resolve_clarification_reply(message, pending)
-            history = list(self._memory_history.get(session_id, [])) if self.db is None else []
-            return build_contextual_search_query(message, history)
+        # 영구 저장 모드에서도 Supabase의 같은 세션 이력을 읽어야 짧은 후속
+        # 질문이 직전 질문의 주제와 의도를 이어받을 수 있다.
+        history = self._get_history_safe(session_id)
+        return build_contextual_search_query(message, history)
 
     def _clarification_result(self, session_id: str, user_message: str, query: str, clarification: dict) -> dict:
         with self._history_lock:
@@ -271,6 +276,20 @@ class ChatBot:
                 "suggested_questions": ["사하구 민원 안내해줘", "사하구 복지 지원 알려줘"],
             }
 
+        # 본청 위치·주소는 담당 업무를 좁힐 필요가 없는 고정 기본정보다.
+        # DB 원문 인덱스가 일시적으로 비어 있어도 공식 위치·대표전화 출처로 즉답한다.
+        office_basics = answer_office_basics(user_message)
+        if office_basics is not None:
+            self._clear_pending_clarification(session_id)
+            self._save_conversation_safe(session_id, "user", user_message, search_query=user_message)
+            self._save_conversation_safe(
+                session_id,
+                "assistant",
+                office_basics["answer"],
+                sources=json.dumps([source["url"] for source in office_basics["sources"]], ensure_ascii=False),
+            )
+            return office_basics
+
         resolved_message = self.contextual_message(session_id, user_message)
         self._clear_pending_clarification(session_id)
         from chatbot.contact_directory import contact_responder
@@ -279,6 +298,17 @@ class ChatBot:
             self.remember_contact_exchange(session_id, user_message, contact_result)
             return contact_result
 
+        program_alternatives = answer_program_alternatives(resolved_message, current_query=user_message)
+        if program_alternatives is not None:
+            # 다음에 프로그램 이름만 답해도 선택할 수 있도록, 합쳐진 과거
+            # 질문이 아니라 이번 사용자의 표현을 다음 문맥으로 저장한다.
+            self._save_conversation_safe(session_id, "user", user_message, search_query=user_message)
+            self._save_conversation_safe(
+                session_id, "assistant", program_alternatives["answer"],
+                sources=json.dumps([source["url"] for source in program_alternatives["sources"]], ensure_ascii=False),
+            )
+            return program_alternatives
+
         # 1-2. 너무 포괄적인 요청은 임의로 답하지 않고 먼저 범위를 좁힌다.
         clarification = build_clarification(resolved_message)
         if clarification:
@@ -286,7 +316,11 @@ class ChatBot:
 
         # 비용표처럼 한 페이지에 여러 사업의 금액이 있는 경우, 오늘 확인된
         # 공식 표의 해당 행만 읽어 답한다. 행 구조가 바뀌면 추측하지 않는다.
-        verified = answer_verified_table_question(resolved_message, self.retriever.db.client)
+        # 생활쓰레기 배출 일정은 검증된 공식 표를 우선 사용한다. DB 원문이
+        # 일시적으로 비어 있어도 사용자에게 내부 검색 실패 문구를 노출하지 않는다.
+        verified = answer_waste_schedule(resolved_message)
+        if verified is None:
+            verified = answer_verified_table_question(resolved_message, self.retriever.db.client)
         if verified is not None:
             verified_details, _ = mask_personal_info(verified.get("answer_details", ""), use_ner=False)
             self._save_conversation_safe(session_id, "user", user_message, search_query=resolved_message)

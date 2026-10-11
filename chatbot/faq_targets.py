@@ -11,7 +11,7 @@ from openpyxl import load_workbook
 from chatbot.question_intent import asks_opening_hours, asks_location
 from chatbot.query_subject import fallback_keywords
 from chatbot.vaccination import vaccine_place_page
-from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH
+from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH, question_similarity
 
 WORKBOOK = Path(__file__).resolve().parents[1] / "data" / "official_sources" / "사하구 홈페이지_100개 질문.xlsx"
 
@@ -25,6 +25,58 @@ def find_official_question(question: str) -> dict | None:
     """FAQ similarity is a navigation hint, never proof of a draft answer."""
     matches = [index.find_best(question, min_score=0.88) for index in _question_indexes()]
     return max((match for match in matches if match), key=lambda match: match['score'], default=None)
+
+
+_PROGRAM_CUES = ("프로그램", "강좌", "교실", "체험", "교육")
+_GENERIC_PROGRAM_WORDS = {
+    "사하구", "보건소", "프로그램", "강좌", "교실", "체험", "교육", "운영",
+    "예약", "신청", "이용", "관련", "안내", "설명", "서비스", "어떤", "무슨",
+}
+
+
+def _program_anchor(value: str) -> str:
+    anchor = _normalize(value)
+    for suffix in ("인가요", "하나요", "있나요", "운영하나요", "알려줘", "설명해줘",
+                   "에서", "으로", "이나", "도", "은", "는", "을", "를", "이", "가"):
+        if len(anchor) > len(suffix) + 1 and anchor.endswith(suffix):
+            anchor = anchor[:-len(suffix)]
+            break
+    return anchor
+
+
+def find_program_service(question: str) -> dict | None:
+    """Match a named/program-area question to one unambiguous stored service."""
+    normalized = _normalize(question)
+    if not any(cue in normalized for cue in _PROGRAM_CUES):
+        return None
+    candidates = []
+    for index in _question_indexes():
+        for item in index.items:
+            searchable = " ".join([
+                str(item.get("question") or ""),
+                *(str(value) for value in item.get("aliases") or []),
+                *(str(value) for value in item.get("keywords") or []),
+            ])
+            if not any(cue in _normalize(searchable) for cue in _PROGRAM_CUES):
+                continue
+            anchors = {
+                _program_anchor(value)
+                for value in item.get("keywords") or []
+                if _program_anchor(value) and _program_anchor(value) not in _GENERIC_PROGRAM_WORDS
+            }
+            hits = {anchor for anchor in anchors if len(anchor) >= 2 and anchor in normalized}
+            if not hits:
+                continue
+            variants = [item.get("question", ""), *(item.get("aliases") or [])]
+            similarity = max(question_similarity(question, value) for value in variants if value)
+            score = sum(len(hit) for hit in hits) + max(map(len, hits)) + similarity
+            candidates.append((score, max(map(len, hits)), item))
+    if not candidates:
+        return None
+    candidates.sort(key=lambda row: (-row[0], -row[1], int(row[2].get("id", 0))))
+    if len(candidates) > 1 and candidates[0][0] == candidates[1][0]:
+        return None
+    return candidates[0][2]
 
 
 def _normalize(question: str) -> str:
@@ -51,6 +103,9 @@ def _targets() -> list[tuple[str, str]]:
 
 def match_official_page(question: str) -> str | None:
     normalized = _normalize(question)
+    program = find_program_service(question)
+    if program and str(program.get('url', '')).startswith('https://www.saha.go.kr/'):
+        return str(program['url'])
     vaccine_url = vaccine_place_page(question)
     if vaccine_url:
         return vaccine_url

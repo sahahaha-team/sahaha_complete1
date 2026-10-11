@@ -2,9 +2,10 @@ import unittest
 from unittest.mock import patch
 
 from chatbot.answer_completion import complete_source_units, starts_label
+from chatbot.answer_goal import answer_goal
 from chatbot.concise_answers import concise_source_answer
 from chatbot.faq_targets import match_official_page
-from chatbot.question_intent import asks_opening_hours, has_opening_hours
+from chatbot.question_intent import asks_location, asks_opening_hours, has_opening_hours
 from chatbot.query_subject import fallback_keywords
 from chatbot.source_answers import build_source_answer
 
@@ -18,6 +19,23 @@ HEALTH_BODY = ('보건소 정보\n진료시간 :\n'
 def brief(query, body=HEALTH_BODY, keywords=None):
     quote = '\n'.join('> ' + line for line in body.splitlines())
     return concise_source_answer(query, quote, [{'metadata': {'url': HEALTH_URL}}], keywords or {'보건소'})
+
+
+class LocationIntentTests(unittest.TestCase):
+    def test_connective_ending_is_not_mistaken_for_a_place(self):
+        for query in (
+            '도서관 관련 프로그램이 있다고 하는데',
+            '복지 서비스가 있다고 하는데',
+            '교육을 운영한다고 하는데',
+        ):
+            with self.subTest(query=query):
+                self.assertFalse(asks_location(query))
+                self.assertNotEqual('location', answer_goal(query))
+
+    def test_explicit_place_expressions_still_request_location(self):
+        for query in ('신청하는 데가 어디야?', '교육받는 곳 알려줘', '접종하는 데에서 신청해?'):
+            with self.subTest(query=query):
+                self.assertTrue(asks_location(query))
 
 
 class OpeningHoursTests(unittest.TestCase):
