@@ -15,11 +15,32 @@ GOAL_WORDS = {
     "location": ("장소", "주소", "위치", "방문", "기관"),
     "hours": ("시간", "휴무", "평일", "주말"),
     "services": ("내용", "운영", "진료", "검사", "상담", "제공", "지원", "발급", "접수", "신청", "예약"),
+    "definition": ("이란", "말합니다", "제도", "사업", "목적", "의미", "위함"),
+    "precautions": ("해야", "마세요", "하십시오", "피하", "자제", "주의", "금지", "대피", "행동", "요령"),
+    "necessity": ("공동이용", "제출", "생략", "않", "필요", "확인"),
 }
 
 
 def answer_goal(query: str) -> str | None:
     compact_query = query.replace(' ', '')
+    if re.search(r'이미.*서류|기관.*가지고.*서류|서류.*다시.*제출|중복.*제출', compact_query):
+        return 'necessity'
+    if re.search(r'가입.*(?:해야|필요)|따로가입', compact_query):
+        return 'necessity'
+    if re.search(r'종류|어떤급여|급여에는무엇', compact_query):
+        return 'services'
+    if re.search(r'무엇인가|무엇이고|뭐야|뭐예요|이란|어떤제도|어떤사업', compact_query):
+        return 'definition'
+    if re.search(r'마주치|행동|주의사항|폭염.*주의|예방수칙', compact_query):
+        return 'precautions'
+    if re.search(r'버려야|배출해야|물기를|버리는', compact_query):
+        return 'method'
+    if re.search(r'감경|할인|자진납부', compact_query):
+        return 'cost'
+    if re.search(r'무료|무상', query) and re.search(r'수거|대여|대출', query) and not re.search(r'방법|어떻게|신청',query):
+        return 'cost'
+    if re.search(r'발급\s*받을\s*수|가지\s*않고.*발급',query) and not re.search(r'어떻게|방법|절차',query):
+        return 'services'
     if (any(word in compact_query for word in ("어떤서비스", "어떤진료", "무슨서비스", "어떤지원"))
             or re.search(r'(?:어떤|무슨).{0,20}(?:서비스|진료)|서비스(?:에는|는|가)?(?:무엇|뭐|어떤|종류)', compact_query)):
         return "services"
@@ -27,6 +48,8 @@ def answer_goal(query: str) -> str | None:
     if (link_requested or ("어디" in query and any(word in query for word in (
             "확인", "찾아볼", "찾아보", "조회", "볼 수", "볼수", "보나요", "현황도", "지도", "사이트")))):
         return "reference"
+    if re.search(r'인터넷|온라인|홈페이지', query) and re.search(r'찾아볼|조회할', query):
+        return 'reference'
     if asks_opening_hours(query):
         return "hours"
     if asks_location(query):
@@ -35,7 +58,7 @@ def answer_goal(query: str) -> str | None:
         return "documents"
     if any(word in query for word in ("준비물", "구비", "준비해야", "필요한 서류")):
         return "documents"
-    if any(word in query for word in ("비용", "수수료", "요금", "얼마", "금액")) and not any(word in query for word in ("자주", "무료", "무상", "부담")):
+    if any(word in query for word in ("비용", "수수료", "요금", "얼마", "금액", "얼마나 지원")) and not any(word in query for word in ("자주", "무료", "무상", "부담")):
         return "cost"
     if any(word in query for word in ("대상", "조건", "자격", "누가", "누구", "몇 살", "몇살")):
         return "eligibility"
@@ -43,6 +66,12 @@ def answer_goal(query: str) -> str | None:
         return "schedule"
     if any(word in query for word in ("방법", "어떻게", "하는 법", "받는 법", "신청", "접수", "신고", "발급")):
         return "method"
+    if re.search(r'인터넷|온라인|기부', query):
+        return 'method'
+    if re.search(r'(?:프로그램|사업|서비스|진료).*(?:운영하|운영해|하고\s*있)', query):
+        return 'services'
+    if re.search(r'도움|지원|검사|상담|교육|진료|재활|접종', query) and re.search(r'받을|이용|가능|있나요', query):
+        return 'services'
     if "받을 수" in query:
         return "eligibility"
     return None
@@ -51,11 +80,19 @@ def answer_goal(query: str) -> str | None:
 def requested_goals(query: str) -> tuple[str, ...]:
     """Keep both requested facility fields when hours and location are asked."""
     primary = answer_goal(query)
-    if primary == 'reference':
+    if primary in ('reference','necessity'):
         return (primary,)
     goals = [primary] if primary else []
     if asks_opening_hours(query) and 'hours' not in goals:
         goals.append('hours')
     if asks_location(query) and 'location' not in goals:
         goals.append('location')
+    if primary != 'reference':
+        extra = [('documents', r'(?:준비|구비|필요(?:한)?).*서류|서류.*(?:필요|무엇|뭐|지참)|준비물|가져가|지참'),
+                 ('eligibility', r'누가|누구|대상|조건|자격|몇\s*살'),
+                 ('schedule', r'언제|주기|날짜'),
+                 ('method', r'어떻게|방법')]
+        for goal, pattern in extra:
+            if goal not in goals and re.search(pattern, query) and not (primary in ('precautions','hours','location') and goal == 'method'):
+                goals.append(goal)
     return tuple(goals)

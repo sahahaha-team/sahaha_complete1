@@ -479,9 +479,9 @@ class HybridRetriever:
         originals = {}
         if urls:
             try:
-                rows = self.db.client.table("raw_pages").select(
-                    "url,last_checked_at,content,attachments"
-                ).in_("url", list(set(urls))).execute().data or []
+                from database_db.raw_pages import read_raw_pages
+                rows = read_raw_pages(self.db.client,
+                    'url,last_checked_at,content,raw_html,attachments',urls=set(urls))
                 originals = {row["url"]: row for row in rows}
             except Exception as exc:
                 logger.warning("출처 확인 시각 조회 실패: %s", exc)
@@ -523,7 +523,8 @@ class HybridRetriever:
                         # change it while the background index still holds
                         # an older snapshot with a recent check timestamp.
                         from chatbot.source_answers import strip_page_chrome
-                        doc['content'] = strip_page_chrome(original.get('content') or '')
+                        from chatbot.official_content import official_html_text
+                        doc['content'] = strip_page_chrome(official_html_text(original.get('raw_html') or '') or original.get('content') or '')
                         doc['metadata']['attachments'] = original.get('attachments') or []
                 kept.append(doc)
         return kept

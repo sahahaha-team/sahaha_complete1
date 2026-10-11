@@ -2,6 +2,7 @@
 
 import logging
 import re
+from urllib.parse import urlparse, parse_qsl
 
 logger = logging.getLogger(__name__)
 
@@ -50,4 +51,30 @@ def mask_personal_info(text: str, use_ner: bool = True) -> tuple[str, list[str]]
             found.extend(ner_found)
         except Exception as exc:
             logger.warning("NER 마스킹 호출 실패 (정규식 결과만 반환): %s", exc)
+    return masked, found
+
+
+def mask_answer(text: str) -> tuple[str, list[str]]:
+    """Keep numeric identifiers in official page/file URLs, mask all prose.
+
+    Only known administrative identifier query parameters are exempt. A mobile
+    number or email in a URL/query string still cannot bypass output masking.
+    Input detection is unchanged.
+    """
+    allowed_params = {'mId', 'mid', 'atchFileId', 'fileSn', 'fileNo', 'nttId', 'nttNo', 'bbsId', 'idx'}
+    saved = []
+    def protect(match):
+        value = match.group(0)
+        parsed = urlparse(value)
+        host = (parsed.hostname or '').lower()
+        if (parsed.scheme != 'https' or not (host == 'saha.go.kr' or host.endswith('.saha.go.kr'))
+                or '@' in parsed.netloc or parsed.fragment
+                or any(key not in allowed_params for key, _ in parse_qsl(parsed.query))):
+            return value
+        saved.append(value)
+        return f'OFFICIALURLTOKEN{chr(65 + len(saved) - 1)}END'
+    protected = re.sub(r'https?://[^\s<>\[\]()`]+', protect, text or '')
+    masked, found = mask_personal_info(protected, use_ner=False)
+    for index, url in enumerate(saved):
+        masked = masked.replace(f'OFFICIALURLTOKEN{chr(65 + index)}END', url)
     return masked, found

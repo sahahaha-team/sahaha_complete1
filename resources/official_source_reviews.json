@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+    "reviewed_at": "2026-10-11",
+    "marker": "1\\.1일\\s*기준\\s*:\\s*5월\\s*말",
+    "unverified_fields": ["schedule"],
+    "reason": "공시 일정의 기준연도가 없고 2026년 다른 공식 공시 안내와 일치하지 않음. 사하구 최신 공고 확인 전 일정 안내 보류.",
+    "verification_reference": "https://www.gb.go.kr/Main/open_contents/section/finace/page.do?LARGE_CODE=1070&MEDIUM_CODE=10&SMALL_CODE=10&mnu_uid=15368",
+    "user_warning": "공식 원문의 공시 일정은 최신 공고와 대조가 필요해 안내를 보류했습니다."
+  },
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+    "reviewed_at": "2026-10-11",
+    "marker": "공인인증서를 발급 받아야",
+    "unverified_fields": ["method"],
+    "reason": "정부24 본인인증을 공인인증서 사전 발급만으로 안내하는 예전 이용방법. 현재 공식 정부24의 간편·공동·금융인증 안내와 다름.",
+    "verification_reference": "https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13110000030&HighCtgCD=A01010",
+    "user_warning": "이 페이지의 세부 이용방법은 오래된 안내이므로, 현재 인증·발급 방법은 정부24에서 확인해 주세요."
+  }
+]

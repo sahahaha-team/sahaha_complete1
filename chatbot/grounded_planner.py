@@ -12,7 +12,7 @@ import time
 
 from chatbot.answer_completion import source_unit_complete, QUALIFICATION
 from chatbot.answer_goal import answer_goal, requested_goals, GOAL_WORDS
-from chatbot.concise_answers import _source_units, MAX_BRIEF_LENGTH, condition_indices, SCOPE_FIELD, section_bounds, named_section_bounds, course_scope_result
+from chatbot.concise_answers import _source_units, MAX_BRIEF_LENGTH, condition_indices, SCOPE_FIELD, section_bounds, named_section_bounds, topic_section_bounds, course_scope_result
 from chatbot.evidence import topic_support, is_answerable_document, is_service_source
 from chatbot.query_subject import compact, SERVICE_NAMES
 from chatbot.source_answers import strip_page_chrome, focused_section
@@ -53,7 +53,7 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
         if section == "":
             continue
         units = _source_units((section if section is not None else body).splitlines())
-        scope_start, scope_end = named_section_bounds(units, query) or (0, len(units))
+        scope_start, scope_end = topic_section_bounds(units, query, keywords) or (0, len(units))
         start, end = scope_start, scope_end
         # A long page's first paragraphs are often another service. Select a
         # contiguous window around the strongest substantive topic, preserving
@@ -70,7 +70,7 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
         if units:
             packets.append({"document": doc, "units": units, "body": body,
                             "section_body": section if section is not None else body,
-                            "window": range(start, end)})
+                            "window": range(start, end), 'scope': (scope_start,scope_end)})
     return packets
 
 
@@ -79,7 +79,7 @@ def eligible_ids(query: str, packet: dict, keywords: set[str]) -> set[int]:
     units = packet['units']
     valid = {i for i, unit in enumerate(units) if source_unit_complete(unit) and not QUALIFICATION.match(unit) and
              (matches_goal(query, unit) or SCOPE.match(unit))}
-    requested_section = named_section_bounds(units, query)
+    requested_section = packet.get('scope') or topic_section_bounds(units, query, keywords)
     if requested_section:
         valid = {i for i in valid if requested_section[0] <= i < requested_section[1]}
     if '전자민원' in keywords and answer_goal(query) == 'services':
@@ -102,6 +102,11 @@ def matches_goal(query: str, unit: str) -> bool:
 
 
 def matches_field(query: str, goal: str | None, unit: str) -> bool:
+    if re.search(r'^#{2,6} ', unit):
+        return False
+    if goal in ('cost', 'services', 'eligibility', 'definition', 'precautions','necessity'):
+        from chatbot.structured_answers import field_matches
+        return field_matches(goal, unit)
     if goal == 'location':
         from chatbot.question_intent import has_location_unit
         return has_location_unit(unit)
@@ -212,6 +217,9 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
         return None
     if not course_scope and not any(matches_goal(query, unit) for unit in selected):
         return None
+    if not course_scope and any(not any(matches_field(query, field, unit) for unit in selected)
+                                for field in requested_goals(query) if field not in ('hours','location')):
+        return None
     if goal == "location" and len(requested_goals(query)) == 1:
         from chatbot.question_intent import has_location_unit
         if not any(has_location_unit(unit) for unit in selected):
@@ -252,6 +260,24 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         reference = reference_answer(query, packet['document'], packet['body'], keywords, original)
         if reference:
             return reference
+    from chatbot.structured_answers import structured_brief
+    for packet in candidates:
+        if (answer_goal(query) == 'documents' and 'mId=0104020000' in str(
+                (packet['document'].get('metadata') or {}).get('url'))):
+            # The existing passport reader validates the whole required set;
+            # choosing just one document would be a misleading short answer.
+            from chatbot.concise_answers import _passport
+            brief = _passport(query, packet['section_body'])
+            if brief:
+                if ('유효기간 남은 여권은 지참' in packet['body'] and '기존 여권' not in brief
+                        and not re.search(r'미성년|아이|자녀|긴급|관용',query)):
+                    brief += '\n재발급인 경우, 유효기간이 남은 기존 여권도 지참하세요.'
+                return {'answer':brief,'documents':[packet['document']],
+                        'answer_details':'\n'.join('> '+u for u in packet['body'].splitlines()),
+                        'is_clarification':False,'answer_method':'structured_source'}
+        result = structured_brief(query, packet['document'], packet['section_body'], keywords)
+        if result:
+            return result
     for packet in candidates:
         packet['eligible_ids'] = eligible_ids(query, packet, keywords)
     context, packets = plan_context(candidates)

@@ -31,22 +31,28 @@ def sentence_complete(text: str) -> bool:
 
 def source_unit_complete(text: str) -> bool:
     """Allow factual label/value lists, but not unfinished Korean clauses."""
-    if not text or OMISSION in text or not balanced(text):
+    if (not text or text.startswith('#') or text.rstrip().endswith(('?', '？'))
+            or OMISSION in text or not balanced(text)):
+        return False
+    if re.search(r'[:：]\s*\[[^\]]+\]\s*$', text):
+        return False  # A table caption wrapped in brackets has no factual value.
+    if re.search(r'[:：]\s*(?:아래|다음)\s*(?:품목|내용|표)(?:\([^)]*\))?\s*$',text):
         return False
     plain = text.strip().rstrip('.。').replace('**', '')
     if sentence_complete(text):
         return True
     if _DANGLING.search(plain):
         return False
-    label_value = bool(re.match(r"[^:：]{1,30}[:：]\s*\S", plain))
+    label_value = bool(re.match(r"[^:：]{1,30}[:：]\s*\S", plain) or re.match(r'[^:：]{1,60} — [^:：]{1,80}[:：]\s*\S',plain))
     nominal = re.sub(r"\s*\([^()]*\)\s*$", "", plain)
     noun_list = bool(re.search(r"(?:가능|불가|금지|제출|접수|방문상담|신청|예약|지참|제외|포함|부과|배출|운영|지원|문의|필요|필수|이내|이상|미만|수거|처리|상담|발급|제공|기여|있음|없음|않음|됨|함)$", nominal))
+    noun_list = noun_list or bool(re.search(r'(?:말 것|할 것|피할 것|받을 수 있는 제도|거주할 수 있는 제도|표기|기재|가능\s*함)$', nominal))
     return label_value or noun_list
 
 
 def can_continue(text: str) -> bool:
     """Only join wrapped prose/parentheses, not unrelated table cells."""
-    if OMISSION in text or sentence_complete(text):
+    if text.startswith('#') or OMISSION in text or sentence_complete(text):
         return False
     plain = text.strip().replace('**', '')
     return (not balanced(text) or bool(_DANGLING.search(plain))) and len(plain) >= 6
@@ -64,7 +70,9 @@ def complete_source_units(lines: list[str]) -> list[str]:
         line = re.sub(r"\.\s*\.$", ".", line.strip())
         if not line:
             continue
-        if (units and not source_unit_complete(units[-1]) and len(line) < 80
+        if line.startswith('#'):
+            units.append(line)
+        elif (units and not source_unit_complete(units[-1]) and len(line) < 80
                 and index + 1 < len(lines)
                 and re.match(r'^(?:[을를은는이가]|으로|로)\s', lines[index + 1].strip())):
             # HTML anchors often split a sentence into prefix / link name /

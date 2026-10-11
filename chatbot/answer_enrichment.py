@@ -14,7 +14,7 @@ def _kind(unit: str) -> str | None:
         return 'hours'
     if has_location_unit(unit):
         return 'location'
-    if re.match(r'^(?:신청|접수|등록|이용|예약)방법\s*[:：]', unit):
+    if re.match(r'^(?:신청|접수|등록|이용|예약)?방법\s*[:：]', unit):
         return 'method'
     if (re.match(r'^(?:운영|사업|서비스|진료|지원|상담)내용\s*[:：]', unit)
             or ('상담' in unit and any(word in unit for word in ('지원', '제공', '보조제')))
@@ -109,6 +109,8 @@ def enrich_answer(query: str, answer: str, body: str, keywords: set[str], title:
                 or len(units[i]) > 180):
             continue
         score = priorities[kind] + sum(w in units[i] for w in ('상담', '보조제', '지원')) - abs(i-anchor) / 100
+        if kind == 'services' and ' — ' not in units[i]:
+            score += 10  # Prefer a short service description over a process-table row.
         candidates.append((score, i, kind))
     added = set()
     for _, i, kind in sorted(candidates, reverse=True):

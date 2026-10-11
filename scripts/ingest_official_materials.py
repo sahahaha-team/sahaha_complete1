@@ -28,6 +28,7 @@ from database_db.vector_store import VectorStore
 from processor.data_cleaner import CleanedChunk, DataCleaner
 from processor.metadata_defaults import fallback_keywords
 from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH
+from chatbot.faq_targets import current_official_url
 
 logger = logging.getLogger(__name__)
 DEFAULT_DIR = Path("data/official_sources")
@@ -54,7 +55,7 @@ def workbook_targets(path: Path) -> list[tuple[str, str]]:
     targets = []
     seen = set()
     for _number, question, _proposed_answer, url in sheet.iter_rows(min_row=2, values_only=True):
-        url = str(url or "").strip()
+        url = current_official_url(str(url or "").strip())
         if not question or not _official_url(url):
             logger.warning("공식 URL이 없는 질문 제외: %s", question)
             continue
@@ -72,7 +73,8 @@ def official_page_targets(source_dir: Path) -> list[tuple[str, str]]:
         (item['question'], item['url']) for item in OfficialFAQIndex().items]
     targets.extend((item['question'], item['url'])
                    for item in OfficialFAQIndex(PRIORITY_SERVICE_PATH).items)
-    return list({url: (question, url) for question, url in targets if _official_url(url)}.values())
+    return list({current_official_url(url): (question, current_official_url(url))
+                 for question, url in targets if _official_url(url)}.values())
 
 
 def _fetch_page(target: tuple[str, str]):

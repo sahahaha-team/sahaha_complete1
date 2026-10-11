@@ -65,6 +65,11 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
+    if ('수수료' in compact and '면제' in compact and not any(w in compact for w in
+            ('등본','초본','인감','서명','가족관계','출입국','과세증명','공시지가'))):
+        return clarification_question('어떤 민원이나 서류의 수수료인가요? **등·초본·인감증명서 등 종류**에 따라 면제 조건이 달라요.',
+            ['기초생활수급자 주민등록등본 수수료 면제 조건','한부모가족 인감증명서 수수료 면제 조건'],
+            ['등본','초본','인감','가족관계','출입국','과세','신고','허가'])
 
     from chatbot.official_faq import required_faq_ids
     if required_faq_ids(user_message) == {1, 2}:

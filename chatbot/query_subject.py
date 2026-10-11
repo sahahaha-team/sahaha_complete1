@@ -13,14 +13,20 @@ WEAK_WORDS.update({"준비물", "준비", "서류", "구비서류", "구비", "�
 # These describe the request, not the administrative service. They are checked
 # against answer fields later, rather than required in every retrieval chunk.
 WEAK_WORDS.update("이용 제공 서비스 날짜 기준 각종 제도 도움 때문 어려움 부담 혜택 종류 비용 요금 수수료 금액 기간 시간 운영 대상 조건 자격 부모 특보 절약 주기".split())
+WEAK_WORDS.update("법정 한도 부당 처분 도심 의심 행동 발령 사업 건강 검사 상담 비상 시설 문제".split())
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
-WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철"}
+WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철", "중개수수료": "중개보수", "빌릴": "대여", "빌리": "대여", "감면": "감경"}
 # Keep names intact when morphology splits a service into generic nouns. These
 # are vocabulary, not answers or question-to-URL exceptions.
 SERVICE_NAMES = ("전입신고", "주민등록등본", "주민등록초본", "정부24", "전자민원",
     "정보공개청구", "건강진단결과서", "물리치료", "방문건강", "건강생활지원센터",
     "국가암검진", "조상땅", "탄소포인트", "탄소중립포인트", "소아암", "암환자",
-    "대형폐기물", "무인민원발급", "인플루엔자", "폐렴구균", "작은도서관")
+    "대형폐기물", "무인민원발급", "인플루엔자", "폐렴구균", "작은도서관",
+    "장애인연금", "장애수당", "장애아동수당", "아이돌봄", "주민세", "구직", "구인",
+    "임산부등록", "영양플러스", "고위험임산부", "영유아건강검진", "대사증후군",
+    "심뇌혈관질환", "고향사랑기부", "민간임대주택", "중개보수", "디지털", "컴퓨터",
+    "민방위", "지진", "옥외대피", "치매", "결핵", "오존경보", "멧돼지", "자전거",
+    "공공근로", "기초생활보장", "법정감염병", "건강검진", "검사비용", "행정정보공동이용", "냉장고", "세탁기", "출산축하", "긴급복지", "정신건강")
 
 
 def normalize_query(query: str) -> str:
@@ -59,7 +65,15 @@ def subject_query(query: str) -> str:
 def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     text = compact(subject_query(query))
     names = {name for name in SERVICE_NAMES if name in text}
+    if re.search(r'이미.*서류|기관.*가지고.*서류|서류.*다시.*제출|중복.*제출', compact(query)):
+        names.add('행정정보공동이용')
     topics = substantive_keywords(words)
+    if '정신건강' in names and '우울감' in topics:
+        topics.discard('우울감')  # Symptom wording must not reject the mental-health service.
+    if not topics - {'보건소'} and re.search(r'검사.{0,3}(?:비용|수수료|요금)', text):
+        names.add('검사비용')  # The fee table remains a real service subject.
+    if '민방위' in names and '대피' in text and '급수' in text:
+        topics -= {'대피','급수'}  # A combined facility inquiry can first narrow the location.
     from chatbot.answer_goal import answer_goal
     if answer_goal(query) == 'reference':
         # Requested display formats are not extra services that every body
@@ -72,12 +86,30 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     if names:
         topics = {word for word in topics if not any(word in name for name in names)} | names
         topics -= {'홈페이지', '웹사이트', '사이트'}
+        if names.intersection({'디지털','컴퓨터'}):
+            topics.discard('교육')
+            topics.discard('컴퓨터')
+            topics.add('디지털')
+        if '건강검진' in names:
+            topics.discard('국가')
+        if '주민세' in names:
+            topics -= {'인터넷', '종업원', '사업소'}
+        if '행정정보공동이용' in names:
+            topics -= {'행정', '기관', '서류', '제출'}
+        if names.intersection({'결핵', '치매', '대사증후군', '영유아건강검진', '심뇌혈관질환'}):
+            topics -= {'검사', '건강', '상담', '관리', '예방', '질환', '혈압', '당뇨', '뇌혈관'}
     if "정부24" in names:
         topics.discard("구청")  # '구청에 가지 않고' is not another service.
     elif len(topics) > 1:
         topics.discard("구청")
     if "방문건강" in names:
         topics -= {"거동", "불편", "관리"}
+    if len(topics) > 1:
+        topics.discard('보건소')
+    if '출산축하' in names:
+        topics -= {'아이', '이상'}
+    if '긴급복지' in names:
+        topics.discard('생계')
     if "조상" in topics and "땅" in query:
         topics.discard("조상")
         topics.add("조상땅")

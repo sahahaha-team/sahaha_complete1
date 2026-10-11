@@ -375,8 +375,22 @@ class ChatBot:
             if concise["is_clarification"]:
                 return self._clarification_result(session_id, user_message, search_query, concise)
             method = concise.get('answer_method') or ("source_extract" if SOURCE_ONLY_ANSWERS else "source_fallback")
-        answer, _ = mask_personal_info(concise["answer"], use_ner=False)
-        details, _ = mask_personal_info(concise.get("answer_details", ""), use_ner=False)
+        from chatbot.privacy import mask_answer
+        answer, _ = mask_answer(concise["answer"])
+        details, _ = mask_answer(concise.get("answer_details", ""))
+        from chatbot.source_warnings import dated_invitation_warning
+        warning = dated_invitation_warning(details)
+        source_notes = list(dict.fromkeys((d.get('metadata') or {}).get('source_warning')
+                            for d in used_results if (d.get('metadata') or {}).get('source_warning')))
+        if source_notes:
+            warning = ' '.join(source_notes)
+        if warning:
+            if len(answer) + len(warning) + 2 > 480:
+                answer = re.sub(r'^\*\*[^\n]+\*\*\s*\n', '', answer)
+            if len(answer) + len(warning) + 2 <= 480:
+                answer += '\n\n' + warning
+            else:
+                answer = '현재 일정은 확인이 필요합니다. 아래 공식 원문에서 안내 내용과 기준연도를 함께 확인해 주세요.'
         _context, sources = self.retriever.format_context(search_query, used_results)
         for source in sources:
             if source.get("category") != "staff_directory":
@@ -395,8 +409,8 @@ class ChatBot:
             sources=json.dumps([source["url"] for source in sources], ensure_ascii=False))
         return {
             "answer": answer, "answer_details": details, "sources": sources, "is_clarification": False,
-            "degraded": degraded, "degraded_reason": degraded_reason,
-            "evidence": {"status": "official", "label": "공식 자료 핵심 안내",
+            "degraded": degraded or bool(concise.get('degraded')), "degraded_reason": 'missing_requested_field' if concise.get('degraded') else degraded_reason,
+            "evidence": {"status": "insufficient" if concise.get('degraded') else "official", "label": "요청 항목 확인 필요" if concise.get('degraded') else "원문 최신 확인 필요" if warning else "공식 자료 핵심 안내",
                          "official_source_count": len(sources), "answer_method": method},
             "suggested_questions": build_suggested_questions(search_query, sources),
         }

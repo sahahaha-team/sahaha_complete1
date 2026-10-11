@@ -66,6 +66,9 @@ def is_listing_document(doc: dict) -> bool:
     if "/bbs/list.do" in parsed.path:
         return True
     compact = re.sub(r"\s+", "", str(doc.get("content") or ""))
+    if parsed.path.endswith('/contents.do') and re.search(
+            r'(?:진료내용|지원내용|신청방법|검진수수료|진료대상).{0,150}[가-힣]{4}', compact):
+        return False  # A content page may embed a notice list below real service facts.
     return "게시판목록" in compact and any(word in compact for word in (
         "검색어를입력", "검색영역", "작성일", "조회", "Page",
     ))
@@ -107,6 +110,14 @@ def topic_support(doc: dict, keywords: set[str]) -> tuple[bool, set[str]]:
     meta = doc.get("metadata") or {}
     haystack = compact(f"{meta.get('title', '')} {doc.get('content', '')}")
     matched = {word for word in topics if word in haystack}
+    if '법정감염병' in topics and len(set(re.findall(r'제[1-4]급감염병', haystack))) >= 2:
+        matched.add('법정감염병')  # Statutory classes establish the subject without that exact title.
+    if '옥외대피' in topics and '외부공간' in haystack:
+        matched.add('옥외대피')
+    if '옥외' in topics and '외부공간' in haystack:
+        matched.add('옥외')
+    if '민간임대주택' in topics and '민간임대' in haystack and '주택' in haystack:
+        matched.add('민간임대주택')
     # Breadcrumbs are removed from originals. An actual online civil-service
     # instruction can establish 전자민원 without repeating the menu's name.
     body = compact(str(doc.get('content') or ''))
@@ -130,6 +141,10 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
+    if '자전거' in compact(query) and re.search(r'대여|빌리|빌릴|렌탈', query):
+        body = compact(str(doc.get('content') or ''))
+        if not re.search(r'자전거.{0,80}(?:대여|대출|빌리)|(?:대여|대출).{0,80}자전거', body):
+            return False
     certificates = {"주민등록등본", "주민등록초본", "건강진단결과서"}.intersection(keywords)
     if certificates and answer_goal(query) in ("method", "cost", "documents") and title:
         return any(name in title for name in certificates) or any(

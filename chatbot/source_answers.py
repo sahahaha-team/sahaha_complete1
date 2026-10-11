@@ -50,6 +50,7 @@ def focused_section(query: str, url: str, text: str) -> str | None:
     """
     compact = re.sub(r"\s+", "", query or "")
     body = strip_page_chrome(text)
+    body = re.sub(r'^#{2,6}\s+', '', body, flags=re.MULTILINE)
     vaccine_section = vaccination_section(query, url, body)
     if vaccine_section is not None:
         return vaccine_section
@@ -114,7 +115,7 @@ def build_source_answer(documents: list[dict], client, *, query: str = "", topic
                 return answer, used
             from chatbot.concise_answers import concise_source_answer
             brief = concise_source_answer(query, answer, used, topic_keywords or set())
-            if not brief["is_clarification"]:
+            if not brief["is_clarification"] and not brief.get('degraded'):
                 return answer, used
             if not fallback[0]:
                 fallback = answer, used

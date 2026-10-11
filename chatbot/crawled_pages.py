@@ -82,9 +82,9 @@ class CrawledPageIndex:
         results = []
         if url:
             try:
-                pages = self.client.table("raw_pages").select(
-                    "url,title,content,category,last_checked_at,attachments"
-                ).eq("url", url).limit(1).execute().data or []
+                from database_db.raw_pages import read_raw_pages
+                pages = read_raw_pages(self.client,
+                    'url,title,content,raw_html,category,last_checked_at,attachments',url=url,limit=1)
             except Exception:
                 logger.warning("공식 URL 원문 조회 실패")
                 pages = []
@@ -101,12 +101,16 @@ class CrawledPageIndex:
                     continue
             except (TypeError, ValueError):
                 continue
+            from chatbot.official_content import official_html_text
+            body = official_html_text(page.get('raw_html') or '') or page.get('content') or ''
             doc = {"id": "raw:" + str(page.get("url")),
-                "content": strip_page_chrome(page.get("content") or ""),
+                "content": strip_page_chrome(body),
                 "metadata": {"url": page.get("url"), "title": page.get("title") or "",
                     "category": page.get("category") or "", "source_type": "crawled_page",
                     "attachments": page.get("attachments") or [], "checked_at": checked.date().isoformat()},
                 "similarity": 0.0, "vector_similarity": 0.0, "bm25_score": 0.0}
+            if 'raw_html' in page:
+                doc['_raw_page'] = page
             # Validate the actual body, never let a stale or misleading title
             # turn an unrelated original into evidence.
             body_doc = {"content": doc["content"], "metadata": {"url": page.get("url")}}

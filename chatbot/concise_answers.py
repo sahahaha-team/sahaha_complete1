@@ -19,7 +19,20 @@ SCOPE_FIELD = re.compile(r"^(?:교육)?(?:대\s*상|신청자격|지원대상|�
 
 def _section_headings(units: list[str]) -> list[int]:
     headings = []
+    structured = any(re.match(r'^#{2,6} ', u) for u in units)
     for i, unit in enumerate(units):
+        if re.match(r'^#{2,6} ', unit):
+            value = unit.lstrip('# ')
+            if value.endswith(('?', '？')) and re.search(r'공시일|기간|시간|방법|절차|대상|조건|자격|비용|서류', value):
+                continue  # A requested field question is not another program.
+            if re.fullmatch(r'(?:질환|소득|재산|연령|거주|영양)\s*기준',value):
+                continue
+            if not re.fullmatch(r'(?:지원|신청|교육|진료|사업|운영|이용)?\s*(?:대상|내용|방법|기간|시간|자격|조건)|구비\s*서류|준비물|\d{4}년\s*선정기준액', value) and compact(value) not in {
+                    '위치및운영시간','사업목적','운영원리','핵심운영원리','검진시기및항목','신청안내','문의','상담문의','연락처','처리업무','제외대상','사업개요','사업기간','신청서접수처','신청자격','참여자격배제대상','대상자선발방법','선발시고려요소가중치적용','임금및근로조건','대상자선정기준','선정기준','배경','신청','목적','지원대상및기준','신청절차'} and not re.search(r'신청기준|^\d+[.]\s*(?:지원내용|주의사항|신청서류)|(?:이용시|이용 시)\s*(?:유의|주의)사항$|^\d{4}년.*판정기준$', value):
+                headings.append(i)
+            continue
+        if structured:
+            continue
         # Some headings include their own hours after an arrow. Those hours
         # belong to the new service, not to the previous clinic's table.
         heading = re.split(r'\s*[▹▷]', unit, maxsplit=1)[0].strip()
@@ -35,7 +48,9 @@ def section_bounds(units: list[str], index: int) -> tuple[int, int]:
     """Separate named activities from the next activity on a multi-service page."""
     headings = _section_headings(units)
     start = max((i for i in headings if i <= index), default=0)
-    end = min((i for i in headings if i > index), default=len(units))
+    level = len(units[start]) - len(units[start].lstrip('#')) if headings else 0
+    end = min((i for i in headings if i > index and
+               (not level or len(units[i]) - len(units[i].lstrip('#')) <= level)), default=len(units))
     return start, end
 
 
@@ -44,16 +59,59 @@ def named_section_bounds(units: list[str], query: str) -> tuple[int, int] | None
     matches = []
     headings = _section_headings(units)
     for pos, start in enumerate(headings):
-        name = re.split(r'[▹▷(（]', units[start], maxsplit=1)[0].strip()
-        name = compact(re.sub(r'\s*(?:운영|안내)$', '', name))
-        if len(name) >= 4 and name in compact(query):
-            end = headings[pos + 1] if pos + 1 < len(headings) else len(units)
+        name = re.split(r'[▹▷]', units[start].lstrip('# '), maxsplit=1)[0].strip()
+        if name.endswith(('?', '？')):
+            continue  # A field question is not a separate requested program.
+        # Parenthesized tax/service names can contain the requested subtype.
+        if '(' in name and compact(name) not in compact(query):
+            name = name.split('(', 1)[0].strip()
+        name = compact(re.sub(r'\s*(?:운영|안내|정보)$', '', name))
+        matches_name = (len(name) >= 4 or name in SERVICE_NAMES) and (name in compact(query) or
+            ('주민세' in name and '주민세' in compact(query)) or
+            ('성인예방접종' in name and '성인예방접종' in compact(query)))
+        if matches_name:
+            _, end = section_bounds(units, start)
             matches.append((len(name), start, end))
     if not matches:
         return None
     best = max(length for length, _, _ in matches)
     winners = [(start, end) for length, start, end in matches if length == best]
     return winners[0] if len(winners) == 1 else None
+
+
+def topic_section_bounds(units: list[str], query: str, keywords: set[str]) -> tuple[int,int] | None:
+    """Use the smallest unique program containing the requested subjects."""
+    explicit = named_section_bounds(units, query)
+    from chatbot.answer_goal import requested_goals
+    if explicit and len(requested_goals(query)) > 1:
+        return explicit
+    subjects = keywords.intersection(SERVICE_NAMES) or (substantive_keywords(keywords) - {'보건소','구청','무상'})
+    if not subjects:
+        return explicit
+    if (not explicit and units and re.match(r'^## ',units[0])
+            and re.search(r'(?:진료실|보건실|민원실)$',compact(units[0]))
+            and all(s in compact(units[0]) for s in subjects)):
+        return section_bounds(units,0)
+    regions, body_regions = [], []
+    for start in _section_headings(units):
+        bounds = section_bounds(units,start)
+        if explicit and not explicit[0] <= start < explicit[1]:
+            continue
+        heading = compact(units[start])
+        # Facts/documents can mention another program incidentally. Only a
+        # program name in the heading can narrow a structured page's scope.
+        if all(s in heading for s in subjects):
+            regions.append(bounds)
+        elif all(s in compact(' '.join(units[bounds[0]:bounds[1]])) for s in subjects):
+            body_regions.append(bounds)
+    if not regions:
+        regions = body_regions
+    exact = [r for r in regions if compact(re.sub(r'\s*(?:운영|안내|정보)$','',units[r[0]].lstrip('# ')))
+             == ''.join(sorted(subjects))]
+    if exact:
+        regions = exact
+    smallest = [r for r in regions if not any(r != s and r[0] <= s[0] and s[1] <= r[1] for s in regions)]
+    return smallest[0] if len(smallest)==1 else explicit
 
 
 def condition_indices(units: list[str], indices: list[int]) -> list[int]:
@@ -155,6 +213,10 @@ def _source_units(lines: list[str]) -> list[str]:
     output = []
     index = 0
     while index < len(units):
+        if units[index].startswith('#'):
+            output.append(units[index])
+            index += 1
+            continue
         if compact(units[index]) in list_headings:
             items = []
             end = index + 1
@@ -187,7 +249,7 @@ def _source_units(lines: list[str]) -> list[str]:
 def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str = "") -> str | None:
     location = answer_goal(query) == "location"
     units = location_source_units(lines) if location else _source_units(lines)
-    requested_section = named_section_bounds(units, query)
+    requested_section = topic_section_bounds(units, query, keywords)
     topics = substantive_keywords(keywords)
     opening_hours = asks_opening_hours(query)
     goal = answer_goal(query)
@@ -215,6 +277,10 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
             continue
         if not source_unit_complete(unit):
             continue
+        if goal in ('cost','eligibility','services','definition','precautions','necessity'):
+            from chatbot.structured_answers import field_matches
+            if not field_matches(goal,unit):
+                continue
         if QUALIFICATION.match(unit):
             continue
         # Omitted context and an unfinished preceding condition cannot be
@@ -281,10 +347,17 @@ def scope_question(query: str, body: str) -> dict:
     choices = [label for label, words in fields if any(word in body for word in words)][:3]
     # A clear request must not be sent back to choose the same field again.
     goal = answer_goal(query)
+    if goal and any(line.startswith('#') for line in body.splitlines()):
+        label = {'hours':'운영시간','location':'이용 장소','eligibility':'대상 조건',
+                 'documents':'준비 서류','cost':'비용·감면 조건','schedule':'일정',
+                 'method':'이용 방법','services':'이용 가능한 서비스','definition':'제도 설명',
+                 'precautions':'행동요령','necessity':'서류 제출 여부'}.get(goal,'요청하신 항목')
+        return {"answer": f"관련 공식 자료는 찾았지만, {label}을 정확히 안내할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
+            "answer_details": "", "is_clarification": False, "degraded": True,
+            "suggested_questions": []}
     if goal:
-        return {"answer": "어떤 신청 유형이나 대상에 관한 문의인지 조금 더 알려주시겠어요?",
-            "answer_details": "", "is_clarification": True,
-            "suggested_questions": [], "reply_terms": ["유형", "대상"]}
+        return {"answer":"확인된 원문만으로는 요청 항목을 명확히 안내하기 어렵습니다. 어떤 신청 유형이나 대상에 관한 문의인지 조금 더 알려주시겠어요?",
+                "answer_details":"", "is_clarification":True,"suggested_questions":[],"reply_terms":["유형","대상"]}
     if not choices:
         choices = ["대상이나 사업명"]
     answer = "안내 범위를 좁혀볼게요. **" + "·".join(choices) + "** 중 어떤 내용을 확인하시겠어요?"

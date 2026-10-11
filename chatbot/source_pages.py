@@ -14,7 +14,8 @@ def hydrate_source_documents(documents: list[dict], client) -> list[dict]:
     if not urls:
         return documents
     try:
-        rows = client.table('raw_pages').select('url,content,attachments').in_('url', sorted(urls)).execute().data or []
+        from database_db.raw_pages import read_raw_pages
+        rows = read_raw_pages(client,'url,content,raw_html,attachments',urls=sorted(urls))
         originals = {row['url']: row for row in rows}
     except Exception:
         logger.warning('상담 원문 일괄 조회 실패')
@@ -27,17 +28,21 @@ def hydrate_source_documents(documents: list[dict], client) -> list[dict]:
 
 def source_document(document: dict, client) -> tuple[str, dict]:
     meta = document.get('metadata') or {}
-    if meta.get('source_type') == 'crawled_page':
+    if meta.get('source_type') == 'crawled_page' and '_raw_page' not in document:
         return document.get('content') or '', document
     if '_raw_page' in document:
         row = document['_raw_page']
     else:
         try:
-            rows = client.table('raw_pages').select('content,attachments').eq(
-                'url', meta.get('url')).limit(1).execute().data or []
+            from database_db.raw_pages import read_raw_pages
+            rows = read_raw_pages(client,'content,raw_html,attachments',url=meta.get('url'),limit=1)
             row = rows[0] if rows else {}
         except Exception:
             row = {}
     if 'attachments' in row:
         document = {**document, 'metadata': {**meta, 'attachments': row.get('attachments') or []}}
-    return row.get('content') or '', document
+    from chatbot.official_content import official_html_text
+    structured = official_html_text(row.get('raw_html') or '')
+    from chatbot.source_warnings import reviewed_source
+    body, reviewed_meta = reviewed_source(structured or row.get('content') or '', document.get('metadata') or {})
+    return body, {**document,'metadata':reviewed_meta}

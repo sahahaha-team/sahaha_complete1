@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import json
 from difflib import SequenceMatcher
 from functools import lru_cache
 from pathlib import Path
@@ -16,6 +17,14 @@ from chatbot.official_faq import OfficialFAQIndex, PRIORITY_SERVICE_PATH
 WORKBOOK = Path(__file__).resolve().parents[1] / "data" / "official_sources" / "사하구 홈페이지_100개 질문.xlsx"
 
 
+def current_official_url(url: str) -> str:
+    path = Path(__file__).resolve().parents[1] / 'resources' / 'official_source_redirects.json'
+    replacements = json.loads(path.read_text(encoding='utf-8')) if path.is_file() else {}
+    replacement = replacements.get(url, url)
+    from chatbot.reference_answers import safe_official_link
+    return replacement if safe_official_link(replacement) else url
+
+
 @lru_cache(maxsize=1)
 def _question_indexes() -> tuple[OfficialFAQIndex, OfficialFAQIndex]:
     return OfficialFAQIndex(), OfficialFAQIndex(PRIORITY_SERVICE_PATH)
@@ -24,7 +33,8 @@ def _question_indexes() -> tuple[OfficialFAQIndex, OfficialFAQIndex]:
 def find_official_question(question: str) -> dict | None:
     """FAQ similarity is a navigation hint, never proof of a draft answer."""
     matches = [index.find_best(question, min_score=0.88) for index in _question_indexes()]
-    return max((match for match in matches if match), key=lambda match: match['score'], default=None)
+    match = max((match for match in matches if match), key=lambda match: match['score'], default=None)
+    return {**match, 'url': current_official_url(match['url'])} if match else None
 
 
 def _normalize(question: str) -> str:
@@ -34,7 +44,7 @@ def _normalize(question: str) -> str:
 @lru_cache(maxsize=1)
 def _targets() -> list[tuple[str, str]]:
     # Committed JSON keeps the official question routes usable on a new PC.
-    output = [(_normalize(str(item['question'])), str(item['url']))
+    output = [(_normalize(str(item['question'])), current_official_url(str(item['url'])))
               for index in _question_indexes() for item in index.items
               if str(item.get('url', '')).startswith('https://www.saha.go.kr/')]
     if not WORKBOOK.is_file():
@@ -43,7 +53,7 @@ def _targets() -> list[tuple[str, str]]:
     try:
         for _number, question, _draft_answer, url in book["예상질문답변"].iter_rows(min_row=2, values_only=True):
             if question and url and str(url).startswith("https://www.saha.go.kr/"):
-                output.append((_normalize(str(question)), str(url)))
+                output.append((_normalize(str(question)), current_official_url(str(url))))
     finally:
         book.close()
     return output
