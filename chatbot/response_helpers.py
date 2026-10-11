@@ -92,23 +92,24 @@ def build_clarification(user_message: str) -> dict | None:
     # One missing condition per turn. Suggestions are questions, not promises
     # that a particular service or eligibility rule exists.
     if "여권" in compact:
-        adult = any(word in compact for word in ("성인", "어른", "18세이상"))
-        minor = any(word in compact for word in ("미성년", "아이", "자녀", "18세미만"))
+        from chatbot.passport_documents import applicant_age, applicant_role, document_request
+        age = applicant_age(user_message)
+        adult, minor = age == 'adult', age == 'minor'
         new = any(word in compact for word in ("신규", "처음", "새로"))
         renew = "재발급" in compact
-        docs = any(word in compact for word in ("준비", "서류", "구비"))
+        docs = document_request(user_message)
         goal = bool(answer_goal(user_message)) or any(word in compact for word in ("준비", "서류", "구비", "수수료", "비용", "얼마", "기간", "며칠", "시간", "장소", "어디", "사진", "전화", "담당", "번호"))
         if docs and not (adult or minor):
             return clarification_question("여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
                 ["성인 신규 여권 준비물 알려줘", "성인 여권 재발급 준비물 알려줘", "미성년자 여권 준비물 알려줘"],
-                ["성인", "어른", "미성년", "아이", "자녀", "18세"])
+                ["성인", "어른", "미성년", "아이", "자녀", "세", "부모", "본인", "친족", "직접"])
         if docs and adult and not (new or renew):
             return clarification_question("여권을 **처음 발급**받으시나요, **재발급**받으시나요?",
                 ["성인 신규 여권 준비물 알려줘", "성인 여권 재발급 준비물 알려줘"], ["신규", "처음", "새로", "재발급"])
-        if docs and minor and not any(word in compact for word in ('부모', '친권자', '법정대리인', '본인', '친족')):
+        if docs and minor and applicant_role(user_message) is None:
             return clarification_question("미성년자 여권은 **누가 신청**하시나요? 부모·본인·친족 대리인을 구분해 주세요.",
                 ["부모가 미성년자 여권 신청할 때 준비물", "미성년자 본인이 여권 신청할 때 준비물", "친족이 미성년자 여권 대리 신청할 때 준비물"],
-                ['부모', '친권자', '법정대리인', '본인', '친족'])
+                ['부모', '친권자', '법정대리인', '본인', '친족', '직접', '엄마', '아빠'])
         if any(word in compact for word in ("수수료", "비용", "얼마")) and not (adult and '10년' in compact and any(word in compact for word in ('58면', '26면'))):
             return clarification_question("여권 수수료는 **연령·유효기간·면수**에 따라 달라요. 어떤 여권을 신청하시나요?",
                 ["성인 10년 58면 여권 수수료 알려줘", "성인 10년 26면 여권 수수료 알려줘"],

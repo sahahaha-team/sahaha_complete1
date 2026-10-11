@@ -286,7 +286,10 @@ class ChatBot:
 
         # 비용표처럼 한 페이지에 여러 사업의 금액이 있는 경우, 오늘 확인된
         # 공식 표의 해당 행만 읽어 답한다. 행 구조가 바뀌면 추측하지 않는다.
-        verified = answer_verified_table_question(resolved_message, self.retriever.db.client)
+        from chatbot.passport_documents import answer_passport_documents
+        verified = answer_passport_documents(resolved_message, self.retriever.db.client)
+        if verified is None:
+            verified = answer_verified_table_question(resolved_message, self.retriever.db.client)
         if verified is not None:
             verified_details, _ = mask_personal_info(verified.get("answer_details", ""), use_ner=False)
             self._save_conversation_safe(session_id, "user", user_message, search_query=resolved_message)
@@ -296,8 +299,9 @@ class ChatBot:
                 "is_clarification": False, "degraded": not verified["verified"],
                 "degraded_reason": None if verified["verified"] else "unverified_table",
                 "evidence": {
+                    "answer_method": verified.get('answer_method', 'verified_table'),
                     "status": "official" if verified["verified"] else "insufficient",
-                    "label": "최근 공식 표의 해당 항목 확인됨" if verified["verified"] else "현재 표의 항목 확인 필요",
+                    "label": verified.get('verification_label') or ("최근 공식 표의 해당 항목 확인됨" if verified["verified"] else "현재 표의 항목 확인 필요"),
                     "official_source_count": len(verified["sources"]),
                 },
                 "suggested_questions": [],
