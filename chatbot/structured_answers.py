@@ -15,7 +15,8 @@ from chatbot.question_intent import has_opening_hours, has_location_unit
 from chatbot.source_scope import focus_units, focus_terms, detail_section_bounds, normalize_plain_source
 
 FIELD = {
-    'conditions': r'제외|불가|불필요|금지|제한|금식|자동가입|보장내용|용도\s*[:：]|지원대상|선정기준|소득인정액|지급금액|신청기간|예약|허\s*가\s*대\s*상|신\s*고\s*대\s*상|등록.*지원|단[,， ]|다만',
+    'medical_details': r'(?:약품명|약명|복용량|용량|복용법)\s*[:：]|(?:복용|투여).{0,50}\d+\s*(?:mg|㎎|ml|㎖|정|회)',
+    'conditions': r'제외|불가|안되는|안 되는|불필요|금지|제한|금식|자동가입|보장내용|용도\s*[:：]|지원대상|선정기준|소득인정액|지급금액|신청기간|예약|허\s*가\s*대\s*상|신\s*고\s*대\s*상|등록.*지원|단[,， ]|다만',
     'specifications': r'규격|크기|가로|세로|\d+\s*(?:cm|㎝|매)',
     'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
@@ -275,6 +276,9 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         # eligibility, then its access method. A title is still never a fact.
         if any(field_matches('eligibility',u) and len(u) <= 180 for u in units):
             goals = ('eligibility',)
+        elif re.search(r'수거|가져가.*서비스', query) and any(
+                field_matches('method', u, query) and re.search(r'수거|방문', u) for u in units):
+            goals = ('method',)
     for field in goals:
         candidates = []
         def requested_row(unit):
@@ -498,7 +502,9 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     answer = '**' + heading + '**\n' + '\n'.join('- ' + u for u in display)
     unknown_details = {t for t in details if t not in compact(title) and
                        not any(t in compact(u) for u in units)}
-    if unknown_details and goal == 'cost':
+    unresolved_detail = bool(unknown_details and (goal == 'cost' or (goal == 'conditions' and
+        not any(t in compact(' '.join(selected)) for t in details))))
+    if unresolved_detail:
         answer += '\n문의하신 세부 항목·포함 범위는 이 자료에서 확인되지 않았습니다.'
     if missing:
         labels = {'location':'장소','hours':'운영시간','documents':'구비서류','method':'신청·이용 방법','cost':'비용','schedule':'기간·일정','eligibility':'대상·조건','services':'서비스 내용'}
@@ -515,5 +521,5 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal in ('eligibility','services') and len(selected) <= 2:
         from chatbot.answer_enrichment import enrich_answer
         answer = enrich_answer(query, answer, '\n'.join(units), keywords, heading)
-    return {'answer': answer, 'answer_details': title + '의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + u for u in body.splitlines()), 'degraded':bool(missing) or bool(unknown_details and goal == 'cost'),
+    return {'answer': answer, 'answer_details': title + '의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + u for u in body.splitlines()), 'degraded':bool(missing) or unresolved_detail,
             'documents': [document], 'is_clarification': False, 'answer_method': 'structured_source'}

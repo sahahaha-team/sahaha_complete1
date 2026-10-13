@@ -96,6 +96,16 @@ RAG_RRF_K = int(os.getenv("RAG_RRF_K", "60"))
 VECTOR_CANDIDATE_MIN_SIMILARITY = float(os.getenv("VECTOR_CANDIDATE_MIN_SIMILARITY", "0.35"))
 EMBEDDING_CPU_THREADS = int(os.getenv("EMBEDDING_CPU_THREADS", "2"))
 
+# 로컬에 설치된 의미 재정렬 모델만 사용한다. 실행 중 자동 다운로드하지 않는다.
+from pathlib import Path
+RAG_RERANK_ENABLED = os.getenv("RAG_RERANK_ENABLED", "true").lower() == "true"
+RAG_RERANK_MODEL = os.getenv("RAG_RERANK_MODEL", "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1")
+RAG_RERANK_CACHE_DIR = str(Path(__file__).resolve().parent / '.local' / 'huggingface' / 'hub')
+RAG_RERANK_LIMIT = int(os.getenv("RAG_RERANK_LIMIT", "8"))
+# 개발 표본의 후보 관련성용 보수적인 기준. 확률이나 정답률이 아니다.
+RAG_SEMANTIC_MIN_LOGIT = float(os.getenv("RAG_SEMANTIC_MIN_LOGIT", "-2.0"))
+RAG_SEMANTIC_MIN_MARGIN = float(os.getenv("RAG_SEMANTIC_MIN_MARGIN", "1.5"))
+
 # ===== 답변 신뢰도 게이트 =====
 # 원본 벡터 유사도에 대한 후보 신호. 공식 출처·업무·요청 항목 검사를 함께 한다.
 # BM25 정규화 점수나 RRF 점수에 이 값을 적용하지 않는다.

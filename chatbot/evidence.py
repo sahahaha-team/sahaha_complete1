@@ -167,6 +167,22 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
     anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','자전거','냉장고','세탁기','구직','구인','전자민원'}
     body_text = str(doc.get('content') or '')
+    # A specific named program/facility cannot be replaced by a different
+    # one merely because both pages explain 신청 or contain the same amount.
+    requested_entities = re.findall(r'([가-힣A-Za-z0-9]{2,20})\s*(센터|도서관|체육관|지원금|보조금|장려금|수당|보험|클리닉)', query)
+    owners = [line.lstrip('# ') for line in body_text.splitlines() if line.startswith('#')]
+    owners += [line.split(' — ', 1)[0] for line in body_text.splitlines() if ' — ' in line]
+    owners += [line.strip() for line in body_text.splitlines() if re.fullmatch(
+        r'[^:：,.。]{2,40}(?:센터|도서관|체육관|지원금|보조금|장려금|수당|보험|클리닉)(?:\s*(?:운영|안내))?', line.strip())]
+    source_text = compact(title + ' ' + ' '.join(owners))
+    for name, kind in requested_entities:
+        name = re.sub(r'^(?:사하구청|사하구|부산광역시)', '', name)
+        if name and compact(name + kind) not in source_text:
+            return False
+    if (answer_goal(query) == 'necessity' and re.search(r'서류|행정|기관|제출', query)
+            and (re.search(r'임산부|임신|출산|미숙아|선천성|영유아', title) or '/health/' in str((doc.get('metadata') or {}).get('url') or ''))
+            and not re.search(r'임산부|임신|출산|산모|아기|미숙아|선천성|영유아|보건|건강|검진|검사|접종|치매', query)):
+        return False  # A generic document-sharing question is not maternity aid.
     if '검사' in query and not re.search(r'접종|백신',query) and '접종' in title and '검사' not in title:
         return False
     if '암환자' in anchors and '소아암' in title and not re.search(r'소아|아동|아이|어린|미성년',query):
@@ -178,7 +194,16 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
         headings = [compact(line) for line in body_text.splitlines() if re.fullmatch(
             r'[^:：,·]{2,35}(?:안내|사업|제도|지원|관리|신청|헌장|방법)(?:\[[^\]]+\])?',line.strip())]
     if anchors and not any(a in title or any(a in h for h in headings) for a in anchors):
-        return False  # A mention in another program's eligibility is not its guide.
+        # Some dedicated pages have generic titles such as 설치안내. Their
+        # opening complete fact must name the subject and requested field;
+        # a passing mention elsewhere in a benefit page is still insufficient.
+        from chatbot.answer_goal import requested_goals
+        from chatbot.structured_answers import field_matches
+        opening = body_text[:450].splitlines()
+        fields = requested_goals(query)
+        if not fields or not any(all(a in compact(unit) for a in anchors) and
+                any(field_matches(field, unit, query) for field in fields) for unit in opening):
+            return False
     if '자전거' in compact(query) and re.search(r'대여|빌리|빌릴|렌탈', query):
         body = compact(str(doc.get('content') or ''))
         if not re.search(r'자전거.{0,80}(?:대여|대출|빌리)|(?:대여|대출).{0,80}자전거', body):

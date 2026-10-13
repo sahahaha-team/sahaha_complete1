@@ -6,6 +6,7 @@ import re
 from chatbot.question_intent import asks_location, asks_opening_hours
 
 GOAL_WORDS = {
+    "medical_details": ("처방", "약명", "약품명", "복용량", "용량", "복용법"),
     "conditions": ("조건", "가능", "제외", "한도", "유의", "반드시", "다만", "불가", "제한", "금식", "신청"),
     "specifications": ("사진", "규격", "크기", "가로", "세로", "매", "장", "cm"),
     "reference": ("홈페이지", "페이지", "링크", "현황도", "지도", "조회", "확인", "자세히보기", "다운로드"),
@@ -25,6 +26,16 @@ GOAL_WORDS = {
 
 def answer_goal(query: str) -> str | None:
     compact_query = query.replace(' ', '')
+    if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량', compact_query):
+        return 'medical_details'
+    if re.search(r'(?:지도|노선도|현황도|공식페이지|공식사이트).*(?:볼수|보려|알려|확인|조회)|(?:볼수|확인|조회).*(?:지도|노선도|현황도|공식페이지|공식사이트)', compact_query):
+        return 'reference'
+    if re.search(r'예약.*(?:해야|필수|먼저)|(?:먼저|사전).*예약', compact_query):
+        return 'conditions'
+    if re.search(r'서류.*(?:제출|내).*(?:생략|안내도)|기관.*서류.*확인', compact_query):
+        return 'necessity'
+    if re.search(r'돈이?들|수강료|재료비|주차장마다.*(?:같|똑같)', compact_query):
+        return 'cost'
     if re.search(r'나이.*(?:같|차이)|(?:같|차이).*나이', compact_query):
         return 'eligibility'
     if re.search(r'소득.*재산|재산.*소득', compact_query) and re.search(r'수급|선정|대상', compact_query):
@@ -99,7 +110,8 @@ def answer_goal(query: str) -> str | None:
         return 'location'
     if any(word in query for word in ("서류", "준비물", "구비", "준비해야")) and not any(word in query for word in ("발급", "신청", "어떻게")):
         return "documents"
-    if any(word in query for word in ("준비물", "구비", "준비해야", "필요한 서류", "가져가", "가져갈")):
+    if any(word in query for word in ("준비물", "구비", "준비해야", "필요한 서류")) or (
+            re.search(r'가져가|가져갈',query) and not re.search(r'수거|가져가.*서비스|와서.*가져가',query)):
         return "documents"
     if (any(word in query for word in ("비용", "발급비", "수수료", "요금", "금액", "얼마나 지원", "얼마나 주")) or re.search(r'얼마(?!나)',query)) and not any(word in query for word in ("자주", "무료", "무상", "부담")):
         return "cost"
@@ -121,6 +133,8 @@ def answer_goal(query: str) -> str | None:
         return 'services'
     if "받을 수" in query:
         return "eligibility"
+    if re.search(r'넣어도|버려도|버리나요|섞어도|해도돼|해도되|할수없|제외되|제외품목',compact_query):
+        return 'conditions'
     if re.search(r'해도|돼요|되나요|받나요|같나요|같아요|포함|가능|있어요|이용해|누구를|어디에쓰',compact_query):
         return 'services'
     return None
@@ -148,6 +162,7 @@ def requested_goals(query: str) -> tuple[str, ...]:
             goals.append('services')
         for goal, pattern in extra:
             if (goal not in goals and re.search(pattern, query)
+                    and not (goal == 'documents' and re.search(r'수거|가져가.*서비스|와서.*가져가',query))
                     and not (primary in ('precautions','hours','location','specifications','conditions') and goal == 'method')
                     and not (primary == 'method' and goal == 'cost' and re.search(r'계산|거래금액|환산',query) and not '얼마' in query)
                     and not (primary == 'conditions' and goal == 'cost' and not re.search(r'얼마|비용은|수수료는',query))):

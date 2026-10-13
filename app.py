@@ -74,6 +74,9 @@ class Evidence(BaseModel):
     reasons: list[str] = Field(default_factory=list)
     requested_fields: list[str] = Field(default_factory=list)
     matched_fields: list[str] = Field(default_factory=list)
+    retrieval_mode: str = ""
+    vector_invoked: bool = False
+    reranker_used: bool = False
 
 
 class ChatResponse(BaseModel):

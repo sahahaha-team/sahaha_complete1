@@ -115,7 +115,8 @@ def build_source_answer(documents: list[dict], client, *, query: str = "", topic
             if not require_brief:
                 return answer, used
             from chatbot.concise_answers import concise_source_answer
-            brief = concise_source_answer(query, answer, used, topic_keywords or set())
+            from chatbot.semantic_ranker import semantic_keywords
+            brief = concise_source_answer(query, answer, used, semantic_keywords(query, used[0], topic_keywords or set()))
             if not brief["is_clarification"] and not brief.get('degraded'):
                 return answer, used
             if not fallback[0]:
@@ -160,7 +161,10 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
         return "", []
     from chatbot.source_scope import focus_terms
     details = focus_terms(query)
-    if details and answer_goal(query) not in ('reference','specifications') and not any(
+    from chatbot.semantic_ranker import has_semantic_support, semantic_keywords
+    if topic_keywords is not None or has_semantic_support(query, lead):
+        topic_keywords = semantic_keywords(query, lead, topic_keywords or set())
+    if details and not has_semantic_support(query,lead) and answer_goal(query) not in ('reference','specifications') and not any(
             term in re.sub(r'\s+','',text) for term in details):
         return "", []
     # A later retrieval chunk may omit the board header. Check the complete
@@ -174,7 +178,7 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     if section == "":
         return "", []
     passage = section if section is not None else source_passage(text, lead.get("content") or "",
-        budget=12000 if meta.get("source_type") == "crawled_page" else 2400)
+        budget=12000 if meta.get("source_type") == "crawled_page" or lead.get('_raw_page') else 2400)
     if asks_opening_hours(query) and not has_opening_hours(passage):
         return "", []
     if answer_goal(query) == "location" and not has_location(passage):

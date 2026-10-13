@@ -1,7 +1,7 @@
 # 사하구청 AI 상담사
 
-> 2026-10-11 상담 개선 및 100개 제공 질문의 검수 범위·결과는
-> [100개 질문 개선 보고서](faq100_improvement_report_20261011.md)를 참고하세요.
+> 2026-10-13 검색·근거 판정 변경과 검증 범위는
+> [RAG 개선 보고서](rag_upgrade_report_20261013.md)를 참고하세요.
 
 부산광역시 사하구청 홈페이지 공식 정보를 기반으로, 주민의 질문에 자연어로 답변하는 RAG 기반 AI 챗봇 시스템입니다.
 
@@ -17,7 +17,7 @@
 ### 핵심 차별점
 
 - **단순 챗봇이 아닌 데이터 파이프라인**: 크롤링 → 정제 → 태깅 → 벡터화까지 자동화
-- **하이브리드 검색**: 메타데이터 필터링 + 벡터 검색 + BM25 재랭킹으로 정확도 향상
+- **하이브리드 검색**: 검증된 원문 우선 조회, 부족하면 BM25·벡터 후보를 URL별 RRF로 통합하고 의미 재정렬
 - **환각 방지**: 사하구청 공식 데이터만 사용, 모르는 건 모른다고 답변
 - **개인정보 보호**: 주민등록번호, 전화번호 등 입력 시 LLM 전달 전 차단
 - **자동 데이터 갱신**: 상담 Web과 분리된 Worker가 매일 증분 크롤링 실행
@@ -30,6 +30,7 @@
 | 웹 서버 | FastAPI + Uvicorn |
 | LLM | 로컬 Ollama (`gemma2:2b`, 환경변수로 변경 가능) |
 | 임베딩 | HuggingFace sentence-transformers (MiniLM-L12-v2) |
+| 의미 재정렬 | 로컬 Cross-Encoder (`mmarco-mMiniLMv2-L12-H384-v1`, 필요한 검색에만 적용) |
 | 벡터 DB | Supabase PostgreSQL + pgvector |
 | 크롤링 | requests + BeautifulSoup (Selenium fallback) |
 | 스케줄러 | 별도 APScheduler Worker (증분 크롤링 자동화, 매일 03:00) |
@@ -57,7 +58,9 @@
         |
     (A) 개인정보 필터링 (정규식)
         |
-    (B) 하이브리드 검색 (메타데이터 + 벡터 + BM25 + 직원업무안내)
+    (B) 검증된 원문·직원업무안내 우선 조회
+        |  └─ 부족하면 BM25 + 벡터 + 원문 후보를 URL별 RRF 통합
+        |     최근 원문 확인 후 로컬 의미 재정렬
         |
     (C) 공식 근거의 최신성·질문 의도 확인
         |
@@ -93,6 +96,9 @@ sahahaha/
 ├── chatbot/
 │   ├── retriever.py       # 하이브리드 검색 + 근거 신뢰도 판정
 │   ├── crawled_pages.py   # 전체 크롤링 원문 검색 (청크 누락 보강)
+│   ├── candidate_search.py # 필요한 경우 검색 확장 + URL별 RRF 통합
+│   ├── semantic_ranker.py # 로컬 의미 재정렬, 질문·현재 원문에 결합된 판정
+│   ├── evidence_decision.py # 관련 자료와 요청 항목의 충족 여부 구분
 │   ├── answer_goal.py     # 서비스 주제와 요청 항목 구분
 │   ├── evidence.py        # 외부 의존성 없는 검색 근거 게이트
 │   ├── contact_directory.py # 로컬 공식 업무·연락처 조회
@@ -202,6 +208,20 @@ ollama list
 Ollama 앱이나 서비스가 이미 실행 중이면 `ollama serve`는 생략합니다.
 모델을 교체할 때는 새 모델을 내려받고 `.env`의 `OLLAMA_MODEL`을 바꾼 뒤
 웹 서버와 Worker를 재시작합니다.
+
+의미 재정렬 모델은 새 PC에서 최초 한 번 준비합니다. 무료 공개 가중치를 로컬에서
+실행하며 별도 API 키는 필요하지 않습니다. 이 작업 PC에는 이미 내려받았습니다.
+
+```powershell
+python scripts/setup_reranker.py --download
+```
+
+준비 여부만 검사하려면 `python scripts/setup_reranker.py`를 실행합니다.
+모델이 없거나 로딩에 실패하면 기존 근거 검사를 유지합니다. 재정렬을 끄려면
+`.env`에 `RAG_RERANK_ENABLED=false`를 설정한 뒤 웹을 재시작합니다.
+재정렬은 검색 후보가 불명확할 때만 사용하고, 확인된 연락처·긴급 안내·원문 필드 조회는
+빠른 경로를 유지합니다. 벡터·RRF·재정렬 점수는 정답 확률이 아니며, 자료의 업무·
+시점·요청 항목·조건을 별도로 확인합니다. 이번 변경에 추가 DB 마이그레이션은 없습니다.
 
 ### 2. DB 초기화
 

@@ -20,6 +20,8 @@ def balanced(text: str) -> bool:
             stack.append(char)
         elif char in pairs:
             if not stack:
+                if char == ')' and re.search(r'(?:^|\s)(?:예|ex|EX)$', text[:position]):
+                    continue  # Literal example markers in official tables.
                 # Official lists use '1) ... 2) ...' without opening brackets.
                 # Do not confuse these markers with an unfinished formula.
                 if (char == ')' and re.search(r'(?:^|\s)(?:\d{1,2}|[가나다라마바사아자차카타파하])$',text[:position])
@@ -41,6 +43,8 @@ def source_unit_complete(text: str) -> bool:
     if (not text or text.startswith('#') or text.rstrip().endswith(('?', '？'))
             or OMISSION in text or not balanced(text)):
         return False
+    if re.match(r'^(?:며|으며|하여|하고|되어|이며)[,，\s]', text.strip()):
+        return False  # A carried-over PDF clause is not a standalone fact.
     if re.search(r'[:：]\s*\[[^\]]+\]\s*$', text):
         return False  # A table caption wrapped in brackets has no factual value.
     if re.search(r'[:：]\s*(?:아래|다음)\s*(?:품목|내용|표)(?:\([^)]*\))?\s*$',text):

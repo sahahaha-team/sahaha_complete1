@@ -60,6 +60,11 @@ def complete_direct_candidates(query: str, documents: list[dict], keywords: set[
         # bypass meaning search. The requested service must own the heading.
         owners=names or {word for word in keywords if len(word)>=3 and word not in {'보건소','구청','자전거','쓰레기'}}
         if not owners or not all(name in heading for name in owners): continue
+        from chatbot.source_scope import focus_terms
+        from chatbot.evidence_decision import source_body
+        details = focus_terms(query)
+        if details and not any(term in compact(source_body(doc)) for term in details):
+            continue  # A broad field label cannot resolve an unseen requested detail.
         result=document_decision(query,doc,keywords)
         if result['decision'] == 'supported': complete.append(doc)
     unique={source_key(doc):doc for doc in complete}
@@ -102,9 +107,13 @@ def search_candidates(retriever, query: str, *, k: int = 15) -> dict:
             category=hints.get('category') if not hints.get('service_type') else None,
             service_type=hints.get('service_type'), k=max(k,RAG_CANDIDATE_LIMIT),
             min_similarity=VECTOR_CANDIDATE_MIN_SIMILARITY)
-        if len(vector)<2:
-            vector=retriever.vs.similarity_search(query,k=max(k,RAG_CANDIDATE_LIMIT),
-                min_similarity=VECTOR_CANDIDATE_MIN_SIMILARITY)
+        # Metadata tags are hints: older or LLM-generated tags may put a
+        # relevant official page in another category. Always add the global
+        # semantic candidates rather than trusting a nonempty filtered list.
+        global_vector=retriever.vs.similarity_search(query,k=max(k,RAG_CANDIDATE_LIMIT),
+            min_similarity=VECTOR_CANDIDATE_MIN_SIMILARITY)
+        by_id={str(doc.get('id') or source_key(doc)):doc for doc in vector + global_vector}
+        vector=sorted(by_id.values(), key=lambda doc:float(doc.get('vector_similarity',doc.get('similarity',0)) or 0),reverse=True)
     except Exception as exc:
         logger.warning('의미 검색 실패 (%s)',type(exc).__name__);failures.append('vector_search_failed')
     contact_intent=retriever._has_staff_lookup_intent(query)

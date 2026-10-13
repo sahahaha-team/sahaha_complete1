@@ -43,7 +43,17 @@ def focus_terms(query: str) -> frozenset[str]:
 def normalize_plain_source(body: str, title: str) -> str:
     """Label headings present in older text-only rows, without supplying facts."""
     if re.search(r'^#{2,6} ', body, re.M):
-        return body
+        output=[]; field=None
+        for line in body.splitlines():
+            heading=re.match(r'^#{2,6}\s+(.+)',line)
+            if heading:
+                name=heading.group(1).strip().rstrip(':：')
+                field=name if is_field_heading(name) else None
+                output.append(line)
+            elif field and line.strip() and not re.search(r'[:：]| — ',re.sub(r'\d{1,2}:\d{2}', '', line)) and not line.lstrip().startswith(('※','❖','다만','단,','단 ')):
+                output.append(field+': '+line)
+            else:output.append(line)
+        return '\n'.join(output)
     if ' — ' in body:
         return '## ' + title + '\n' + body
     from chatbot.concise_answers import _section_headings
@@ -72,6 +82,12 @@ def normalize_plain_source(body: str, title: str) -> str:
         elif line != title:
             output.append(label + ': ' + line if label and not line.startswith(('※','❖','다만')) else line)
     return '\n'.join(output)
+
+
+def is_field_heading(name: str) -> bool:
+    value=compact(name).rstrip(':：?？')
+    return bool(FIELD_LABEL.fullmatch(value) or re.search(
+        r'(?:방법|절차|기간|시간|서류|준비물|자격|조건|요건|기준|위치|주소|연락처|수수료|이용료|지원내용|사업내용|배출요령|제외품목|제외항목)$',value))
 
 
 def focus_units(query: str, units: list[str]) -> list[str]:
@@ -147,6 +163,9 @@ def detail_section_bounds(query: str, units: list[str]) -> tuple[int, int] | Non
             continue
         name = compact(unit.lstrip('# '))
         if name.endswith(('유의사항','주의사항','란?','란？')) or re.search(r'란[?？]$', unit):
+            continue
+        from chatbot.answer_goal import requested_goals
+        if name.endswith(('구비서류','준비서류')) and 'documents' not in requested_goals(query):
             continue
         if FIELD_LABEL.fullmatch(name) or name in {'위치및운영시간','대상및기준','사업기간','신청안내','선정기준','지원대상및기준','문의','상담문의'}:
             continue

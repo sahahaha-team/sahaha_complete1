@@ -121,7 +121,7 @@ class ChatBot:
             temperature=CHATBOT_TEMPERATURE,
             num_predict=CHATBOT_MAX_TOKENS,
             num_ctx=OLLAMA_NUM_CTX,
-            timeout=OLLAMA_TIMEOUT,
+            client_kwargs={"timeout": OLLAMA_TIMEOUT},
             keep_alive=OLLAMA_KEEP_ALIVE,
         )
         self.retriever = HybridRetriever()
@@ -333,6 +333,11 @@ class ChatBot:
 
         search_outcome = self.retriever.search(search_query, k=15)
         fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
+        rerank_info = {'used': False}
+        if search_outcome.get('retrieval', {}).get('mode') == 'hybrid_rrf':
+            from chatbot.semantic_ranker import semantic_ranker
+            fresh_results, rerank_info = semantic_ranker.rerank(search_query, fresh_results,
+                self.retriever._content_keywords(search_query))
         results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
         logger.info("상담 근거 단계: 검색=%s, 최근 확인=%s, 서로 다른 근거 URL=%s",
             len(search_outcome["results"]), len(fresh_results), len(results))
@@ -377,8 +382,9 @@ class ChatBot:
                     "evidence": {"status": "insufficient", "label": "최신 근거를 찾지 못함", "official_source_count": 0},
                     "suggested_questions": [],
                 }
+            from chatbot.semantic_ranker import semantic_keywords
             concise = concise_source_answer(search_query, original, used_results,
-                self.retriever._content_keywords(search_query))
+                semantic_keywords(search_query, used_results[0], self.retriever._content_keywords(search_query)))
             if concise["is_clarification"]:
                 return self._clarification_result(session_id, user_message, search_query, concise)
             method = concise.get('answer_method') or ("source_extract" if SOURCE_ONLY_ANSWERS else "source_fallback")
@@ -422,6 +428,9 @@ class ChatBot:
                 "reasons": ["missing_requested_fields"] if concise.get('degraded') else [],
                 "requested_fields": evidence.get('requested_fields', []),
                 "matched_fields": evidence.get('matched_fields', []),
+                "retrieval_mode": search_outcome.get('retrieval', {}).get('mode', ''),
+                "vector_invoked": search_outcome.get('retrieval', {}).get('vector_invoked', False),
+                "reranker_used": rerank_info.get('used', False),
                          "official_source_count": len(sources), "answer_method": method},
             "suggested_questions": build_suggested_questions(search_query, sources),
         }

@@ -67,7 +67,7 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
 
 def unavailable_capability(message: str) -> dict | None:
     text = topic_compact(message)
-    if '주차장' in text and re.search(r'빈자리|빈공간|남은자리|잔여|몇대가능',text) and re.search(r'지금|현재|실시간|오늘',text):
+    if re.search(r'주차장|주차면',text) and re.search(r'빈자리|빈공간|남은자리|잔여|몇대가능|비어|비었|빈주차',text) and re.search(r'지금|현재|실시간|오늘',text):
         answer = '현재 상담에는 **실시간 주차 잔여면수 조회 기능이 없습니다.** 주차장의 전체 주차면수를 현재 빈자리 수로 안내할 수는 없습니다.'
         reason = 'live_data_unavailable'
     elif re.search(r'대신|알아서|너가|네가',text) and re.search(r'신청접수해|신청해줘|예약해줘|접수해줘',text):
@@ -82,6 +82,9 @@ def unavailable_capability(message: str) -> dict | None:
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
+    if '통합예약' in compact and re.search(r'취소|변경',compact) and not re.search(r'체험관|축구|테니스|체육|도서관|강좌|프로그램|정비창|문화|대관',compact):
+        return clarification_question('예약한 시설·프로그램에 따라 취소 방법이 다릅니다. **어떤 시설이나 프로그램을 예약하셨나요?**',
+            [], ['체험관','축구','테니스','체육','도서관','강좌','프로그램','정비창','문화','대관'])
     if ('쓰레기' in compact and re.search(r'아무때|낮|배출시간',compact)
             and not any(kind in compact for kind in ('일반쓰레기','종량제','음식물','재활용','분리수거'))):
         return clarification_question('**일반쓰레기·음식물·재활용 중 무엇을 배출**하시나요? 종류에 맞는 시간·방법을 확인하겠습니다.',

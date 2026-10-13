@@ -38,8 +38,12 @@ JSON만 출력: {{"mode":"answer","source":0,"units":[1,2]}}. source는 자료 �
 
 def prepare_evidence(query: str, documents: list[dict], client, keywords: set[str]) -> list[dict]:
     packets = []
+    from chatbot.semantic_ranker import semantic_keywords, has_semantic_support
+    original_keywords=keywords
     details = focus_terms(query)
     for doc in documents[:15]:
+        keywords=semantic_keywords(query,doc,original_keywords)
+        semantic=has_semantic_support(query,doc)
         meta = doc.get("metadata") or {}
         url = meta.get("url")
         text, doc = source_document(doc, client)
@@ -47,7 +51,7 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
         if not text or not is_answerable_document(query, {"content": text, "metadata": meta}):
             continue
         body = normalize_plain_source(strip_page_chrome(text), str(meta.get('title') or '공식 안내'))
-        if (details and answer_goal(query) not in ('reference','specifications','cost')
+        if (details and not semantic and answer_goal(query) not in ('reference','specifications','cost')
                 and not any(t in compact(body) for t in details)):
             continue
         if not topic_support({"content": body, "metadata": {"url": url}}, keywords)[0]:
@@ -85,7 +89,7 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
             start = min(start, section_start) if section_start else start
             end = min(end, section_end)
         if units:
-            packets.append({"document": doc, "units": units, "body": body,
+            packets.append({"document": doc, "units": units, "body": body, "keywords": keywords,
                             "section_body": section if section is not None else body,
                             "window": range(start, end), 'scope': (scope_start,scope_end)})
     return sorted(packets, key=lambda p: sum(t in compact(p['body']) for t in details), reverse=True)[:5]
@@ -136,7 +140,7 @@ def matches_field(query: str, goal: str | None, unit: str) -> bool:
     if goal == 'schedule' and any(word in compact(query) for word in ('자주', '주기', '몇번')):
         from chatbot.structured_answers import field_matches
         return field_matches(goal,unit,query)
-    if goal in ('cost', 'services', 'eligibility', 'definition', 'precautions','necessity','specifications','schedule','method','documents'):
+    if goal in ('cost', 'services', 'eligibility', 'definition', 'precautions','necessity','specifications','schedule','method','documents','medical_details'):
         from chatbot.structured_answers import field_matches
         return field_matches(goal, unit, query)
     if goal == 'location':
@@ -198,6 +202,7 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
             or not 1 <= len(ids) <= 3 or any(type(i) is not int for i in ids)):
         return None
     packet = packets[source]
+    keywords=packet.get('keywords',keywords)
     units = packet["units"]
     if any(not 0 <= i < len(units) or i not in packet.get('visible_ids', range(len(units)))
            or i not in packet.get('eligible_ids', range(len(units))) for i in ids):
@@ -248,7 +253,8 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
     selected = [units[i] for i in ids]
     details = {t for t in focus_terms(query) if t not in compact(title)
                and not any(t in k or k in t for k in keywords)}
-    if details and any(t in compact(packet['body']) for t in details) and not any(
+    from chatbot.semantic_ranker import has_semantic_support
+    if details and not has_semantic_support(query,packet['document']) and any(t in compact(packet['body']) for t in details) and not any(
             t in compact(' '.join(selected) + ' ' + scope_heading) for t in details):
         return None
     if any(not source_unit_complete(unit) for unit in selected):
@@ -302,9 +308,10 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
     # Navigation has an answer in verified page/file metadata. Selecting prose
     # cannot recover links removed by get_text(), and may choose a slogan.
     for packet in candidates:
+        packet_keywords = packet.get('keywords', keywords)
         title = (packet['document'].get('metadata') or {}).get('title') or ''
         original = f'{title}의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + line for line in packet['body'].splitlines())
-        reference = reference_answer(query, packet['document'], packet['body'], keywords, original)
+        reference = reference_answer(query, packet['document'], packet['body'], packet_keywords, original)
         if reference:
             return reference
     from chatbot.structured_answers import structured_brief
@@ -323,7 +330,7 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
                 return {'answer':brief,'documents':[packet['document']],
                         'answer_details':'\n'.join('> '+u for u in packet['body'].splitlines()),
                         'is_clarification':False,'answer_method':'structured_source'}
-        result = structured_brief(query, packet['document'], packet['section_body'], keywords)
+        result = structured_brief(query, packet['document'], packet['section_body'], packet.get('keywords', keywords))
         if result:
             if not result.get('degraded'):
                 return result
@@ -331,7 +338,7 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
     if partial:
         return partial
     for packet in candidates:
-        packet['eligible_ids'] = eligible_ids(query, packet, keywords)
+        packet['eligible_ids'] = eligible_ids(query, packet, packet.get('keywords',keywords))
     context, packets = plan_context(candidates)
     if not context:
         return None
@@ -360,7 +367,7 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         selector = llm.model_copy(update={"format": schema, "temperature": 0, "num_predict": 100})
         started = time.perf_counter()
         response = selector.invoke(
-            PROMPT.format(question=query, context=context))
+            PROMPT.format(question=query, context=context), stream=False)
         metadata = getattr(response, "response_metadata", {}) or {}
         logger.info("상담 모델 시간: wall=%.3fs, load=%.3fs, prompt=%.3fs/%s tokens, output=%.3fs/%s tokens",
                     time.perf_counter() - started, float(metadata.get('load_duration') or 0) / 1e9,

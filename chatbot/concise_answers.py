@@ -23,6 +23,9 @@ def _section_headings(units: list[str]) -> list[int]:
     for i, unit in enumerate(units):
         if re.match(r'^#{2,6} ', unit):
             value = unit.lstrip('# ')
+            from chatbot.source_scope import is_field_heading
+            if is_field_heading(value):
+                continue
             if value.endswith(('?', '？')) and re.search(r'공시일|기간|시간|방법|절차|대상|조건|자격|비용|서류', value):
                 continue  # A requested field question is not another program.
             if re.fullmatch(r'(?:질환|소득|재산|연령|거주|영양|근로|취업)\s*기준|근로이력',value):
@@ -316,7 +319,7 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
         if not source_unit_complete(unit):
             continue
         matched_field = False
-        if goal in ('conditions','cost','schedule','eligibility','services','definition','precautions','necessity','method','specifications','documents'):
+        if goal in ('conditions','cost','schedule','eligibility','services','definition','precautions','necessity','method','specifications','documents','medical_details'):
             from chatbot.structured_answers import field_matches
             if not field_matches(goal,unit,query):
                 continue
@@ -419,8 +422,8 @@ def scope_question(query: str, body: str) -> dict:
         label = {'hours':'운영시간','location':'이용 장소','eligibility':'대상 조건',
                  'documents':'준비 서류','cost':'비용·감면 조건','schedule':'일정',
                  'method':'이용 방법','services':'이용 가능한 서비스','definition':'제도 설명',
-                 'precautions':'행동요령','necessity':'서류 제출 여부'}.get(goal,'요청하신 항목')
-        return {"answer": f"관련 공식 자료는 찾았지만, {label}을 정확히 안내할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
+                 'precautions':'행동요령','necessity':'서류 제출 여부','medical_details':'약품·복용 정보'}.get(goal,'요청하신 항목')
+        return {"answer": f"관련 공식 자료는 찾았지만, {label}에 답할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
             "answer_details": "", "is_clarification": False, "degraded": True,
             "suggested_questions": []}
     if goal:
@@ -487,5 +490,16 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
         return scope_question(query, body)
     if meta.get("source_type") == "official_report":
         answer = f"자료 기준: {meta.get('data_period', '미상')}\n\n" + answer
+    from chatbot.answer_goal import requested_goals
+    from chatbot.structured_answers import field_matches
+    fields = requested_goals(query)
+    missing = [field for field in fields if not any(field_matches(field, line.removeprefix('- ').strip(), query)
+        for line in answer.splitlines())] if len(fields) > 1 and not course_scope else []
+    if missing:
+        from chatbot.evidence_decision import FIELD_LABELS
+        note = '\n' + '·'.join(FIELD_LABELS.get(f, '요청 항목') for f in missing) + '은 이 답변에서 명확히 확인되지 않았습니다.'
+        if len(answer) + len(note) > MAX_BRIEF_LENGTH:
+            return scope_question(query, body)
+        answer += note
     return {"answer": answer, "answer_details": original_answer, "is_clarification": False,
-            "suggested_questions": []}
+            'degraded': bool(missing), "suggested_questions": []}

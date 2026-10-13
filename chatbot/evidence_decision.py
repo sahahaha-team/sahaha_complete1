@@ -9,6 +9,7 @@ from __future__ import annotations
 from functools import lru_cache
 
 FIELD_LABELS = {
+    'medical_details': '약품·복용 정보',
     'hours': '운영시간', 'location': '장소', 'cost': '비용',
     'documents': '구비서류', 'method': '신청·이용 방법', 'schedule': '기간·일정',
     'eligibility': '이용·지원 대상', 'conditions': '조건·예외',
@@ -65,10 +66,12 @@ def document_decision(query: str, document: dict, keywords: set[str], *, min_sim
         # checked institution title, since an address need not repeat its name.
         topic_document = {**checked, 'metadata': {'url': metadata.get('url'),
             'title': metadata.get('title') if keywords.issubset({'구청', '보건소'}) else ''}}
-    lexical, matched = topic_support(topic_document, keywords)
+    from chatbot.semantic_ranker import semantic_keywords
+    effective_keywords=semantic_keywords(query,document,keywords)
+    lexical, matched = topic_support(topic_document, effective_keywords)
     if not lexical: reasons.append('topic_not_established')
     raw_similarity = float(document.get('vector_similarity', 0) or 0)
-    fields, covered = _coverage(query, body, str(metadata.get('title') or ''), tuple(sorted(keywords)))
+    fields, covered = _coverage(query, body, str(metadata.get('title') or ''), tuple(sorted(effective_keywords)))
     missing = tuple(field for field in fields if field not in covered)
     relevant = not reasons
     # Absence of a field is not absence of a related source. The source reader
@@ -77,6 +80,7 @@ def document_decision(query: str, document: dict, keywords: set[str], *, min_sim
     return {'relevant': relevant, 'decision': state, 'reasons': reasons,
             'requested_fields': list(fields), 'matched_fields': list(covered),
             'missing_fields': list(missing), 'matched_keywords': sorted(matched),
+            'effective_keywords': sorted(effective_keywords),
             'vector_candidate': raw_similarity >= min_similarity,
             'vector_similarity': raw_similarity}
 
