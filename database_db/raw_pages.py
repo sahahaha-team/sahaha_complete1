@@ -4,7 +4,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def read_raw_pages(client, fields: str, *, url=None, urls=None, limit=None):
+def read_raw_pages(client, fields: str, *, url=None, urls=None, limit=None, offset=None, count=None, order=None):
     def read(selected):
         query = client.table('raw_pages').select(selected)
         if url is not None:
@@ -13,6 +13,10 @@ def read_raw_pages(client, fields: str, *, url=None, urls=None, limit=None):
             query = query.in_('url',list(urls))
         if limit is not None:
             query = query.limit(limit)
+        if order is not None:
+            query = query.order(order)
+        if offset is not None and count is not None:
+            query = query.range(offset, offset + count - 1)
         return query.execute().data or []
     try:
         return read(fields)

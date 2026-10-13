@@ -123,6 +123,27 @@ def report_pages(path: Path) -> list[dict]:
             content = pdf_page.extract_text() or ""
             content = re.sub(r"^저장 :[^\n]*\n", "", content)
             content = re.sub(r"^문서관리카드[^\n]*\n", "", content)
+            # Only tables with a complete single header row are labelled.
+            # Multi-level/merged ambiguous headers need manual verification.
+            table_lines = []
+            for table in pdf_page.extract_tables():
+                if len(table) < 2 or len(table[0]) < 2:
+                    continue
+                headers = [re.sub(r'\s+',' ',str(h or '')).strip() for h in table[0]]
+                if any(not h for h in headers[1:-1]):
+                    continue
+                if any(len(row) != len(headers) for row in table[1:]):
+                    continue
+                for values in table[1:]:
+                    row_name = re.sub(r'\s+',' ',str(values[0] or '')).strip()
+                    if not re.fullmatch(r'20\d{2}년',row_name):
+                        continue
+                    for label,value in zip(headers[1:],values[1:]):
+                        value = str(value or '').strip()
+                        if label and re.fullmatch(r'[\d,]+',value):
+                            table_lines.append(f'{row_name} — {label}: {value}')
+            if table_lines:
+                content += '\n\n## 원문 표의 연도별 항목\n' + '\n'.join(dict.fromkeys(table_lines))
             if len(content.strip()) < 80:
                 logger.warning("보고서 %s %s쪽 텍스트 없음", path.name, page_number)
                 continue

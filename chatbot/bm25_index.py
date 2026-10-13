@@ -11,6 +11,7 @@ import shutil
 import logging
 import threading
 import time
+from functools import lru_cache
 from typing import Optional
 
 from config import SUPABASE_SERVICE_KEY
@@ -22,6 +23,7 @@ logger = logging.getLogger(__name__)
 EXCLUDED_POS_PREFIXES = ("J", "E", "X", "S")  # 조사/어미/접사/기호
 
 
+@lru_cache(maxsize=1)
 def _init_kiwi():
     """
     Kiwi 초기화. 한글 사용자 경로(예: C:/Users/황상필/...) 환경에서

@@ -70,7 +70,8 @@ def focused_section(query: str, url: str, text: str) -> str | None:
             selected = next((line for line in section.splitlines() if marker and line.startswith(marker)), None)
             common = next((line for line in body.splitlines() if line.startswith('미성년자의 사진 및 구여권')), None)
             return start + common + '\n' + selected if common and selected else ''
-        if any(word in compact for word in ("발급기간", "기간은", "며칠", "소요")) and "유효기간" not in compact:
+        if (any(word in compact for word in ("발급기간", "기간은", "며칠", "소요", "수령", "교부"))
+                or answer_goal(query) == 'schedule') and "유효기간" not in compact:
             start = "\n여권교부\n"
             if start not in body:
                 return ""
@@ -156,6 +157,11 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
         text, lead = source_document(lead, client)
         meta = lead.get('metadata') or {}
     if not text.strip():
+        return "", []
+    from chatbot.source_scope import focus_terms
+    details = focus_terms(query)
+    if details and answer_goal(query) not in ('reference','specifications') and not any(
+            term in re.sub(r'\s+','',text) for term in details):
         return "", []
     # A later retrieval chunk may omit the board header. Check the complete
     # original too, so pagination/search fields cannot masquerade as an answer.

@@ -19,6 +19,7 @@ from chatbot.source_answers import strip_page_chrome, focused_section
 from chatbot.reference_answers import reference_answer
 from chatbot.source_pages import source_document
 from chatbot.model_plan_cache import model_plan_cache, plan_key
+from chatbot.source_scope import normalize_plain_source, focus_terms, detail_section_bounds, focus_units
 
 logger = logging.getLogger(__name__)
 SCOPE = SCOPE_FIELD
@@ -37,30 +38,46 @@ JSON만 출력: {{"mode":"answer","source":0,"units":[1,2]}}. source는 자료 �
 
 def prepare_evidence(query: str, documents: list[dict], client, keywords: set[str]) -> list[dict]:
     packets = []
-    for doc in documents[:5]:
+    details = focus_terms(query)
+    for doc in documents[:15]:
         meta = doc.get("metadata") or {}
         url = meta.get("url")
         text, doc = source_document(doc, client)
         meta = doc.get('metadata') or {}
         if not text or not is_answerable_document(query, {"content": text, "metadata": meta}):
             continue
-        body = strip_page_chrome(text)
+        body = normalize_plain_source(strip_page_chrome(text), str(meta.get('title') or '공식 안내'))
+        if (details and answer_goal(query) not in ('reference','specifications','cost')
+                and not any(t in compact(body) for t in details)):
+            continue
         if not topic_support({"content": body, "metadata": {"url": url}}, keywords)[0]:
             continue
-        if not is_service_source(query, doc, keywords):
+        if not is_service_source(query, {**doc, 'content': body}, keywords):
             continue
         section = focused_section(query, str(url), body)
         if section == "":
             continue
+        if section is not None and not re.search(r'^#{2,6} ',section,re.M):
+            section = '## ' + str(meta.get('title') or '공식 안내') + '\n' + section
         units = _source_units((section if section is not None else body).splitlines())
-        scope_start, scope_end = topic_section_bounds(units, query, keywords) or (0, len(units))
+        # A named requested detail is stronger than generic field coverage.
+        # Otherwise a pregnancy-age query could select a different program
+        # whose heading merely repeats the parent service name.
+        scope_start, scope_end = detail_section_bounds(query, units) or topic_section_bounds(units, query, keywords) or (0, len(units))
+        scoped = units[scope_start:scope_end]
+        detail = detail_section_bounds(query, scoped)
+        if detail:
+            scope_end = scope_start + detail[1]
+            scope_start += detail[0]
         start, end = scope_start, scope_end
         # A long page's first paragraphs are often another service. Select a
         # contiguous window around the strongest substantive topic, preserving
         # its surrounding headings, audience, dates and exclusions.
         if sum(map(len, units[start:end])) > 1000:
             goals = tuple(word for goal in requested_goals(query) for word in GOAL_WORDS.get(goal, ()))
+            details = focus_terms(query)
             best = max(range(start, end), key=lambda i: (
+                sum(word in compact(units[i]) for word in details),
                 sum(word in compact(" ".join(units[max(0, i-3):i+4])) for word in keywords),
                 sum(compact(word) in compact(units[i]) for word in goals)))
             start, end = max(scope_start, best - 4), min(scope_end, best + 10)
@@ -71,14 +88,23 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
             packets.append({"document": doc, "units": units, "body": body,
                             "section_body": section if section is not None else body,
                             "window": range(start, end), 'scope': (scope_start,scope_end)})
-    return packets
+    return sorted(packets, key=lambda p: sum(t in compact(p['body']) for t in details), reverse=True)[:5]
 
 
 def eligible_ids(query: str, packet: dict, keywords: set[str]) -> set[int]:
     """A named service's explicit facts take priority over portal-wide setup."""
     units = packet['units']
+    owning_units = set(focus_units(query, units))
     valid = {i for i, unit in enumerate(units) if source_unit_complete(unit) and not QUALIFICATION.match(unit) and
              (matches_goal(query, unit) or SCOPE.match(unit))}
+    valid = {i for i in valid if units[i] in owning_units}
+    if answer_goal(query) == 'hours' and not re.search(r'야간|저녁|밤|일과시간외',query):
+        valid = {i for i in valid if not re.search(r'야간|일과시간 외|18:30\s*[~∼]',
+                 ' '.join(units[max(0,i-2):i+1]))}
+    details = focus_terms(query)
+    focused = {i for i in valid if any(t in compact(units[i]) for t in details)}
+    if focused:
+        valid = focused | {i for i in valid if SCOPE.match(units[i])}
     requested_section = packet.get('scope') or topic_section_bounds(units, query, keywords)
     if requested_section:
         valid = {i for i in valid if requested_section[0] <= i < requested_section[1]}
@@ -104,15 +130,21 @@ def matches_goal(query: str, unit: str) -> bool:
 def matches_field(query: str, goal: str | None, unit: str) -> bool:
     if re.search(r'^#{2,6} ', unit):
         return False
-    if goal in ('cost', 'services', 'eligibility', 'definition', 'precautions','necessity'):
+    if goal == 'conditions':
         from chatbot.structured_answers import field_matches
-        return field_matches(goal, unit)
+        return field_matches(goal,unit,query)
+    if goal == 'schedule' and any(word in compact(query) for word in ('자주', '주기', '몇번')):
+        from chatbot.structured_answers import field_matches
+        return field_matches(goal,unit,query)
+    if goal in ('cost', 'services', 'eligibility', 'definition', 'precautions','necessity','specifications','schedule','method','documents'):
+        from chatbot.structured_answers import field_matches
+        return field_matches(goal, unit, query)
     if goal == 'location':
         from chatbot.question_intent import has_location_unit
         return has_location_unit(unit)
     if goal == 'hours':
-        from chatbot.question_intent import has_opening_hours
-        return has_opening_hours(unit)
+        from chatbot.structured_answers import field_matches
+        return field_matches(goal,unit,query)
     if goal == 'schedule' and any(word in compact(query) for word in ('자주', '주기', '몇번')):
         return bool(re.search(r'(?:연|월|주|일)\s*\d+\s*회|매(?:년|월|주|일)', unit))
     words = GOAL_WORDS.get(goal, ())
@@ -185,7 +217,17 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
         return None
     anchors = set(keywords).intersection(SERVICE_NAMES)
     selected_body = compact(title + ' ' + ' '.join(units[i] for i in ids))
-    if anchors and not topic_support({'content': selected_body, 'metadata': {'url': source_url}}, anchors)[0]:
+    scope_heading = ' '.join(u for u in units[section_start:ids[0]+1] if u.startswith('#'))
+    from chatbot.source_hierarchy import heading_path
+    scope_heading += ' ' + heading_path(units,ids[0])
+    from chatbot.concise_answers import _section_headings
+    if section_start in _section_headings(units):
+        scope_heading += ' ' + units[section_start]
+    institution_only = set(keywords).issubset({'보건소','구청'})
+    if not institution_only and not topic_support({'content':selected_body + ' ' + scope_heading,
+                          'metadata':{'url':source_url}},keywords)[0]:
+        return None
+    if anchors and not topic_support({'content': selected_body + compact(scope_heading), 'metadata': {'url': source_url}}, anchors)[0]:
         # Generic printer/certificate requirements on a portal page are not
         # the steps of a specifically named report/application service.
         return None
@@ -204,6 +246,11 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
                     and any(word in unit for word in ('제외', '않음', '불가', '유상', '부담'))):
                 ids.append(pos)
     selected = [units[i] for i in ids]
+    details = {t for t in focus_terms(query) if t not in compact(title)
+               and not any(t in k or k in t for k in keywords)}
+    if details and any(t in compact(packet['body']) for t in details) and not any(
+            t in compact(' '.join(selected) + ' ' + scope_heading) for t in details):
+        return None
     if any(not source_unit_complete(unit) for unit in selected):
         return None
     audience = next((unit for unit in selected if SCOPE.match(unit)), None)
@@ -261,6 +308,7 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         if reference:
             return reference
     from chatbot.structured_answers import structured_brief
+    partial = None
     for packet in candidates:
         if (answer_goal(query) == 'documents' and 'mId=0104020000' in str(
                 (packet['document'].get('metadata') or {}).get('url'))):
@@ -277,7 +325,11 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
                         'is_clarification':False,'answer_method':'structured_source'}
         result = structured_brief(query, packet['document'], packet['section_body'], keywords)
         if result:
-            return result
+            if not result.get('degraded'):
+                return result
+            partial = partial or result
+    if partial:
+        return partial
     for packet in candidates:
         packet['eligible_ids'] = eligible_ids(query, packet, keywords)
     context, packets = plan_context(candidates)

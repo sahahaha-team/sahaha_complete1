@@ -293,7 +293,7 @@ async def chat(request: Request, payload: ChatRequest):
         contact_result = await run_in_threadpool(contact_responder.respond, session_id, contact_query)
         if contact_result is not None:
             if _chatbot is not None:
-                _chatbot.remember_contact_exchange(session_id, user_message, contact_result)
+                _chatbot.remember_contact_exchange(session_id, user_message, contact_result, contact_query)
             return ChatResponse(**contact_result)
         bot = get_chatbot()
         # 동기 LLM 호출은 워커 스레드로 위임 (이벤트 루프 비차단)

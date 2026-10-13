@@ -121,7 +121,7 @@ class ConciseAnswerTests(unittest.TestCase):
         self.assertIsNone(parse_adult_passport_fee(body, '성인여권수수료'))
 
     def test_short_method_label_keeps_visit_requirement(self):
-        result = concise_source_answer('법률상담 신청 방법', original('방 법\n: 전화예약 후 방문상담'), [{'metadata': {}}], {'법률상담'})
+        result = concise_source_answer('법률상담 신청 방법', original('방 법\n: 전화예약 후 방문상담'), [{'metadata': {'title':'법률상담'}}], {'법률상담'})
         self.assertFalse(result['is_clarification'])
         self.assertIn('전화예약 후 방문상담', result['answer'])
 

@@ -25,10 +25,10 @@ def _section_headings(units: list[str]) -> list[int]:
             value = unit.lstrip('# ')
             if value.endswith(('?', '？')) and re.search(r'공시일|기간|시간|방법|절차|대상|조건|자격|비용|서류', value):
                 continue  # A requested field question is not another program.
-            if re.fullmatch(r'(?:질환|소득|재산|연령|거주|영양)\s*기준',value):
+            if re.fullmatch(r'(?:질환|소득|재산|연령|거주|영양|근로|취업)\s*기준|근로이력',value):
                 continue
             if not re.fullmatch(r'(?:지원|신청|교육|진료|사업|운영|이용)?\s*(?:대상|내용|방법|기간|시간|자격|조건)|구비\s*서류|준비물|\d{4}년\s*선정기준액', value) and compact(value) not in {
-                    '위치및운영시간','사업목적','운영원리','핵심운영원리','검진시기및항목','신청안내','문의','상담문의','연락처','처리업무','제외대상','사업개요','사업기간','신청서접수처','신청자격','참여자격배제대상','대상자선발방법','선발시고려요소가중치적용','임금및근로조건','대상자선정기준','선정기준','배경','신청','목적','지원대상및기준','신청절차'} and not re.search(r'신청기준|^\d+[.]\s*(?:지원내용|주의사항|신청서류)|(?:이용시|이용 시)\s*(?:유의|주의)사항$|^\d{4}년.*판정기준$', value):
+                    '위치및운영시간','사업목적','운영원리','핵심운영원리','검진시기및항목','신청안내','문의','상담문의','연락처','처리업무','제외대상','사업개요','사업기간','신청서접수처','신청자격','참여자격배제대상','대상자선발방법','선발시고려요소가중치적용','임금및근로조건','대상자선정기준','선정기준','배경','신청','목적','지원대상및기준','신청절차','지원대상및내용','지원절차','서류안내','검진항목','검진절차','검사항목','지원항목','이용시간및이용료'} and not re.search(r'신청기준|적용기준$|^\d+[.]\s*(?:지원내용|주의사항|신청서류)|(?:이용시|이용 시)\s*(?:유의|주의)사항$|^\d{4}년.*판정기준$', value):
                 headings.append(i)
             continue
         if structured:
@@ -49,8 +49,10 @@ def section_bounds(units: list[str], index: int) -> tuple[int, int]:
     headings = _section_headings(units)
     start = max((i for i in headings if i <= index), default=0)
     level = len(units[start]) - len(units[start].lstrip('#')) if headings else 0
+    current_name = compact(units[start]) if units else ''
     end = min((i for i in headings if i > index and
-               (not level or len(units[i]) - len(units[i].lstrip('#')) <= level)), default=len(units))
+               (not level or len(units[i]) - len(units[i].lstrip('#')) <= level
+                or ('상담전화' in compact(units[i]) and '국가' in compact(units[i]) and '국가' not in current_name))), default=len(units))
     return start, end
 
 
@@ -110,6 +112,21 @@ def topic_section_bounds(units: list[str], query: str, keywords: set[str]) -> tu
              == ''.join(sorted(subjects))]
     if exact:
         regions = exact
+    if regions and requested_goals(query):
+        # A provider list can repeat the program name while omitting its age
+        # or period. Prefer the region which actually contains the requested
+        # fields before choosing the smallest subsection.
+        from chatbot.structured_answers import field_matches
+        fields = requested_goals(query)
+        def coverage(bounds):
+            region = units[bounds[0]:bounds[1]]
+            count = sum(any(field_matches(field,u,query) for u in region) for field in fields)
+            requested_rows = sum(' — ' in u and any(len(compact(p))>=2 and not compact(p).isdigit()
+                and compact(p) in compact(query) for p in re.split(r'[,·/]',u.split(' — ',1)[0]))
+                and any(field_matches(field,u,query) for field in fields) for u in region)
+            return (bool(requested_rows),count)
+        best = max(coverage(r) for r in regions)
+        regions = [r for r in regions if coverage(r) == best]
     smallest = [r for r in regions if not any(r != s and r[0] <= s[0] and s[1] <= r[1] for s in regions)]
     return smallest[0] if len(smallest)==1 else explicit
 
@@ -119,6 +136,13 @@ def condition_indices(units: list[str], indices: list[int]) -> list[int]:
     chosen = set(indices)
     for index in indices:
         section_start, section_end = section_bounds(units, index)
+        if re.search(r'아래\s*(?:요건|조건).*모두',units[index]):
+            for pos in range(index + 1,min(section_end,index + 7)):
+                if pos in _section_headings(units):
+                    break
+                requirement = units[pos].removeprefix('- ').strip()
+                if source_unit_complete(requirement) and re.match(r'(?:거주|근로|소득|재산|취업|연령|사업자).*[:：]',requirement):
+                    chosen.add(pos)
         for pos in range(index + 1, min(section_end, index + 6)):
             if QUALIFICATION.match(units[pos]):
                 chosen.add(pos)
@@ -160,6 +184,8 @@ def source_lines(original_answer: str) -> list[str]:
 
 
 def _passport(query: str, body: str) -> str | None:
+    if re.search(r'수령|교부|증명',query):
+        return None
     if any(word in query for word in ("기간", "며칠", "소요")) and '유효기간' not in query:
         line = next((line for line in body.splitlines() if re.match(r"여권교부\s*:", line)), None)
         return line if line and len(line) < MAX_BRIEF_LENGTH else None
@@ -249,6 +275,14 @@ def _source_units(lines: list[str]) -> list[str]:
 def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str = "") -> str | None:
     location = answer_goal(query) == "location"
     units = location_source_units(lines) if location else _source_units(lines)
+    from chatbot.source_scope import focus_units, detail_section_bounds
+    detail = detail_section_bounds(query,units)
+    if detail:
+        units = units[detail[0]:detail[1]]
+    units = focus_units(query,units)
+    from chatbot.evidence import topic_support
+    if not topic_support({'content':'\n'.join(units),'metadata':{'title':title}},keywords)[0]:
+        return None
     requested_section = topic_section_bounds(units, query, keywords)
     topics = substantive_keywords(keywords)
     opening_hours = asks_opening_hours(query)
@@ -273,14 +307,20 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
             continue
         if opening_hours and not hours_unit:
             continue
+        if opening_hours and not re.search(r'야간|저녁|밤|일과시간외',query):
+            nearby = ' '.join(units[max(0,i-2):i+1])
+            if re.search(r'야간|일과시간 외|18:30\s*[~∼]',nearby):
+                continue
         if location and not place_unit:
             continue
         if not source_unit_complete(unit):
             continue
-        if goal in ('cost','eligibility','services','definition','precautions','necessity'):
+        matched_field = False
+        if goal in ('conditions','cost','schedule','eligibility','services','definition','precautions','necessity','method','specifications','documents'):
             from chatbot.structured_answers import field_matches
-            if not field_matches(goal,unit):
+            if not field_matches(goal,unit,query):
                 continue
+            matched_field = True
         if QUALIFICATION.match(unit):
             continue
         # Omitted context and an unfinished preceding condition cannot be
@@ -291,7 +331,7 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
             continue
         value = compact(unit)
         topic_hits = sum(word in value for word in topics)
-        goal_hits = sum(compact(word) in value for word in intent)
+        goal_hits = sum(compact(word) in value for word in intent) + int(matched_field)
         if goal == "method" and re.search(r"(?:하세요|하십시오|마세요|해야 합니다)[.!]?$", unit):
             goal_hits += 1
         if goal == "schedule" and any(word in query for word in ("자주", "주기", "몇 번")):
@@ -310,6 +350,15 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
         return None
     for _, start in sorted(candidates, key=lambda item: (-item[0], item[1])):
         chosen = [units[index] for index in condition_indices(units, [start])]
+        if goal == 'eligibility':
+            # Subcriteria under one program apply together. An age row alone
+            # must not imply eligibility when income/residency also constrain it.
+            begin, end = section_bounds(units,start)
+            for criterion in units[begin:end]:
+                value = criterion.removeprefix('- ').strip()
+                if (re.match(r'^(?:거주|소득|재산|연령|근로|취업|영양)(?:기준|이력|위험요인)\s*[:：]',value)
+                        and source_unit_complete(value) and criterion not in chosen):
+                    chosen.append(criterion)
         if goal == "method" and start and source_unit_complete(units[start - 1]):
             previous = units[start - 1]
             if (not QUALIFICATION.match(previous) and any(word in previous for word in ("통합", "인터넷", "예약"))
@@ -334,6 +383,25 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
                     chosen.append(unit)
         if any(not source_unit_complete(unit) for unit in chosen):
             continue
+        # Validate the actual chosen facts and their owning heading. A topic
+        # elsewhere on the same page cannot validate an unrelated fallback.
+        from chatbot.source_hierarchy import heading_path
+        local_keywords = keywords - {'보건소','구청'}
+        # In a named program, '임산부' asks about its audience; source rows may
+        # explicitly split that audience into 임신부·출산부·수유부. The complete
+        # page has already established the program and requested topic above.
+        named_programs = local_keywords.intersection(SERVICE_NAMES) - {'임산부'}
+        if '임산부' in local_keywords and any(name in compact(title) for name in named_programs):
+            local_keywords = local_keywords - {'임산부'}
+        if local_keywords and not topic_support({
+                'content':' '.join(chosen) + ' ' + heading_path(units,start),
+                'metadata':{'title':title}}, local_keywords)[0]:
+            continue
+        # A fact about support ages cannot drop its complete requirements just
+        # because a nearby method/marketing unit won the fallback ranking.
+        for pos in [i for i,u in enumerate(units) if u in chosen]:
+            if re.search(r'아래\s*(?:요건|조건).*모두',units[pos]):
+                chosen = [units[i] for i in condition_indices(units,[units.index(u) for u in chosen])]
         answer = "\n".join("- " + line for line in chosen)
         if len(answer) <= MAX_BRIEF_LENGTH:
             return answer

@@ -21,6 +21,8 @@ SYNONYMS = {
     "인공지능": "ai", "보건증": "건강진단결과서",
     "출산장려금": "출산지원금", "불법주차": "불법주정차",
     "대형쓰레기": "대형폐기물", "불법건축물": "위반건축물", "주민센터": "행정복지센터",
+    "식당": "음식점",
+    "음식점": "식품접객",
 }
 INTENT = re.compile(r"연락처|전화|담당부서|담당자|담당.*(?:알려|누구|어디)|문의처|연결|어느(?:부서|과)|어떤부서|부서.*(?:알려|어디)|(?:번호|문의).*(?:알려|어디|뭐|어떻게|할곳)")
 FILLER = re.compile(r"사하구청|사하구|부산광역시|부산|담당부서|담당자|담당|대표전화|대표번호|대표|전화번호|연락처|전화|번호|부서|문의처|업무내용|업무|문의|알려(?:주실수있(?:나요|어요)|주세요|줘|주실래|줄래)?|어떻게(?:돼|되나요|되는지|되요)?|뭐(?:야|예요|에요|지)?|몇번(?:인가요|이야|인지)?|어디로|어디에|어디|어느과|어느|어떤|무슨|연결|관련|관한|알고싶(?:어요|어)|알수있(?:을까요|을까|나요)|해야(?:해|하나요)|할수있(?:나요|어요)|부탁(?:해|드려요)|인가요|있나요|주세요|필요해요|궁금해요|좀|신고|신청|접수|발급|처리")
@@ -213,9 +215,10 @@ class ContactDirectoryResponder:
         if contextual:
             subject = re.sub(r"수수료|요금|금액|비용|얼마(?:야|인가요|예요|인지)?", "", subject)
         subject = re.sub(r"^(?:그러면|그럼)", "", subject)
+        subject = re.sub(r'^그(?=업무|부서|$)', '', subject)
         # A dong in a work question specifies the service area, whereas a
         # dong alone asks for that office's phone. Keep these cases separate.
-        area_names = {re.sub(r"[1-4]?동$", "", d["name"]) for d in self.departments if d["name"].endswith("동")}
+        area_names = {'괴정','당리','하단','신평','장림','다대','구평','감천'}
         areas = {name for name in area_names if re.search(re.escape(name) + r"(?:[1-4])?동", text)}
         for area in areas:
             subject = re.sub(re.escape(area) + r"(?:[1-4])?동", "", subject)
@@ -237,7 +240,8 @@ class ContactDirectoryResponder:
 
         if not fresh(self.data.get("staff_checked_at")):
             return response("직원업무안내 확인일이 7일을 지나 최신 담당자를 확인할 수 없습니다. 사하구청 대표전화 **051-220-4000**로 확인해주세요.", reason="stale_contact_directory")
-        departments = [d for d in departments if not d["name"].endswith("동")]
+        departments = [d for d in departments if not d["name"].endswith("동")
+                       and d['name'] != '보건소']
         found = {k for k in self.vocabulary if k in subject and len(k) >= 2}
         # A complete noun ('대형폐기물') carries more meaning than its fragments.
         terms = {k for k in found if not any(k != longer and k in longer for longer in found)}
@@ -247,19 +251,54 @@ class ContactDirectoryResponder:
         for filler in ("알려", "곳", "랑", "와", "및", "어떻게", "해야해", "합니다", "해주세요", "하면돼", "좀", "찾아줘", "원해", "부탁해"):
             remainder = remainder.replace(filler, "")
         remainder = PARTICLES.sub("", remainder)
-        if len(remainder) >= 4:
+        # Korean predicates such as '깨졌는데', '맡는 팀' are not unknown
+        # services. Still reject unsupported nouns rather than partial-match
+        # an unrelated duty (e.g. 보건증 + 양자컴퓨팅).
+        from chatbot.bm25_index import _init_kiwi
+        try:
+            token_query = query
+            if contextual:
+                token_query = re.sub(r'수수료|요금|금액|비용|얼마(?:야|인가요|예요|인지)?','',token_query)
+            for alias,target in SYNONYMS.items():
+                token_query = token_query.replace(alias,target)
+            tokens = {canonical(t.form) for t in _init_kiwi().tokenize(token_query)
+                      if t.tag.startswith('NN') or t.tag == 'SL'}
+            fillers = WEAK_TERMS | {'상태','뚜껑','팀','때문','곳','어디','분','번호','전화번호','행정복지센터','건','과','준비물','서류','필요','비용','수수료','보건소','무엇'}
+            unknown = {t for t in tokens if len(t) >= 2 and t not in fillers and
+                       not FILLER.fullmatch(t) and
+                       not any(t in name for name in areas) and
+                       not any(t in canonical(d['name']) for d in self.departments) and
+                       not any(t in term or term in t for term in found)}
+            unknown = {t for t in unknown if not re.fullmatch(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동',t)}
+            unknown -= {'그럼','그러면','그업무','그부서','거기'}
+            remainder_unknown = bool(unknown)
+            meaningful = tokens - fillers
+            terms = {term for term in terms if term not in WEAK_TERMS and term not in {'배출','위생상태'}
+                     and any(t == term or t in term for t in meaningful)}
+            terms = {term.removesuffix('배출') for term in terms}
+            terms = {term for term in terms if not any(term != other and term in other for other in terms)}
+        except Exception:
+            remainder_unknown = len(remainder) >= 4
+        if remainder_unknown:
             return response("질문의 일부 업무를 공식 직원업무안내에서 확인하지 못했습니다. 필요한 업무명을 구체적으로 알려주세요.", clarification=True, reason="contact_not_verified")
         if not terms:
             return response("해당 업무의 담당 부서와 번호를 공식 파일에서 확인하지 못했습니다. 문의 내용을 조금 더 구체적으로 알려주세요. 사하구청 대표전화는 **051-220-4000**입니다.", clarification=True, reason="contact_not_verified")
 
         ranked = []
+        inspection = '신고' in text and bool(re.search(r'위생|불량|불결|식중독|위반',text))
         for row in self.rows:
             if departments and row["department"] not in {d["name"] for d in departments}:
                 continue
-            if areas and not any(area in row["text"] or area in row["department"] for area in areas):
+            if '보건소' in text and not re.search(r'^보건|^건강',row['department']):
+                continue
+            row_areas = {area for area in area_names if re.search(re.escape(area)+r'(?:[1-4]?동|[,、\s)]|$)', row['duties'] + ' ' + row['department'])}
+            if areas and row_areas and not areas.intersection(row_areas):
                 continue
             # Every meaningful query term must be supported by this actual duty/role.
-            if not all(term in row["text"] or term in row["role"] for term in terms):
+            if not all(term in row["text"] or term in row["role"] or term in canonical(row['department'])
+                       or (inspection and term == '식품접객' and '식품' in row['text']) for term in terms):
+                continue
+            if inspection and not re.search(r'지도점검|행정처분|위생지도|식중독',row['text']):
                 continue
             score = sum(math.log(1 + len(self.rows) / (1 + self.frequencies[term])) for term in terms)
             score += 1.0 if any(term in row["role"] for term in terms) else 0
@@ -267,6 +306,8 @@ class ContactDirectoryResponder:
                 score += 1.5
             # Without a named dong, central departmental specialists are preferred.
             if re.search(r"\d동$", row["department"]):
+                score -= 2.0
+            if not areas and row_areas:
                 score -= 2.0
             ranked.append((score, row))
         if not ranked:

@@ -176,11 +176,11 @@ class ChatBot:
         except Exception as exc:
             logger.warning(f"대화 이력 저장 실패 ({role}): {exc}")
 
-    def remember_contact_exchange(self, session_id: str, user_message: str, result: dict):
+    def remember_contact_exchange(self, session_id: str, user_message: str, result: dict, query: str | None = None):
         """Keep local contact replies in the normal memory history without DB I/O."""
         self._clear_pending_clarification(session_id)
         if self.db is None and result.get("evidence", {}).get("status") != "protected":
-            self._save_conversation_safe(session_id, "user", user_message)
+            self._save_conversation_safe(session_id, "user", user_message, search_query=query or user_message)
             self._save_conversation_safe(session_id, "assistant", result["answer"],
                                          sources=json.dumps(result.get("sources", []), ensure_ascii=False))
 
@@ -273,11 +273,27 @@ class ChatBot:
 
         resolved_message = self.contextual_message(session_id, user_message)
         self._clear_pending_clarification(session_id)
+        from chatbot.response_helpers import unavailable_capability
+        capability = unavailable_capability(resolved_message)
+        if capability:
+            return capability
         from chatbot.contact_directory import contact_responder
         contact_result = contact_responder.respond(session_id, resolved_message)
         if contact_result is not None:
-            self.remember_contact_exchange(session_id, user_message, contact_result)
+            self.remember_contact_exchange(session_id, user_message, contact_result, resolved_message)
             return contact_result
+
+        from chatbot.official_reports import answer_official_report, is_report_query
+        if is_report_query(resolved_message):
+            report = answer_official_report(resolved_message,self.retriever.db.client)
+            if report:
+                _context,sources = self.retriever.format_context(resolved_message,report['documents'])
+                self._save_conversation_safe(session_id,'user',user_message,search_query=resolved_message)
+                self._save_conversation_safe(session_id,'assistant',report['answer'])
+                return {'answer':report['answer'],'sources':sources,'is_clarification':False,'degraded':False,
+                        'degraded_reason':None,'suggested_questions':[],
+                        'evidence':{'status':'official','label':'공식 보고서의 과거 통계','official_source_count':len(sources),
+                                    'answer_method':report['answer_method']}}
 
         # 1-2. 너무 포괄적인 요청은 임의로 답하지 않고 먼저 범위를 좁힌다.
         clarification = build_clarification(resolved_message)
@@ -311,16 +327,10 @@ class ChatBot:
         history = self._get_history_safe(session_id)
 
         # 3. 하이브리드 검색 (문맥 포함 검색어 구성)
-        search_query = normalize_query(build_contextual_search_query(resolved_message, history))
+        search_query = normalize_query(resolved_message)
         search_started = time.perf_counter()
 
-        target_url = None if is_staff_lookup(search_query) else match_official_page(search_query)
-        search_outcome = (
-            self.retriever.search_official_url(search_query, target_url, k=15)
-            if target_url else self.retriever.search(search_query, k=15)
-        )
-        if target_url and not search_outcome["results"]:
-            search_outcome = self.retriever.search(search_query, k=15)
+        search_outcome = self.retriever.search(search_query, k=15)
         fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
         results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
         logger.info("상담 근거 단계: 검색=%s, 최근 확인=%s, 서로 다른 근거 URL=%s",

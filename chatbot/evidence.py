@@ -78,6 +78,21 @@ def is_answerable_document(query: str, doc: dict) -> bool:
     """A notice index is evidence for listing requests, not for an office's duty."""
     url = str((doc.get("metadata") or {}).get("url") or "")
     path = urlparse(url).path
+    request = compact(query)
+    # '민원실' exists in both portals. Explicitly asking about the district
+    # office cannot establish the health center's location/clinical hours.
+    if '/health/' in path and ('구청민원실' in request or
+            ('구청' in request and '민원실' in request)) and '보건소' not in request:
+        return False
+    title = compact(str((doc.get('metadata') or {}).get('title') or ''))
+    primary_heading = next((compact(line.lstrip('# ')) for line in str(doc.get('content') or '').splitlines()
+                            if line.startswith('## ')),title)
+    if '민원실' in request and '무인' not in request and '무인민원' in primary_heading:
+        return False
+    if '민원실' in request and '여권' not in request and '여권' in title:
+        return False
+    if '통합예약' in request and '/reserve/' not in path:
+        return False
     if path.endswith('/main.do') or path in ('/welfare.do', '/reserve', '/reserve/'):
         # Landing-page menus are not a service's instructions.
         return False
@@ -85,10 +100,10 @@ def is_answerable_document(query: str, doc: dict) -> bool:
         return False
     if not is_listing_document(doc):
         return True
-    compact = re.sub(r"\s+", "", query or "")
-    if "담당" in compact or "부서" in compact:
+    requested = re.sub(r"\s+", "", query or "")
+    if "담당" in requested or "부서" in requested:
         return False
-    return any(word in compact for word in ("공지사항", "게시판", "공고목록", "고시공고", "최신소식", "구정소식"))
+    return any(word in requested for word in ("공지사항", "게시판", "공고목록", "고시공고", "최신소식", "구정소식"))
 
 
 def unsupported_numbers(answer: str, context: str) -> list[str]:
@@ -141,6 +156,20 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
+    anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','자전거','냉장고','세탁기','구직','구인','전자민원'}
+    body_text = str(doc.get('content') or '')
+    if '검사' in query and not re.search(r'접종|백신',query) and '접종' in title and '검사' not in title:
+        return False
+    if '암환자' in anchors and '소아암' in title and not re.search(r'소아|아동|아이|어린|미성년',query):
+        return False
+    headings = [compact(line.lstrip('# ').split('※',1)[0]) for line in body_text.splitlines()
+                if line.startswith('#')]
+    headings += [compact(line.split(' — ',1)[0]) for line in body_text.splitlines() if ' — ' in line]
+    if not headings:
+        headings = [compact(line) for line in body_text.splitlines() if re.fullmatch(
+            r'[^:：,·]{2,35}(?:안내|사업|제도|지원|관리|신청|헌장|방법)(?:\[[^\]]+\])?',line.strip())]
+    if anchors and not any(a in title or any(a in h for h in headings) for a in anchors):
+        return False  # A mention in another program's eligibility is not its guide.
     if '자전거' in compact(query) and re.search(r'대여|빌리|빌릴|렌탈', query):
         body = compact(str(doc.get('content') or ''))
         if not re.search(r'자전거.{0,80}(?:대여|대출|빌리)|(?:대여|대출).{0,80}자전거', body):
@@ -148,7 +177,7 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     certificates = {"주민등록등본", "주민등록초본", "건강진단결과서"}.intersection(keywords)
     if certificates and answer_goal(query) in ("method", "cost", "documents") and title:
         return any(name in title for name in certificates) or any(
-            word in title for word in ("정부24", "무인민원", "민원실", "제증명", "발급안내"))
+            word in title for word in ("정부24", "무인민원", "민원실", "제증명", "발급안내", "수수료면제"))
     return True
 
 

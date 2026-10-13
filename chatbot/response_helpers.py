@@ -3,7 +3,7 @@
 import re
 from chatbot.vaccination import needs_vaccine_kind, vaccine_kind
 from chatbot.question_intent import asks_location, location_subject
-from chatbot.query_subject import AREA_PATTERN
+from chatbot.query_subject import AREA_PATTERN, SERVICE_NAMES, compact as topic_compact
 from chatbot.answer_goal import answer_goal
 
 
@@ -36,6 +36,9 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     if message in pending.get("suggested_questions", []):
         return message  # Buttons already contain a complete, narrowed question.
     previous = re.sub(r"\s+", "", pending.get("query", ""))
+    if (len(current) <= 25 and not answer_goal(message)
+            and any(term in current for term in pending.get('reply_terms',[]))):
+        return pending['query'] + ' ' + message
     for topic in ("여권", "보건증", "폐기물", "복지", "주차", "화재", "출산", "건축", "세금", "등본"):
         if topic in current and topic not in previous:
             return message
@@ -45,7 +48,7 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
         for goal in ('비용', '수수료', '얼마', '운영시간', '접종시간', '시기', '대상', '조건', '준비물', '서류'):
             if goal in current and goal not in previous:
                 return message
-    if len(current) <= 35 and any(term in current for term in pending.get("reply_terms", [])):
+    if len(current) <= 60 and any(term in current for term in pending.get("reply_terms", [])):
         return pending["query"] + " " + message
     return message
 
@@ -62,10 +65,38 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
     return any(re.search(pattern, compact) for pattern in patterns)
 
 
+def unavailable_capability(message: str) -> dict | None:
+    text = topic_compact(message)
+    if '주차장' in text and re.search(r'빈자리|빈공간|남은자리|잔여|몇대가능',text) and re.search(r'지금|현재|실시간|오늘',text):
+        answer = '현재 상담에는 **실시간 주차 잔여면수 조회 기능이 없습니다.** 주차장의 전체 주차면수를 현재 빈자리 수로 안내할 수는 없습니다.'
+        reason = 'live_data_unavailable'
+    elif re.search(r'대신|알아서|너가|네가',text) and re.search(r'신청접수해|신청해줘|예약해줘|접수해줘',text):
+        answer = '챗봇은 **신청·접수를 대신 실행할 수 없습니다.** 필요한 서류와 공식 신청 방법은 안내할 수 있어요. 어떤 업무를 신청하시나요?'
+        reason = 'action_not_supported'
+    else:
+        return None
+    return {'answer':answer,'sources':[],'is_clarification':False,'degraded':True,'degraded_reason':reason,
+            'evidence':{'status':'insufficient','label':'실행·조회 기능 확인 필요','official_source_count':0},'suggested_questions':[]}
+
+
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
-    if ('수수료' in compact and '면제' in compact and not any(w in compact for w in
+    if ('쓰레기' in compact and re.search(r'아무때|낮|배출시간',compact)
+            and not any(kind in compact for kind in ('일반쓰레기','종량제','음식물','재활용','분리수거'))):
+        return clarification_question('**일반쓰레기·음식물·재활용 중 무엇을 배출**하시나요? 종류에 맞는 시간·방법을 확인하겠습니다.',
+            ['일반쓰레기 배출시간 알려줘','음식물쓰레기 배출시간 알려줘','재활용품 배출시간 알려줘'],
+            ['일반','종량제','음식물','재활용','분리수거'])
+    if re.search(r'가구.*(?:버리|배출)', compact) and any(w in compact for w in ('비용','수수료','얼마')) and not re.search(r'침대|소파|책상|의자|장롱',compact):
+        return clarification_question('버릴 가구의 **품목과 크기**를 알려주세요. 수수료는 품목·규격별로 다릅니다.',
+            ['2인용 소파 배출 수수료','일반침대 1인용 배출 수수료'], ['소파','침대','책상','의자','장롱'])
+    if re.search(r'생활비.*지원', compact) and not re.search(r'실직|질병|폐업|긴급복지|기초생활|연금',compact):
+        return clarification_question('생활비 지원은 상황에 따라 달라요. **실직·질병·폐업 등으로 갑자기 생계가 어려워지셨나요?**',
+            ['실직한 경우 긴급복지 생계지원 신청 방법'], ['실직','질병','폐업','소득','갑자기'])
+    if '민방위' in compact and re.search(r'대피소|대피시설',compact) and not re.search(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동',compact):
+        return clarification_question('**어느 동 근처의 대피시설**을 찾으시나요? 동 이름을 알려주세요.',
+            ['장림1동 민방위 대피시설 위치'], ['괴정','당리','하단','신평','장림','다대','구평','감천'])
+    if (any(w in compact for w in ('수수료','발급비','민원서류')) and any(w in compact for w in ('면제','공짜','전부무료')) and not any(w in compact for w in
             ('등본','초본','인감','서명','가족관계','출입국','과세증명','공시지가'))):
         return clarification_question('어떤 민원이나 서류의 수수료인가요? **등·초본·인감증명서 등 종류**에 따라 면제 조건이 달라요.',
             ['기초생활수급자 주민등록등본 수수료 면제 조건','한부모가족 인감증명서 수수료 면제 조건'],
@@ -88,6 +119,11 @@ def build_clarification(user_message: str) -> dict | None:
             ['독감 접종 장소 알려줘', '폐렴구균 접종 장소 알려줘', 'B형간염 접종 장소 알려줘'],
             ['독감', '인플루엔자', '폐렴', '간염', '코로나', 'HPV', 'hpv', '유두종', '자궁경부암',
              '대상포진', '파상풍', '장티푸스', 'BCG', 'bcg', '홍역', '뇌염', '수두', '로타', '황열', '콜레라', 'RSV', 'rsv'])
+
+    if (re.search(r'모든|전부',compact) and re.search(r'예방접종|백신',compact)
+            and not vaccine_kind(user_message) and re.search(r'지원|무료|끝|나이|세',compact)):
+        return clarification_question('백신마다 지원 연령이 다릅니다. **어떤 백신의 지원 여부**가 궁금하신가요?',
+            [], ['독감','인플루엔자','폐렴','간염','HPV','hpv','유두종','자궁경부암','대상포진','파상풍','수두','로타'])
 
     # One missing condition per turn. Suggestions are questions, not promises
     # that a particular service or eligibility rule exists.
@@ -129,7 +165,7 @@ def build_clarification(user_message: str) -> dict | None:
             return clarification_question("대형폐기물의 **배출 방법**과 **수수료** 중 무엇이 궁금하신가요?",
                 ["대형폐기물 배출 방법 알려줘", "대형폐기물 수수료 알려줘"], ["배출", "버리", "방법", "수수료", "비용", "가격"])
 
-    if "무인민원발급기" in compact and not any(word in compact for word in ("위치", "어디", "장소", "시간", "수수료", "비용", "얼마", "서류", "등본", "전화", "담당")):
+    if "무인민원발급기" in compact and not any(word in compact for word in ("위치", "어디", "장소", "시간", "수수료", "비용", "얼마", "서류", "등본", "증명", "전화", "담당")):
         return clarification_question("무인민원발급기의 **위치·운영시간·수수료** 중 무엇이 궁금하신가요?",
             ["무인민원발급기 위치 알려줘", "무인민원발급기 운영시간 알려줘", "무인민원발급기 수수료 알려줘"], ["위치", "어디", "시간", "수수료", "비용"])
 
@@ -167,7 +203,8 @@ def build_clarification(user_message: str) -> dict | None:
         "지원받고싶", "혜택알려", "신청하고싶", "도와줘", "도움받고싶",
         "어디에문의", "뭘해야", "무슨지원",
     )
-    if len(compact) > 22 or not any(pattern in compact for pattern in vague_patterns):
+    if (len(compact) > 22 or not any(pattern in compact for pattern in vague_patterns)
+            or any(name in topic_compact(user_message) for name in SERVICE_NAMES)):
         return None
 
     return {
@@ -217,16 +254,34 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     """생략된 후속 질문에만 직전 주제를 보충한다."""
     current = (user_message or "").strip()
     compact = re.sub(r"\s+", "", current)
+    recent = [(m.get('search_query') or m.get('content') or '').strip()
+              for m in history or [] if m.get('role') == 'user']
+    previous_query = recent[-1] if recent else ''
+    generic = {'자전거','디지털','컴퓨터','냉장고','세탁기','구직','구인','건강검진','영유아'}
+    names = {n for n in SERVICE_NAMES if n not in generic and n in topic_compact(current)}
+    old_names = {n for n in SERVICE_NAMES if n not in generic and n in topic_compact(previous_query)}
+    new_subject = any(not any(n in old or old in n for old in old_names) for n in names)
+    if new_subject:
+        return current
     is_follow_up = (
         len(compact) <= 16 and (
             compact.startswith(("그건", "그럼", "그거", "그것", "그러면", "그경우"))
             or re.search(r"(은요|는요|도요|그때는|수수료는|비용은)[?？]?$", compact)
         )
     )
+    # Elided field/condition questions need not start with '그럼'. Keep a
+    # known service, but do not attach unrelated complete new questions.
+    is_follow_up = is_follow_up or bool(previous_query and old_names and len(compact) <= 60 and
+        (not names or names <= old_names) and re.search(
+            r'가져갈|등록장소|가입자|사업자등록|실직|소득이|몇급지|보상받|서류랑|주민등록등본이요',compact))
     # A short reply to an actual contact choice can omit its work topic.
     # Complete questions such as '보건소 위치' keep their own topic.
     last_reply = next((str(m.get('content') or '') for m in reversed(history or [])
                        if m.get('role') == 'assistant'), '')
+    if (len(compact) <= 45 and re.search(r'업무나 부서명|어떤 민원이나 업무',last_reply)
+            and re.search(r'전화|번호|연락처',previous_query)
+            and not re.search(r'여권|화재|비용|수수료|시간|기간|서류',compact)):
+        return current + ' 담당 전화번호'
     if len(compact) <= 12 and any(word in last_reply for word in ('알려주세요', '어떤 업무', '어느 업무', '어느 부서')):
         is_follow_up = is_follow_up or compact in ('민원처리', '단속')
     if not is_follow_up:
@@ -237,6 +292,14 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         if message.get("role") == "user" and (message.get("content") or "").strip()
     ]
     previous = recent_user_messages[-1] if recent_user_messages else ""
+    if answer_goal(current) and old_names:
+        # Carry the service and explicit profile, not the previous requested
+        # field (e.g. automatic enrolment must not replace a benefit question).
+        profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}세|성인|미성년자|부모|친족|신규|재발급',previous)
+        subjects = sorted(old_names,key=len,reverse=True)
+        if '인플루엔자' in subjects and '독감' in previous:
+            subjects[subjects.index('인플루엔자')] = '독감'
+        previous = ' '.join(subjects + profile)
     if any(word in current for word in ("수수료", "비용", "얼마")):
         previous = re.sub(r"준비물|준비서류|구비서류|서류|준비|기간|며칠", "", previous)
         previous = location_subject(previous)
@@ -245,4 +308,6 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         previous = location_subject(previous)
     elif asks_location(current):
         previous = re.sub(r"준비물|준비서류|구비서류|서류|준비|기간|시간|며칠|수수료|비용|얼마", "", previous)
+    if previous in current or previous == current:
+        return current
     return (previous + " " + current).strip()

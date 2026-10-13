@@ -12,36 +12,77 @@ from chatbot.answer_completion import source_unit_complete, QUALIFICATION
 from chatbot.concise_answers import _source_units, named_section_bounds, topic_section_bounds, section_bounds, MAX_BRIEF_LENGTH
 from chatbot.query_subject import compact, SERVICE_NAMES
 from chatbot.question_intent import has_opening_hours, has_location_unit
+from chatbot.source_scope import focus_units, focus_terms, detail_section_bounds, normalize_plain_source
 
 FIELD = {
-    'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
+    'conditions': r'제외|불가|불필요|금지|제한|금식|자동가입|보장내용|용도\s*[:：]|지원대상|선정기준|소득인정액|지급금액|신청기간|예약|허\s*가\s*대\s*상|신\s*고\s*대\s*상|등록.*지원|단[,， ]|다만',
+    'specifications': r'규격|크기|가로|세로|\d+\s*(?:cm|㎝|매)',
+    'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
-    'method': r'방법\s*[:：]|절차\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투',
-    'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|본인\s*부담\s*없',
-    'schedule': r'(?:기간|일자|시기|주기|공시|공표|접수시간).{0,100}(?:\d|매년|연중)|\d\s*(?:월|일|개월|회)',
-    'services': r'(?:운영|사업|서비스|진료|검사|검진|지원|상담)?내용\s*[:：]|처리업무\s*[:：]|급여\s*[:：]|서비스.*제공|서비스입니다|상담.*(?:제공|운영)|검진.*(?:무료|가능)|교육대상\s*[:：]|무료.*교육.*제공|(?:상담|접수|발급|신청).*(?:이용|가능|하실수)',
+    'method': r'방법\s*[:：]|절차\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
+    'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|본인\s*부담\s*없|(?:수\s*수\s*료|사용료|요금|금액|가격|처리비용)[^:：\n]{0,40}[:：].*\d',
+    'schedule': r'(?:기간|시간|일자|시기|주기|공시|공표|납기|신청권수|신청수량|한도).{0,100}(?:\d|매년|연중|매주|매월)|\d\s*(?:월|일|개월|회|권|주|년)',
+    'services': r'(?:운영|사업|서비스|진료|검사|검진|지원|상담)?내용\s*[:：]|민원증명\s*[:：]|처리업무\s*[:：]|급여\s*[:：]|서비스.*제공|서비스입니다|상담.*(?:제공|운영)|검진.*(?:무료|가능)|교육대상\s*[:：]|무료.*교육.*제공|(?:상담|접수|발급|신청).*(?:이용|가능|하실수)',
     'definition': r'^정의\s*[:：]|이란|말합니다|위함|목적으로|목적\s*[:：]|제도.*(?:입니다|함)|제공받고|일자리를\s*제공|사업(?:입니다|을\s*제공)|이다[.。]?$',
     'precautions': r'해야|마세요|하십시오|피하|피할|자제|삼가|대피|행동요령|금지|말 것|할 것',
     'necessity': r'공동.{0,8}이용|제출.*않|제출.*생략|불필요|제출.*필요|가입절차\s*[:：]|자동가입',
 }
 
 
-def field_matches(goal: str | None, unit: str) -> bool:
+def field_matches(goal: str | None, unit: str, query: str = '', context: str = '') -> bool:
     if not source_unit_complete(unit):
         return False
+    request = compact(query)
+    scoped = context + ' ' + unit
+    if goal == 'conditions' and re.search(r'되어도|되면|그대로받',request):
+        ages = re.findall(r'\d{1,2}세',request)
+        if ages and not any(age in compact(scoped) for age in ages):
+            return False
+    if goal == 'method' and re.search(
+            r'방\s*법\s*[:：]|배출.*(?:수거|봉투|요일|품목)|(?:요일|품목).*배출|수거.*(?:콜센터|예약|접수)|'
+            r'(?:상담|민원).*국민신문고|인터넷.*(?:신청|열람|발급)|'
+            r'(?:회원가입|로그인|본인인증|신분확인).*(?:필요|필수|먼저|후)',unit):
+        return True
+    if goal == 'schedule' and query:
+        if re.search(r'한참뒤|출산.*(?:지나|지난|뒤)',request):
+            return bool(re.search(r'신청기간|접수기간|신청시기',scoped))
+        if re.search(r'배출|쓰레기',query) and re.search(r'아무때|낮|시간',query):
+            return has_opening_hours(unit) and bool(re.search(r'배출|내어|내놓',unit))
+        if re.search(r'당일.*(?:나와|발급|받)|다음날|며칠',request) and not re.search(r'며칠.*전',request):
+            return bool(re.search(r'처리기간|소요|교부\s*[:：]|처리기한|\d+\s*일\s*(?:이내|정도)',unit))
+        if re.search(r'며칠.*전|몇.*전',request):
+            return bool(re.search(r'예약기간|신청기간|\d+\s*(?:일|주).*전',unit))
+        if re.search(r'주기|몇년마다|몇번|자주',request):
+            return bool(re.search(r'주기|횟수|\d+\s*(?:년|회|개월)|매(?:년|월|주)',unit))
+    if goal == 'method' and re.search(r'계산|거래금액|환산',request):
+        return bool(re.search(r'거래금액.*(?:보증금|월차임)|환산',unit))
+    if goal == 'cost' and re.search(r'깎|감경|할인|감면',request):
+        return bool(re.search(r'감경|할인|감면|자진납부',scoped)) and bool(re.search(FIELD['cost'],unit))
+    if goal == 'cost' and re.search(r'기부.*까지만|기부한도|연간한도',request):
+        return bool(re.search(r'연간|개인별.*최대',unit))
     if goal == 'hours':
+        if re.search(r'주말|공휴일|토요일|일요일',query) and not re.search(r'주말|공휴일|토요일|일요일',unit):
+            return False
         return has_opening_hours(unit)
     if goal == 'location':
         return has_location_unit(unit) or bool(re.search(r'(?:신고처|접수처|기관명|소재지|시설명|주\s*소|위\s*치)\s*[:：]', unit))
     if goal == 'eligibility' and re.match(r'(?:지원대상|선정기준|이용대상|신청자격)\s*—',unit):
+        return True
+    if goal == 'conditions' and re.search(FIELD['eligibility'],unit):
         return True
     return bool(goal and re.search(FIELD.get(goal, r'(?!)'), unit))
 
 
 def scoped_units(query: str, body: str, keywords: set[str] | None = None) -> list[str]:
     units = _source_units(body.splitlines())
-    bounds = topic_section_bounds(units,query,keywords) if keywords else named_section_bounds(units,query)
-    return units[bounds[0]:bounds[1]] if bounds else units
+    bounds = detail_section_bounds(query, units)
+    if bounds is None:
+        bounds = topic_section_bounds(units,query,keywords) if keywords else named_section_bounds(units,query)
+    units = units[bounds[0]:bounds[1]] if bounds else units
+    detail = detail_section_bounds(query, units)
+    if detail:
+        units = units[detail[0]:detail[1]]
+    return focus_units(query, units)
 
 
 def requested_supported_items(query: str, units: list[str]) -> list[str]:
@@ -66,13 +107,73 @@ def requested_supported_items(query: str, units: list[str]) -> list[str]:
     return output
 
 
+def explicit_table_answer(query: str, units: list[str], title: str) -> str | None:
+    """Read categorical lists and comparison cells with both axes intact."""
+    request = compact(query)
+    details = focus_terms(query)
+    # Compare criteria printed in row identities, not an unrelated formula or
+    # an arbitrary household-size amount. Values remain literal source text.
+    if re.search(r'소득.*(?:같|차이)|(?:같|차이).*소득',request):
+        subjects = {name for name in SERVICE_NAMES if name in request}
+        labels = list(dict.fromkeys(u.split(' — ',1)[0] for u in units if ' — ' in u
+            and re.search(r'중위.*\d+\s*%',u.split(' — ',1)[0])
+            and any(name in compact(u.split(' — ',1)[0]) for name in subjects)))
+        if len(labels) >= 2 and all(any(name in compact(label) for label in labels) for name in subjects):
+            return '**' + title + '**\n' + '\n'.join('- ' + label for label in labels)
+    rows = [u for u in units if ' — ' in u and ':' in u]
+    # Boolean cells are meaningful only under an explicit eligibility caption.
+    if re.search(r'면제|가능|대상',query) and re.search(r'면제|대상',title+' '.join(units[:2])):
+        marks = [u for u in rows if re.search(r':\s*(?:○|◯|X|×)\s*$',u)
+                 and any(t in compact(u.split(' — ',1)[1].split(':',1)[0]) for t in details)]
+        if len(marks) == 1:
+            unit = marks[0]
+            label,mark = unit.rsplit(':',1)
+            meaning = '면제 대상으로 안내됩니다.' if '면제' in title else '대상으로 표시되어 있습니다.'
+            if mark.strip() in ('X','×'):
+                meaning = '이 표에서는 대상이 아닌 것으로 표시되어 있습니다.'
+            return label + ': **' + mark.strip() + '** — ' + meaning
+    if answer_goal(query) == 'cost' and re.search(r'무료|무상',query):
+        for row in rows:
+            owner, field = row.split(' — ',1)
+            if not re.match(r'품\s*명\s*:',field):
+                continue
+            items = [x.strip() for x in field.split(':',1)[1].split(',')]
+            matches = [x for x in items if len(x) >= 2 and compact(x) in request]
+            rules = [u.split(' — ',1)[1] for u in reversed(units[:units.index(row)]) if u.startswith(owner+' — ')
+                     and re.match(r'분\s*류\s*:',u.split(' — ',1)[1])][:1]
+            if not matches or not rules:
+                continue
+            proof = '·'.join(matches) + ' — ' + owner + '\n- ' + '\n- '.join(rules)
+            qualifications = [u for u in units if QUALIFICATION.match(u) and
+                              (compact(owner) in compact(u) or any(compact(x) in compact(u) for x in matches)) and len(u)<170
+                              and not ('품목 中' in u and not any(compact(x) in compact(u) for x in matches))]
+            proof += ''.join('\n- '+u for u in qualifications[:2])
+            return proof if len(proof) <= 400 else None
+    if answer_goal(query) == 'conditions' and details:
+        focused = [u for u in rows if source_unit_complete(u) and
+                   any(t in compact(u.split(' — ',1)[0]) for t in details)]
+        content = [u for u in focused if re.search(r'조건|기준|보장내용|대상|용도',u.split(' — ',1)[1])]
+        if content and len(content) <= 3:
+            answer = '해당 조건을 충족하는지 확인해야 합니다. 공식 자료의 안내는 다음과 같습니다.\n'
+            answer += '\n'.join('- '+u for u in content)
+            return answer if len(answer) <= MAX_BRIEF_LENGTH else None
+    return None
+
+
 def structured_brief(query: str, document: dict, body: str, keywords: set[str]) -> dict | None:
+    body = normalize_plain_source(body, str((document.get('metadata') or {}).get('title') or '공식 안내'))
     if not re.search(r'^#{2,6} ', body, re.M):
         return None
     goal = answer_goal(query)
     if goal in (None, 'reference'):
         return None
     units = scoped_units(query, body, keywords)
+    from chatbot.evidence import topic_support
+    from chatbot.source_hierarchy import heading_path
+    whole_units = _source_units(body.splitlines())
+    ancestry = heading_path(whole_units,whole_units.index(units[0])) if units and units[0] in whole_units else ''
+    if not topic_support({'content':'\n'.join(units)+' '+ancestry,'metadata':document.get('metadata') or {}},keywords)[0]:
+        return None
     if goal == 'location':
         areas = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동', query)
         rows = [u for u in units if ' — ' in u and any(area in compact(u) for area in areas)]
@@ -85,6 +186,24 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     scope = topic_section_bounds(_source_units(body.splitlines()), query, keywords)
     title = str((document.get('metadata') or {}).get('title') or '공식 안내')
     anchors = keywords.intersection(SERVICE_NAMES)
+    details = focus_terms(query)
+    # Income alone does not establish eligibility for crisis aid.
+    reasons = [w for w in ('실직','질병','부상','폐업','휴업','화재','이혼') if w in query]
+    if '위기사유' in body and '소득기준' in body and reasons and goal in ('eligibility','services','method'):
+        whole = _source_units(body.splitlines())
+        cause = [u for u in whole if not u.startswith('#') and any(w in u for w in reasons)
+                 and source_unit_complete(u) and len(u) < 240]
+        criteria = [u for u in whole if re.match(r'(?:소득|재산|금융재산)기준\s*[:：]',u) and source_unit_complete(u)]
+        if cause and criteria:
+            facts = [cause[0]] + criteria
+            answer = '위기사유와 소득·재산 조건을 함께 확인해야 합니다.\n'+'\n'.join('- '+u for u in facts)
+            if len(answer) <= MAX_BRIEF_LENGTH:
+                return {'answer':answer,'documents':[document],'is_clarification':False,'answer_method':'structured_source',
+                        'answer_details':title+'의 공식 안내 원문입니다.\n\n'+'\n'.join('> '+u for u in body.splitlines())}
+    table_answer = explicit_table_answer(query, units, title)
+    if table_answer:
+        return {'answer':table_answer,'documents':[document],'is_clarification':False,
+                'answer_method':'structured_source','answer_details':title+'의 공식 안내 원문입니다.\n\n'+'\n'.join('> '+u for u in body.splitlines())}
     if (goal in ('services','eligibility') and '위기사유' in body and '소득기준' in body
             and len(re.findall(r'^#{2,6} .*제\d+조 \d+호',body,re.M)) >= 3
             and not re.search(r'실직|질병|부상|폐업|휴업|화재|이혼|퇴원|입원',query)):
@@ -92,7 +211,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         return {'answer':'위기사유와 소득·재산 조건을 함께 확인해야 합니다. **생계가 어려워진 이유('+'·'.join(reasons)+' 등)가 무엇인가요?**',
                 'documents':[],'is_clarification':True,'answer_method':'structured_source',
                 'reply_terms':reasons,'suggested_questions':[]}
-    if (goal in ('services','eligibility') and '선정기준 — 의료급여수급자' in body
+    if ('암환자' in keywords and goal in ('services','eligibility','method') and '선정기준 — 의료급여수급자' in body
             and '선정기준 — 건강보험가입자' in body and not re.search(r'의료급여|차상위|건강보험',query)):
         return {'answer':'가입 유형에 따라 의료비 지원 조건이 다릅니다. **의료급여·차상위 대상자이신가요, 건강보험 가입자이신가요?**',
                 'documents':[],'is_clarification':True,'answer_method':'structured_source',
@@ -144,6 +263,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 return {'answer':answer,'answer_details':title+'의 공식 안내 원문입니다.\n\n'+'\n'.join('> '+u for u in body.splitlines()),
                         'documents':[document],'is_clarification':False,'answer_method':'structured_source'}
     selected = []
+    missing = []
     goals = requested_goals(query)
     blocked = (document.get('metadata') or {}).get('unverified_fields') or []
     goals = tuple(f for f in goals if f not in blocked)
@@ -155,13 +275,24 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         # eligibility, then its access method. A title is still never a fact.
         if any(field_matches('eligibility',u) and len(u) <= 180 for u in units):
             goals = ('eligibility',)
-        elif any(field_matches('definition',u) for u in units):
-            goals = ('definition',)
     for field in goals:
         candidates = []
-        general_targets = field == 'eligibility' and any(field_matches(field,u) and ' — ' not in u for u in units)
+        def requested_row(unit):
+            if ' — ' not in unit:
+                return False
+            owner = unit.split(' — ',1)[0]
+            return any(len(compact(n))>=2 and not compact(n).isdigit() and compact(n) in compact(query) for n in re.split(r'[,·/]',owner))
+        row_focus = any(requested_row(u) for u in units)
+        general_targets = field == 'eligibility' and not row_focus and any(field_matches(field,u) and ' — ' not in u for u in units)
         for index, unit in enumerate(units):
-            if not field_matches(field, unit) or QUALIFICATION.match(unit) or len(unit) > 330:
+            relevant_exception = (field in ('cost','eligibility','conditions') and QUALIFICATION.match(unit) and details
+                                  and any(t in compact(unit) for t in details))
+            if QUALIFICATION.match(unit) and field == 'conditions':
+                relevant_exception = field_matches(field,unit,query)
+            if QUALIFICATION.match(unit) and field == 'cost' and re.search(r'깎|감경|할인|감면',query):
+                relevant_exception = field_matches(field,unit,query)
+            heading_context = next((u for u in reversed(units[:index+1]) if u.startswith('#')),'')
+            if (not field_matches(field, unit, query, heading_context) and not relevant_exception) or (QUALIFICATION.match(unit) and not relevant_exception) or len(unit) > 330:
                 continue
             if general_targets and ' — ' in unit:
                 continue
@@ -180,32 +311,81 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 continue
             # A resident-wide inquiry cannot silently become a children-only
             # outreach program merely because both pages mention consultation.
-            narrow = bool(re.search(r'초등|지역아동센터|채용담당|사업자등록증|구인안내|노인·장애인', unit + ' ' + program))
-            if narrow and not re.search(r'아동|아이|어린|초등|구인|사업자', query):
+            narrow = bool(re.search(r'소아|초등|지역아동센터|채용담당|사업자등록증|구인안내|노인·장애인|참여업체|업체\s*모집', unit + ' ' + program))
+            if narrow and not re.search(r'소아|아동|아이|어린|초등|구인|사업자', query):
                 continue
             resolved_field = field in ('eligibility','method') or (field == 'cost' and '지원' in query)
             score = (0 if resolved_field and (scope or page_scope) else matches * 5) + int(bool(re.search(r'^[^:：]{1,35}[:：]', unit))) * 3
+            # Topic retrieval and requested detail are separate. A matching
+            # service alone cannot choose the wrong certificate/table row.
+            score += 10 * sum(t in compact(unit) for t in details)
+            if requested_row(unit):
+                score += 20
+            score += 5 * sum(t in compact(section_heading) for t in details)
+            if relevant_exception:
+                score += 20
             if field == 'method' and re.search(r'인터넷|온라인', query):
                 score += 12 if re.search(r'인터넷|온라인|위택스|공공보건포털', unit) else -10
             if field == 'cost' and re.search(r'지원', query):
                 score += 15 if re.search(r'지원내용|지원금액|지원범위|지원한도|지원비율', section_heading + unit) else -10
+            if field == 'cost' and re.search(r'깎|감경|할인|감면',query):
+                if not re.search(r'깎|감경|할인|감면',section_heading+' '+unit):
+                    continue
+            if field == 'cost' and re.search(r'까지만|한도|연간',query):
+                score += 20 if re.search(r'연간|한도|최대',unit) else -10
+            if field == 'cost' and re.fullmatch(r'계|합계',unit.split(':',1)[0].split('/')[-1].strip()):
+                score += 15
+            if field == 'definition':
+                score += 20 if unit.startswith('정의:') else 0
+            if field == 'schedule' and re.search(r'주말|공휴일|토요일|일요일',query):
+                if not re.search(r'주말|공휴일|토요일|일요일',unit):
+                    continue
             if field == 'services':
                 score += 8 if re.search(r'^(?:운영|진료|지원|사업)내용\s*[:：]|급여\s*[:：]', unit) else 0
+                score += 8 if re.search(r'민원증명\s*[:：]',unit) else 0
                 if re.search(r'상담', query):
                     score += 10 if re.search(r'상담', unit) else -5
                 if re.search(r'목적', unit):
                     score -= 10
             if field == 'eligibility':
                 score += 12
+            if field == 'hours' and not re.search(r'저녁|밤|야간|일과시간외',query):
+                if re.search(r'야간|일과시간 외',section_heading + ' ' + unit):
+                    continue
+            if field == 'schedule' and '여권' in query and '유효' not in query and '유효' in compact(unit):
+                continue
+            if field == 'schedule' and '신청' in query:
+                if re.search(r'며칠.*전|몇.*전',query) and not re.search(r'예약기간|일.*전|주.*전',unit):
+                    continue
+                score += 15 if re.search(r'신청|접수',section_heading + ' ' + unit) else -10
+                if re.search(r'이용금지|조치사항',section_heading + ' ' + unit):
+                    continue
             if field == 'schedule' and has_opening_hours(unit):
                 score += 10
+            if field == 'schedule' and not re.search(r'연납|선납',query):
+                if re.search(r'연납|선납',section_heading + ' ' + unit):
+                    continue
+                if re.search(r'납기|정기',section_heading + ' ' + unit):
+                    score += 12
             if field == 'schedule' and '공시' in query and not re.search(r'의견|이의',query):
                 if re.search(r'의견|이의신청',section_heading + ' ' + unit):
                     continue
             candidates.append((score, index, unit))
         if not candidates:
-            return None  # Let the model inspect semantics; do not substitute a different field.
+            missing.append(field)
+            continue
         candidates.sort(key=lambda item: (-item[0], item[1]))
+        field_details = {t for t in details if t not in compact(title)}
+        global_fee = field == 'cost' and ' — ' not in candidates[0][2] and bool(re.search(r'수수료.*(?:무료|무상)',candidates[0][2]))
+        audience_column = any(' — ' in u and len(compact(u.split(' — ',1)[1].split(':',1)[0])) >= 3
+                              and compact(u.split(' — ',1)[1].split(':',1)[0]) in compact(query) for u in units)
+        supported_items = requested_supported_items(query, units)
+        shared_support = field in ('cost','method') and bool(supported_items)
+        if (not global_fee and not shared_support and not (audience_column and field in ('method','documents')) and field_details and any(t in compact(' '.join(units)) for t in field_details)
+                and not any(t in compact(candidates[0][2]) or t in compact(
+                    next((u for u in reversed(units[:candidates[0][1]+1]) if u.startswith('#')),''))
+                            for t in field_details)):
+            return None
         best_score = candidates[0][0]
         take = 6 if field == 'services' else 4 if field in ('eligibility', 'documents') else 3 if field in ('precautions','method') else 1 if field == 'definition' else 2
         for score, index, unit in candidates[:take]:
@@ -229,7 +409,36 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 if next_unit not in selected:
                     selected.append(next_unit)
     if not selected:
-        return None
+        # A matched audience column can establish criteria even when an image
+        # contains the application procedure. Do not substitute children's rules.
+        labels = {compact(u.split(' — ',1)[1].split(':',1)[0]) for u in units if ' — ' in u}
+        if goal in ('method','services') and any(len(l)>=3 and l in compact(query) for l in labels):
+            facts = [u for u in units if ' — ' in u and field_matches('eligibility',u)]
+            if facts and len(' '.join(facts)) < 350:
+                selected = facts[:2]
+                missing = ['method']
+        elif goal == 'method' and scope and re.search(r'등록|신청',query):
+            facts = [u for u in units if field_matches('documents',u) or field_matches('eligibility',u)]
+            if facts and len(' '.join(facts)) < 350:
+                selected = facts
+                missing = ['method']
+        if not selected:
+            return None
+    # Comparison answers must establish both named programs. A formula for
+    # one benefit is not a comparison merely because both occur on the page.
+    comparison_subjects = keywords.intersection(SERVICE_NAMES)
+    if len(comparison_subjects) > 1 and re.search(r'같|차이|비교',query):
+        facts = compact(' '.join(selected))
+        if not all(name in facts for name in comparison_subjects):
+            return None
+    audience_labels = {compact(u.split(' — ',1)[1].split(':',1)[0]) for u in units if ' — ' in u}
+    matched_audience = {l for l in audience_labels if len(l)>=3 and l in compact(query)}
+    audience_criteria = [u for u in units if ' — ' in u and field_matches('eligibility',u)
+                         and compact(u.split(' — ',1)[1].split(':',1)[0]) in matched_audience]
+    if goal in ('method','services') and audience_criteria:
+        # Mandatory comparison-column conditions take precedence over a long
+        # generic document list. Merely having documents is not eligibility.
+        selected = list(dict.fromkeys(audience_criteria + [u for u in selected if len(u)<120]))
     if goal == 'cost' and ('무상' in keywords or re.search(r'무료|무상',query)):
         products = sorted(anchors - {'보건소'})
         if products and all(any(p in compact(u) and '가능제품 — ' in u for u in units) for p in products):
@@ -273,7 +482,28 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     heading = units[0].lstrip('# ') if scope and units[0].startswith('#') else title
     if heading.endswith(('?','？')) or compact(heading) in {'목적','지원사업소개'}:
         heading = title
-    answer = '**' + heading + '**\n' + '\n'.join('- ' + u for u in selected)
+    if goal == 'location':
+        # Facility dimensions/capacity and UI link labels are not requested
+        # location facts. Keep the name and address from the same owning row.
+        display = []
+        for unit in selected:
+            if ' — ' in unit and ' · ' in unit:
+                owner, cells = unit.split(' — ',1)
+                cells = [c for c in cells.split(' · ') if re.match(r'(?:동명|시설명|기관명|장소|소재지|주\s*소|위\s*치)\s*[:：]',c)]
+                display.append(owner+' — '+' · '.join(cells) if cells else unit)
+            else:
+                display.append(unit)
+    else:
+        display = selected
+    answer = '**' + heading + '**\n' + '\n'.join('- ' + u for u in display)
+    unknown_details = {t for t in details if t not in compact(title) and
+                       not any(t in compact(u) for u in units)}
+    if unknown_details and goal == 'cost':
+        answer += '\n문의하신 세부 항목·포함 범위는 이 자료에서 확인되지 않았습니다.'
+    if missing:
+        labels = {'location':'장소','hours':'운영시간','documents':'구비서류','method':'신청·이용 방법','cost':'비용','schedule':'기간·일정','eligibility':'대상·조건','services':'서비스 내용'}
+        fields = '·'.join(labels.get(f,'요청 항목') for f in missing)
+        answer += '\n'+fields+' 정보는 이 자료에서 명확히 확인되지 않았습니다.'
     if len(answer) > MAX_BRIEF_LENGTH:
         return None
     if goal == 'location' and re.search(r'상담|진료|검사', query):
@@ -285,5 +515,5 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal in ('eligibility','services') and len(selected) <= 2:
         from chatbot.answer_enrichment import enrich_answer
         answer = enrich_answer(query, answer, '\n'.join(units), keywords, heading)
-    return {'answer': answer, 'answer_details': title + '의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + u for u in body.splitlines()),
+    return {'answer': answer, 'answer_details': title + '의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + u for u in body.splitlines()), 'degraded':bool(missing) or bool(unknown_details and goal == 'cost'),
             'documents': [document], 'is_clarification': False, 'answer_method': 'structured_source'}

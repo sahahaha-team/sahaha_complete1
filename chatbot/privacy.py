@@ -14,8 +14,10 @@ PERSONAL_INFO_PATTERNS = [
 ]
 
 ADDRESS_PATTERNS = [
-    re.compile(r"[가-힣]{1,20}(?:동|읍|면|리)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?"),
-    re.compile(r"[가-힣]{1,20}(?:로|길)\s*\d{1,4}(?:-\d{1,4})?(?:\s*(?:번지|호|층))?"),
+    # Numbers followed by an age/duration/count are not lot numbers. Without
+    # this boundary '있으면 65세', '빌리면 2시간' matched the 면/리 suffix.
+    re.compile(r"[가-힣]{1,20}(?:동|읍|면|리)\s*\d{1,4}(?:-\d{1,4})?(?!\d|\s*(?:세|시간|분|초|만원|원|회|개월|년|월|일|권|개|명|퍼센트|%))(?:\s*(?:번지|호|층))?"),
+    re.compile(r"[가-힣]{1,20}(?:로|길)\s*\d{1,4}(?:-\d{1,4})?(?!\d|\s*(?:세|시간|분|초|만원|원|회|개월|년|월|일|권|개|명|퍼센트|%))(?:\s*(?:번지|호|층))?"),
 ]
 
 

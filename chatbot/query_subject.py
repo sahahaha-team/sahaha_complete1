@@ -14,6 +14,8 @@ WEAK_WORDS.update({"준비물", "준비", "서류", "구비서류", "구비", "�
 # against answer fields later, rather than required in every retrieval chunk.
 WEAK_WORDS.update("이용 제공 서비스 날짜 기준 각종 제도 도움 때문 어려움 부담 혜택 종류 비용 요금 수수료 금액 기간 시간 운영 대상 조건 자격 부모 특보 절약 주기".split())
 WEAK_WORDS.update("법정 한도 부당 처분 도심 의심 행동 발령 사업 건강 검사 상담 비상 시설 문제".split())
+WEAK_WORDS.update("어떤 얼마나 몇 며칠 한참 대신 직접 없이 장수 크기 규격 신청자 이용자 참여자 가입자 외래 특실 식비 보호자 지역 가족 아이 아기 어린아이 초등학생 청소년 고등학생 손자 할아버지 월별 생후 개월 주부터 등록증 채무 월세 계약 공짜 포함 이해 답변 따로 이익".split())
+WEAK_WORDS.update({'민원서류','계속'})
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
 WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철", "중개수수료": "중개보수", "빌릴": "대여", "빌리": "대여", "감면": "감경"}
 # Keep names intact when morphology splits a service into generic nouns. These
@@ -27,6 +29,28 @@ SERVICE_NAMES = ("전입신고", "주민등록등본", "주민등록초본", "�
     "심뇌혈관질환", "고향사랑기부", "민간임대주택", "중개보수", "디지털", "컴퓨터",
     "민방위", "지진", "옥외대피", "치매", "결핵", "오존경보", "멧돼지", "자전거",
     "공공근로", "기초생활보장", "법정감염병", "건강검진", "검사비용", "행정정보공동이용", "냉장고", "세탁기", "출산축하", "긴급복지", "정신건강")
+# Administrative vocabulary, not question/answer pairs. The answer's specific
+# field, audience and region are validated against source sections separately.
+SERVICE_NAMES += ('여권','민원실','희망도서','통합예약','임산부','영유아','미숙아',
+    '고위험임산부','산모신생아','가족사랑카드','다자녀','첫만남이용권',
+    '생계급여','의료급여','기초생활','1인가구','응시료','자격증',
+    '마을세무사','납세자보호관','재산세','자동차세','취득세','공시지가',
+    '대형폐가전','소형폐가전','구민안전보험','공영주차장','다대포해수욕장',
+    '축구장','테니스장','해양경찰정비창','사전컨설팅감사','행정서비스헌장',
+    '마을기업','지역공동체일자리','치아홈메우기','정보공개청구','비상급수')
+WORDING_ALIASES.update({'무인발급기':'무인민원발급', '무인민원발급기':'무인민원발급',
+    '암치료비':'암환자', '암 치료비':'암환자', '암의료비':'암환자',
+    '임산부 등록':'임산부등록', '조상 땅':'조상땅', '행정서비스 헌장':'행정서비스헌장',
+    '컨설팅감사':'컨설팅감사', '치아 홈메우기':'치아홈메우기'})
+SERVICE_NAMES += ('다대포체육시설','가정위탁','1기업1세대','지방세','간판')
+SERVICE_NAMES += ('b형간염','a형간염','수수료면제')
+SERVICE_NAMES += ('쓰레기',)
+WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
+WORDING_ALIASES.update({'시험비':'응시료','시험료':'응시료'})
+WORDING_ALIASES.update({'대피소':'대피시설'})
+WORDING_ALIASES.update({'다대포 축구장':'다대포체육시설 축구장',
+    '다대포축구장':'다대포체육시설 축구장','공시 지가':'공시지가',
+    '부동산 등기부등본':'등기사항증명서','부동산등기부등본':'등기사항증명서'})
 
 
 def normalize_query(query: str) -> str:
@@ -43,7 +67,8 @@ def compact(value: str) -> str:
     for alias, target in WORDING_ALIASES.items():
         value = value.replace(alias, target)
     value = value.replace("주민등록표등본", "주민등록등본").replace("주민등록등초본", "주민등록등본주민등록초본")
-    return value
+    value = re.sub(r'임산부.{0,8}등록', '임산부등록', value)
+    return re.sub(r'[^가-힣a-z0-9]', '', value)
 
 
 def subject_query(query: str) -> str:
@@ -64,10 +89,32 @@ def subject_query(query: str) -> str:
 
 def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     text = compact(subject_query(query))
+    if re.search(r'면제|장애인등록증.*(?:공짜|무료)', query) and re.search(r'수수료|발급비|발급|민원서류',query):
+        return {'수수료면제'}
     names = {name for name in SERVICE_NAMES if name in text}
-    if re.search(r'이미.*서류|기관.*가지고.*서류|서류.*다시.*제출|중복.*제출', compact(query)):
+    if re.search(r'임산부.{0,12}등록',compact(query)):
+        names.add('임산부등록')
+    if '다대포체육시설' in names:
+        names.discard('축구장')
+    names = {name for name in names if not any(name != other and name in other for other in names)}
+    if re.search(r'이미.*서류|기관.*가지고.*서류|서류.*다시.*제출|중복.*제출|공무원.*서류.*확인.*종이', compact(query)):
         names.add('행정정보공동이용')
+        return {'행정정보공동이용'}
     topics = substantive_keywords(words)
+    if re.search(r'가구.*(?:버리|배출)|소파.*(?:버리|배출|수수료|비용)',query):
+        return {'대형폐기물'}
+    if '금연' in query and '클리닉' in query:
+        return {'금연','클리닉'}
+    if re.search(r'생활비.*지원|지원.*생활비',query) and re.search(r'실직|갑자기.*소득',query):
+        return {'긴급복지'}
+    if re.search(r'혼자\s*사|1인\s*가구',query) and re.search(r'청소|반찬',query):
+        return {'1인가구'}
+    if '자격증' in names and re.search(r'시험비|시험료|응시|지원',query):
+        return {'응시료'}
+    if re.search(r'(?:아기|영유아|생후).*건강검진|영유아.*구강검진',text):
+        return {'영유아건강검진'}
+    if '폐암' in query and '검진' in query:
+        return {'국가암검진'}
     if '정신건강' in names and '우울감' in topics:
         topics.discard('우울감')  # Symptom wording must not reject the mental-health service.
     if not topics - {'보건소'} and re.search(r'검사.{0,3}(?:비용|수수료|요금)', text):
@@ -84,6 +131,8 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     if re.search(r'일반\s*(?:주민|구민|시민)', query):
         topics.discard('일반')  # Audience condition, distinct from 일반쓰레기.
     if names:
+        if len(names) > 1:
+            names.discard('검사비용')
         topics = {word for word in topics if not any(word in name for name in names)} | names
         topics -= {'홈페이지', '웹사이트', '사이트'}
         if names.intersection({'디지털','컴퓨터'}):
@@ -98,6 +147,14 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
             topics -= {'행정', '기관', '서류', '제출'}
         if names.intersection({'결핵', '치매', '대사증후군', '영유아건강검진', '심뇌혈관질환'}):
             topics -= {'검사', '건강', '상담', '관리', '예방', '질환', '혈압', '당뇨', '뇌혈관'}
+        # Conditions such as youth, photos, reservation or a requested month
+        # describe answer fields. Requiring them in every chunk prevented the
+        # right service from reaching the source reader at all.
+        strong = names - {'구직','구인','디지털','컴퓨터','자전거','냉장고','세탁기'}
+        if strong:
+            topics = strong | (topics & {'신규','도로','일반'} if '쓰레기' in strong else topics & {'신규','도로'})
+            if '암환자' in strong and re.search(r'치료비|의료비',query):
+                topics.add('의료비')
     if "정부24" in names:
         topics.discard("구청")  # '구청에 가지 않고' is not another service.
     elif len(topics) > 1:

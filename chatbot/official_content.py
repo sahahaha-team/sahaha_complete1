@@ -53,6 +53,17 @@ def table_units(table: Tag) -> list[str]:
         if not any(value for value, _ in row):
             continue
         row_label = row[0][0] if len(row) > 2 or (row and row[0][1]) else ''
+        # Repeated category cells (e.g. 건강돌봄) are not a program identity.
+        # Carry the explicit program column on every cell of that same row.
+        identity_columns = [c for c, labels in headers.items()
+                            if any(re.fullmatch(r'사업명|프로그램명|서비스명|시설명|주차장명|품명', re.sub(r'\s+','',label)) for label in labels)]
+        if any(any(re.sub(r'\s+','',label)=='품명' for label in headers[c]) for c in identity_columns):
+            identity_columns += [c for c, labels in headers.items() if any(re.sub(r'\s+','',label)=='규격' for label in labels)]
+        for column in identity_columns:
+            if column < len(row):
+                identity = row[column][0]
+                if identity and not identity.isdigit() and len(identity)<60 and identity not in row_label:
+                    row_label += ' / ' + identity
         fields = []
         for column, (value, is_header) in enumerate(row):
             if not value or (column == 0 and row_label):
@@ -102,8 +113,17 @@ def official_html_text(html: str) -> str | None:
         if not value or value in ('게시판 목록', '인쇄하기'):
             continue
         if node.name.startswith('h'):
+            prefix = re.split(r'[▹▷]',value,1)[0].strip()
+            if prefix != value and re.search(r'클리닉|상담전화\s*안내',prefix):
+                lines.append('#' * int(node.name[1]) + ' ' + prefix)
+                lines.append(value)
+                field = None
+                continue
             # Label headings are fields; program headings retain hierarchy.
-            if value.endswith(('?', '？')):
+            if re.search(r'이란[?？]?$',value):
+                field = '정의'
+                lines.append('#' * int(node.name[1]) + ' ' + value)
+            elif value.endswith(('?', '？')):
                 field = '정의' if re.search(r'란\??$|는\?$', value) else None
                 lines.append('#' * int(node.name[1]) + ' ' + value)
             elif (sentence_complete(value)

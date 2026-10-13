@@ -15,11 +15,18 @@ def balanced(text: str) -> bool:
     text = re.sub(r'(?<![\d(])(0\d{1,2})\)\s*(?=\d)', r'(\1)', text)
     stack = []
     pairs = {')': '(', ']': '[', '}': '{', '）': '（'}
-    for char in text:
+    for position, char in enumerate(text):
         if char in pairs.values():
             stack.append(char)
         elif char in pairs:
-            if not stack or stack.pop() != pairs[char]:
+            if not stack:
+                # Official lists use '1) ... 2) ...' without opening brackets.
+                # Do not confuse these markers with an unfinished formula.
+                if (char == ')' and re.search(r'(?:^|\s)(?:\d{1,2}|[가나다라마바사아자차카타파하])$',text[:position])
+                        and re.match(r'\s*[가-힣\dA-Za-z]',text[position + 1:])):
+                    continue
+                return False
+            if stack.pop() != pairs[char]:
                 return False
     return not stack and text.count('**') % 2 == 0
 
@@ -41,13 +48,16 @@ def source_unit_complete(text: str) -> bool:
     plain = text.strip().rstrip('.。').replace('**', '')
     if sentence_complete(text):
         return True
-    if _DANGLING.search(plain):
+    if _DANGLING.search(plain) and not re.search(r'(?:확인|온라인|법정대리인|대리인|신청인|민원인|가입자|거주자인)$',plain):
         return False
     label_value = bool(re.match(r"[^:：]{1,30}[:：]\s*\S", plain) or re.match(r'[^:：]{1,60} — [^:：]{1,80}[:：]\s*\S',plain))
     nominal = re.sub(r"\s*\([^()]*\)\s*$", "", plain)
+    quantified = (len(nominal) >= 6 and bool(re.search(
+        r'\d+(?:[.,]\d+)?\s*(?:매|권|명|건|개월|일|시간|cm|㎝)$', nominal)))
     noun_list = bool(re.search(r"(?:가능|불가|금지|제출|접수|방문상담|신청|예약|지참|제외|포함|부과|배출|운영|지원|문의|필요|필수|이내|이상|미만|수거|처리|상담|발급|제공|기여|있음|없음|않음|됨|함)$", nominal))
-    noun_list = noun_list or bool(re.search(r'(?:말 것|할 것|피할 것|받을 수 있는 제도|거주할 수 있는 제도|표기|기재|가능\s*함)$', nominal))
-    return label_value or noun_list
+    noun_list = noun_list or bool(re.search(r'(?:말 것|할 것|피할 것|받을 수 있는 제도|거주할 수 있는 제도|표기|기재|가능\s*함|할인|감경|면제)$', nominal))
+    noun_list = noun_list or bool(re.search(r'거래금액\s*=.*(?:보증금|월차임)',plain))
+    return label_value or noun_list or quantified
 
 
 def can_continue(text: str) -> bool:
@@ -61,6 +71,8 @@ def can_continue(text: str) -> bool:
 def starts_label(text: str) -> bool:
     """The colon in 09:00 is a clock, not the start of a new source field."""
     match = re.match(r"^([^:：]{1,30})[:：]", text)
+    if ' — ' in text:
+        match = re.match(r"^([^:：]{1,80})[:：]", text.split(' — ',1)[1])
     return bool(match and not match.group(1).rstrip()[-1].isdigit())
 
 

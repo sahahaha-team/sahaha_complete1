@@ -10,12 +10,13 @@ from chatbot.query_subject import normalize_query
 FIRE_SOURCE_URL = "https://www.saha.go.kr/portal/contents.do?mId=0410020200"
 ADMINISTRATIVE = re.compile(r"예방|교육|훈련|점검|검사|허가|허위|과태료|처벌|벌금|보상|지원금|증명|보험|통계|건수|보고서")
 ONGOING_FIRE = re.compile(r"불(?:이)?(?:났|난|나고|나서|붙|남)|화재(?:가)?(?:났|발생|나고)")
+SUSPECTED_FIRE = re.compile(r"(?:공장|건물|주택|집|창고|산|차량|자동차|가게).{0,25}(?:연기(?:가)?(?:나|남|피어|올라)|불꽃|타는냄새)")
 
 
 def answer_emergency_question(query: str) -> dict | None:
     normalized = normalize_query(query)
     text = re.sub(r"\s+", "", normalized)
-    ongoing = bool(ONGOING_FIRE.search(text))
+    ongoing = bool(ONGOING_FIRE.search(text) or SUSPECTED_FIRE.search(text))
     # Incident wording also appears in claims/statistics about past fires.
     # Those questions need administrative evidence rather than report routing.
     if ADMINISTRATIVE.search(text):

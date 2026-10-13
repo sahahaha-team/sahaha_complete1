@@ -91,7 +91,8 @@ def required_faq_ids(query: str) -> set[int]:
     mentions_office = any(term in compact for term in ("사하구청", "구청"))
     asks_location = any(term in compact for term in ("위치", "주소", "어디", "찾아가", "오시는길"))
     asks_contact = any(term in compact for term in ("연락처", "전화", "대표번호", "문의번호"))
-    if mentions_office and asks_location and asks_contact:
+    specific_work = bool(re.search(r'담당|업무|부서|팀|인공지능|ai', compact))
+    if mentions_office and asks_location and asks_contact and not specific_work:
         # 엑셀 공식 문항 1번(위치)과 2번(대표전화)을 모두 LLM 근거로 제공한다.
         return {1, 2}
     return set()

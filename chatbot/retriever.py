@@ -330,14 +330,14 @@ class HybridRetriever:
         # Resolve the team's FAQ aliases to current crawler originals. Draft
         # answers and manually entered verification dates are not evidence.
         target = match_official_page(query)
-        if target:
-            pages = self.search_crawled_pages(query, k=k, url=target)
-            if pages:
-                return {"results": pages, "degraded": False, "reason": None}
+        preferred = self.search_crawled_pages(query,k=k,url=target) if target else []
 
         # The original contains fields and qualifications that embedding
         # chunks can omit. Search every crawler page, not just workbook URLs.
         pages = self.search_crawled_pages(query, k=k)
+        if preferred:
+            preferred_urls = {(d.get('metadata') or {}).get('url') for d in preferred}
+            pages = preferred + [p for p in pages if (p.get('metadata') or {}).get('url') not in preferred_urls]
         if pages:
             lexical = self.bm25.search(query, top_n=max(k, 30)) if self.bm25 and self.bm25.enabled else []
             subjects = self._content_keywords(query)

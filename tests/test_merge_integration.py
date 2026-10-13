@@ -30,7 +30,7 @@ class MergeIntegrationTests(unittest.TestCase):
         result = retriever.search(query)
         self.assertEqual(result['results'], [original])
         self.assertNotIn('approved_answer', result['results'][0]['metadata'])
-        self.assertEqual(retriever.page_index.search.call_args.kwargs['url'], match['url'])
+        self.assertTrue(any(call.kwargs.get('url') == match['url'] for call in retriever.page_index.search.call_args_list))
 
     def test_original_table_text_and_structured_search_chunks_coexist(self):
         crawler = object.__new__(SahaCrawler)

@@ -8,8 +8,7 @@ logger = logging.getLogger(__name__)
 
 def hydrate_source_documents(documents: list[dict], client) -> list[dict]:
     urls = {str((doc.get('metadata') or {}).get('url') or '') for doc in documents
-            if (doc.get('metadata') or {}).get('source_type') != 'crawled_page'
-            and '_raw_page' not in doc
+            if '_raw_page' not in doc
             and (doc.get('metadata') or {}).get('category') != 'staff_directory'} - {''}
     if not urls:
         return documents
