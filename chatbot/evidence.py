@@ -187,7 +187,11 @@ def assess_evidence(
     keywords: set[str],
     domain_intent: bool,
     min_similarity: float,
+    query: str | None = None,
 ) -> dict:
+    if query is not None:
+        from chatbot.evidence_decision import assess_documents
+        return assess_documents(query, results, keywords, min_similarity=min_similarity)
     if not results:
         return {
             "confident": False,
@@ -245,6 +249,7 @@ def select_grounded_results(
     domain_intent: bool,
     min_similarity: float,
     limit: int = 5,
+    query: str | None = None,
 ) -> list[dict]:
     official = [result for result in results if is_official_document(result)]
     if not official:
@@ -252,7 +257,10 @@ def select_grounded_results(
 
     selected, seen = [], set()
     for result in official:
-        if not topic_support(result, keywords)[0]:
+        from chatbot.evidence_decision import document_decision
+        relevant = (document_decision(query, result, keywords, min_similarity=min_similarity)['relevant']
+                    if query is not None else topic_support(result, keywords)[0])
+        if not relevant:
             continue
         url = (result.get("metadata") or {}).get("url")
         if url in seen:

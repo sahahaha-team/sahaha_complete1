@@ -84,7 +84,8 @@ def location_subject(query: str) -> str:
 
 def asks_opening_hours(query: str) -> bool:
     text = re.sub(r"\s+", "", query or "")
-    return not _DURATION.search(text) and bool(_OPENING.search(text))
+    compound = bool(re.search(r'시간(?:과|및|이랑|하고)?(?:위치|주소)|(?:위치|주소)(?:와|과|및|이랑|하고)?시간', text))
+    return not _DURATION.search(text) and bool(_OPENING.search(text) or compound)
 
 
 def has_opening_hours(text: str) -> bool:

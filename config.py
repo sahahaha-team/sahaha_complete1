@@ -91,10 +91,9 @@ HYBRID_BM25_TOP_N = int(os.getenv("HYBRID_BM25_TOP_N", "30"))
 BM25_FAST_PATH_MIN_SCORE = float(os.getenv("BM25_FAST_PATH_MIN_SCORE", "8.0"))
 
 # ===== 답변 신뢰도 게이트 =====
-# 검색된 최상위 문서의 "원본 벡터 유사도(코사인)"가 이 임계값 미만이면
-# LLM을 호출하지 않고 안전한 안내 멘트를 출력한다 (환각 방지 + API 절약).
-# 주의: MiniLM 코사인 유사도는 보통 0.4~0.7 범위라 0.85 같은 값은 거의 모두 차단됨.
-#       발표 자료의 "85%"는 LLM 자가점수가 아니라 이 검색 신뢰도 임계값으로 매핑됨.
+# 원본 벡터 유사도에 대한 후보 신호. 공식 출처·업무·요청 항목 검사를 함께 한다.
+# BM25 정규화 점수나 RRF 점수에 이 값을 적용하지 않는다.
+# 이 값은 답변의 정답 확률 또는 '85% 신뢰도'를 뜻하지 않는다.
 CONFIDENCE_MIN_SIMILARITY = float(os.getenv("CONFIDENCE_MIN_SIMILARITY", "0.45"))
 SOURCE_MAX_AGE_DAYS = int(os.getenv("SOURCE_MAX_AGE_DAYS", "30"))
 SOURCE_DYNAMIC_MAX_AGE_DAYS = int(os.getenv("SOURCE_DYNAMIC_MAX_AGE_DAYS", "7"))

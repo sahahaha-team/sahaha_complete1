@@ -213,6 +213,7 @@ class ChatBot:
         return {"answer": clarification["answer"], "sources": [], "is_clarification": True,
                 "degraded": False, "degraded_reason": None,
                 "evidence": {"status": "clarification", "label": "문의 범위 확인", "official_source_count": 0,
+                             "decision": "clarify", "reasons": ["ambiguous_request"],
                              "answer_method": clarification.get("answer_method", "clarification")},
                 "suggested_questions": clarification["suggested_questions"]}
 
@@ -346,20 +347,12 @@ class ChatBot:
             top_sim = evidence["top_similarity"]
             logger.info(f"핵심 업무 근거 없음 (참고용 최상위 유사도={top_sim:.2f}) → 안전 안내 출력")
             self._save_conversation_safe(session_id, "user", user_message, search_query=search_query)
-            self._save_conversation_safe(session_id, "assistant", LOW_CONFIDENCE_MESSAGE)
-            return {
-                "answer": LOW_CONFIDENCE_MESSAGE,
-                "sources": [],
-                "is_clarification": False,
-                "degraded": True,
-                "degraded_reason": "low_confidence",
-                "evidence": {
-                    "status": evidence["status"],
-                    "label": evidence["label"],
-                    "official_source_count": evidence["official_source_count"],
-                },
-                "suggested_questions": ["사하구청 대표전화 알려줘", "민원 담당 부서 안내해줘"],
-            }
+            from chatbot.evidence_decision import unavailable_answer
+            reason = ('retrieval_error' if search_outcome['degraded'] else
+                      'stale_evidence' if search_outcome['results'] and not fresh_results else 'insufficient')
+            response = unavailable_answer(reason)
+            self._save_conversation_safe(session_id, "assistant", response['answer'])
+            return response
 
         from chatbot.source_pages import hydrate_source_documents
         grounded_results = hydrate_source_documents(results, self.retriever.db.client)
@@ -424,7 +417,11 @@ class ChatBot:
         return {
             "answer": answer, "answer_details": details, "sources": sources, "is_clarification": False,
             "degraded": degraded or bool(concise.get('degraded')), "degraded_reason": 'missing_requested_field' if concise.get('degraded') else degraded_reason,
-            "evidence": {"status": "insufficient" if concise.get('degraded') else "official", "label": "요청 항목 확인 필요" if concise.get('degraded') else "원문 최신 확인 필요" if warning else "공식 자료 핵심 안내",
+            "evidence": {"status": "partial" if concise.get('degraded') else "official", "label": "요청 항목 확인 필요" if concise.get('degraded') else "원문 최신 확인 필요" if warning else "공식 자료 핵심 안내",
+                "decision": "partial" if concise.get('degraded') else "supported",
+                "reasons": ["missing_requested_fields"] if concise.get('degraded') else [],
+                "requested_fields": evidence.get('requested_fields', []),
+                "matched_fields": evidence.get('matched_fields', []),
                          "official_source_count": len(sources), "answer_method": method},
             "suggested_questions": build_suggested_questions(search_query, sources),
         }

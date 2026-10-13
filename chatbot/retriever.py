@@ -449,6 +449,7 @@ class HybridRetriever:
             keywords=keywords,
             domain_intent=domain_intent,
             min_similarity=CONFIDENCE_MIN_SIMILARITY,
+            query=query,
         )
 
     def assess_confidence(self, query: str, results: list[dict]) -> tuple[bool, float]:
@@ -468,6 +469,7 @@ class HybridRetriever:
             domain_intent=domain_intent,
             min_similarity=CONFIDENCE_MIN_SIMILARITY,
             limit=limit,
+            query=query,
         )
 
     def filter_fresh_results(self, query: str, results: list[dict]) -> list[dict]:
