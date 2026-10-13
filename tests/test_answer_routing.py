@@ -128,7 +128,8 @@ class SubjectEvidenceTests(unittest.TestCase):
         with patch.object(retriever, "_hybrid_combine", return_value=[]):
             result = retriever.search("당리동 공장 소음 신고 어떻게해?")
         self.assertTrue(retriever.vs.called)
-        self.assertEqual(result["results"], [])
+        self.assertEqual(retriever.select_grounded_results(
+            "당리동 공장 소음 신고 어떻게해?", result["results"]), [])
 
 
 if __name__ == "__main__":

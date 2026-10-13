@@ -480,7 +480,7 @@ class HybridRankingTests(unittest.TestCase):
         ranked = retriever._hybrid_combine("대형 폐기물 배출", vector_results, k=1)
         self.assertEqual(ranked[0]["id"], "exact")
 
-    def test_strong_lexical_match_uses_fast_path_without_vector_call(self):
+    def test_complete_original_uses_fast_path_without_vector_call(self):
         class FakeBm25:
             enabled = True
 
@@ -488,10 +488,11 @@ class HybridRankingTests(unittest.TestCase):
             def search(_query, top_n):
                 return [{
                     "id": "exact",
-                    "content": "침대 대형폐기물 수수료",
+                    "content": "## 대형폐기물\n침대 — 수수료: 5,000원",
                     "metadata": {
                         "title": "대형폐기물 처리 및 수수료",
                         "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+                        "source_type": "crawled_page",
                     },
                     "bm25_score": 12.0,
                 }]
@@ -503,7 +504,9 @@ class HybridRankingTests(unittest.TestCase):
         retriever = object.__new__(HybridRetriever)
         retriever.bm25 = FakeBm25()
         retriever.vs = NoVector()
-        outcome = retriever.search("대형 폐기물 침대 수수료", k=5)
+        retriever.db = object()
+        with patch.object(retriever, 'filter_fresh_results', return_value=FakeBm25.search('',5)):
+            outcome = retriever.search("대형 폐기물 침대 수수료", k=5)
         self.assertEqual(outcome["results"][0]["id"], "exact")
         self.assertFalse(outcome["degraded"])
 

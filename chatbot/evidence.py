@@ -87,6 +87,15 @@ def is_answerable_document(query: str, doc: dict) -> bool:
     title = compact(str((doc.get('metadata') or {}).get('title') or ''))
     primary_heading = next((compact(line.lstrip('# ')) for line in str(doc.get('content') or '').splitlines()
                             if line.startswith('## ')),title)
+    from chatbot.question_intent import asks_opening_hours
+    general_health_hours = ('보건소' in request and asks_opening_hours(query)
+        and not re.search(r'검사|검진|접종|백신|임신|임산부|금연|치매|센터|진료실|물리치료|보건증|건강진단',request))
+    if general_health_hours and re.search(
+            r'임신|임산부|예비부모|예방접종|백신|금연|치매|센터|진료실|물리치료|영양플러스|방문건강', title+' '+primary_heading):
+        return False  # A specific program's hours are not the whole institution's hours.
+    for district, facility in re.findall(r'([가-힣]{2,6}구)\s*(보건소|청)', query):
+        if district != '사하구' and compact(district+facility) not in compact(str(doc.get('content') or '')):
+            return False
     if '민원실' in request and '무인' not in request and '무인민원' in primary_heading:
         return False
     if '민원실' in request and '여권' not in request and '여권' in title:

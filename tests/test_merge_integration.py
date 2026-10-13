@@ -28,7 +28,9 @@ class MergeIntegrationTests(unittest.TestCase):
         retriever.page_index = MagicMock()
         retriever.page_index.search.return_value = [original]
         result = retriever.search(query)
-        self.assertEqual(result['results'], [original])
+        self.assertEqual(len(result['results']), 1)
+        self.assertEqual(result['results'][0]['content'], original['content'])
+        self.assertEqual(result['results'][0]['metadata'], original['metadata'])
         self.assertNotIn('approved_answer', result['results'][0]['metadata'])
         self.assertTrue(any(call.kwargs.get('url') == match['url'] for call in retriever.page_index.search.call_args_list))
 

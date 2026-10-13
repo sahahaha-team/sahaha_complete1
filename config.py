@@ -90,6 +90,12 @@ HYBRID_BM25_WEIGHT = float(os.getenv("HYBRID_BM25_WEIGHT", "0.70"))
 HYBRID_BM25_TOP_N = int(os.getenv("HYBRID_BM25_TOP_N", "30"))
 BM25_FAST_PATH_MIN_SCORE = float(os.getenv("BM25_FAST_PATH_MIN_SCORE", "8.0"))
 
+# 순위 통합 점수는 근거 신뢰도나 정답 확률이 아니다.
+RAG_CANDIDATE_LIMIT = int(os.getenv("RAG_CANDIDATE_LIMIT", "30"))
+RAG_RRF_K = int(os.getenv("RAG_RRF_K", "60"))
+VECTOR_CANDIDATE_MIN_SIMILARITY = float(os.getenv("VECTOR_CANDIDATE_MIN_SIMILARITY", "0.35"))
+EMBEDDING_CPU_THREADS = int(os.getenv("EMBEDDING_CPU_THREADS", "2"))
+
 # ===== 답변 신뢰도 게이트 =====
 # 원본 벡터 유사도에 대한 후보 신호. 공식 출처·업무·요청 항목 검사를 함께 한다.
 # BM25 정규화 점수나 RRF 점수에 이 값을 적용하지 않는다.

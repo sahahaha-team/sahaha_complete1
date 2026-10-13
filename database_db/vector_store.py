@@ -6,8 +6,11 @@ Supabase pgvector 벡터 스토어 (무료 티어)
 
 import json
 import logging
+import threading
+import time
+from collections import OrderedDict
 
-from config import SUPABASE_SERVICE_KEY
+from config import SUPABASE_SERVICE_KEY, EMBEDDING_CPU_THREADS
 from database_db import get_supabase
 
 logger = logging.getLogger(__name__)
@@ -18,6 +21,10 @@ EMBEDDING_DIM = 384  # MiniLM-L12-v2 출력 차원
 
 class VectorStore:
     def __init__(self, admin: bool = None):
+        import torch
+        torch.set_num_threads(max(1, EMBEDDING_CPU_THREADS))
+        self._embedding_lock = threading.Lock()
+        self._query_cache = OrderedDict()
         # langchain-huggingface 우선, 미설치 시 langchain-community 폴백
         try:
             from langchain_huggingface import HuggingFaceEmbeddings
@@ -38,7 +45,18 @@ class VectorStore:
 
     def embed_text(self, text: str) -> list[float]:
         """텍스트 → 임베딩 벡터"""
-        return self.embeddings.embed_query(text)
+        # Cached vectors depend only on the model/query, never on database
+        # facts. Corpus updates still retrieve and verify new originals.
+        with self._embedding_lock:
+            cached = self._query_cache.get(text)
+            if cached and time.monotonic() - cached[0] < 600:
+                self._query_cache.move_to_end(text)
+                return list(cached[1])
+            vector = self.embeddings.embed_query(text)
+            self._query_cache[text] = (time.monotonic(), tuple(vector))
+            self._query_cache.move_to_end(text)
+            while len(self._query_cache) > 256: self._query_cache.popitem(last=False)
+            return vector
 
     def embed_texts(self, texts: list[str]) -> list[list[float]]:
         """텍스트 배치 → 임베딩 벡터"""
@@ -106,7 +124,7 @@ class VectorStore:
             ).execute()
         except Exception as e:
             logger.error(f"match_documents RPC 호출 실패: {e}")
-            return []
+            raise
 
         docs = []
         for row in result.data or []:
@@ -133,7 +151,8 @@ class VectorStore:
 
         return top
 
-    def hybrid_search(self, query: str, category: str = None, service_type: str = None, k: int = 5) -> list[dict]:
+    def hybrid_search(self, query: str, category: str = None, service_type: str = None, k: int = 5,
+                      min_similarity: float = 0.5) -> list[dict]:
         """
         하이브리드 검색 (2단계 전략)
         1차: 메타데이터 필터 (카테고리, 서비스 유형)
@@ -145,7 +164,8 @@ class VectorStore:
         if service_type:
             filter_meta["service_type"] = service_type
 
-        return self.similarity_search(query, k=k, filter_meta=filter_meta if filter_meta else None)
+        return self.similarity_search(query, k=k, filter_meta=filter_meta if filter_meta else None,
+                                      min_similarity=min_similarity)
 
     def collection_stats(self) -> dict:
         """벡터 DB 통계"""
