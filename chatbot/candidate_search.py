@@ -6,6 +6,7 @@ It does not establish answerability. The current original is checked afterwards.
 from __future__ import annotations
 
 import logging
+import re
 import time
 
 from chatbot.evidence_decision import document_decision
@@ -59,7 +60,13 @@ def complete_direct_candidates(query: str, documents: list[dict], keywords: set[
         # A vague entity word or matching noun somewhere in a page cannot
         # bypass meaning search. The requested service must own the heading.
         owners=names or {word for word in keywords if len(word)>=3 and word not in {'보건소','구청','자전거','쓰레기'}}
-        if not owners or not all(name in heading for name in owners): continue
+        if not owners:
+            from chatbot.answer_goal import requested_goals
+            institution = keywords and keywords.issubset({'보건소','구청'})
+            direction = re.search(r'찾아오|오시는길|민원실이용|청사안내', heading)
+            if not institution or not direction or not set(requested_goals(query)).issubset({'hours','location'}):
+                continue
+        elif not all(name in heading for name in owners): continue
         from chatbot.source_scope import focus_terms
         from chatbot.evidence_decision import source_body
         details = focus_terms(query)

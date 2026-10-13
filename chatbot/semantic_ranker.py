@@ -28,13 +28,23 @@ def source_hash(document: dict) -> str:
     return text_hash(str(meta.get('url') or '') + '\n' + str(meta.get('title') or '') + '\n' + source_body(document))
 
 
+def eligible_candidates(query: str, documents: list[dict], keywords: set[str]) -> list[dict]:
+    from chatbot.evidence import is_official_document, is_answerable_document, is_time_compatible, is_service_source
+    from chatbot.evidence_decision import source_body
+    from chatbot.query_subject import SERVICE_NAMES, compact
+    known = keywords.intersection(SERVICE_NAMES)
+    return [doc for doc in documents if is_official_document(doc) and is_answerable_document(query, doc)
+        and is_time_compatible(query, doc) and is_service_source(query, doc, keywords)
+        and all(term in compact(str((doc.get('metadata') or {}).get('title') or '') + ' ' + source_body(doc)) for term in known)]
+
+
 def semantic_keywords(query: str, document: dict, default: set[str]) -> set[str]:
     record=document.get('_semantic_support') or {}
     from chatbot.evidence_decision import source_body
     if (record.get('model') != RAG_RERANK_MODEL or record.get('query_hash') != text_hash(query)
             or record.get('source_hash') != source_hash(document)
             or float(record.get('logit',-100)) < RAG_SEMANTIC_MIN_LOGIT
-            or float(record.get('margin',-100)) < RAG_SEMANTIC_MIN_MARGIN):
+            or (float(record.get('margin',-100)) < RAG_SEMANTIC_MIN_MARGIN and not record.get('single_known_subject'))):
         return default
     terms=set(record.get('terms') or [])
     return terms or default
@@ -86,8 +96,7 @@ class SemanticRanker:
         from chatbot.evidence_decision import source_body
         from chatbot.query_subject import fallback_keywords
         started=time.perf_counter()
-        eligible=[doc for doc in documents if is_official_document(doc) and
-                  is_answerable_document(query,doc) and is_time_compatible(query,doc)]
+        eligible = eligible_candidates(query, documents, keywords)
         selected=eligible[:max(1,RAG_RERANK_LIMIT)]
         with self._lock:
             if not selected or not self._load():return documents,{'used':False,'reason':'model_unavailable' if selected else 'no_candidates'}
@@ -122,10 +131,12 @@ class SemanticRanker:
             if not scored:return documents,{'used':False,'reason':'empty_source'}
             top=scored[0][1];second=scored[1][1] if len(scored)>1 else top
             margin=top-second
+            from chatbot.query_subject import SERVICE_NAMES
+            single_known = len(scored) == 1 and bool(keywords.intersection(SERVICE_NAMES))
             ranked=[]
             for index,(doc,logit) in enumerate(scored):
                 item={**doc,'rerank_logit':round(logit,5)}
-                if index==0 and logit>=RAG_SEMANTIC_MIN_LOGIT and margin>=RAG_SEMANTIC_MIN_MARGIN:
+                if index==0 and logit>=RAG_SEMANTIC_MIN_LOGIT and (margin>=RAG_SEMANTIC_MIN_MARGIN or single_known):
                     title=str((doc.get('metadata') or {}).get('title') or '')
                     terms=fallback_keywords(title)
                     from chatbot.query_subject import SERVICE_NAMES, compact
@@ -136,7 +147,8 @@ class SemanticRanker:
                     terms = known or terms
                     if terms:
                         item['_semantic_support']={'model':RAG_RERANK_MODEL,'query_hash':text_hash(query),
-                            'source_hash':source_hash(doc),'logit':logit,'margin':margin,'terms':sorted(terms)}
+                            'source_hash':source_hash(doc),'logit':logit,'margin':margin,'terms':sorted(terms),
+                            'single_known_subject':single_known}
                 ranked.append(item)
             seen={(doc.get('metadata') or {}).get('url') for doc in ranked}
             ranked += [doc for doc in eligible if (doc.get('metadata') or {}).get('url') not in seen]

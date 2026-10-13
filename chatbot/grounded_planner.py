@@ -107,7 +107,7 @@ def eligible_ids(query: str, packet: dict, keywords: set[str]) -> set[int]:
                  ' '.join(units[max(0,i-2):i+1]))}
     details = focus_terms(query)
     focused = {i for i in valid if any(t in compact(units[i]) for t in details)}
-    if focused:
+    if focused and len(requested_goals(query)) <= 1:
         valid = focused | {i for i in valid if SCOPE.match(units[i])}
     requested_section = packet.get('scope') or topic_section_bounds(units, query, keywords)
     if requested_section:

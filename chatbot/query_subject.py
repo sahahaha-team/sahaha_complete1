@@ -16,6 +16,7 @@ WEAK_WORDS.update("이용 제공 서비스 날짜 기준 각종 제도 도움 �
 WEAK_WORDS.update("법정 한도 부당 처분 도심 의심 행동 발령 사업 건강 검사 상담 비상 시설 문제".split())
 WEAK_WORDS.update("어떤 얼마나 몇 며칠 한참 대신 직접 없이 장수 크기 규격 신청자 이용자 참여자 가입자 외래 특실 식비 보호자 지역 가족 아이 아기 어린아이 초등학생 청소년 고등학생 손자 할아버지 월별 생후 개월 주부터 등록증 채무 월세 계약 공짜 포함 이해 답변 따로 이익".split())
 WEAK_WORDS.update({'민원서류','계속'})
+WEAK_WORDS.update({'엄마','아빠','어머니','아버지','공식'})
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
 WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철", "중개수수료": "중개보수", "빌릴": "대여", "빌리": "대여", "감면": "감경"}
 # Keep names intact when morphology splits a service into generic nouns. These
@@ -46,6 +47,7 @@ SERVICE_NAMES += ('다대포체육시설','가정위탁','1기업1세대','지�
 SERVICE_NAMES += ('b형간염','a형간염','수수료면제')
 SERVICE_NAMES += ('쓰레기',)
 WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
+WORDING_ALIASES.update({'자전거길':'자전거도로'})
 WORDING_ALIASES.update({'시험비':'응시료','시험료':'응시료'})
 WORDING_ALIASES.update({'대피소':'대피시설'})
 WORDING_ALIASES.update({'다대포 축구장':'다대포체육시설 축구장',
@@ -131,6 +133,7 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     if re.search(r'일반\s*(?:주민|구민|시민)', query):
         topics.discard('일반')  # Audience condition, distinct from 일반쓰레기.
     if names:
+        topics -= {'주소','위치','지도','노선','노선도','현황도','링크','페이지'}
         if len(names) > 1:
             names.discard('검사비용')
         topics = {word for word in topics if not any(word in name for name in names)} | names

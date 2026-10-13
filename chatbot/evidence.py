@@ -91,8 +91,10 @@ def is_answerable_document(query: str, doc: dict) -> bool:
     general_health_hours = ('보건소' in request and asks_opening_hours(query)
         and not re.search(r'검사|검진|접종|백신|임신|임산부|금연|치매|센터|진료실|물리치료|보건증|건강진단',request))
     if general_health_hours and re.search(
-            r'임신|임산부|예비부모|예방접종|백신|금연|치매|센터|진료실|물리치료|영양플러스|방문건강', title+' '+primary_heading):
+            r'임신|임산부|예비부모|예방접종|백신|금연|치매|센터|진료실|물리치료|영양플러스|방문건강|검진|의료기관', title+' '+primary_heading):
         return False  # A specific program's hours are not the whole institution's hours.
+    if general_health_hours and '/health/' not in path and '보건소' not in title:
+        return False  # A district-office counter is not the health-center clinic.
     for district, facility in re.findall(r'([가-힣]{2,6}구)\s*(보건소|청)', query):
         if district != '사하구' and compact(district+facility) not in compact(str(doc.get('content') or '')):
             return False
@@ -165,7 +167,7 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
-    anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','자전거','냉장고','세탁기','구직','구인','전자민원'}
+    anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','냉장고','세탁기','구직','구인','전자민원'}
     body_text = str(doc.get('content') or '')
     # A specific named program/facility cannot be replaced by a different
     # one merely because both pages explain 신청 or contain the same amount.

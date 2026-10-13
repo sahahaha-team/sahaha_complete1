@@ -118,6 +118,43 @@ class SemanticRankerTests(unittest.TestCase):
 
 
 class SemanticSafetyTests(unittest.TestCase):
+    def test_known_subject_filters_bus_before_bicycle_reranking(self):
+        from chatbot.semantic_ranker import eligible_candidates
+        bicycle=source('## 자전거 도로\n자전거 도로 현황도를 확인하세요.','자전거 도로')
+        bus=source('## 대중교통\n버스 경유지 : 장림시장 - 동아대','대중교통')
+        self.assertEqual(eligible_candidates('자전거 지도 어디서 확인해?', [bus,bicycle], {'자전거'}),[bicycle])
+
+    def test_bicycle_mention_in_parking_rule_is_not_a_bicycle_map(self):
+        from chatbot.evidence import is_service_source
+        doc=source('## 불법주정차\n단속대상 : 자전거 도로에 주차한 자동차','불법주정차')
+        self.assertFalse(is_service_source('자전거길 노선 지도 어디에서 볼 수 있어요?',doc,{'자전거','도로'}))
+
+    def test_reference_field_words_do_not_hide_bicycle_topic(self):
+        from chatbot.query_subject import query_keywords
+        keys=query_keywords('자전거길 공식 노선 지도는 어디에서 볼 수 있나요?', ['자전거','노선','지도','페이지'])
+        self.assertEqual(keys,{'자전거'})
+        self.assertEqual(query_keywords('자전거길 공식 노선 지도는 어디에서 볼 수 있나요?',
+            ['자전거','길','공식','노선','지도','페이지']),{'자전거'})
+
+    def test_general_health_hours_reject_infant_provider_list(self):
+        from chatbot.evidence import is_answerable_document
+        doc=source('## 영유아 건강검진\n주소 : 부산 사하구 낙동대로 234','영유아 건강검진')
+        self.assertFalse(is_answerable_document('보건소 진료시간이랑 주소 알려줘',doc))
+
+    def test_colloquial_age_reply_keeps_passport_and_parent_role(self):
+        from chatbot.response_helpers import build_clarification, resolve_clarification_reply
+        from chatbot.passport_documents import applicant_age, applicant_role
+        question='고등학생 여권 준비물 알려줘'
+        pending={**build_clarification(question),'query':question}
+        resolved=resolve_clarification_reply('17살이고 엄마가 신청할 거야',pending)
+        self.assertIn('여권',resolved)
+        self.assertEqual(applicant_age(resolved),'minor')
+        self.assertEqual(applicant_role(resolved),'parent')
+
+    def test_fee_connective_is_not_a_location_request(self):
+        from chatbot.question_intent import asks_location
+        self.assertFalse(asks_location('마을세무사 상담을 받는 데 돈이 들어요?'))
+
     def test_semantic_topic_remains_bicycle_not_bus(self):
         from chatbot.evidence_decision import document_decision
         query='자전거 도로 지도 볼 수 있는 공식 페이지 알려줘'

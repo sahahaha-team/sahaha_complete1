@@ -29,6 +29,9 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     if not pending:
         return message
     current = re.sub(r"\s+", "", message)
+    if ('여권' in pending.get('query','') and '세' in pending.get('reply_terms',[]) and
+            len(current) <= 40 and re.match(r'^(?:만)?\d{1,2}(?:세|살)', current)):
+        return pending['query'] + ' ' + message
     if pending.get('affirmative_context') and current.rstrip('.!?') in ('네', '예', '응', '맞아', '맞아요'):
         return pending['query'] + ' ' + pending['affirmative_context']
     if pending.get('negative_context') and current.rstrip('.!?') in ('아니', '아니요', '아니야'):
@@ -141,7 +144,7 @@ def build_clarification(user_message: str) -> dict | None:
         if docs and not (adult or minor):
             return clarification_question("여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
                 ["성인 신규 여권 준비물 알려줘", "성인 여권 재발급 준비물 알려줘", "미성년자 여권 준비물 알려줘"],
-                ["성인", "어른", "미성년", "아이", "자녀", "세", "부모", "본인", "친족", "직접"])
+                ["성인", "어른", "미성년", "아이", "자녀", "세", "부모", "본인", "친족", "직접", "엄마", "아빠"])
         if docs and adult and not (new or renew):
             return clarification_question("여권을 **처음 발급**받으시나요, **재발급**받으시나요?",
                 ["성인 신규 여권 준비물 알려줘", "성인 여권 재발급 준비물 알려줘"], ["신규", "처음", "새로", "재발급"])

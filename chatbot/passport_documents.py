@@ -21,7 +21,7 @@ def applicant_age(query: str) -> str | None:
     text = re.sub(r'\s+', '', query or '')
     if '18세미만' in text:
         return 'minor'
-    age = re.search(r'(?:만)?(\d{1,2})세(?!이상|이하|미만)', text)
+    age = re.search(r'(?:만)?(\d{1,2})(?:세|살)(?!이상|이하|미만)', text)
     if age:
         return 'minor' if int(age.group(1)) < 18 else 'adult'
     if any(w in text for w in ('미성년', '아이', '자녀')):
