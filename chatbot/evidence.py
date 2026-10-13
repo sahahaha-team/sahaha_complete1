@@ -169,6 +169,19 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
     anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','냉장고','세탁기','구직','구인','전자민원'}
     body_text = str(doc.get('content') or '')
+    if '소방' in anchors:
+        from chatbot.query_subject import service_term_present
+        if not service_term_present('소방', str((doc.get('metadata') or {}).get('title') or '') + '\n' + body_text):
+            return False
+    if '주민등록증' in anchors:
+        # Identity-card issuance cannot borrow its procedure from a passport
+        # or kiosk page merely listing the card as a required document.
+        if '주민등록증' not in title:
+            return False
+        if re.search(r'재발급|분실|잃어|훼손', query) and '재발급' not in title:
+            return False
+        if re.search(r'처음|신규', query) and '재발급' in title:
+            return False
     # A specific named program/facility cannot be replaced by a different
     # one merely because both pages explain 신청 or contain the same amount.
     requested_entities = re.findall(r'([가-힣A-Za-z0-9]{2,20})\s*(센터|도서관|체육관|지원금|보조금|장려금|수당|보험|클리닉)', query)
@@ -203,8 +216,17 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
         from chatbot.structured_answers import field_matches
         opening = body_text[:450].splitlines()
         fields = requested_goals(query)
-        if not fields or not any(all(a in compact(unit) for a in anchors) and
-                any(field_matches(field, unit, query) for field in fields) for unit in opening):
+        # A dedicated facility's generic 이용안내 can declare its purpose in
+        # 공간안내. This is the same facility's rooms, not another program's
+        # incidental mention elsewhere in a multi-service page.
+        space = re.search(r'^#{2,6}\s*(?:공간안내|시설안내)\s*$([\s\S]*?)(?=^#{2,6}\s|\Z)',body_text,re.M)
+        dedicated_space = (title in {'이용안내','시설이용안내','체험관이용안내'} and space is not None
+            and any(all(a in compact(unit) for a in anchors) and re.search(r'교육센터|교육관|체험관',unit)
+                    for unit in space.group(1).splitlines())
+            and not any(any(n in h for n in SERVICE_NAMES if n not in anchors and n not in {'보건소','구청'})
+                        for h in headings))
+        if not dedicated_space and (not fields or not any(all(a in compact(unit) for a in anchors) and
+                any(field_matches(field, unit, query) for field in fields) for unit in opening)):
             return False
     if '자전거' in compact(query) and re.search(r'대여|빌리|빌릴|렌탈', query):
         body = compact(str(doc.get('content') or ''))

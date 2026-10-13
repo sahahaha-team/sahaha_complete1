@@ -20,7 +20,7 @@ FIELD = {
     'specifications': r'규격|크기|가로|세로|\d+\s*(?:cm|㎝|매)',
     'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
-    'method': r'방법\s*[:：]|절차\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
+    'method': r'방법\s*[:：]|절차\s*[:：]|흐름도\s*[:：]|제출처\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
     'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|본인\s*부담\s*없|(?:수\s*수\s*료|사용료|요금|금액|가격|처리비용)[^:：\n]{0,40}[:：].*\d',
     'schedule': r'(?:기간|시간|일자|시기|주기|공시|공표|납기|신청권수|신청수량|한도).{0,100}(?:\d|매년|연중|매주|매월)|\d\s*(?:월|일|개월|회|권|주|년)',
     'services': r'(?:운영|사업|서비스|진료|검사|검진|지원|상담)?내용\s*[:：]|민원증명\s*[:：]|처리업무\s*[:：]|급여\s*[:：]|서비스.*제공|서비스입니다|상담.*(?:제공|운영)|검진.*(?:무료|가능)|교육대상\s*[:：]|무료.*교육.*제공|(?:상담|접수|발급|신청).*(?:이용|가능|하실수)',
@@ -166,9 +166,19 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if not re.search(r'^#{2,6} ', body, re.M):
         return None
     goal = answer_goal(query)
-    if goal in (None, 'reference'):
+    if goal == 'reference':
         return None
     units = scoped_units(query, body, keywords)
+    if re.search(r'교육|훈련|강좌', query) and goal in (None,'method','location','schedule','services'):
+        from chatbot.concise_answers import SCOPE_FIELD, course_scope_result
+        audience = next((u for u in units if SCOPE_FIELD.match(u)), None)
+        course = course_scope_result(query, audience)
+        if course:
+            return {**course, 'documents': [] if course['is_clarification'] else [document],
+                    'answer_details': '', 'answer_method': 'structured_source',
+                    'degraded': not course['is_clarification']}
+    if goal is None:
+        return None
     from chatbot.evidence import topic_support
     from chatbot.source_hierarchy import heading_path
     whole_units = _source_units(body.splitlines())
@@ -428,6 +438,17 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 missing = ['method']
         if not selected:
             return None
+    if (goal == 'method' and selected and all(re.match(r'^제출처\s*[:：]',u) for u in selected)):
+        # A submission counter alone is a thin procedure answer. In its own
+        # civil-service section, retain the complete short document set and
+        # explicit filing deadline instead of inventing missing steps.
+        requirements = [u for u in units if re.match(r'^(?:신청서\s*및\s*구비서류|구비서류|준비서류)\s*[:：]',u)]
+        deadlines = [u for u in units if re.search(r'\d+\s*일\s*이내.*(?:신청|신고)',u)
+                     and not u.startswith('#')]
+        additions = requirements + deadlines
+        if (additions and all(source_unit_complete(u) for u in additions)
+                and len('\n'.join(selected + additions)) < 360):
+            selected.extend(u for u in additions if u not in selected)
     # Comparison answers must establish both named programs. A formula for
     # one benefit is not a comparison merely because both occur on the page.
     comparison_subjects = keywords.intersection(SERVICE_NAMES)

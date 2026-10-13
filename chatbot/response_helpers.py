@@ -3,7 +3,7 @@
 import re
 from chatbot.vaccination import needs_vaccine_kind, vaccine_kind
 from chatbot.question_intent import asks_location, location_subject
-from chatbot.query_subject import AREA_PATTERN, SERVICE_NAMES, compact as topic_compact
+from chatbot.query_subject import AREA_PATTERN, SERVICE_NAMES, compact as topic_compact, service_names
 from chatbot.answer_goal import answer_goal
 
 
@@ -82,9 +82,32 @@ def unavailable_capability(message: str) -> dict | None:
             'evidence':{'status':'insufficient','label':'실행·조회 기능 확인 필요','official_source_count':0},'suggested_questions':[]}
 
 
+def is_field_only_question(message: str) -> bool:
+    """Recognize elided fields without treating a new service as a follow-up."""
+    text = re.sub(r'[\s?!.,？]', '', message or '')
+    text = re.sub(r'^(?:그럼|그러면|그건|그거|관련)', '', text)
+    text = re.sub(r'(?:좀)?(?:알려(?:줘|주세요)|설명해줘|보고싶(?:어|어요)|보여(?:줘|주세요)|확인하고싶(?:어|어요)|궁금(?:해|해요))$', '', text)
+    fields = r'현황도|현황|노선도|노선|지도|위치|주소|장소|시간|일정|기간|비용|수수료|준비물|서류|대상|자격|조건|신청방법|신청절차|발급절차|방법'
+    return bool(text and re.fullmatch(r'(?:(?:' + fields + r')(?:과|와|이랑|랑|하고|및)?)+(?:은|는|을|를|도|가|이|요|좀)*', text))
+
+
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
+    if is_field_only_question(user_message):
+        return clarification_question('**어떤 시설이나 업무**에 관한 안내가 필요하신가요?',
+            [], ['시설','업무','자전거','주차','보건소','주민등록','소방'])
+    identity = topic_compact(user_message)
+    if ('건강진단결과서' in identity and re.search(r'발급|방법|어떻게|받', identity)
+            and not re.search(r'처음|검사|재발급|재출력|다시|인터넷|온라인|준비물|서류|비용|수수료|시간|기간|장소|어디', identity)):
+        return clarification_question('**처음 검사를 받으려는 건가요**, 아니면 **검사 후 결과서를 발급**받으려는 건가요?',
+            ['보건증 처음 검사받는 방법 알려줘', '보건증 검사 후 결과서 발급 방법 알려줘'],
+            ['처음','검사','재발급','재출력','다시'])
+    if ('주민등록증' in identity and re.search(r'발급|절차|만들', identity)
+            and not re.search(r'재발급|신규|처음|분실|잃어|훼손|변경|모바일|사진|수수료|비용', identity)):
+        return clarification_question('주민등록증을 **처음 발급**받으시나요, 아니면 **재발급**받으시나요?',
+            ['주민등록증 처음 발급 절차 알려줘', '주민등록증 재발급 절차 알려줘'],
+            ['처음','신규','재발급','분실','잃어','훼손'])
     if '통합예약' in compact and re.search(r'취소|변경',compact) and not re.search(r'체험관|축구|테니스|체육|도서관|강좌|프로그램|정비창|문화|대관',compact):
         return clarification_question('예약한 시설·프로그램에 따라 취소 방법이 다릅니다. **어떤 시설이나 프로그램을 예약하셨나요?**',
             [], ['체험관','축구','테니스','체육','도서관','강좌','프로그램','정비창','문화','대관'])
@@ -264,11 +287,18 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
               for m in history or [] if m.get('role') == 'user']
     previous_query = recent[-1] if recent else ''
     generic = {'자전거','디지털','컴퓨터','냉장고','세탁기','구직','구인','건강검진','영유아'}
-    names = {n for n in SERVICE_NAMES if n not in generic and n in topic_compact(current)}
-    old_names = {n for n in SERVICE_NAMES if n not in generic and n in topic_compact(previous_query)}
+    names = service_names(current) - generic
+    old_names = service_names(previous_query) - generic
     new_subject = any(not any(n in old or old in n for old in old_names) for n in names)
     if new_subject:
         return current
+    # Bare fields can follow generic families too. The full-match language
+    # check ensures "비상급수시설 지도" is a new topic, not a bicycle follow-up.
+    field_follow_up = bool(previous_query and is_field_only_question(current))
+    if field_follow_up:
+        previous_names = service_names(previous_query)
+        field_follow_up = bool(previous_names)
+        old_names |= previous_names
     is_follow_up = (
         len(compact) <= 16 and (
             compact.startswith(("그건", "그럼", "그거", "그것", "그러면", "그경우"))
@@ -277,7 +307,7 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     )
     # Elided field/condition questions need not start with '그럼'. Keep a
     # known service, but do not attach unrelated complete new questions.
-    is_follow_up = is_follow_up or bool(previous_query and old_names and len(compact) <= 60 and
+    is_follow_up = is_follow_up or field_follow_up or bool(previous_query and old_names and len(compact) <= 60 and
         (not names or names <= old_names) and re.search(
             r'가져갈|등록장소|가입자|사업자등록|실직|소득이|몇급지|보상받|서류랑|주민등록등본이요',compact))
     # A short reply to an actual contact choice can omit its work topic.

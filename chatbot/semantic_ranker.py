@@ -31,11 +31,11 @@ def source_hash(document: dict) -> str:
 def eligible_candidates(query: str, documents: list[dict], keywords: set[str]) -> list[dict]:
     from chatbot.evidence import is_official_document, is_answerable_document, is_time_compatible, is_service_source
     from chatbot.evidence_decision import source_body
-    from chatbot.query_subject import SERVICE_NAMES, compact
+    from chatbot.query_subject import SERVICE_NAMES, compact, service_term_present
     known = keywords.intersection(SERVICE_NAMES)
     return [doc for doc in documents if is_official_document(doc) and is_answerable_document(query, doc)
         and is_time_compatible(query, doc) and is_service_source(query, doc, keywords)
-        and all(term in compact(str((doc.get('metadata') or {}).get('title') or '') + ' ' + source_body(doc)) for term in known)]
+        and all(service_term_present(term, str((doc.get('metadata') or {}).get('title') or '') + '\n' + source_body(doc)) for term in known)]
 
 
 def semantic_keywords(query: str, document: dict, default: set[str]) -> set[str]:
@@ -47,6 +47,11 @@ def semantic_keywords(query: str, document: dict, default: set[str]) -> set[str]
             or (float(record.get('margin',-100)) < RAG_SEMANTIC_MIN_MARGIN and not record.get('single_known_subject'))):
         return default
     terms=set(record.get('terms') or [])
+    from chatbot.query_subject import SERVICE_NAMES, service_term_present
+    known = default.intersection(SERVICE_NAMES)
+    if known and (not known.issubset(terms) or not all(service_term_present(term,
+            str((document.get('metadata') or {}).get('title') or '') + '\n' + source_body(document)) for term in known)):
+        return default
     return terms or default
 
 

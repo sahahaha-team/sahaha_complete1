@@ -17,6 +17,26 @@ def _text(node: Tag) -> str:
 
 
 def table_units(table: Tag) -> list[str]:
+    # Civil-service detail forms are vertical th/td pairs. Their spanning
+    # title is a program heading, never a column header on every fact.
+    if 'tableSt_view' in (table.get('class') or []):
+        output = []
+        for row in table.find_all('tr'):
+            cells = row.find_all(['th', 'td'], recursive=False)
+            if len(cells) == 1 and cells[0].name == 'th' and 'title' in (cells[0].get('class') or []):
+                output.append('### ' + _text(cells[0]))
+                continue
+            if len(cells) % 2 or not all(cells[i].name == 'th' and cells[i+1].name == 'td'
+                                      for i in range(0,len(cells),2)):
+                return []  # Changed/ambiguous layouts must not swap fields.
+            for i in range(0,len(cells),2):
+                label = _text(cells[i])
+                if label == '첨부파일':
+                    continue
+                # Retain all numbered document requirements as intact units.
+                values = cells[i+1].get_text('\n', strip=True).splitlines()
+                output.extend(label + ': ' + ' '.join(v.split()) for v in values if v.strip())
+        return output
     grid, spans = [], {}
     for row_index, row in enumerate(table.find_all('tr')):
         cells, column = {}, 0
@@ -93,6 +113,12 @@ def official_html_text(html: str) -> str | None:
     root = soup.select_one('#conts, .board_view, article')
     if root is None:
         return None
+    # Detail forms wrap published facts, while search/input forms are chrome.
+    for form in root.select('form'):
+        if form.get('id') == 'detailForm' and form.select_one('table.tableSt_view th.title'):
+            form.unwrap()
+        else:
+            form.decompose()
     for node in root.select('script,style,nav,form,.offscreen,.hidden,.tableSt_list,.bbs_search,.satisfaction,.tabSt,.tab_menu,.tab_wrap'):
         node.decompose()
     title = soup.select_one('#contents h2, h2.title, .cont_title h2, .sub_title h2')

@@ -132,9 +132,9 @@ class SemanticSafetyTests(unittest.TestCase):
     def test_reference_field_words_do_not_hide_bicycle_topic(self):
         from chatbot.query_subject import query_keywords
         keys=query_keywords('자전거길 공식 노선 지도는 어디에서 볼 수 있나요?', ['자전거','노선','지도','페이지'])
-        self.assertEqual(keys,{'자전거'})
+        self.assertEqual(keys,{'자전거도로'})
         self.assertEqual(query_keywords('자전거길 공식 노선 지도는 어디에서 볼 수 있나요?',
-            ['자전거','길','공식','노선','지도','페이지']),{'자전거'})
+            ['자전거','길','공식','노선','지도','페이지']),{'자전거도로'})
 
     def test_general_health_hours_reject_infant_provider_list(self):
         from chatbot.evidence import is_answerable_document

@@ -227,6 +227,9 @@ class SahaCrawler:
         )
 
     def _extract_title(self, soup: BeautifulSoup) -> str:
+        civil_title = soup.select_one('#conts table.tableSt_view th.title')
+        if civil_title:
+            return civil_title.get_text(' ', strip=True)
         for selector in ["h1.title", "h2.title", ".cont_title h2", ".sub_title h2", "title"]:
             el = soup.select_one(selector)
             if el:

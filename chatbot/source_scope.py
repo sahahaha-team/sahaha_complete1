@@ -4,7 +4,7 @@ from __future__ import annotations
 import re
 from functools import lru_cache
 
-from chatbot.query_subject import compact, SERVICE_NAMES, WEAK_WORDS, AREA_PATTERN
+from chatbot.query_subject import compact, SERVICE_NAMES, WEAK_WORDS, AREA_PATTERN, service_names
 
 FIELD_LABEL = re.compile(r'^(?:신청대상|신청권수|신청방법|선정제외기준|신청기간|처리절차|청구주체|신청대상|준비물|구비서류|지원내용|이용시간|진료시간|제외대상|지원제외|납부기간|납기|예약방법|처리기간|대상|내용|방법|수수료|위치|문의)$')
 FOCUS_STOP = WEAK_WORDS | set('구청 보건소 나이 주민등록증 주민등록 신청인 이유 이용 기준 무료 무상 신규 등록 서류 준비물 검사 치료 병원 주사 차이 똑같 사람 장소 채택 결과 필요 친구 낮 밤 직장 상태 계좌 중 하나 모든 전부 꼭 아무 이용권 받을 통장 보건지원 세금 도움 청구'.split())
@@ -19,7 +19,8 @@ FOCUS_STOP.update({'요청','시험','응시','선정','개방','정도','임신
 @lru_cache(maxsize=256)
 def focus_terms(query: str) -> frozenset[str]:
     """Keep detail words for selecting rows; never require them in every chunk."""
-    text = AREA_PATTERN.sub(' ', query)
+    from chatbot.query_subject import normalize_query, strip_general_question_tail
+    text = AREA_PATTERN.sub(' ', strip_general_question_tail(normalize_query(query)))
     text = text.replace('대신','대리')
     from chatbot.query_subject import WORDING_ALIASES
     for alias, target in WORDING_ALIASES.items():
@@ -157,9 +158,22 @@ def focus_units(query: str, units: list[str]) -> list[str]:
 def detail_section_bounds(query: str, units: list[str]) -> tuple[int, int] | None:
     """Prefer an explicitly requested subsection, such as 철분제 or 영아종일제."""
     terms = focus_terms(query)
+    # A detail word such as 안전 may occur in a sibling program. Once a
+    # requested service owns a heading, details must stay inside that scope.
+    subjects = service_names(query) - {'보건소','구청','쓰레기','디지털','컴퓨터'}
+    service_scopes = []
+    for index, unit in enumerate(units):
+        if not subjects or not unit.startswith('#') or not all(s in compact(unit) for s in subjects):
+            continue
+        level = len(unit) - len(unit.lstrip('#'))
+        end = next((i for i in range(index+1,len(units)) if units[i].startswith('#')
+                    and len(units[i])-len(units[i].lstrip('#')) <= level),len(units))
+        service_scopes.append((index,end))
     candidates = []
     for index, unit in enumerate(units):
         if not unit.startswith('#'):
+            continue
+        if service_scopes and not any(start <= index < end for start,end in service_scopes):
             continue
         name = compact(unit.lstrip('# '))
         if name.endswith(('유의사항','주의사항','란?','란？')) or re.search(r'란[?？]$', unit):

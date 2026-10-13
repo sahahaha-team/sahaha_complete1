@@ -46,6 +46,7 @@ WORDING_ALIASES.update({'무인발급기':'무인민원발급', '무인민원발
 SERVICE_NAMES += ('다대포체육시설','가정위탁','1기업1세대','지방세','간판')
 SERVICE_NAMES += ('b형간염','a형간염','수수료면제')
 SERVICE_NAMES += ('쓰레기',)
+SERVICE_NAMES += ('주민등록증', '소방', '자전거도로')
 WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
 WORDING_ALIASES.update({'자전거길':'자전거도로'})
 WORDING_ALIASES.update({'시험비':'응시료','시험료':'응시료'})
@@ -55,13 +56,25 @@ WORDING_ALIASES.update({'다대포 축구장':'다대포체육시설 축구장',
     '부동산 등기부등본':'등기사항증명서','부동산등기부등본':'등기사항증명서'})
 
 
+def strip_general_question_tail(query: str) -> str:
+    """Neutral state questions do not themselves request an application method.
+
+    Explicit actions/fields before the ending remain: 발급 절차, 신청 방법,
+    진료시간, 비용 and 조건 are still checked independently.
+    """
+    return re.sub(r'\s*어떻게\s*(?:돼(?:요)?|되(?:나요|어요|죠|니)|됩니까|되는데|되는지)\s*[?？.!]*\s*$', '', query or '')
+
+
 def normalize_query(query: str) -> str:
     """Correct 화제 only in an explicit fire incident/reporting context."""
-    text = query or ""
+    text = strip_general_question_tail(query or "")
     # Colloquial questions insert words such as '어떻게' between the typo and
     # '신고', and often omit spaces. News and film festivals are not incidents.
-    return re.sub(r"(?<!영)화제(?!가\s*된|의|로\s*떠|성)(?=[^.!?\n]{0,30}(?:신고|발생|났|나고|진압|대피|119))",
+    text = re.sub(r"(?<!영)화제(?!가\s*된|의|로\s*떠|성)(?=[^.!?\n]{0,30}(?:신고|발생|났|나고|진압|대피|119))",
                   "화재", text)
+    text = re.sub(r'화재\s*예방\s*교육', '소방 안전교육', text)
+    # Bound the abbreviation so 시민증/외국인등록증 are not transformed.
+    return re.sub(r'(?<![가-힣])민증(?=\s|[?？.!]|$|은|는|을|이|의|발급|재발급|분실)', '주민등록증', text)
 
 
 def compact(value: str) -> str:
@@ -73,8 +86,25 @@ def compact(value: str) -> str:
     return re.sub(r'[^가-힣a-z0-9]', '', value)
 
 
+def service_term_present(term: str, text: str) -> bool:
+    if term == '소방':
+        # Removing spaces from "보건소 방문" creates the unrelated string
+        # "소방". Accept a real fire-service word, including 사하소방서.
+        return bool(re.search(r'(?<![가-힣])(?:사하|부산(?:광역시)?)?소방', text))
+    return term in compact(text)
+
+
+def service_names(query: str) -> set[str]:
+    """Preserve the specific administrative topic, not just its broad family."""
+    text = compact(query)
+    names = {name for name in SERVICE_NAMES if name in text}
+    if re.search(r'자전거(?:전용)?도로', text):
+        names.add('자전거도로')
+    return {name for name in names if not any(name != other and name in other for other in names)}
+
+
 def subject_query(query: str) -> str:
-    text = location_subject(opening_hours_subject(normalize_query(query)))
+    text = location_subject(opening_hours_subject(strip_general_question_tail(normalize_query(query))))
     # 구청 is a facility in directions questions, not just a region name.
     text = AREA_PATTERN.sub(" ", text.replace("사하구청", "구청"))
     # Normalize full wording before morphology splits it: 불법주차 must become
@@ -93,7 +123,7 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     text = compact(subject_query(query))
     if re.search(r'면제|장애인등록증.*(?:공짜|무료)', query) and re.search(r'수수료|발급비|발급|민원서류',query):
         return {'수수료면제'}
-    names = {name for name in SERVICE_NAMES if name in text}
+    names = service_names(subject_query(query))
     if re.search(r'임산부.{0,12}등록',compact(query)):
         names.add('임산부등록')
     if '다대포체육시설' in names:

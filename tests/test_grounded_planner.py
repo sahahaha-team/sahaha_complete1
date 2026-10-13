@@ -93,7 +93,9 @@ class GroundedPlannerTests(unittest.TestCase):
 
     def test_general_resident_condition_does_not_erase_general_waste_topic(self):
         from chatbot.query_subject import query_keywords
-        self.assertEqual(query_keywords('일반 주민 소방 안전교육', ['일반','주민','소방','안전','교육']), {'소방','안전','교육'})
+        # Keep the fire-service subject intact; audience and requested
+        # training fields are checked within that service's own section.
+        self.assertEqual(query_keywords('일반 주민 소방 안전교육', ['일반','주민','소방','안전','교육']), {'소방'})
         self.assertIn('일반', query_keywords('일반 쓰레기 배출요일', ['일반','쓰레기','배출']))
 
     def test_model_context_budget_does_not_drop_hidden_exception_from_answer(self):

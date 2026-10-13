@@ -25,10 +25,14 @@ GOAL_WORDS = {
 
 
 def answer_goal(query: str) -> str | None:
+    from chatbot.query_subject import strip_general_question_tail
+    query = strip_general_question_tail(query)
     compact_query = query.replace(' ', '')
+    if re.search(r'통행규칙|안전수칙', compact_query):
+        return 'precautions'
     if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량', compact_query):
         return 'medical_details'
-    if re.search(r'(?:지도|노선도|현황도|공식페이지|공식사이트).*(?:볼수|보려|알려|확인|조회)|(?:볼수|확인|조회).*(?:지도|노선도|현황도|공식페이지|공식사이트)', compact_query):
+    if re.search(r'(?:지도|노선도|현황도|공식페이지|공식사이트).*(?:볼수|보려|보고싶|보여|알려|확인|조회)|(?:볼수|확인|조회).*(?:지도|노선도|현황도|공식페이지|공식사이트)', compact_query):
         return 'reference'
     if re.search(r'예약.*(?:해야|필수|먼저)|(?:먼저|사전).*예약', compact_query):
         return 'conditions'
@@ -142,6 +146,8 @@ def answer_goal(query: str) -> str | None:
 
 def requested_goals(query: str) -> tuple[str, ...]:
     """Keep both requested facility fields when hours and location are asked."""
+    from chatbot.query_subject import strip_general_question_tail
+    query = strip_general_question_tail(query)
     primary = answer_goal(query)
     if primary in ('reference','necessity'):
         return (primary,)

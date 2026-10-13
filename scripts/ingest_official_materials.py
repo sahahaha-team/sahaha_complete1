@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import logging
 import re
 import sys
@@ -73,6 +74,9 @@ def official_page_targets(source_dir: Path) -> list[tuple[str, str]]:
         (item['question'], item['url']) for item in OfficialFAQIndex().items]
     targets.extend((item['question'], item['url'])
                    for item in OfficialFAQIndex(PRIORITY_SERVICE_PATH).items)
+    extra_path = Path(__file__).resolve().parents[1] / 'resources' / 'additional_official_pages.json'
+    if extra_path.is_file():
+        targets.extend((item['title'], item['url']) for item in json.loads(extra_path.read_text(encoding='utf-8')))
     return list({current_official_url(url): (question, current_official_url(url))
                  for question, url in targets if _official_url(url)}.values())
 

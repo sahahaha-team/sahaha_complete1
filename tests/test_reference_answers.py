@@ -33,7 +33,7 @@ class ReferenceAnswerTests(unittest.TestCase):
         self.assertEqual(answer_goal('소방 안전 교육 어디서 들어'), 'location')
 
     def test_navigation_has_subject_without_requiring_word_map_in_body(self):
-        self.assertEqual(query_keywords('자전거도로 지도 어디에서 확인해?', ['자전거', '도로', '지도', '확인']), {'자전거', '도로'})
+        self.assertEqual(query_keywords('자전거도로 지도 어디에서 확인해?', ['자전거', '도로', '지도', '확인']), {'자전거도로'})
         self.assertEqual(query_keywords('지도 어디에서 확인해?', ['지도', '확인']), {'지도'})
 
     def test_model_cannot_choose_promotion_for_reference_question(self):

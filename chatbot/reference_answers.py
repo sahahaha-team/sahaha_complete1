@@ -35,7 +35,11 @@ def reference_answer(query: str, document: dict, body: str, keywords: set[str],
     title = str(meta.get('title') or '')
     goal = answer_goal(query)
     map_page = any(word in title.replace(' ', '') for word in ('현황도', '안내지도', '위치도'))
-    if goal != 'reference' and not (map_page and goal in (None, 'location')):
+    detail = (('통행 규칙',r'통행\s*규칙|통행\s*(?:가능|금지)|자전거만'),
+              ('전용도로 지정 여부',r'전용\s*여부'),
+              ('총 길이',r'총\s*길이|몇\s*(?:km|킬로)'))
+    missing_detail = next((label for label,pattern in detail if map_page and re.search(pattern,query,re.I)),None)
+    if goal != 'reference' and not (map_page and goal in (None, 'location')) and not missing_detail:
         return None
     url = str(meta.get('url') or '')
     if (not safe_official_link(url) or not is_official_document(document)
@@ -43,6 +47,16 @@ def reference_answer(query: str, document: dict, body: str, keywords: set[str],
             or not topic_support({'content': body, 'metadata': {'url': url}}, keywords)[0]):
         return None
     label = link_label(title) or '공식 안내'
+    if missing_detail:
+        from chatbot.concise_answers import _source_units
+        from chatbot.structured_answers import field_matches
+        if any(field_matches(goal,u,query) and re.search(r'통행|전용|길이|km|킬로',u,re.I)
+               for u in _source_units(body.splitlines())):
+            return None  # Actual rule facts should go through the source reader.
+        return {'answer': f'확인한 공식 원문에서는 **{missing_detail}**에 관한 확정 근거가 부족합니다. '
+                f'[{label}]({url})는 위치 확인용으로 참고해 주세요.',
+                'answer_details':original,'is_clarification':False,'suggested_questions':[],
+                'documents':[document],'answer_method':'official_reference','degraded':True}
     answer = f'사하구청 [{label}]({url})에서 확인할 수 있습니다.'
     attachments = [a for a in meta.get('attachments') or [] if isinstance(a, dict)
                    and safe_official_link(str(a.get('url') or ''))]
