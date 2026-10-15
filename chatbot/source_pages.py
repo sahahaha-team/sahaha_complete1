@@ -2,8 +2,26 @@
 from __future__ import annotations
 
 import logging
+import hashlib
 
 logger = logging.getLogger(__name__)
+
+
+def parsed_original(row: dict) -> str:
+    """Reuse parsing within a fetched row, bound to both actual source fields.
+
+    No freshness is cached: the caller must fetch and check last_checked_at.
+    A replaced/edited HTML or fallback text invalidates this derived value.
+    """
+    html, content = row.get('raw_html') or '', row.get('content') or ''
+    digest = hashlib.sha256((html + '\0' + content).encode('utf-8')).digest()
+    cached = row.get('_parsed_original')
+    if cached and cached[0] == digest:
+        return cached[1]
+    from chatbot.official_content import official_html_text
+    body = official_html_text(html) or content
+    row['_parsed_original'] = (digest, body)
+    return body
 
 
 def hydrate_source_documents(documents: list[dict], client) -> list[dict]:
@@ -40,8 +58,6 @@ def source_document(document: dict, client) -> tuple[str, dict]:
             row = {}
     if 'attachments' in row:
         document = {**document, 'metadata': {**meta, 'attachments': row.get('attachments') or []}}
-    from chatbot.official_content import official_html_text
-    structured = official_html_text(row.get('raw_html') or '')
     from chatbot.source_warnings import reviewed_source
-    body, reviewed_meta = reviewed_source(structured or row.get('content') or '', document.get('metadata') or {})
+    body, reviewed_meta = reviewed_source(parsed_original(row), document.get('metadata') or {})
     return body, {**document,'metadata':reviewed_meta}

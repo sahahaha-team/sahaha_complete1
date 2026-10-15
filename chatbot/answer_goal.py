@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 
 from chatbot.question_intent import asks_location, asks_opening_hours
 
@@ -34,6 +35,7 @@ def quantity_unit(query: str) -> str | None:
     return None
 
 
+@lru_cache(maxsize=512)
 def answer_goal(query: str) -> str | None:
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
@@ -158,6 +160,7 @@ def answer_goal(query: str) -> str | None:
     return None
 
 
+@lru_cache(maxsize=512)
 def requested_goals(query: str) -> tuple[str, ...]:
     """Keep both requested facility fields when hours and location are asked."""
     from chatbot.query_subject import interpret_query

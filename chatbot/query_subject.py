@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 import unicodedata
 from collections.abc import Iterable
+from functools import lru_cache
 from chatbot.question_intent import opening_hours_subject, location_subject
 from chatbot.vaccination import is_vaccination_query, vaccine_kind
 
@@ -70,6 +71,7 @@ def strip_general_question_tail(query: str) -> str:
     return re.sub(r'\s*어떻게\s*(?:돼(?:요)?|되(?:나요|어요|죠|니)|됩니까|되는데|되는지)\s*[?？.!]*\s*$', '', query or '')
 
 
+@lru_cache(maxsize=1024)
 def normalize_query(query: str) -> str:
     """Normalize surface wording without inventing a service or condition."""
     text = strip_general_question_tail(unicodedata.normalize('NFC', query or ""))
@@ -91,6 +93,7 @@ def normalize_query(query: str) -> str:
     return re.sub(r'(?<![가-힣])민증(?=\s|[?？.!]|$|은|는|을|이|의|발급|재발급|분실)', '주민등록증', text)
 
 
+@lru_cache(maxsize=512)
 def interpret_query(query: str) -> str:
     """Use the affirmative request in an explicit correction, for routing only.
 
@@ -105,6 +108,7 @@ def interpret_query(query: str) -> str:
     return re.sub(pattern, '', text)
 
 
+@lru_cache(maxsize=8192)
 def compact(value: str) -> str:
     value = re.sub(r"[^가-힣a-z0-9]", "", normalize_query(value).lower())
     for alias, target in WORDING_ALIASES.items():

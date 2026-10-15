@@ -44,6 +44,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         if ages and not any(age in compact(scoped) for age in ages):
             return False
     if goal == 'method' and re.search(
+            r'^(?:처리|신청|접수|이용|예약|배출)방법\s+(?:[^\n]{0,180})(?:전화|문자|접수|신청|방문|제출|인터넷|온라인|콜센터)|'
             r'방\s*법\s*[:：]|배출.*(?:수거|봉투|요일|품목)|(?:요일|품목).*배출|수거.*(?:콜센터|예약|접수)|'
             r'(?:상담|민원).*국민신문고|인터넷.*(?:신청|열람|발급)|'
             r'(?:회원가입|로그인|본인인증|신분확인).*(?:필요|필수|먼저|후)',unit):

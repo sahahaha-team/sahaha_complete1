@@ -43,8 +43,8 @@ def _coverage(query: str, body: str, title: str, keywords: tuple[str, ...]):
 def source_body(document: dict) -> str:
     row = document.get('_raw_page')
     if row is not None:
-        from chatbot.official_content import official_html_text
-        return official_html_text(row.get('raw_html') or '') or row.get('content') or ''
+        from chatbot.source_pages import parsed_original
+        return parsed_original(row)
     return str(document.get('content') or '')
 
 

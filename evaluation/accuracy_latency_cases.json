@@ -1,0 +1,90 @@
+{
+  "protocol": "Paired same-machine/model/corpus HTTP latency check, two ordered rounds. First round can include cold path/model caches; round 2 is repeat-query state. No concurrent refresh/profile/test load. Do not interpret 12 observations as population latency or accuracy. Each answer must retain its actual conditions and source.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "law_1",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "무료 법률상담은 예약 없이 아무 때나 찾아가면 되나요?"
+      ]
+    },
+    {
+      "id": "fan_1",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "작은 선풍기 한 대도 집으로 무료 수거하러 오나요?"
+      ]
+    },
+    {
+      "id": "bulky_1",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "대형폐기물 배출 방법 알려줘"
+      ]
+    },
+    {
+      "id": "health_1",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "사하구보건소 운영시간과 주소 알려줘"
+      ]
+    },
+    {
+      "id": "passport_1",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "성인 여권 재발급 준비물"
+      ]
+    },
+    {
+      "id": "library_1",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "희망 도서 월별 신청 한도 알려줘"
+      ]
+    },
+    {
+      "id": "law_2",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "무료 법률상담은 예약 없이 아무 때나 찾아가면 되나요?"
+      ]
+    },
+    {
+      "id": "fan_2",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "작은 선풍기 한 대도 집으로 무료 수거하러 오나요?"
+      ]
+    },
+    {
+      "id": "bulky_2",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "대형폐기물 배출 방법 알려줘"
+      ]
+    },
+    {
+      "id": "health_2",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "사하구보건소 운영시간과 주소 알려줘"
+      ]
+    },
+    {
+      "id": "passport_2",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "성인 여권 재발급 준비물"
+      ]
+    },
+    {
+      "id": "library_2",
+      "criterion": "같은 공식 근거와 중요 조건 유지; 초기/반복 상태 별도 기록",
+      "turns": [
+        "희망 도서 월별 신청 한도 알려줘"
+      ]
+    }
+  ]
+}

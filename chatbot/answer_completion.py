@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 
 OMISSION = "[…]"
 QUALIFICATION = re.compile(r"^(?:단[,， ]|다만|※|예외|제외|주의)")
@@ -9,6 +10,7 @@ _ENDING = re.compile(r"(?:니다|세요|시오|해요|돼요|어요|아요|인�
 _DANGLING = re.compile(r"(?:[,，:：/·]|[을를] 이용|(?:하여|하며|이며|으며|하고|되고|하거나|따라|위해|통해|경우|때|대한|위한|있는|없는|하는|되는|한해|한|할|된|될|인|은|는|이|가|을|를|의|에서|에게|로|와|과))$")
 
 
+@lru_cache(maxsize=8192)
 def balanced(text: str) -> bool:
     # Official Korean pages also write phone area codes as 051) 220-5716.
     # That closing parenthesis is phone notation, not unfinished prose.
@@ -38,6 +40,7 @@ def sentence_complete(text: str) -> bool:
     return balanced(text) and bool(_ENDING.search(plain))
 
 
+@lru_cache(maxsize=8192)
 def source_unit_complete(text: str) -> bool:
     """Allow factual label/value lists, but not unfinished Korean clauses."""
     if (not text or text.startswith('#') or text.rstrip().endswith(('?', '？'))

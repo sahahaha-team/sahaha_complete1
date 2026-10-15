@@ -57,6 +57,11 @@ def complete_direct_candidates(query: str, documents: list[dict], keywords: set[
         if meta.get('source_type') != 'crawled_page' and '_raw_page' not in doc: continue
         heading=compact(str(meta.get('title') or '') + ' ' + next((u.lstrip('# ') for u in
             str(doc.get('content') or '').splitlines() if u.startswith('## ')),''))
+        from chatbot.structured_answers import scoped_units
+        # A real program subheading inside a generic page can establish the
+        # service too. The same scoped field/source checks below still apply.
+        heading += compact(' '.join(unit for unit in scoped_units(query, doc.get('content') or '', keywords)
+                                   if unit.startswith('#')))
         # A vague entity word or matching noun somewhere in a page cannot
         # bypass meaning search. The requested service must own the heading.
         owners=names or {word for word in keywords if len(word)>=3 and word not in {'보건소','구청','자전거','쓰레기'}}
@@ -117,8 +122,8 @@ def search_candidates(retriever, query: str, *, k: int = 15) -> dict:
         # Metadata tags are hints: older or LLM-generated tags may put a
         # relevant official page in another category. Always add the global
         # semantic candidates rather than trusting a nonempty filtered list.
-        global_vector=retriever.vs.similarity_search(query,k=max(k,RAG_CANDIDATE_LIMIT),
-            min_similarity=VECTOR_CANDIDATE_MIN_SIMILARITY)
+        global_vector=(retriever.vs.similarity_search(query,k=max(k,RAG_CANDIDATE_LIMIT),
+            min_similarity=VECTOR_CANDIDATE_MIN_SIMILARITY) if hints.get('category') or hints.get('service_type') else [])
         by_id={str(doc.get('id') or source_key(doc)):doc for doc in vector + global_vector}
         vector=sorted(by_id.values(), key=lambda doc:float(doc.get('vector_similarity',doc.get('similarity',0)) or 0),reverse=True)
     except Exception as exc:

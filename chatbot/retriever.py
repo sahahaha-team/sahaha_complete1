@@ -397,8 +397,8 @@ class HybridRetriever:
                         # change it while the background index still holds
                         # an older snapshot with a recent check timestamp.
                         from chatbot.source_answers import strip_page_chrome
-                        from chatbot.official_content import official_html_text
-                        doc['content'] = strip_page_chrome(official_html_text(original.get('raw_html') or '') or original.get('content') or '')
+                        from chatbot.source_pages import parsed_original
+                        doc['content'] = strip_page_chrome(parsed_original(original))
                         doc['metadata']['attachments'] = original.get('attachments') or []
                 kept.append(doc)
         return kept
