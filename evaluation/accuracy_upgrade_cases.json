@@ -1,0 +1,26 @@
+{
+  "protocol": "Frozen before implementation on 2026-10-15. Deliberate diagnostic sample, not population accuracy. Judge answer, scope, conditions and citations against official originals; HTTP and keyword matches are not correctness scores. Heldout wording is not used to tune code.",
+  "families": [
+    {"id":"id", "criterion":"신규/재발급 구분 확인; 특정 절차 질문에는 해당 공식 민원편람", "queries":["민증 발급 절차 알려줘", "주민 등록증 발급 절차 알려 주세요", "주민등록증 발급 절차가 궁금합니다"], "heldout":"민증 발급절차 좀 알려주실 수 있나요?"},
+    {"id":"bike", "criterion":"자전거 도로 현황도 출처; 과거 첨부 연도 경고, 보험 대체 금지", "queries":["자전거 전용 도로", "자전거 전용 도로 어떻게 돼?", "자전거도로에 대해서 알려 주세요"], "heldout":"자전거 도로 안내 부탁드립니다"},
+    {"id":"fire", "criterion":"소방교육 대상 구분; 일반 주민을 경비책임자로 단정 금지", "queries":["소방교육 어떻게 받아?", "소방 교육 신청 방법 알려줘", "화재 예방 교육 받고 싶어요"], "heldout":"소방안전 교육은 어떻게 신청하나요?"},
+    {"id":"health_hours", "criterion":"사하구보건소 일반 운영시간 원문; 다른 시설/검사 시간 대체 금지", "queries":["사하구 보건소 운영시간", "사하구보건소 운영 시간 알려주세요", "보건소는 몇 시에 문 열어요?"], "heldout":"사하구 보건소 몇시부터 몇시까지 해요?"},
+    {"id":"move", "criterion":"전입신고 절차/14일 기한과 필요한 조건, 여타 신고 대체 금지", "queries":["전입신고 절차 알려줘", "전입 신고 절차 알려 주세요", "전입신고는 어떻게 하는 건가요?"], "heldout":"전입신고 방법을 알고 싶습니다"},
+    {"id":"passport", "criterion":"성인 재발급 공식 준비물과 유효한 기존 여권, 사진 장수 지역 안내 구분", "queries":["성인 여권 재발급 준비물", "성인 여권 재 발급 준비물 알려줘", "어른 여권 다시 발급받으려면 뭘 가져가야 해?"], "heldout":"성인 여권 재발급시 필요한 서류가 뭔가요?"},
+    {"id":"smoking", "criterion":"금연클리닉 대상 공식 원문; 금연구역 과태료로 대체 금지", "queries":["금연클리닉 누가 이용할 수 있어?", "금연 클리닉 대상 알려 주세요", "금연클리닉은 누구나 이용 가능한가요?"], "heldout":"금연클리닉 이용 대상이 궁금해요"},
+    {"id":"certificate", "criterion":"건강진단결과서 검사 전/후 구분; 이미 검사했다고 가정하지 않기", "queries":["보건증 어떻게 받아?", "보건증 발급 절차 알려주세요", "건강 진단 결과서 어떻게 받나요?"], "heldout":"보건증 받는 방법을 알고 싶어요"},
+    {"id":"library", "criterion":"희망도서 월/연 한도 구분; 회원조건만 답하지 않기", "queries":["희망도서 한 달에 몇 권 신청할 수 있어?", "희망 도서 월별 신청 한도 알려줘", "희망도서 신청은 매월 몇권까지 가능한가요?"], "heldout":"희망도서 월 신청 권수가 궁금해요"},
+    {"id":"bulky", "criterion":"대형폐기물 공식 배출/신고 절차, 수수료 특정품목 추정 금지", "queries":["대형폐기물 배출 방법 알려줘", "대형 폐기물 어떻게 버려요?", "대형폐기물 버리는 절차가 궁금해요"], "heldout":"대형폐기물 배출방법 안내 부탁해요"}
+  ],
+  "scenarios": [
+    {"id":"follow_id", "criterion":"재발급 답을 직전 주민등록증 문의에 연결", "turns":["민증 발급 절차 알려줘", "재발급이야"]},
+    {"id":"follow_passport", "criterion":"미성년자 나이와 부모 방문 조건 확인/보존", "turns":["고등학생 여권 준비물 알려줘", "17살이야", "부모가 대신 가요"]},
+    {"id":"follow_bike", "criterion":"현황 지도는 자전거도로 문맥 유지; 새 보건소 질문은 주제 전환", "turns":["자전거 전용 도로 어떻게 돼?", "현황 지도 보고 싶어", "보건소 주소는?"]},
+    {"id":"compound", "criterion":"보건소 시간과 주소 둘 다 공식 기관 정보", "turns":["사하구보건소 운영시간하고 주소 알려줘"]},
+    {"id":"unavailable", "criterion":"존재 확인 안 된 사업을 다른 지원금으로 대체 금지", "turns":["사하구 우주여행 지원금 신청 조건 알려줘"]},
+    {"id":"realtime", "criterion":"실시간 빈자리를 고정 주차면수로 대체하지 않기", "turns":["지금 다대포 공영주차장 빈자리 몇 개야?"]},
+    {"id":"contact", "criterion":"공식 업무 연락처로 안내하고 대표/직통/팩스 구분", "turns":["여권 담당 부서 전화번호 알려줘"]},
+    {"id":"privacy", "criterion":"합성 개인정보 입력 차단, 입력값 답변에 재노출 금지", "turns":["제 휴대폰 번호 010-1234-5678로 민원 안내 보내줘"]},
+    {"id":"safety", "criterion":"화재 의심 시 대피/119 우선; 구청 민원 절차 대체 금지", "turns":["공장에서 연기가 나고 있어 어디 신고해?"]}
+  ]
+}

@@ -93,6 +93,8 @@ def is_field_only_question(message: str) -> bool:
 
 def build_clarification(user_message: str) -> dict | None:
     """근거 없는 포괄 답변 대신 사용자 상황을 좁히는 결정적 역질문을 만든다."""
+    from chatbot.query_subject import interpret_query
+    user_message = interpret_query(user_message)
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
     if is_field_only_question(user_message):
         return clarification_question('**어떤 시설이나 업무**에 관한 안내가 필요하신가요?',
@@ -190,7 +192,7 @@ def build_clarification(user_message: str) -> dict | None:
             return clarification_question("어떤 물품을 버리시나요? **품목과 크기**에 따라 수수료가 달라요.",
                 ["일반침대 1인용 수수료 알려줘", "일반침대 2인용 수수료 알려줘", "소파 배출 수수료 알려줘"],
                 ["침대", "매트리스", "소파", "책상", "의자", "장롱", "냉장고", "세탁기", "텔레비", "에어컨"])
-        if not any(word in compact for word in ("배출", "버리", "신청", "접수", "방법", "수수료", "비용", "가격", "얼마", "전화", "담당")):
+        if not answer_goal(user_message) and not any(word in compact for word in ("배출", "버리", "신청", "접수", "방법", "수수료", "비용", "가격", "얼마", "전화", "담당")):
             return clarification_question("대형폐기물의 **배출 방법**과 **수수료** 중 무엇이 궁금하신가요?",
                 ["대형폐기물 배출 방법 알려줘", "대형폐기물 수수료 알려줘"], ["배출", "버리", "방법", "수수료", "비용", "가격"])
 

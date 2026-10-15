@@ -24,10 +24,22 @@ GOAL_WORDS = {
 }
 
 
+def quantity_unit(query: str) -> str | None:
+    """A count limit is distinct from a fee or a processing duration."""
+    text = re.sub(r'\s+', '', query)
+    if re.search(r'몇권|권수|신청수량|(?:도서|책).*(?:한도|몇권)', text):
+        return '권'
+    if re.search(r'몇회|횟수|몇번', text):
+        return '회'
+    return None
+
+
 def answer_goal(query: str) -> str | None:
-    from chatbot.query_subject import strip_general_question_tail
-    query = strip_general_question_tail(query)
+    from chatbot.query_subject import interpret_query
+    query = interpret_query(query)
     compact_query = query.replace(' ', '')
+    if quantity_unit(query):
+        return 'schedule'
     if re.search(r'통행규칙|안전수칙', compact_query):
         return 'precautions'
     if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량', compact_query):
@@ -146,8 +158,8 @@ def answer_goal(query: str) -> str | None:
 
 def requested_goals(query: str) -> tuple[str, ...]:
     """Keep both requested facility fields when hours and location are asked."""
-    from chatbot.query_subject import strip_general_question_tail
-    query = strip_general_question_tail(query)
+    from chatbot.query_subject import interpret_query
+    query = interpret_query(query)
     primary = answer_goal(query)
     if primary in ('reference','necessity'):
         return (primary,)

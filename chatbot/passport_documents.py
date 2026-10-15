@@ -45,6 +45,8 @@ def applicant_role(query: str) -> str | None:
 
 def parse_passport_documents(query: str, content: str) -> str | None:
     """Accept both legacy lines and HTML paragraphs; retain role boundaries."""
+    from chatbot.query_subject import interpret_query
+    query = interpret_query(query)
     body = re.sub(r'^#{1,6}\s+', '', content or '', flags=re.M)
     if not document_request(query):
         return None

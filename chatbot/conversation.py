@@ -39,7 +39,7 @@ from chatbot.verified_facts import answer_verified_table_question
 from chatbot.faq_targets import match_official_page
 from chatbot.source_answers import build_source_answer
 from chatbot.emergency_guidance import answer_emergency_question
-from chatbot.query_subject import normalize_query
+from chatbot.query_subject import normalize_query, interpret_query
 from chatbot.response_helpers import resolve_clarification_reply
 from chatbot.concise_answers import concise_source_answer, scope_question
 from chatbot.grounded_planner import answer_with_grounded_model
@@ -272,7 +272,7 @@ class ChatBot:
                 "suggested_questions": ["사하구 민원 안내해줘", "사하구 복지 지원 알려줘"],
             }
 
-        resolved_message = self.contextual_message(session_id, user_message)
+        resolved_message = interpret_query(self.contextual_message(session_id, interpret_query(user_message)))
         self._clear_pending_clarification(session_id)
         from chatbot.response_helpers import unavailable_capability
         capability = unavailable_capability(resolved_message)

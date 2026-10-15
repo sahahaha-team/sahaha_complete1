@@ -1,0 +1,322 @@
+{
+  "protocol": "Historical 24 difficult cases plus four new spelling/negation cases, fixed before changes. Diagnostic reuse, not independent general accuracy. Official evidence review required.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "N001",
+      "group": "민원",
+      "kind": "single",
+      "turns": [
+        "구청 민원실에 점심시간인 12시 반에 가도 민원 접수를 할 수 있어요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0103010000"
+      ],
+      "criterion": "민원실 점심 교대 운영과 실제 운영시간; 구체 업무 예외 구분"
+    },
+    {
+      "id": "N002",
+      "group": "민원",
+      "kind": "single",
+      "turns": [
+        "무인발급기에서 가족관계증명서도 뽑을 수 있나요? 비용도 궁금해요."
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0103040000"
+      ],
+      "criterion": "해당 발급문서 행의 가능 여부와 수수료; 모든 기기 가능 단정 금지"
+    },
+    {
+      "id": "N011",
+      "group": "민원",
+      "kind": "single",
+      "turns": [
+        "정부24에서 서류 떼려면 공동인증서만 꼭 있어야 하나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0102010000"
+      ],
+      "criterion": "오래된 인증 방식 한정 금지; 현재 확인 한계 표시"
+    },
+    {
+      "id": "N013",
+      "group": "민원",
+      "kind": "single",
+      "turns": [
+        "할아버지 땅을 찾고 싶은데 손자도 조상 땅 찾기를 신청할 수 있나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0404180000"
+      ],
+      "criterion": "법적 상속자 자격 및 관계 증빙; 자동 가능 단정 금지"
+    },
+    {
+      "id": "N015",
+      "group": "민원",
+      "kind": "single",
+      "turns": [
+        "무료 법률상담은 예약 없이 아무 때나 찾아가면 되나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0309060000"
+      ],
+      "criterion": "정해진 상담 일정·예약 경로; 상시 가능 단정 금지"
+    },
+    {
+      "id": "N020",
+      "group": "폐기물",
+      "kind": "single",
+      "turns": [
+        "닭뼈와 조개껍데기를 음식물쓰레기통에 넣어도 돼요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0405050102"
+      ],
+      "criterion": "동물뼈·패류껍데기 음식물 제외"
+    },
+    {
+      "id": "N025",
+      "group": "폐기물",
+      "kind": "single",
+      "turns": [
+        "작은 선풍기 한 대도 집으로 무료 수거하러 오나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0405050104"
+      ],
+      "criterion": "단일 소형가전 방문수거 제한과 대안"
+    },
+    {
+      "id": "N028",
+      "group": "폐기물",
+      "kind": "single",
+      "turns": [
+        "정화조 청소 안 하면 과태료가 있나요? 얼마까지예요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0405140000"
+      ],
+      "criterion": "법적 의무 및 공식 과태료 상한; 확인 안 된 금액 금지"
+    },
+    {
+      "id": "N033",
+      "group": "세금부동산",
+      "kind": "single",
+      "turns": [
+        "마을세무사에게 회사 세무장부 작성까지 무료로 부탁할 수 있나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0105060000"
+      ],
+      "criterion": "무료 상담 범위와 신고대행·장부 작성 제한"
+    },
+    {
+      "id": "N036",
+      "group": "세금부동산",
+      "kind": "single",
+      "turns": [
+        "공시지가 이의신청은 발표 후 며칠 안에 해야 하나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0404010300"
+      ],
+      "criterion": "공시일부터 이의신청 기간"
+    },
+    {
+      "id": "N040",
+      "group": "세금부동산",
+      "kind": "single",
+      "turns": [
+        "고향사랑기부금은 1년에 500만원까지만 낼 수 있는 건가요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0608000000"
+      ],
+      "criterion": "2025년 이후 2천만원 변경; 옛 금액 채택 금지"
+    },
+    {
+      "id": "N049",
+      "group": "복지지원",
+      "kind": "single",
+      "turns": [
+        "첫째 아이랑 둘째 아이 첫만남이용권은 금액이 같나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0510070100"
+      ],
+      "criterion": "출생순위·출생연도별 금액 구분"
+    },
+    {
+      "id": "N052",
+      "group": "복지지원",
+      "kind": "single",
+      "turns": [
+        "둘째 아이만 있어도 광안대교 통행료가 무료인가요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0510070200"
+      ],
+      "criterion": "광안대교 3자녀 이상 조건; 주차 감면과 혼동 금지"
+    },
+    {
+      "id": "N055",
+      "group": "복지지원",
+      "kind": "single",
+      "turns": [
+        "생계급여랑 의료급여 선정 소득 기준은 같아요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0501010200"
+      ],
+      "criterion": "각 급여별 기준중위소득 비율 구분"
+    },
+    {
+      "id": "N061",
+      "group": "복지지원",
+      "kind": "single",
+      "turns": [
+        "39세이고 사하구로 이사한 지 6개월인데 자격증 시험비를 돌려받을 수 있어요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/job/contents.do?mId=0301070000"
+      ],
+      "criterion": "1년 계속 거주요건 미충족; 연령만으로 가능 금지"
+    },
+    {
+      "id": "N070",
+      "group": "보건",
+      "kind": "single",
+      "turns": [
+        "사하구보건소 물리치료는 당일 바로 가면 돼요? 예약이 필요해요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/health/contents.do?mId=0201020000"
+      ],
+      "criterion": "예약 요건 및 진료 선행조건"
+    },
+    {
+      "id": "N075",
+      "group": "보건",
+      "kind": "single",
+      "turns": [
+        "아이가 만 12세 넘으면 모든 국가예방접종 지원이 끝나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/health/contents.do?mId=0203010000"
+      ],
+      "criterion": "백신별 HPV 등 연령 예외; 단일 연령 일반화 금지"
+    },
+    {
+      "id": "N080",
+      "group": "보건",
+      "kind": "single",
+      "turns": [
+        "영양플러스 대상은 임산부만인가요? 어린아이도 신청돼요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/health/contents.do?mId=0402090000"
+      ],
+      "criterion": "만6세미만 영유아·임산부·출산수유부 및 소득·영양위험 조건"
+    },
+    {
+      "id": "N081",
+      "group": "보건",
+      "kind": "single",
+      "turns": [
+        "임산부 철분제는 임신 몇 주부터 얼마나 받을 수 있어요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/health/contents.do?mId=0402010100"
+      ],
+      "criterion": "16주~분만 전, 최대5개월, 주민등록 요건"
+    },
+    {
+      "id": "N088",
+      "group": "보건",
+      "kind": "single",
+      "turns": [
+        "사하구 건강생활지원센터는 어느 동에 있고 어떤 주민이 이용해요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/health/contents.do?mId=0404060000"
+      ],
+      "criterion": "신평·다대 센터와 대상·위치"
+    },
+    {
+      "id": "N090",
+      "group": "드문업무",
+      "kind": "single",
+      "turns": [
+        "사전 컨설팅감사를 신청하면 답변은 며칠 안에 오나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0305080000"
+      ],
+      "criterion": "30일 이내 회신 및 상급기관 의뢰시 지연 예외"
+    },
+    {
+      "id": "N091",
+      "group": "드문업무",
+      "kind": "single",
+      "turns": [
+        "이미 소송 중인 건도 사전 컨설팅감사를 받을 수 있나요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0305080000"
+      ],
+      "criterion": "수사·소송·심판 등 진행확정 제외"
+    },
+    {
+      "id": "N096",
+      "group": "드문업무",
+      "kind": "single",
+      "turns": [
+        "희망도서는 어디서 신청하고 어떤 책은 제외돼요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/portal/contents.do?mId=0607110000"
+      ],
+      "criterion": "도서관 경로·제외도서, 다른업무 금지"
+    },
+    {
+      "id": "N097",
+      "group": "드문업무",
+      "kind": "single",
+      "turns": [
+        "사하구 통합예약 회원가입 없이 예약 신청할 수 있어요?"
+      ],
+      "expected_sources": [
+        "https://www.saha.go.kr/reserve/contents.do?mId=1207000000"
+      ],
+      "criterion": "해당 시스템 회원·본인인증 요건"
+    },
+    {
+      "id": "typo_id",
+      "turns": [
+        "주민등룍증 발급 절차 알려줘"
+      ],
+      "criterion": "오타/부정 표현으로 업무나 조건을 바꾸지 않기; 명확하지 않은 의미는 확인"
+    },
+    {
+      "id": "typo_waste",
+      "turns": [
+        "대형페기물 어떻게 버려요?"
+      ],
+      "criterion": "오타/부정 표현으로 업무나 조건을 바꾸지 않기; 명확하지 않은 의미는 확인"
+    },
+    {
+      "id": "negative_id",
+      "turns": [
+        "주민등록증 발급 말고 분실 신고 방법 알려줘"
+      ],
+      "criterion": "오타/부정 표현으로 업무나 조건을 바꾸지 않기; 명확하지 않은 의미는 확인"
+    },
+    {
+      "id": "negative_passport",
+      "turns": [
+        "여권 신규 발급이 아니라 재발급 준비물 알려줘"
+      ],
+      "criterion": "오타/부정 표현으로 업무나 조건을 바꾸지 않기; 명확하지 않은 의미는 확인"
+    }
+  ]
+}

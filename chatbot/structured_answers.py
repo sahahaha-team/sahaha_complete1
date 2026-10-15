@@ -45,6 +45,10 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
             r'(?:회원가입|로그인|본인인증|신분확인).*(?:필요|필수|먼저|후)',unit):
         return True
     if goal == 'schedule' and query:
+        from chatbot.answer_goal import quantity_unit
+        count_unit = quantity_unit(query)
+        if count_unit:
+            return bool(re.search(r'\d+\s*' + count_unit, unit))
         if re.search(r'한참뒤|출산.*(?:지나|지난|뒤)',request):
             return bool(re.search(r'신청기간|접수기간|신청시기',scoped))
         if re.search(r'배출|쓰레기',query) and re.search(r'아무때|낮|시간',query):

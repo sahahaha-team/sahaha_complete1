@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from collections.abc import Iterable
 from chatbot.question_intent import opening_hours_subject, location_subject
 from chatbot.vaccination import is_vaccination_query, vaccine_kind
@@ -55,6 +56,10 @@ WORDING_ALIASES.update({'다대포 축구장':'다대포체육시설 축구장',
     '다대포축구장':'다대포체육시설 축구장','공시 지가':'공시지가',
     '부동산 등기부등본':'등기사항증명서','부동산등기부등본':'등기사항증명서'})
 
+_SERVICE_SPACING = re.compile('|'.join(r'\s*'.join(map(re.escape, name))
+    for name in sorted(set(SERVICE_NAMES) | {'보건소', '금연클리닉'}, key=lambda n: (-len(n), n))
+    if len(name) >= 3))
+
 
 def strip_general_question_tail(query: str) -> str:
     """Neutral state questions do not themselves request an application method.
@@ -66,8 +71,17 @@ def strip_general_question_tail(query: str) -> str:
 
 
 def normalize_query(query: str) -> str:
-    """Correct 화제 only in an explicit fire incident/reporting context."""
-    text = strip_general_question_tail(query or "")
+    """Normalize surface wording without inventing a service or condition."""
+    text = strip_general_question_tail(unicodedata.normalize('NFC', query or ""))
+    # Closed vocabulary corrections only. Do not fuzzy-match arbitrary names,
+    # numbers, districts or eligibility conditions.
+    for typo, name in (('주민등룍증', '주민등록증'), ('대형페기물', '대형폐기물')):
+        text = text.replace(typo, name)
+    text = re.sub(r'재\s+발급', '재발급', text)
+    text = re.sub(r'다시\s*발급', '재발급', text)
+    # Known service words may be spaced between syllables. Keep the surrounding
+    # sentence, including negation and applicant facts, intact.
+    text = _SERVICE_SPACING.sub(lambda match: re.sub(r'\s+', '', match.group()), text)
     # Colloquial questions insert words such as '어떻게' between the typo and
     # '신고', and often omit spaces. News and film festivals are not incidents.
     text = re.sub(r"(?<!영)화제(?!가\s*된|의|로\s*떠|성)(?=[^.!?\n]{0,30}(?:신고|발생|났|나고|진압|대피|119))",
@@ -75,6 +89,20 @@ def normalize_query(query: str) -> str:
     text = re.sub(r'화재\s*예방\s*교육', '소방 안전교육', text)
     # Bound the abbreviation so 시민증/외국인등록증 are not transformed.
     return re.sub(r'(?<![가-힣])민증(?=\s|[?？.!]|$|은|는|을|이|의|발급|재발급|분실)', '주민등록증', text)
+
+
+def interpret_query(query: str) -> str:
+    """Use the affirmative request in an explicit correction, for routing only.
+
+    Raw input is still checked for privacy and retained as the user's message.
+    This is deliberately separate from compact(), which also reads evidence.
+    """
+    text = normalize_query(query)
+    # Remove only an explicitly rejected lifecycle, never a rejected service,
+    # age, place, or a condition such as '신분증 없이'. A following affirmative
+    # request is required, so '재발급이 아니에요' is not silently reinterpreted.
+    pattern = r'(?:신규\s*(?:발급)?|처음\s*발급|재발급|발급)\s*(?:(?:이|가)\s*아니라|말고)\s*(?=.{1,80}(?:발급|분실|신고|수령))'
+    return re.sub(pattern, '', text)
 
 
 def compact(value: str) -> str:
