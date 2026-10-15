@@ -52,7 +52,10 @@ def source_unit_complete(text: str) -> bool:
     plain = text.strip().rstrip('.。').replace('**', '')
     if sentence_complete(text):
         return True
-    if _DANGLING.search(plain) and not re.search(r'(?:확인|온라인|법정대리인|대리인|신청인|민원인|가입자|거주자인)$',plain):
+    if (re.match(r'^(?:(?:신청|지원|선정|이용)?\s*제외\s*(?:대상|기준|품목)|(?:신청|지원|이용)대상)\s*[:：]', plain)
+            and plain.endswith('경우')):
+        return True  # A complete labelled category, not a dangling prose clause.
+    if _DANGLING.search(plain) and not re.search(r'(?:확인|로그인|온라인|법정대리인|대리인|신청인|민원인|가입자|거주자인)$',plain):
         return False
     label_value = bool(re.match(r"[^:：]{1,30}[:：]\s*\S", plain) or re.match(r'[^:：]{1,60} — [^:：]{1,80}[:：]\s*\S',plain))
     nominal = re.sub(r"\s*\([^()]*\)\s*$", "", plain)

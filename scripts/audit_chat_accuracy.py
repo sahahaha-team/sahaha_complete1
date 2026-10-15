@@ -30,7 +30,19 @@ def main():
     parser.add_argument('--split', choices=['development', 'heldout', 'all'], default='development')
     parser.add_argument('--base-url', default='http://127.0.0.1:5000')
     parser.add_argument('--only', default='')
+    parser.add_argument('--ready-timeout', type=float, default=90)
     args = parser.parse_args()
+    deadline = time.monotonic() + args.ready_timeout
+    while True:
+        try:
+            ready = requests.get(args.base_url + '/api/health', timeout=3)
+            if ready.status_code == 200 and ready.json().get('status') == 'ok':
+                break
+        except requests.RequestException:
+            pass
+        if time.monotonic() >= deadline:
+            raise RuntimeError('Server is not ready; no evaluation was started')
+        time.sleep(1)
     raw = args.cases.read_bytes()
     cases = json.loads(raw)
     scenarios = []

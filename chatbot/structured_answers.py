@@ -21,7 +21,7 @@ FIELD = {
     'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
     'method': r'방법\s*[:：]|절차\s*[:：]|흐름도\s*[:：]|제출처\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
-    'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|본인\s*부담\s*없|(?:수\s*수\s*료|사용료|요금|금액|가격|처리비용)[^:：\n]{0,40}[:：].*\d',
+    'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|면제|본인\s*부담\s*없|(?:수\s*수\s*료|사용료|요금|금액|가격|처리비용)[^:：\n]{0,40}[:：].*\d',
     'schedule': r'(?:기간|시간|일자|시기|주기|공시|공표|납기|신청권수|신청수량|한도).{0,100}(?:\d|매년|연중|매주|매월)|\d\s*(?:월|일|개월|회|권|주|년)',
     'services': r'(?:운영|사업|서비스|진료|검사|검진|지원|상담)?내용\s*[:：]|민원증명\s*[:：]|처리업무\s*[:：]|급여\s*[:：]|서비스.*제공|서비스입니다|상담.*(?:제공|운영)|검진.*(?:무료|가능)|교육대상\s*[:：]|무료.*교육.*제공|(?:상담|접수|발급|신청).*(?:이용|가능|하실수)',
     'definition': r'^정의\s*[:：]|이란|말합니다|위함|목적으로|목적\s*[:：]|제도.*(?:입니다|함)|제공받고|일자리를\s*제공|사업(?:입니다|을\s*제공)|이다[.。]?$',
@@ -35,6 +35,10 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return False
     request = compact(query)
     scoped = context + ' ' + unit
+    if goal == 'conditions' and re.search(r'제외|불가|금지', request):
+        # "제외도서 확인" is an instruction to look up rules, not those rules.
+        return bool(re.search(r'^(?:선정|신청|지원|이용)?\s*제외\s*(?:대상|기준|품목)\s*[:：]', unit)
+            or re.search(r'제외(?:됩니다|합니다|대상|품목)|불가|금지|안되는|안 되는', unit))
     if goal == 'conditions' and re.search(r'되어도|되면|그대로받',request):
         ages = re.findall(r'\d{1,2}세',request)
         if ages and not any(age in compact(scoped) for age in ages):
@@ -279,6 +283,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                         'documents':[document],'is_clarification':False,'answer_method':'structured_source'}
     selected = []
     missing = []
+    partial_list = False
     goals = requested_goals(query)
     blocked = (document.get('metadata') or {}).get('unverified_fields') or []
     goals = tuple(f for f in goals if f not in blocked)
@@ -426,6 +431,10 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                     break
                 if next_unit not in selected:
                     selected.append(next_unit)
+        if field == 'conditions' and re.search(r'제외', query):
+            exclusions = [u for _score, _index, u in candidates if re.match(
+                r'^(?:선정|신청|지원|이용)?\s*제외\s*(?:대상|기준|품목)\s*[:：]', u)]
+            partial_list = any(u not in selected for u in exclusions)
     if not selected:
         # A matched audience column can establish criteria even when an image
         # contains the application procedure. Do not substitute children's rules.
@@ -491,7 +500,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 selected.append(u)
     # Useful adjacent prerequisites and verified access channels are retained
     # for method/service availability, not replaced by another service's fees.
-    if goal in ('method', 'services', 'cost'):
+    if goal in ('method', 'services', 'cost') and len(goals) == 1:
         labels = r'^(?:지참물|준비물|신청방법|이용방법|방법|온라인 발급|신청처|접수처|대\s*상|진료장소)\s*[:：]'
         for unit in units:
             if (unit not in selected and source_unit_complete(unit) and re.search(labels, unit)
@@ -509,7 +518,8 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             if len(' '.join(selected))+len(unit)<400:
                 selected.append(unit)
     heading = units[0].lstrip('# ') if scope and units[0].startswith('#') else title
-    if heading.endswith(('?','？')) or compact(heading) in {'목적','지원사업소개'}:
+    from chatbot.source_scope import is_field_heading
+    if heading.endswith(('?','？')) or heading.startswith('※') or is_field_heading(heading) or compact(heading) in {'목적','지원사업소개'}:
         heading = title
     if goal == 'location':
         # Facility dimensions/capacity and UI link labels are not requested
@@ -525,6 +535,8 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     else:
         display = selected
     answer = '**' + heading + '**\n' + '\n'.join('- ' + u for u in display)
+    if partial_list:
+        answer += '\n제외 기준 중 일부입니다. 전체 목록은 아래 공식 원문을 확인해 주세요.'
     unknown_details = {t for t in details if t not in compact(title) and
                        not any(t in compact(u) for u in units)}
     unresolved_detail = bool(unknown_details and (goal == 'cost' or (goal == 'conditions' and
@@ -546,5 +558,5 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal in ('eligibility','services') and len(selected) <= 2:
         from chatbot.answer_enrichment import enrich_answer
         answer = enrich_answer(query, answer, '\n'.join(units), keywords, heading)
-    return {'answer': answer, 'answer_details': title + '의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + u for u in body.splitlines()), 'degraded':bool(missing) or unresolved_detail,
+    return {'answer': answer, 'answer_details': title + '의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + u for u in body.splitlines()), 'degraded':bool(missing) or unresolved_detail or partial_list,
             'documents': [document], 'is_clarification': False, 'answer_method': 'structured_source'}

@@ -1,5 +1,7 @@
 """Regressions from real consultations; facts remain source-derived."""
 import unittest
+import json
+from pathlib import Path
 from unittest.mock import Mock
 
 from chatbot.answer_goal import answer_goal, quantity_unit
@@ -8,6 +10,9 @@ from chatbot.response_helpers import build_clarification
 from chatbot.passport_documents import parse_passport_documents
 from chatbot.official_content import official_html_text
 from chatbot.structured_answers import structured_brief, field_matches
+from chatbot.evidence_decision import document_decision
+from chatbot.grounded_planner import answer_with_grounded_model
+from chatbot.concise_answers import concise_source_answer
 from tests.test_passport_documents import HTML
 
 
@@ -56,3 +61,67 @@ class QueryConsistencyTests(unittest.TestCase):
         self.assertFalse(field_matches('schedule', '처리기간: 1개월', query))
         self.assertEqual(answer_goal('기부금 연간 한도 얼마'), 'cost')
         self.assertIsNone(quantity_unit('지원금 신청 금액 한도'))
+
+
+class SourceOwnershipTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.rows = json.loads((Path(__file__).parent / 'fixtures/accuracy_sources_20261015.json').read_text(encoding='utf-8'))
+
+    def document(self, index):
+        row = self.rows[index]
+        body = official_html_text(row['html'])
+        return {'content': body, 'metadata': {'title': row['title'], 'url': row['url'], 'source_type': 'crawled_page'}}
+
+    def test_general_institution_address_cannot_be_a_vaccination_venue(self):
+        q = '보건소 주소는?'
+        wrong = {'content': '## 어르신 폐렴구균 예방접종\n접종장소: 보건소 접종 미운영, 전국 위탁의료기관',
+                 'metadata': {'title': '어르신 폐렴구균 예방접종', 'url': 'https://www.saha.go.kr/health/contents.do?mId=wrong'}}
+        self.assertFalse(document_decision(q, wrong, {'보건소'})['relevant'])
+        doc = self.document(0)
+        self.assertEqual(document_decision(q, doc, {'보건소'})['decision'], 'supported')
+        llm = Mock()
+        answer = answer_with_grounded_model(q, [doc], None, {'보건소'}, llm)
+        self.assertIn('하신중앙로 185', answer['answer'])
+        llm.model_copy.assert_not_called()
+
+    def test_specific_benefit_retains_its_own_extra_child_condition(self):
+        q = '둘째 아이만 있어도 광안대교 통행료가 무료인가요?'
+        doc = self.document(1)
+        keys = {'광안대교', '통행료'}
+        answer = structured_brief(q, doc, doc['content'], keys)
+        self.assertIn('3자녀 이상', answer['answer'])
+        self.assertIn('통행료 면제', answer['answer'])
+        self.assertNotIn('손세정제', answer['answer'])
+        llm = Mock()
+        planned = answer_with_grounded_model(q, [doc], None, keys, llm)
+        self.assertIn('3자녀 이상', planned['answer'])
+        llm.model_copy.assert_not_called()
+        original = '\n'.join('> ' + line for line in doc['content'].splitlines())
+        fallback = concise_source_answer(q, original, [doc], keys)
+        self.assertIn('3자녀 이상', fallback['answer'])
+
+    def test_compound_request_uses_actual_exclusions_not_a_lookup_instruction(self):
+        q = '희망도서는 어디서 신청하고 어떤 책은 제외돼요?'
+        doc = self.document(2)
+        answer = structured_brief(q, doc, doc['content'], {'희망도서'})
+        self.assertIn('로그인', answer['answer'])
+        self.assertIn('선정제외기준:', answer['answer'])
+        self.assertIn('일부', answer['answer'])
+        self.assertTrue(answer['degraded'])
+        self.assertFalse(field_matches('conditions', '신청방법: 선정 제외도서 확인', q))
+
+    def test_nested_exclusions_keep_the_label_and_do_not_absorb_other_cases(self):
+        doc = self.document(3)
+        self.assertIn('신청제외대상: 신청과 관련된 수사·소송·행정심판', doc['content'])
+        q = '이미 소송 중인 건도 사전컨설팅감사를 받을 수 있나요?'
+        answer = structured_brief(q, doc, doc['content'], {'사전컨설팅감사'})
+        self.assertIn('신청제외대상:', answer['answer'])
+        self.assertIn('소송', answer['answer'])
+
+    def test_reply_duration_keeps_the_delay_exception(self):
+        doc = self.document(3)
+        q = '사전컨설팅감사를 신청하면 답변은 며칠 안에 오나요?'
+        answer = structured_brief(q, doc, doc['content'], {'사전컨설팅감사'})
+        self.assertIn('30일 이내', answer['answer'])
+        self.assertIn('지연될 수 있음', answer['answer'])

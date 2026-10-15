@@ -121,6 +121,16 @@ def official_html_text(html: str) -> str | None:
             form.decompose()
     for node in root.select('script,style,nav,form,.offscreen,.hidden,.tableSt_list,.bbs_search,.satisfaction,.tabSt,.tab_menu,.tab_wrap'):
         node.decompose()
+    # Link/button labels are navigation, not the ending of the preceding fact
+    # or another item in a policy's exclusion list. URLs remain in metadata.
+    for link in root.select('a'):
+        if re.search(r'(?:다운로드|바로가기)\s*$', _text(link)) and len(_text(link)) < 60:
+            link.decompose()
+    # Some pages put a labelled exclusion list inside the final positive li.
+    # Preserve that ownership instead of flattening all cases into one line.
+    for label in root.find_all(['p', 'strong']):
+        if re.fullmatch(r'※?\s*(?:신청|지원|선정|이용)?\s*제외\s*(?:대상|기준|품목)', _text(label)):
+            label.name = 'h6'
     title = soup.select_one('#contents h2, h2.title, .cont_title h2, .sub_title h2')
     lines = ['## ' + _text(title)] if title else []
     field = None
@@ -133,7 +143,8 @@ def official_html_text(html: str) -> str | None:
             lines.extend(table_units(node))
             field = None
             continue
-        if node.find_parent(['li','p','dd']) is not None:
+        parent = node.find_parent(['li','p','dd'])
+        if parent is not None and not parent.find(['table','h2','h3','h4','h5','h6']):
             continue
         value = _text(node)
         if not value or value in ('게시판 목록', '인쇄하기'):
@@ -158,8 +169,9 @@ def official_html_text(html: str) -> str | None:
                   or re.search(r'(?:말 것|할 것|피할 것)(?:\s*-.*)?$', value)):
                 field = None
                 lines.append(value)
-            elif re.fullmatch(r'(?:지원|진료|사업|운영|신청|접수|이용|교육|검사|검진|상담|표기)?\s*(?:대상|내용|방법|기간|시간|장소|자격|조건)|처리업무|준비물|구비\s*서류|지원\s*대상|지원\s*내용|지참물|신고시\s*제출서류|만성질환\s*1차진료|(?:대상자\s*)?선정\s*기준', value):
+            elif re.fullmatch(r'(?:지원|진료|사업|운영|신청|접수|이용|교육|검사|검진|상담|표기)?\s*(?:대상|내용|방법|기간|시간|장소|자격|조건)|처리업무|준비물|구비\s*서류|지원\s*대상|지원\s*내용|지참물|신고시\s*제출서류|만성질환\s*1차진료|(?:대상자\s*)?선정\s*기준|※?\s*(?:신청|지원|선정|이용)?\s*제외\s*(?:대상|기준|품목)', value):
                 field = value.replace(' ', '')
+                field = field.lstrip('※')
                 if re.search(r'진료$', value):
                     field = '진료내용'
                 if re.search(r'선정\s*기준$',value):
@@ -181,6 +193,16 @@ def official_html_text(html: str) -> str | None:
             # Nested lists belong to their outer label. get_text joins wrapped
             # age ranges and link text without removing any source condition.
             if node.find(['table','h2','h3','h4','h5','h6']):
+                if node.name in ('li', 'dd'):
+                    leading = []
+                    for child in node.children:
+                        if isinstance(child, Tag) and (child.name in ('table','h2','h3','h4','h5','h6')
+                                or child.find(['table','h2','h3','h4','h5','h6'])):
+                            break
+                        leading.append(child.get_text(' ', strip=True) if isinstance(child, Tag) else str(child))
+                    value = ' '.join(' '.join(leading).split())
+                    if value:
+                        lines.append(field + ': ' + value if field else value)
                 continue  # Descendants are read separately with their own ownership.
             if field and not re.match(r'^[^:：]{1,30}[:：]', value):
                 value = field + ': ' + value

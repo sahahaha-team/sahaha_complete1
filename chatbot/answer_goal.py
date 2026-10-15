@@ -129,6 +129,8 @@ def answer_goal(query: str) -> str | None:
     if any(word in query for word in ("준비물", "구비", "준비해야", "필요한 서류")) or (
             re.search(r'가져가|가져갈',query) and not re.search(r'수거|가져가.*서비스|와서.*가져가',query)):
         return "documents"
+    if re.search(r'통행료|입장료|사용료', query) and re.search(r'무료|무상|면제|얼마|금액|할인|감면', query):
+        return 'cost'
     if (any(word in query for word in ("비용", "발급비", "수수료", "요금", "금액", "얼마나 지원", "얼마나 주")) or re.search(r'얼마(?!나)',query)) and not any(word in query for word in ("자주", "무료", "무상", "부담")):
         return "cost"
     if any(word in query for word in ("대상", "조건", "자격", "누가", "누구", "몇 살", "몇살")):
@@ -175,7 +177,8 @@ def requested_goals(query: str) -> tuple[str, ...]:
                  ('schedule', r'언제|주기|날짜'),
                  ('method', r'어떻게|방법')]
         extra += [('cost',r'비용|발급비|수수료|요금|사용료|얼마(?!나)|얼마나\s*(?:주|지원)|공짜|무료'),
-                  ('schedule',r'몇\s*(?:월|주|권|번|년|개월)|한\s*달|기한')]
+                  ('schedule',r'몇\s*(?:월|주|권|번|년|개월)|한\s*달|기한'),
+                  ('conditions',r'제외|금지|제한')]
         if re.search(r'(?:발급|뽑을|출력).{0,10}수|증명서도.*(?:있나요|돼요)',query) and primary == 'cost':
             goals.append('services')
         for goal, pattern in extra:

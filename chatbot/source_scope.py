@@ -14,6 +14,8 @@ FOCUS_STOP.update({'인터넷','홈페이지','웹사이트','온라인','당일
 FOCUS_STOP.update({'점심','저녁','낮','밤','증명서','클리닉'})
 FOCUS_STOP.update({'이사','전입','갱신','신용카드','계좌이체'})
 FOCUS_STOP.update({'요청','시험','응시','선정','개방','정도','임신'})
+FOCUS_STOP.update({'주소','위치','장소','연락처','전화','번호','운영시간','서류','절차',
+                   '제외','한도','권수','횟수'})
 
 
 @lru_cache(maxsize=256)
@@ -191,7 +193,27 @@ def detail_section_bounds(query: str, units: list[str]) -> tuple[int, int] | Non
                     and len(units[i])-len(units[i].lstrip('#')) <= level),len(units))
         candidates.append((hits, index, end))
     if not candidates:
-        return None
+        # A benefit may be named in the facts, while its heading says e.g.
+        # "우대차량 등록". Use the unique strongest factual occurrence and
+        # retain its owning section, including audience and exceptions.
+        # Never let one generic detail word pick a sibling field/benefit.
+        if len(terms) < 2:
+            return None
+        from chatbot.concise_answers import section_bounds
+        factual = []
+        for index, unit in enumerate(units):
+            if unit.startswith('#'):
+                continue
+            if service_scopes and not any(start <= index < end for start, end in service_scopes):
+                continue
+            hits = sum(term in compact(unit) for term in terms)
+            if hits >= 2:
+                factual.append((hits, section_bounds(units, index)))
+        if not factual:
+            return None
+        best = max(hits for hits, _bounds in factual)
+        winners = {bounds for hits, bounds in factual if hits == best}
+        return next(iter(winners)) if len(winners) == 1 else None
     best = max(c[0] for c in candidates)
     winners = [(start,end) for hits,start,end in candidates if hits == best]
     return winners[0] if len(winners) == 1 else None

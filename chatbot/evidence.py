@@ -87,12 +87,12 @@ def is_answerable_document(query: str, doc: dict) -> bool:
     title = compact(str((doc.get('metadata') or {}).get('title') or ''))
     primary_heading = next((compact(line.lstrip('# ')) for line in str(doc.get('content') or '').splitlines()
                             if line.startswith('## ')),title)
-    from chatbot.question_intent import asks_opening_hours
-    general_health_hours = ('보건소' in request and asks_opening_hours(query)
+    from chatbot.question_intent import asks_opening_hours, asks_location
+    general_health_hours = ('보건소' in request and (asks_opening_hours(query) or asks_location(query))
         and not re.search(r'검사|검진|접종|백신|임신|임산부|금연|치매|센터|진료실|물리치료|보건증|건강진단',request))
     if general_health_hours and re.search(
             r'임신|임산부|예비부모|예방접종|백신|금연|치매|센터|진료실|물리치료|영양플러스|방문건강|검진|의료기관', title+' '+primary_heading):
-        return False  # A specific program's hours are not the whole institution's hours.
+        return False  # A program's venue/hours do not establish the institution's address/hours.
     if general_health_hours and '/health/' not in path and '보건소' not in title:
         return False  # A district-office counter is not the health-center clinic.
     for district, facility in re.findall(r'([가-힣]{2,6}구)\s*(보건소|청)', query):
