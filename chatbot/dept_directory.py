@@ -27,8 +27,6 @@ MANUAL_DEPT_ALIASES = {
     "전산과": "정보통신과",
 }
 
-_DIRECTORY_REFRESH_ATTEMPTED = False
-
 
 def _compact(value: str) -> str:
     return re.sub(r"[\s\-/_.()\[\]{}]", "", value or "").strip().lower()
@@ -44,28 +42,22 @@ def _default_directory() -> dict:
 
 
 def _load_directory() -> dict:
-    global _DIRECTORY_REFRESH_ATTEMPTED
-
     if STAFF_DIRECTORY_PATH.exists():
         try:
             data = json.loads(STAFF_DIRECTORY_PATH.read_text(encoding="utf-8"))
             checked_at = datetime.fromisoformat(str(data.get("generated_at", "")).replace("Z", "+00:00"))
             if checked_at.tzinfo is None:
                 checked_at = checked_at.replace(tzinfo=timezone.utc)
-            if checked_at >= datetime.now(timezone.utc) - timedelta(days=7):
+            now = datetime.now(timezone.utc)
+            if now - timedelta(days=7) <= checked_at <= now + timedelta(minutes=5):
                 return data
-            logger.warning("Staff directory cache is older than seven days; ignoring it")
+            logger.warning("Staff directory timestamp is outside the valid seven-day window; ignoring it")
             return _default_directory()
         except Exception as exc:
             logger.warning("Failed to read staff directory cache: %s", exc)
 
-    if not _DIRECTORY_REFRESH_ATTEMPTED:
-        _DIRECTORY_REFRESH_ATTEMPTED = True
-        try:
-            return refresh_directory(STAFF_DIRECTORY_PATH)
-        except Exception as exc:
-            logger.warning("Failed to refresh staff directory cache: %s", exc)
-
+    # Chat requests only read the snapshot. The Worker owns refresh/retries;
+    # a missing file must not start a full staff crawl in a consultation.
     return _default_directory()
 
 

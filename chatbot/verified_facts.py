@@ -60,7 +60,8 @@ def _fresh(value: str | None) -> str | None:
         checked = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
         if checked.tzinfo is None:
             checked = checked.replace(tzinfo=timezone.utc)
-        if checked >= datetime.now(timezone.utc) - timedelta(days=SOURCE_DYNAMIC_MAX_AGE_DAYS):
+        now = datetime.now(timezone.utc)
+        if now - timedelta(days=SOURCE_DYNAMIC_MAX_AGE_DAYS) <= checked <= now + timedelta(minutes=5):
             return checked.date().isoformat()
     except (TypeError, ValueError):
         pass

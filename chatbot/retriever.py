@@ -363,12 +363,8 @@ class HybridRetriever:
                 originals = {row["url"]: row for row in rows}
             except Exception as exc:
                 logger.warning("출처 확인 시각 조회 실패: %s", exc)
-        dynamic = asks_opening_hours(query) or asks_location(query) or any(word in (query or "") for word in (
-            "현재", "지금", "올해", "오늘", "최신", "운영", "시간", "수수료",
-            "비용", "금액", "요금", "지원금", "기준", "대상", "기간", "언제",
-            "전화", "연락처", "담당", "주소", "위치", "얼마", "몇 시",
-        ))
-        age_days = SOURCE_DYNAMIC_MAX_AGE_DAYS if dynamic else SOURCE_MAX_AGE_DAYS
+        from chatbot.freshness import source_max_age_days
+        age_days = source_max_age_days(query)
         cutoff = datetime.now(timezone.utc) - timedelta(days=age_days)
         kept = []
         for doc in results:
@@ -391,7 +387,7 @@ class HybridRetriever:
                     verified = verified.replace(tzinfo=timezone.utc)
             except (TypeError, ValueError):
                 continue
-            if verified >= cutoff:
+            if cutoff <= verified <= datetime.now(timezone.utc) + timedelta(minutes=5):
                 doc = {**doc, "metadata": {**meta, "checked_at": verified.date().isoformat()}}
                 if meta.get('category') != 'staff_directory':
                     original = originals[meta.get('url')]

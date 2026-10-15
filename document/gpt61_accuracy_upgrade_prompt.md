@@ -21,7 +21,7 @@
 - `document/colloquial_query_report_20261013.md`
 - `evaluation/README.md`
 
-준비된 브랜치는 `codex/accuracy-upgrade-20261015`, 진단 기준 커밋은 `c24c607d478e1c7c14d51fde9901a83374df315d`다. 리모트는 `https://github.com/sahahaha-team/sahaha_complete1.git`이다. 먼저 `git status`, 브랜치, HEAD, 원격 상태를 확인해줘. 그 뒤 변경이 있다면 보존하고 충돌 없이 이어가. 강제 초기화·강제 푸시는 하지 마.
+사용자가 최종 지정한 브랜치는 **`hellokack/fix-chat-rendering`**이다. 초기 작업 브랜치 `codex/accuracy-upgrade-20261015`에서 검증한 A/B 커밋은 지정 브랜치에 반영했다. 진단 기준 커밋은 `c24c607d478e1c7c14d51fde9901a83374df315d`다. 리모트는 `https://github.com/sahahaha-team/sahaha_complete1.git`이다. 먼저 `git status`, 브랜치, HEAD, 원격 상태를 확인해줘. 그 뒤 변경이 있다면 보존하고 충돌 없이 이어가. 강제 초기화·강제 푸시는 하지 마.
 
 기존 `document/project_context.md`의 팀명 사하하하·지도교수 장재훈 정보와 `outputs/` 포스터 작업물을 보존해줘. `git add .`로 무관한 결과물을 함께 커밋하지 마. `.env` 내용·API 키·비밀번호는 출력하거나 커밋하지 마.
 

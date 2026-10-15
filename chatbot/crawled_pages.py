@@ -99,12 +99,8 @@ class CrawledPageIndex:
 
     def search(self, query: str, keywords: set[str], *, limit: int = 15, url: str | None = None) -> list[dict]:
         goal = answer_goal(query)
-        dynamic = goal in ("hours", "location", "cost", "schedule", "eligibility") or any(
-            word in query for word in ("올해", "현재", "최신", "오늘", "지금", "운영", "시간",
-                "수수료", "비용", "금액", "요금", "지원금", "기준", "대상", "기간", "언제",
-                "전화", "연락처", "담당", "주소", "위치", "얼마", "몇 시"))
-        cutoff = datetime.now(timezone.utc) - timedelta(
-            days=SOURCE_DYNAMIC_MAX_AGE_DAYS if dynamic else SOURCE_MAX_AGE_DAYS)
+        from chatbot.freshness import source_max_age_days
+        cutoff = datetime.now(timezone.utc) - timedelta(days=source_max_age_days(query))
         results = []
         if url:
             try:
@@ -123,7 +119,7 @@ class CrawledPageIndex:
                 checked = datetime.fromisoformat(str(page.get("last_checked_at")).replace("Z", "+00:00"))
                 if checked.tzinfo is None:
                     checked = checked.replace(tzinfo=timezone.utc)
-                if checked < cutoff:
+                if checked < cutoff or checked > datetime.now(timezone.utc) + timedelta(minutes=5):
                     continue
             except (TypeError, ValueError):
                 continue

@@ -118,7 +118,7 @@ def run_incremental(menu_filter: str = None):
         if cat in known_by_menu:
             known_by_menu[cat].append(u)
 
-    stats = {"new": 0, "updated": 0, "unchanged": 0, "deleted": 0}
+    stats = {"new": 0, "updated": 0, "unchanged": 0, "deleted": 0, "failed": 0}
     changed_urls: list[str] = []
     queued_job_urls: list[str] = []
     seen_urls: set[str] = set()
@@ -142,6 +142,7 @@ def run_incremental(menu_filter: str = None):
 
                 if page.transient_fail:
                     # 일시 실패는 무시 — 다음 회차 재시도. 삭제로 오판하지 않도록 seen에는 포함.
+                    stats['failed'] += 1
                     continue
 
                 if page.deleted:
@@ -180,8 +181,11 @@ def run_incremental(menu_filter: str = None):
         logger.info(
             f"증분 크롤링 완료 - "
             f"신규: {stats['new']}개 / 변경: {stats['updated']}개 / "
-            f"삭제: {stats['deleted']}개 / 변경없음: {stats['unchanged']}개"
+            f"삭제: {stats['deleted']}개 / 변경없음: {stats['unchanged']}개 / 확인실패: {stats['failed']}개"
         )
+        if stats['failed']:
+            run_status = 'failed'
+            run_error = f"공식 페이지 {stats['failed']}건 확인 실패; 기존 자료 보존"
 
         # 4. 변경된 페이지만 재처리 (신규/수정)
         if changed_urls:

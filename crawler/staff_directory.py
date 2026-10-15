@@ -11,6 +11,7 @@ import logging
 import os
 import re
 import tempfile
+import time
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -97,10 +98,13 @@ class StaffDirectoryCrawler:
             )
         return rows
 
-    def crawl(self) -> list[StaffRow]:
+    def crawl(self, *, timeout_seconds: float = 600) -> list[StaffRow]:
+        deadline = time.monotonic() + timeout_seconds
         first_html = self.fetch_page(1)
         first_soup = BeautifulSoup(first_html, "lxml")
         total_pages = self._extract_total_pages(first_soup)
+        if not 1 <= total_pages <= 500:
+            raise ValueError('직원 안내 페이지 수가 예상 범위를 벗어났습니다. 기존 파일을 유지합니다.')
         count_match = re.search(r"Total\s*([\d,]+)", first_soup.get_text(" ", strip=True))
         logger.info("Staff directory pages detected: %s", total_pages)
 
@@ -109,6 +113,8 @@ class StaffDirectoryCrawler:
             raise ValueError("직원업무안내 첫 페이지를 읽을 수 없습니다. 기존 파일을 유지합니다.")
         for page in range(2, total_pages + 1):
             try:
+                if time.monotonic() >= deadline:
+                    raise TimeoutError('직원 안내 전체 갱신 제한시간 초과')
                 html = self.fetch_page(page)
                 rows = self.parse_rows(html, page)
                 if not rows:

@@ -398,7 +398,8 @@ class MetadataFallbackTests(unittest.TestCase):
 
     def test_explicit_department_is_extracted_from_page_footer(self):
         text = "대형폐기물 처리 안내 담당자 자원순환과 (051-220-4452) 최근업데이트"
-        self.assertEqual(extract_explicit_department(text), "자원순환과")
+        with patch('chatbot.dept_directory._official_names', return_value={'자원순환과'}):
+            self.assertEqual(extract_explicit_department(text), "자원순환과")
 
 
 class IncrementalCrawlerTests(unittest.TestCase):

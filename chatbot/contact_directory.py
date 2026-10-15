@@ -458,7 +458,8 @@ def build_contact_payload(staff_data: dict) -> dict:
 def save_contact_payload(staff_data: dict, path: Path = DEFAULT_CONTACT_PATH) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = build_contact_payload(staff_data)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    from scripts.build_contact_directory import atomic_save
+    atomic_save(payload, path)
     load_contact_payload.cache_clear()
     return path
 
