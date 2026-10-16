@@ -40,7 +40,12 @@ def plan_key(query, packets, keywords, llm, prompt):
         return None
     # Hash the full original, including conditions omitted from the bounded
     # prompt. Never store residents' query text or source bodies in the cache.
-    material = {'query': query, 'model': model, 'prompt': prompt,
+    identity = getattr(llm, 'cache_identity', None)
+    if identity is None:
+        identity = (type(llm).__module__, type(llm).__name__,
+                    str(getattr(llm, 'base_url', '')), model,
+                    str(getattr(llm, 'num_ctx', '')), str(getattr(llm, 'reasoning', '')))
+    material = {'query': query, 'model': model, 'runtime': identity, 'prompt': prompt,
                 'keywords': sorted(keywords), 'packets': packets}
     return hashlib.sha256(json.dumps(material, ensure_ascii=False, sort_keys=True,
         default=lambda obj: list(obj) if isinstance(obj, (set, range)) else str(obj)).encode('utf-8')).hexdigest()

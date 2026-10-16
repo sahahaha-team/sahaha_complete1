@@ -31,7 +31,7 @@ from config import (
     CORS_ALLOWED_ORIGINS,
     RATE_LIMIT_CHAT,
 )
-from chatbot.ollama_runtime import get_ollama_status
+from chatbot.llm_runtime import get_llm_status
 from chatbot.contact_directory import contact_responder
 from chatbot.emergency_guidance import answer_emergency_question
 
@@ -131,9 +131,9 @@ async def lifespan(app: FastAPI):
     """앱 시작/종료 lifecycle hook"""
     logger.info("=== 사하구청 AI 상담사 웹 서버 시작 ===")
     logger.info("챗봇 사전 초기화 중 (임베딩/BM25 모델 로딩)...")
-    ollama = await run_in_threadpool(get_ollama_status)
+    ollama = await run_in_threadpool(get_llm_status)
     if ollama["model_ready"]:
-        logger.info(f"Ollama 준비 완료: {ollama['model']}")
+        logger.info(f"{ollama['provider']} 준비 완료: {ollama['model']}")
     else:
         logger.warning(ollama["message"])
     try:
@@ -241,19 +241,20 @@ async def system_dashboard(request: Request):
 
 @app.get("/api/health")
 async def health():
-    """웹·Ollama 준비 상태를 운영 점검용으로 제공한다."""
-    ollama = await run_in_threadpool(get_ollama_status)
+    """선택한 모델 서버의 준비 상태. vLLM은 Ollama에 접속하지 않는다."""
+    ollama = await run_in_threadpool(get_llm_status)
     return {
         "status": "ok" if ollama["model_ready"] else "degraded",
-        "llm_provider": "ollama",
-        "ollama": ollama,
+        "llm_provider": ollama['provider'],
+        "llm": ollama,
+        **({"ollama": ollama} if ollama['provider'] == 'ollama' else {}),
     }
 
 
 @app.get("/api/system-status")
 async def system_status():
     """콘텐츠를 노출하지 않고 구성요소별 상태와 건수만 반환한다."""
-    ollama = await run_in_threadpool(get_ollama_status)
+    ollama = await run_in_threadpool(get_llm_status)
     try:
         db = get_db()
         vs = get_vector_store()
@@ -270,7 +271,9 @@ async def system_status():
     return {
         "status": "ok" if ollama["model_ready"] and search_ready and queue_stats["available"] else "degraded",
         "web": {"ready": True},
-        "ollama": ollama,
+        "llm_provider": ollama['provider'],
+        "llm": ollama,
+        **({"ollama": ollama} if ollama['provider'] == 'ollama' else {}),
         "search": {"ready": search_ready, **vector_stats},
         "queue": queue_stats,
         "latest_crawl": latest_crawl,

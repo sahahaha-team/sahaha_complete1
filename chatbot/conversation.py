@@ -1,6 +1,6 @@
 """
 멀티턴 대화 처리 모듈
-- 로컬 Ollama 기반 답변 생성
+- 설정된 Ollama/vLLM 모델의 공식 근거 선택
 - 문맥 유지 (이전 대화 기억)
 - 모호한 질문 시 역질문으로 의도 파악
 - 출처 명시 답변
@@ -13,15 +13,10 @@ import threading
 import logging
 import time
 from collections import OrderedDict
-try:
-    from langchain_ollama import ChatOllama
-except ImportError:  # 구버전 환경 호환
-    from langchain_community.chat_models import ChatOllama
+from chatbot.llm_runtime import create_llm
 from langchain_core.messages import HumanMessage, AIMessage
 
 from config import (
-    OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT, OLLAMA_NUM_CTX,
-    OLLAMA_KEEP_ALIVE, CHATBOT_TEMPERATURE, CHATBOT_MAX_TOKENS,
     MAX_CONVERSATION_HISTORY, SOURCE_ONLY_ANSWERS,
     CONFIDENCE_MIN_SIMILARITY, LOW_CONFIDENCE_MESSAGE, PERSIST_CONVERSATIONS,
 )
@@ -115,15 +110,7 @@ def enforce_official_contact(answer: str, user_message: str, sources: list[dict]
 
 class ChatBot:
     def __init__(self):
-        self.llm = ChatOllama(
-            base_url=OLLAMA_BASE_URL,
-            model=OLLAMA_MODEL,
-            temperature=CHATBOT_TEMPERATURE,
-            num_predict=CHATBOT_MAX_TOKENS,
-            num_ctx=OLLAMA_NUM_CTX,
-            client_kwargs={"timeout": OLLAMA_TIMEOUT},
-            keep_alive=OLLAMA_KEEP_ALIVE,
-        )
+        self.llm = create_llm()
         self.retriever = HybridRetriever()
         # 기본은 개인정보 최소수집을 위해 프로세스 메모리에서만 문맥을 유지한다.
         # 영구 저장을 명시적으로 켠 경우에만 service role로 DB에 기록한다.

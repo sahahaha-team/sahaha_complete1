@@ -19,7 +19,7 @@
 
     <section class="system-grid" aria-live="polite">
       <article class="system-card"><span>웹 API</span><strong id="webState">확인 중</strong><small>FastAPI 상담 서버</small></article>
-      <article class="system-card"><span>로컬 Ollama</span><strong id="ollamaState">확인 중</strong><small id="ollamaModel">-</small></article>
+        <article class="system-card"><span id="llmLabel">상담 모델</span><strong id="ollamaState">확인 중</strong><small id="ollamaModel">-</small></article>
       <article class="system-card"><span>검색 인덱스</span><strong id="searchState">확인 중</strong><small id="vectorCount">-</small></article>
       <article class="system-card"><span>처리 작업 큐</span><strong id="queueState">확인 중</strong><small id="queueCount">-</small></article>
     </section>
@@ -27,7 +27,7 @@
     <section class="system-panel">
       <div><span>최근 증분 크롤링</span><strong id="crawlState">기록 없음</strong></div>
       <div><span>개인정보 정책</span><strong>대화 영구 저장 안 함</strong></div>
-      <div><span>구성</span><strong>Web · Worker · Ollama · Supabase</strong></div>
+        <div><span>구성</span><strong>Web · Worker · LLM · Supabase</strong></div>
     </section>
     <p id="statusMessage" class="system-message">상태 정보를 불러오는 중입니다.</p>
   </main>
@@ -41,8 +41,10 @@
       .then(response => response.json())
       .then(data => {
         setState('webState', data.web.ready);
-        setState('ollamaState', data.ollama.model_ready, '연결됨', '설치·모델 필요');
-        document.getElementById('ollamaModel').textContent = data.ollama.model;
+          const llm = data.llm || data.ollama;
+          document.getElementById('llmLabel').textContent = llm.provider === 'vllm' ? '내부망 vLLM' : '로컬 Ollama';
+          setState('ollamaState', llm.model_ready, '연결됨', '연결·모델 확인 필요');
+          document.getElementById('ollamaModel').textContent = llm.model;
         setState('searchState', data.search.ready);
         document.getElementById('vectorCount').textContent = `${data.search.total_vectors || 0}개 벡터`;
         setState('queueState', data.queue.available, '사용 가능', 'SQL 적용 필요');

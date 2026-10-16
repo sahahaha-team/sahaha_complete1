@@ -22,10 +22,14 @@ def get_ollama_status(timeout: float = 2.0) -> dict:
         if ":" not in OLLAMA_MODEL:
             expected.add(f"{OLLAMA_MODEL}:latest")
         ready = bool(names & expected)
+        selected = next((item for item in payload.get('models', [])
+                         if (item.get('name') or item.get('model')) in expected), {})
         return {
             "available": True,
             "model_ready": ready,
             "model": OLLAMA_MODEL,
+            "model_digest": selected.get('digest'),
+            "model_details": selected.get('details') or {},
             "base_url": base_url,
             "installed_models": sorted(name for name in names if name),
             "message": "ready" if ready else f"ollama pull {OLLAMA_MODEL} 실행 필요",

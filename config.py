@@ -26,12 +26,20 @@ MAX_RETRIES = 3
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")  # anon/public key
 
-# ===== LLM 설정 (로컬 Ollama) =====
+# ===== LLM: 로컬 Ollama / 내부망 vLLM =====
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").strip().lower()
+if LLM_PROVIDER not in ("ollama", "vllm"):
+    raise ValueError("LLM_PROVIDER는 ollama 또는 vllm이어야 합니다")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma2:2b")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e4b")
 OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))
 OLLAMA_NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "4096"))
 OLLAMA_KEEP_ALIVE = os.getenv("OLLAMA_KEEP_ALIVE", "30m")
+VLLM_BASE_URL = os.getenv("VLLM_BASE_URL", "")
+# 실제 /v1/models에 표시된 served model ID를 설정한다. 별칭을 추정하지 않는다.
+VLLM_MODEL = os.getenv("VLLM_MODEL", "")
+VLLM_API_KEY = os.getenv("VLLM_API_KEY", "")
+VLLM_TIMEOUT = float(os.getenv("VLLM_TIMEOUT", "120"))
 
 # ===== 청크 설정 =====
 CHUNK_SIZE = 500
