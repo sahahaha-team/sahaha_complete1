@@ -10,7 +10,7 @@ import re
 from chatbot.answer_goal import answer_goal, requested_goals
 from chatbot.answer_completion import source_unit_complete, QUALIFICATION
 from chatbot.concise_answers import _source_units, named_section_bounds, topic_section_bounds, section_bounds, MAX_BRIEF_LENGTH
-from chatbot.query_subject import compact, SERVICE_NAMES
+from chatbot.query_subject import compact, SERVICE_NAMES, service_names
 from chatbot.question_intent import has_opening_hours, has_location_unit
 from chatbot.source_scope import focus_units, focus_terms, detail_section_bounds, normalize_plain_source
 
@@ -153,6 +153,35 @@ def explicit_table_answer(query: str, units: list[str], title: str) -> str | Non
         if len(labels) >= 2 and all(any(name in compact(label) for label in labels) for name in subjects):
             return '**' + title + '**\n' + '\n'.join('- ' + label for label in labels)
     rows = [u for u in units if ' — ' in u and ':' in u]
+    # Category membership and its rule may occupy separate source sentences.
+    # Require an explicit item INSIDE the category's balanced parentheses;
+    # an adjacent category or an unlisted item cannot inherit this rule.
+    if (answer_goal(query) == 'conditions' and re.search(r'봉투|배출|버리|넣',query)
+            and not re.search(r'깨|파손|훼손|고장|누액|부푼|터진|분해|오염',query)):
+        for unit in units:
+            for sentence in re.split(r'(?<=[.!?])\s+',unit):
+                rule = re.match(r'([가-힣]{2,16})(?:은|는)\s+.*(?:담지\s*않|혼합.*금지)',sentence)
+                if not rule or not source_unit_complete(sentence):
+                    continue
+                category = rule.group(1)
+                for row in rows:
+                    start = re.search(re.escape(category)+r'\s*\(',row)
+                    if not start:
+                        continue
+                    depth, end = 1, start.end()
+                    while end < len(row) and depth:
+                        depth += (row[end] == '(') - (row[end] == ')')
+                        end += 1
+                    if depth:
+                        continue
+                    members = row[start.end():end-1]
+                    item_details = {d for d in details if d not in compact(sentence)}
+                    item_details |= service_names(query) - {'쓰레기'}
+                    proof = row + '\n- ' + sentence
+                    if (item_details and all(d in compact(members) for d in item_details)
+                            and all(d in compact(proof) for d in details)
+                            and len(proof) <= MAX_BRIEF_LENGTH - 3):
+                        return '- ' + proof
     # Boolean cells are meaningful only under an explicit eligibility caption.
     if re.search(r'면제|가능|대상',query) and re.search(r'면제|대상',title+' '.join(units[:2])):
         marks = [u for u in rows if re.search(r':\s*(?:○|◯|X|×)\s*$',u)

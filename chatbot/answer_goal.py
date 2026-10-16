@@ -175,7 +175,7 @@ def answer_goal(query: str) -> str | None:
         return 'services'
     if "받을 수" in query:
         return "eligibility"
-    if re.search(r'넣어도|버려도|버리나요|섞어도|해도돼|해도되|할수없|제외되|제외품목',compact_query):
+    if re.search(r'넣어도|버려도|버리나요|섞어도|(?:넣으면|버리면|섞으면)(?:돼|되)|해도돼|해도되|할수없|제외되|제외품목',compact_query):
         return 'conditions'
     if re.search(r'해도|돼요|되나요|받나요|같나요|같아요|포함|가능|있어요|이용해|누구를|어디에쓰',compact_query):
         return 'services'

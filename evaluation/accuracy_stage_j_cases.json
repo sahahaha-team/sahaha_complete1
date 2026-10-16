@@ -1,0 +1,9 @@
+{
+  "protocol": "J development probes: explicit recycling membership and unverified detail controls, not independent validation.",
+  "families": [],
+  "scenarios": [
+    {"id":"F016", "turns":["헌 형광등을 종량제봉투에 넣으면 되나요?"], "criterion":"공식 분류표의 폐형광등 포함과 재활용품 봉투 혼합 금지 규칙을 같은 업무에서 연결한다."},
+    {"id":"J_wording", "turns":["폐건전지를 종량제봉투에 넣어도 되나요?"], "criterion":"분류표의 실제 품목과 봉투 규칙을 원문으로 안내한다."},
+    {"id":"J_unknown", "turns":["깨진 형광등도 종량제봉투에 넣으면 되나요?"], "criterion":"파손 조건이 없으면 일반 분류만으로 해당 조건을 확정하지 않는다."}
+  ]
+}
