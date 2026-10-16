@@ -61,6 +61,13 @@ def focused_section(query: str, url: str, text: str) -> str | None:
             return ""
         return start + body.rsplit(start, 1)[1]
     if "mId=0104020000" in url and "여권" in compact:
+        if answer_goal(query) == 'conditions' and re.search(r'대리|대신',compact) and re.search(r'신청|발급',compact):
+            from chatbot.passport_documents import applicant_age
+            if applicant_age(query) == 'adult':
+                # Adult application and minor application are different scopes.
+                major = body.split('\n신규발급',1)[0]
+                rule = next((line for line in major.splitlines() if re.search(r'본인.{0,8}직접.*방문신청',line)),None)
+                return '여권 방문신청 원칙\n' + rule if rule else ''
         if any(word in compact for word in ('미성년', '아이', '18세미만', '자녀')) and any(word in compact for word in ('서류', '준비')):
             start, end = '만18세 미만 미성년자의 여권 신청\n', '\n긴급여권'
             if start not in body or end not in body:
@@ -83,7 +90,8 @@ def focused_section(query: str, url: str, text: str) -> str | None:
                 return ""
             return "재발급\n" + body.split(start, 1)[1].split(end, 1)[0]
         if (any(word in compact for word in ("새로", "처음", "신규"))
-                and any(word in compact for word in ("준비", "서류"))
+                and (any(word in compact for word in ("준비", "서류")) or
+                     (answer_goal(query) == 'conditions' and '신분증' in compact))
                 and not any(word in compact for word in ("미성년", "아이", "긴급", "관용", "재발급"))):
             start, end = "신규발급\n일반여권\n", "\n만18세 미만 미성년자의 여권 신청"
             if start not in body or end not in body:

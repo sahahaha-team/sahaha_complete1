@@ -219,6 +219,9 @@ def build_clarification(user_message: str) -> dict | None:
     # 돌/일반, 1/2인용, 매트리스 단독 여부를 구분할 수 없어 최고 금액을
     # 단정하기 쉽다. 검색/LLM 전에 필요한 규격을 먼저 확인한다.
     asks_fee = any(keyword in compact for keyword in ("수수료", "비용", "가격", "얼마"))
+    if asks_fee and re.search(r'소파|쇼파',compact) and not re.search(r'\d+인용|스툴|카우치',compact):
+        return clarification_question('소파 수수료를 확인할 수 있도록 **몇 인용인지 또는 크기**를 알려주세요.',
+            [], ['1인용','2인용','3인용','4인용','스툴','카우치'])
     mentions_bed = "침대" in compact or "매트리스" in compact
     has_bed_type = any(keyword in compact for keyword in ("돌침대", "일반", "매트리스", "라텍스"))
     if asks_fee and mentions_bed and not has_bed_type:

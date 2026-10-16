@@ -8,12 +8,19 @@ import argparse
 import hashlib
 import json
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def save_report(path, report):
+    temporary = path.with_name(path.name + '.tmp')
+    temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    temporary.replace(path)
 
 
 def code_hashes():
@@ -61,6 +68,7 @@ def main():
     report = {'started_at': datetime.now(timezone.utc).isoformat(),
               'commit': subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'case_sha256': hashlib.sha256(raw).hexdigest(), 'code_hashes': hashes,
+              'health_before': ready.json(), 'python': sys.version,
               'split': args.split, 'protocol': cases['protocol'], 'records': []}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     next_start = 0
@@ -93,10 +101,10 @@ def main():
                           'attempts': attempts, 'response': body}
                 report['records'].append(record)
                 report['code_unchanged'] = hashes == code_hashes()
-                args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+                save_report(args.output, report)
                 print(json.dumps({k: record[k] for k in ('id','turn','seconds','status')}, ensure_ascii=False), flush=True)
     report['finished_at'] = datetime.now(timezone.utc).isoformat()
-    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    save_report(args.output, report)
 
 
 if __name__ == '__main__':

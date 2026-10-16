@@ -17,7 +17,7 @@ from chatbot.source_scope import focus_units, focus_terms, detail_section_bounds
 FIELD = {
     'medical_details': r'(?:약품명|약명|복용량|용량|복용법)\s*[:：]|(?:복용|투여).{0,50}\d+\s*(?:mg|㎎|ml|㎖|정|회)',
     'conditions': r'제외|불가|안되는|안 되는|불필요|금지|제한|금식|자동가입|보장내용|용도\s*[:：]|지원대상|선정기준|소득인정액|지급금액|신청기간|예약|허\s*가\s*대\s*상|신\s*고\s*대\s*상|등록.*지원|단[,， ]|다만',
-    'specifications': r'규격|크기|가로|세로|\d+\s*(?:cm|㎝|매)',
+    'specifications': r'규격|크기|(?<![가-힣])(?:가로|세로)(?![가-힣])|\d+\s*(?:cm|㎝|매)',
     'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
     'method': r'방법\s*[:：]|절차\s*[:：]|흐름도\s*[:：]|제출처\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
@@ -35,6 +35,23 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return False
     request = compact(query)
     scoped = context + ' ' + unit
+    if goal == 'conditions' and re.search(r'대리|대신',request) and re.search(r'신청|발급|접수',request):
+        if '여권' in request:
+            from chatbot.passport_documents import applicant_age
+            if applicant_age(query) == 'adult':
+                return bool(re.search(r'본인.{0,8}직접.*방문신청',unit))
+        return bool(re.search(r'대리|위임|법정대리|친권자|본인.{0,8}직접',unit))
+    if goal == 'conditions' and re.search(r'신분증|증명서',request) and re.search(r'원본|사본|휴대폰사진|사진이면|사진으로',request):
+        return bool(re.search(r'(?:신분증|증명서).{0,35}(?:사본|원본)|(?:사본|원본).{0,35}(?:신분증|증명서)',unit)
+                    and re.search(r'가능|불가|필수|인정|허용|제출|지참',unit))
+    if goal == 'conditions' and re.search(r'현금|계좌|통장',request) and re.search(r'지급|들어|받|나오',request):
+        return bool(re.search(r'지급|바우처|국민행복카드|포인트|현금|계좌|통장',unit))
+    if goal == 'conditions' and re.search(r'외국인',request):
+        return bool(re.search(r'외국인|국적|내국인',unit))
+    if goal == 'conditions' and re.search(r'전부사주|모두사주',request):
+        return bool(re.search(r'선정제외|제외기준|제외대상',unit))
+    if goal == 'eligibility' and re.search(r'\d+(?:세|살)|나이|연령',request) and re.search(r'심사기준.*\d+\s*세\s*(?:이상|미만|이하).*확인',unit):
+        return True
     if goal == 'conditions' and re.search(r'제외|불가|금지', request):
         # "제외도서 확인" is an instruction to look up rules, not those rules.
         return bool(re.search(r'^(?:선정|신청|지원|이용)?\s*제외\s*(?:대상|기준|품목)\s*[:：]', unit)
@@ -68,7 +85,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return bool(re.search(r'거래금액.*(?:보증금|월차임)|환산',unit))
     if goal == 'cost' and re.search(r'깎|감경|할인|감면',request):
         return bool(re.search(r'감경|할인|감면|자진납부',scoped)) and bool(re.search(FIELD['cost'],unit))
-    if goal == 'cost' and re.search(r'기부.*까지만|기부한도|연간한도',request):
+    if goal == 'cost' and re.search(r'기부.*까지만|기부한도|연간한도|상한',request):
         return bool(re.search(r'연간|개인별.*최대',unit))
     if goal == 'hours':
         if re.search(r'주말|공휴일|토요일|일요일',query) and not re.search(r'주말|공휴일|토요일|일요일',unit):
@@ -78,6 +95,8 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return has_location_unit(unit) or bool(re.search(r'(?:신고처|접수처|기관명|소재지|시설명|주\s*소|위\s*치)\s*[:：]', unit))
     if goal == 'eligibility' and re.match(r'(?:지원대상|선정기준|이용대상|신청자격)\s*—',unit):
         return True
+    if goal == 'conditions' and re.search(r'주소지|거주|사는사람',request) and re.search(r'기부',request):
+        return bool(re.search(r'주소지|거주',unit) and re.search(r'제외|불가|제한|가능',unit))
     if goal == 'conditions' and re.search(FIELD['eligibility'],unit):
         return True
     return bool(goal and re.search(FIELD.get(goal, r'(?!)'), unit))
@@ -355,7 +374,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             if field == 'cost' and re.search(r'깎|감경|할인|감면',query):
                 if not re.search(r'깎|감경|할인|감면',section_heading+' '+unit):
                     continue
-            if field == 'cost' and re.search(r'까지만|한도|연간',query):
+            if field == 'cost' and re.search(r'까지만|한도|연간|상한',query):
                 score += 20 if re.search(r'연간|한도|최대',unit) else -10
             if field == 'cost' and re.fullmatch(r'계|합계',unit.split(':',1)[0].split('/')[-1].strip()):
                 score += 15
@@ -486,6 +505,13 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             if (QUALIFICATION.match(u) and any(p in compact(u) for p in products)
                     and re.search(r'제외|않음|불가|유상|부담',u) and source_unit_complete(u)):
                 selected.append(u)
+    # The same prerequisite/exception expansion used by model and fallback
+    # readers applies here too. A schedule/benefit cannot drop its own target.
+    from chatbot.concise_answers import condition_indices
+    indices = [units.index(u) for u in selected if u in units]
+    for i in condition_indices(units, indices):
+        if units[i] not in selected:
+            selected.append(units[i])
     regions = {section_bounds(units,units.index(u)) for u in selected if u in units}
     if len(regions) == 1:
         start,end = regions.pop()
@@ -540,8 +566,14 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         answer += '\n제외 기준 중 일부입니다. 전체 목록은 아래 공식 원문을 확인해 주세요.'
     unknown_details = {t for t in details if t not in compact(title) and
                        not any(t in compact(u) for u in units)}
-    unresolved_detail = bool(unknown_details and (goal == 'cost' or (goal == 'conditions' and
-        not any(t in compact(' '.join(selected)) for t in details))))
+    unresolved_detail = bool(unknown_details and goal in ('cost','conditions','specifications'))
+    if goal in ('conditions','specifications') and unresolved_detail:
+        # A shared topic word (e.g. 음식물) cannot prove an unseen detail
+        # such as 라면 국물. Keep the uncertainty explicit across all readers.
+        from chatbot.source_scope import unanswered_details
+        unresolved_detail = bool(unanswered_details(query,' '.join(selected),title,keywords))
+        if unresolved_detail:
+            return None
     if unresolved_detail:
         answer += '\n문의하신 세부 항목·포함 범위는 이 자료에서 확인되지 않았습니다.'
     if missing:

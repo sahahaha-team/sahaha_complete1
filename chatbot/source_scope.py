@@ -16,6 +16,7 @@ FOCUS_STOP.update({'이사','전입','갱신','신용카드','계좌이체'})
 FOCUS_STOP.update({'요청','시험','응시','선정','개방','정도','임신'})
 FOCUS_STOP.update({'주소','위치','장소','연락처','전화','번호','운영시간','서류','절차',
                    '제외','한도','권수','횟수'})
+FOCUS_STOP.update({'부탁','상한'})
 
 
 @lru_cache(maxsize=256)
@@ -41,6 +42,24 @@ def focus_terms(query: str) -> frozenset[str]:
         words = set(re.findall(r'[가-힣a-zA-Z]{2,}', text))
     return frozenset(w for w in words if len(w) >= 2 and w not in FOCUS_STOP
                      and (not primary or w not in compact(primary)))
+
+
+def unanswered_details(query: str, selected: str, title: str, keywords: set[str]) -> frozenset[str]:
+    """A service match alone cannot establish a requested specific item.
+
+    Semantic ranking may bridge the service's wording. It does not authorize
+    silently discarding a detail absent from the chosen source facts.
+    """
+    details = {t for t in focus_terms(query) if t not in compact(title)
+               and not any(t in k or k in t for k in keywords)}
+    value = compact(selected)
+    if re.search(r'바우처|국민행복카드|포인트|현금|계좌|통장',value):
+        details -= {'현금','계좌','통장'}  # Payment alternatives answer the same field.
+    if re.search(r'본인.{0,8}직접|대리|위임',value):
+        details.discard('대리')
+    if '여권' in compact(query) and re.search(r'\d+(?:세|살)',compact(query)):
+        details -= {'대학','학생','대학생','고등학생','초등학생'}  # Explicit legal age is retained separately.
+    return frozenset(t for t in details if t not in compact(selected))
 
 
 def normalize_plain_source(body: str, title: str) -> str:

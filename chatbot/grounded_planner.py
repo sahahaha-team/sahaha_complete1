@@ -102,6 +102,11 @@ def eligible_ids(query: str, packet: dict, keywords: set[str]) -> set[int]:
     valid = {i for i, unit in enumerate(units) if source_unit_complete(unit) and not QUALIFICATION.match(unit) and
              (matches_goal(query, unit) or SCOPE.match(unit))}
     valid = {i for i in valid if units[i] in owning_units}
+    if answer_goal(query) in ('conditions','specifications'):
+        from chatbot.source_scope import unanswered_details
+        title = str((packet['document'].get('metadata') or {}).get('title') or '')
+        if unanswered_details(query,' '.join(units),title,keywords):
+            return set()  # No selection can prove a detail absent from every unit.
     if answer_goal(query) == 'hours' and not re.search(r'야간|저녁|밤|일과시간외',query):
         valid = {i for i in valid if not re.search(r'야간|일과시간 외|18:30\s*[~∼]',
                  ' '.join(units[max(0,i-2):i+1]))}
@@ -254,9 +259,13 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
     details = {t for t in focus_terms(query) if t not in compact(title)
                and not any(t in k or k in t for k in keywords)}
     from chatbot.semantic_ranker import has_semantic_support
-    if details and not has_semantic_support(query,packet['document']) and any(t in compact(packet['body']) for t in details) and not any(
+    if details and any(t in compact(packet['body']) for t in details) and not any(
             t in compact(' '.join(selected) + ' ' + scope_heading) for t in details):
         return None
+    if answer_goal(query) in ('conditions','specifications'):
+        from chatbot.source_scope import unanswered_details
+        if unanswered_details(query,' '.join(selected)+' '+scope_heading,str(title),keywords):
+            return None
     if any(not source_unit_complete(unit) for unit in selected):
         return None
     audience = next((unit for unit in selected if SCOPE.match(unit)), None)

@@ -1,5 +1,5 @@
 {
-  "protocol": "Frozen on 2026-10-15 before observing this set's API answers. New questions independent of A-D tuning, deliberately difficult and not a random resident sample. Grade the requested fact, ownership, exceptions, source and freshness manually; no expected answer is inserted into production. If a question informs another code fix, relabel it development and obtain replacement final questions.",
+  "protocol": "Originally frozen on 2026-10-15 before observing API answers at b16dcf2. The 36-question first run informed upgrade E on 2026-10-16; the whole set is now DEVELOPMENT, never an untouched final holdout. Deliberately difficult, not a random resident sample. Grade requested facts, ownership, exceptions, source and freshness manually; no expected answer enters production. New untouched questions are defined separately after E verification.",
   "families": [],
   "scenarios": [
     {"id":"F001","turns":["만 18세가 된 대학생 여권은 부모님이 대신 신청해도 돼요?"],"criterion":"만18세와 미성년자 구분; 본인신청 원칙과 확인된 대리 예외만; 불충분하면 필요한 조건 질문"},

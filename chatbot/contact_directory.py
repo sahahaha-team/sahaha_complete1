@@ -199,6 +199,8 @@ class ContactDirectoryResponder:
 
     def _answer(self, session_id: str, query: str, contextual=False) -> dict:
         text = canonical(query)
+        if re.search(r'팩스|fax',text):
+            return response('현재 공식 연락처 파일에서는 **팩스번호를 확인할 수 없습니다.** 직통전화와 같은 번호라고 안내할 수 없습니다.', reason='fax_not_verified')
         if re.search(r"^(?:(?:사하구청|사하구|구청))?대표(?:전화|번호)", text):
             phone = self.data.get("organization_phone", "")
             if phone and fresh(self.data.get("representative_checked_at")):
@@ -298,6 +300,13 @@ class ContactDirectoryResponder:
             if not all(term in row["text"] or term in row["role"] or term in canonical(row['department'])
                        or (inspection and term == '식품접객' and '식품' in row['text']) for term in terms):
                 continue
+            # A named technology/service relation must be present together.
+            # AI in a training bullet plus counselling in another bullet does
+            # not establish responsibility for an AI counselling service.
+            if 'ai' in terms and len(terms) > 1:
+                duties = re.split(r'[\n○•;]+',row['duties'])
+                if not any(all(term in canonical(duty+' '+row['title']) for term in terms) for duty in duties):
+                    continue
             if inspection and not re.search(r'지도점검|행정처분|위생지도|식중독',row['text']):
                 continue
             score = sum(math.log(1 + len(self.rows) / (1 + self.frequencies[term])) for term in terms)

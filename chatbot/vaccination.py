@@ -52,7 +52,7 @@ def vaccine_place_page(query: str) -> str | None:
 
 
 def vaccination_section(query: str, url: str, body: str) -> str | None:
-    if not (asks_location(query) and is_vaccination_query(query)
+    if not (is_vaccination_query(query)
             and any(mid in url for mid in ('mId=0203020000', 'mId=0203020100'))):
         return None
     kind = vaccine_kind(query)

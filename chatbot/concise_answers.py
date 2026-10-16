@@ -386,6 +386,11 @@ def _extract_brief(query: str, lines: list[str], keywords: set[str], title: str 
                     chosen.append(unit)
         if any(not source_unit_complete(unit) for unit in chosen):
             continue
+        if goal in ('conditions','specifications'):
+            from chatbot.source_scope import unanswered_details
+            from chatbot.source_hierarchy import heading_path
+            if unanswered_details(query,' '.join(chosen)+' '+heading_path(units,start),title,keywords):
+                continue
         # Validate the actual chosen facts and their owning heading. A topic
         # elsewhere on the same page cannot validate an unrelated fallback.
         from chatbot.source_hierarchy import heading_path
@@ -418,7 +423,8 @@ def scope_question(query: str, body: str) -> dict:
     choices = [label for label, words in fields if any(word in body for word in words)][:3]
     # A clear request must not be sent back to choose the same field again.
     goal = answer_goal(query)
-    if goal and any(line.startswith('#') for line in body.splitlines()):
+    if goal and (any(line.startswith('#') for line in body.splitlines())
+                 or goal in ('conditions','specifications','medical_details','necessity')):
         label = {'hours':'운영시간','location':'이용 장소','eligibility':'대상 조건',
                  'documents':'준비 서류','cost':'비용·감면 조건','schedule':'일정',
                  'method':'이용 방법','services':'이용 가능한 서비스','definition':'제도 설명',

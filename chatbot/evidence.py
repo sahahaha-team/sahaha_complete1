@@ -22,6 +22,11 @@ def is_time_compatible(query: str, doc: dict) -> bool:
     """Historical reports cannot establish today's service rules or 2026 counts."""
     meta = doc.get("metadata") or {}
     requested_years = {int(year) for year in re.findall(r"(20\d{2})\s*년", query or "")}
+    # A quoted old rule followed by "지금도 그대로?" asks for today's rule.
+    # Explicit historical statistics/comparisons still retain their years.
+    if (re.search(r'지금|현재|아직', query or '') and re.search(r'라던|이전|예전|그대로', query or '')
+            and not re.search(r'통계|건수|보고서|비교|추이', query or '')):
+        requested_years = set()
     content = str(doc.get("content") or "")
     if meta.get("source_type") != "official_report":
         # An explicitly requested year must appear in the factual body,

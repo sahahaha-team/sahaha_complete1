@@ -46,6 +46,28 @@ def answer_goal(query: str) -> str | None:
         return 'precautions'
     if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량', compact_query):
         return 'medical_details'
+    # The requested field wins over an incidental action such as 신청/버리는.
+    # Applicant conditions and identity-copy questions are not application steps.
+    if re.search(r'신분증|증명서', compact_query) and re.search(r'원본|사본|휴대폰사진|사진이면|사진으로', compact_query):
+        return 'conditions'
+    if re.search(r'대리|대신', compact_query) and re.search(r'신청|발급|접수', compact_query) and re.search(r'해도|할수|가능|되나|돼', compact_query) and not re.search(r'방법|절차|서류|준비|가져', compact_query):
+        return 'conditions'
+    if re.search(r'(?:몇|만\d+|\d+)(?:세|살)(?:부터|이상|미만|이하)|몇개월부터|나이|연령', compact_query) and not re.search(r'서류|준비|사진|수수료|요금|비용|처리기간', compact_query):
+        return 'eligibility'
+    if re.search(r'현금|계좌|통장', compact_query) and re.search(r'지급|들어|받|나오', compact_query):
+        return 'conditions'
+    if re.search(r'뭐가필요|무엇이필요|뭘챙|무엇을챙', compact_query):
+        return 'documents'
+    if re.search(r'수수료|요금|비용|가격|상한', compact_query) and re.search(r'얼마|상한|최대|한도|그대로', compact_query):
+        return 'cost'
+    if re.search(r'어느달|몇개월|한번만|생일.*달|신청.*마감', compact_query):
+        return 'schedule'
+    if re.search(r'신청할수|기부할수|지원받을수|해도돼|해도되|전부사주|모두사주', compact_query) and not re.search(r'어떻게|방법|절차|어디|언제|몇|누가|누구|대상|서류|준비', compact_query):
+        return 'conditions'
+    if re.search(r'보조제|제공품|지원품목', compact_query) and re.search(r'지원|제공|주나|주요', compact_query):
+        return 'services'
+    if re.search(r'어디로해|어디서해', compact_query) and re.search(r'신청|접수|예약|수거', compact_query):
+        return 'method'
     if re.search(r'(?:지도|노선도|현황도|공식페이지|공식사이트).*(?:볼수|보려|보고싶|보여|알려|확인|조회)|(?:볼수|확인|조회).*(?:지도|노선도|현황도|공식페이지|공식사이트)', compact_query):
         return 'reference'
     if re.search(r'예약.*(?:해야|필수|먼저)|(?:먼저|사전).*예약', compact_query):
@@ -172,7 +194,7 @@ def requested_goals(query: str) -> tuple[str, ...]:
     if asks_opening_hours(query) and 'hours' not in goals:
         goals.append('hours')
     if (asks_location(query) and 'location' not in goals
-            and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출)',query.replace(' ',''))):
+            and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출)|(?:신청|접수|예약).{0,12}어디(?:로|서)해',query.replace(' ',''))):
         goals.append('location')
     if primary != 'reference':
         extra = [('documents', r'(?:준비|구비|필요(?:한)?).*서류|서류.*(?:필요|무엇|뭐|지참)|준비물|가져가|가져갈|지참'),
@@ -189,6 +211,7 @@ def requested_goals(query: str) -> tuple[str, ...]:
                     and not (goal == 'documents' and re.search(r'수거|가져가.*서비스|와서.*가져가',query))
                     and not (primary in ('precautions','hours','location','specifications','conditions') and goal == 'method')
                     and not (primary == 'method' and goal == 'cost' and re.search(r'계산|거래금액|환산',query) and not '얼마' in query)
-                    and not (primary == 'conditions' and goal == 'cost' and not re.search(r'얼마|비용은|수수료는',query))):
+                    and not (primary == 'conditions' and goal == 'cost' and not re.search(r'얼마|비용은|수수료는',query))
+                    and not (primary == 'cost' and goal == 'method' and not re.search(r'방법|절차|어떻게|어디',query))):
                 goals.append(goal)
     return tuple(goals)
