@@ -41,6 +41,11 @@ from config import (
 logger = logging.getLogger(__name__)
 
 
+class FreshResults(list):
+    """Request-local verification outcome; never shared across chat threads."""
+    verification_failed = False
+
+
 def _normalize_scores(scored_items: list[tuple[str, float]]) -> dict[str, float]:
     """min-max 정규화로 점수를 [0, 1] 범위로 변환"""
     if not scored_items:
@@ -355,6 +360,7 @@ class HybridRetriever:
                 if (doc.get("metadata") or {}).get("source_type") != "official_report"
                 and (doc.get("metadata") or {}).get("category") != "staff_directory"]
         originals = {}
+        verification_failed = False
         if urls:
             try:
                 from database_db.raw_pages import read_raw_pages
@@ -363,10 +369,12 @@ class HybridRetriever:
                 originals = {row["url"]: row for row in rows}
             except Exception as exc:
                 logger.warning("출처 확인 시각 조회 실패: %s", exc)
+                verification_failed = True
         from chatbot.freshness import source_max_age_days
         age_days = source_max_age_days(query)
         cutoff = datetime.now(timezone.utc) - timedelta(days=age_days)
-        kept = []
+        kept = FreshResults()
+        kept.verification_failed = verification_failed
         for doc in results:
             meta = doc.get("metadata") or {}
             if meta.get("source_type") == "official_report":

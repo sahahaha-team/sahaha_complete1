@@ -1,5 +1,5 @@
 {
-  "protocol": "Untouched final holdout frozen 2026-10-16 after E and F regression fixes, before observing responses. V001-010 unseen wording of known task families; V011-020 additional administrative questions; V021-022 adversarial premise/emergency controls. Deliberately difficult convenience sample, not representative. Manual source/condition scoring required. If used to tune, reclassify and replace.",
+  "protocol": "Originally frozen before G evaluation. Its first 22-question run at b663747 exposed H failures; the entire set is now DEVELOPMENT. Preserve its original responses; never count it as an untouched final set after H.",
   "families": [],
   "scenarios": [
     {

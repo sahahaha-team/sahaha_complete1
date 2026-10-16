@@ -14,7 +14,7 @@ from chatbot.answer_completion import (
 )
 
 MAX_BRIEF_LENGTH = 480
-SCOPE_FIELD = re.compile(r"^(?:교육)?(?:대\s*상|신청자격|지원대상|이용대상|조건)\s*[:：]")
+SCOPE_FIELD = re.compile(r"^(?:교육)?(?:대\s*상|신청자격|지원대상|이용대상|발급민원|조건)\s*[:：]")
 
 
 def _section_headings(units: list[str]) -> list[int]:

@@ -57,6 +57,8 @@ def unanswered_details(query: str, selected: str, title: str, keywords: set[str]
         details -= {'현금','계좌','통장'}  # Payment alternatives answer the same field.
     if re.search(r'본인.{0,8}직접|대리|위임',value):
         details.discard('대리')
+    if '청소년' in query and '청소년' in selected:
+        details.discard('학생')  # A confirmed age group, not an inferred one.
     if '여권' in compact(query) and re.search(r'\d+(?:세|살)',compact(query)):
         details -= {'대학','학생','대학생','고등학생','초등학생'}  # Explicit legal age is retained separately.
     return frozenset(t for t in details if t not in compact(selected))

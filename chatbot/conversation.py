@@ -333,6 +333,7 @@ class ChatBot:
 
         search_outcome = self.retriever.search(search_query, k=15)
         fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
+        verification_failed = getattr(fresh_results,'verification_failed',False)
         rerank_info = {'used': False}
         if search_outcome.get('retrieval', {}).get('mode') == 'hybrid_rrf':
             from chatbot.semantic_ranker import semantic_ranker
@@ -353,7 +354,7 @@ class ChatBot:
             logger.info(f"핵심 업무 근거 없음 (참고용 최상위 유사도={top_sim:.2f}) → 안전 안내 출력")
             self._save_conversation_safe(session_id, "user", user_message, search_query=search_query)
             from chatbot.evidence_decision import unavailable_answer
-            reason = ('retrieval_error' if search_outcome['degraded'] else
+            reason = ('retrieval_error' if search_outcome['degraded'] or verification_failed else
                       'stale_evidence' if search_outcome['results'] and not fresh_results else 'insufficient')
             response = unavailable_answer(reason)
             self._save_conversation_safe(session_id, "assistant", response['answer'])

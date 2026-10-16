@@ -18,7 +18,8 @@ def reviewed_source(body: str, metadata: dict) -> tuple[str, dict]:
             blocked = review['unverified_fields']
             from chatbot.structured_answers import field_matches
             safe = '\n'.join(line for line in body.splitlines()
-                             if not any(field_matches(field,line) for field in blocked))
+                             if not any(field_matches(field,line) for field in blocked)
+                             and not re.search(review.get('unverified_line_pattern') or r'(?!)',line))
             return safe, {**metadata,'unverified_fields':blocked,
                           'source_warning':review.get('user_warning') or '공식 원문의 해당 항목은 최신 안내 확인이 필요합니다.'}
     return body, metadata

@@ -44,7 +44,7 @@ def answer_goal(query: str) -> str | None:
         return 'schedule'
     if re.search(r'통행규칙|안전수칙', compact_query):
         return 'precautions'
-    if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량', compact_query):
+    if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량|약.*(?:몇알|몇정|먹어야)|하루.*몇(?:알|정)', compact_query):
         return 'medical_details'
     # The requested field wins over an incidental action such as 신청/버리는.
     # Applicant conditions and identity-copy questions are not application steps.
@@ -56,13 +56,13 @@ def answer_goal(query: str) -> str | None:
         return 'eligibility'
     if re.search(r'현금|계좌|통장', compact_query) and re.search(r'지급|들어|받|나오', compact_query):
         return 'conditions'
-    if re.search(r'뭐가필요|무엇이필요|뭘챙|무엇을챙', compact_query):
+    if re.search(r'뭐가필요|무엇이필요|뭘챙|무엇을챙|챙길(?:것|거)', compact_query):
         return 'documents'
     if re.search(r'수수료|요금|비용|가격|상한', compact_query) and re.search(r'얼마|상한|최대|한도|그대로', compact_query):
         return 'cost'
     if re.search(r'어느달|몇개월|한번만|생일.*달|신청.*마감', compact_query):
         return 'schedule'
-    if re.search(r'신청할수|기부할수|지원받을수|해도돼|해도되|전부사주|모두사주', compact_query) and not re.search(r'어떻게|방법|절차|어디|언제|몇|누가|누구|대상|서류|준비', compact_query):
+    if re.search(r'신청할수|신청(?:이)?가능|기부할수|지원받을수|해도돼|해도되|전부사주|모두사주', compact_query) and not re.search(r'어떻게|방법|절차|순서|어디|언제|몇|누가|누구|대상|서류|준비', compact_query):
         return 'conditions'
     if re.search(r'보조제|제공품|지원품목', compact_query) and re.search(r'지원|제공|주나|주요', compact_query):
         return 'services'
@@ -161,7 +161,7 @@ def answer_goal(query: str) -> str | None:
         return "eligibility"
     if any(word in query for word in ("언제", "기간", "며칠", "주기", "자주", "날짜", "몇 번", "몇 월", "몇월", "몇 주", "몇주", "몇 권", "몇권", "기한", "저녁", "밤에")):
         return "schedule"
-    if any(word in query for word in ("방법", "어떻게", "하는 법", "받는 법", "신청", "접수", "신고", "발급")):
+    if any(word in query for word in ("방법", "순서", "어떻게", "하는 법", "받는 법", "신청", "접수", "신고", "발급")):
         return "method"
     if re.search(r'납부|카드로.*(?:낼|내|납)|계좌이체',query):
         return 'method'

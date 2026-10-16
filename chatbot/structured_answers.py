@@ -35,6 +35,9 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return False
     request = compact(query)
     scoped = context + ' ' + unit
+    if (goal == 'method' and re.search(r'인터넷|온라인',request)
+            and re.search(r'보건증|건강진단결과서|결과서',request)):
+        return bool(re.search(r'온라인|인터넷',unit) and re.search(r'발급|출력|신청',unit))
     if goal == 'conditions' and re.search(r'대리|대신',request) and re.search(r'신청|발급|접수',request):
         if '여권' in request:
             from chatbot.passport_documents import applicant_age
@@ -197,6 +200,12 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal == 'reference':
         return None
     units = scoped_units(query, body, keywords)
+    if (goal == 'conditions' and '예약' in query and '학생' in query
+            and not re.search(r'청소년|성인|\d+\s*(?:세|살)',query)
+            and any(re.search(r'청소년.*예약',u) for u in units)):
+        return {'answer':'공식 안내에서는 청소년의 예약을 구분하고 있습니다. **청소년인가요, 성인인가요?**',
+                'is_clarification':True,'documents':[], 'answer_method':'structured_source',
+                'reply_terms':['청소년','성인'],'suggested_questions':[]}
     if re.search(r'교육|훈련|강좌', query) and goal in (None,'method','location','schedule','services'):
         from chatbot.concise_answers import SCOPE_FIELD, course_scope_result
         audience = next((u for u in units if SCOPE_FIELD.match(u)), None)
@@ -508,6 +517,10 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     # The same prerequisite/exception expansion used by model and fallback
     # readers applies here too. A schedule/benefit cannot drop its own target.
     from chatbot.concise_answers import condition_indices
+    if (goal == 'method' and re.search(r'인터넷|온라인',query)
+            and re.search(r'보건증|건강진단결과서|결과서',query)):
+        selected.extend(u for u in units if re.search(r'검사일로부터.{0,30}발급',u)
+                        and source_unit_complete(u) and u not in selected)
     indices = [units.index(u) for u in selected if u in units]
     for i in condition_indices(units, indices):
         if units[i] not in selected:

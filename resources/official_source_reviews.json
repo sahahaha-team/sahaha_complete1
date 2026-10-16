@@ -16,5 +16,15 @@
     "reason": "정부24 본인인증을 공인인증서 사전 발급만으로 안내하는 예전 이용방법. 현재 공식 정부24의 간편·공동·금융인증 안내와 다름.",
     "verification_reference": "https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=13110000030&HighCtgCD=A01010",
     "user_warning": "이 페이지의 세부 이용방법은 오래된 안내이므로, 현재 인증·발급 방법은 정부24에서 확인해 주세요."
+  },
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0304010000",
+    "reviewed_at": "2026-10-16",
+    "marker": "공인인증기관에서 발행한 공인인증서",
+    "unverified_fields": [],
+    "unverified_line_pattern": "공인인증기관.*공인인증서|한국보건복지개발원|온라인 발급 이용문의",
+    "reason": "현재 e보건소 공식 이용자가이드는 간편인증과 공동인증서를 함께 안내한다. 구 조직/고객센터 표기도 현재 포털과 달라 해당 문장만 격리한다. 정상 결과 조건과 온라인 발급 경로는 보존한다.",
+    "verification_reference": "https://www.e-health.go.kr/gh/caSrvcGud/selectUsrGudInfo.do?menuId=200016",
+    "user_warning": "이 원문의 인증방법·고객센터 표기는 현재 안내와 달라 제외했습니다. 현재 방법은 공공보건포털에서 확인해 주세요."
   }
 ]

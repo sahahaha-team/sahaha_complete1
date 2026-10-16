@@ -12,7 +12,7 @@ PASSPORT_URL = 'https://www.saha.go.kr/portal/contents.do?mId=0104020000'
 
 def document_request(query: str) -> bool:
     text = re.sub(r'\s+', '', query or '')
-    return ('여권' in text and any(w in text for w in ('준비', '서류', '구비', '챙겨', '가져가', '가져갈'))
+    return ('여권' in text and any(w in text for w in ('준비', '서류', '구비', '챙겨', '챙길', '가져가', '가져갈'))
             and not any(w in text for w in ('수령', '교부', '긴급', '관용', '외교',
                 '기록증명', '사본증명', '실효확인', '정보증명', '국제운전', '온라인', '인터넷')))
 

@@ -27,6 +27,9 @@ def code_hashes():
     files = [ROOT / 'app.py', ROOT / 'config.py']
     for folder in ('chatbot', 'database_db', 'crawler'):
         files.extend((ROOT / folder).glob('*.py'))
+    files.extend((ROOT / 'resources').glob('*.json'))
+    contacts = ROOT / 'data/department_contacts.json'
+    if contacts.is_file(): files.append(contacts)
     return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 
 

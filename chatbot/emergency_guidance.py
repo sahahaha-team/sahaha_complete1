@@ -17,7 +17,7 @@ SUSPECTED_FIRE = re.compile(r"(?:공장|건물|주택|집|창고|산|차량|자�
 def answer_emergency_question(query: str) -> dict | None:
     normalized = normalize_query(query)
     text = re.sub(r"\s+", "", normalized)
-    gas_incident = re.search(r'가스(?:가)?(?:누출|누설|새고|샌|샙)|가스냄새.{0,20}(?:나|심|계속|퍼|어떻|신고)',text)
+    gas_incident = re.search(r'가스(?:가)?(?:누출|누설|새(?:고|는|요|어)|샌|샜|샙)|가스냄새.{0,20}(?:나|심|계속|퍼|어떻|신고)',text)
     if gas_incident and not ADMINISTRATIVE.search(text):
         return {
             'answer': '**가스 누출이 의심되면 안전한 곳으로 이동한 뒤 119에 상황을 알리세요.**\n'
