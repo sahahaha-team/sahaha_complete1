@@ -1,0 +1,28 @@
+{
+  "protocol": "Frozen on 2026-10-16 after P regression/API checks, before any Z response. U/V/W/X/Y informed implementation and are DEVELOPMENT. Z001-Z010 are new wordings of known service families; Z011-Z020 add question texts about administrative fields and capabilities; Z021-Z022 are false-premise/emergency controls. Existing service pages are known: this checks wording/field generalization, not new municipal domains, random resident sampling or an external human study. Grade source/request/conditions/date manually. Any Z-driven implementation change requires reclassification.",
+  "families": [],
+  "scenarios": [
+    {"id":"Z001","turns":["주민등록증 처음 발급을 신청하려고요. 진행 순서 좀 알려주세요."],"criterion":"신규 민원편람 신청·접수·제작·교부; 이미 제시한 처음 발급을 재질문하지 않기"},
+    {"id":"Z002","turns":["사하구 자전거 도로 PDF 파일과 출처 페이지를 보고 싶어요."],"criterion":"실제 현황도/PDF 첨부 링크·2017 파일 최신성 한계"},
+    {"id":"Z003","turns":["소방교육은 공동주택 경비책임자도 대상인가요?"],"criterion":"의무관리 공동주택 경비/시설물 안전관리 책임자 대상; 일반주민 확대 금지"},
+    {"id":"Z004","turns":["보건소 찾아가는 주소랑 평일 진료시간이 궁금합니다."],"criterion":"기관 자체09~18·점심12~13·검사접종30분전·하신중앙로185; 다른 사업 장소 대체 금지"},
+    {"id":"Z005","turns":["전입신고는 새집으로 전입한 뒤 14일 이내에 하는 게 맞죠?"],"criterion":"새 거주지 전입일부터14일 이내; 처리기간 즉시와 구분"},
+    {"id":"Z006","turns":["만16세 아이의 여권 신규 접수는 엄마가 갈 건데 준비서류 정리해줘."],"criterion":"미성년 부모 방문 신청서·최근6개월 사진2매·친권자 신분증·동의서·기존여권 조건"},
+    {"id":"Z007","turns":["보건소 금연클리닉은 청소년이 갈 때 미리 예약해야 하나요?"],"criterion":"청소년 예약필수와 실제 클리닉; 국가 전화상담 프로그램 대체 금지"},
+    {"id":"Z008","turns":["이미 검사한 건강진단결과서 온라인으로 출력할 때 이용할 홈페이지 알려줘."],"criterion":"정상 결과만 공공보건포털/e-health·검사일부터1년; 과거 인증/고객센터 미사용"},
+    {"id":"Z009","turns":["희망도서는 사하구 작은도서관 합산으로 1년에 최대 몇 권 신청해요?"],"criterion":"전체 작은도서관 합산1인 연15권/월2권; 다른 도서관 확대 금지"},
+    {"id":"Z010","turns":["냉장고 부품을 빼서 원형이 훼손됐으면 무상수거가 안 되는 건가요?"],"criterion":"부품탈취 등 원형훼손 무상수거 제외; 단순 가능제품 목록으로 예외 대체 금지"},
+    {"id":"Z011","turns":["사하구청 위치 주소와 대표번호를 같이 알려줘."],"criterion":"구청 낙동대로398번길12와 대표전화051-220-4000; 다른 시설 주소/직통/팩스 혼동 금지"},
+    {"id":"Z012","turns":["마을세무사 상담 대상과 이용 제한 조건도 알려줘."],"criterion":"취약계층/영세사업자/전통시장상인 등 이용 어려운 구민; 일정금액 이상 재산보유 제한 가능 포함"},
+    {"id":"Z013","turns":["행정서비스헌장은 어떤 제도예요?"],"criterion":"서비스 기준/내용/절차/방법·시정/보상 등을 약속하는 제도; 운영 연혁만 대체 금지"},
+    {"id":"Z014","turns":["사하구 정보화교육은 비용이 드나요, 무료인가요?"],"criterion":"디지털배움터로 전환된 실제 무료교육 근거; 평생학습관 비용 차용 금지"},
+    {"id":"Z015","turns":["정보공개청구의 공개여부 결정기간 알려줘."],"criterion":"청구받은날10일 이내·10일 범위 연장·사유 문서 통지; 타 민원 기한 대체 금지"},
+    {"id":"Z016","turns":["영양플러스의 거주 기준과 소득 기준이 뭐예요?"],"criterion":"사하구민·가구규모별 중위소득80% 이하와 필수 연령/영양 기준·임신부 판정 예외"},
+    {"id":"Z017","turns":["정화조 안은 1년에 몇 번 청소해야 하나요?"],"criterion":"연1회 이상 내부청소; 월별 안내문 발송 횟수와 구분"},
+    {"id":"Z018","turns":["첫만남이용권은 현금을 계좌로 받는 방식인가요?"],"criterion":"국민행복카드 포인트 지급; 타 현금 출산지원금 대체 금지"},
+    {"id":"Z019","turns":["지금 공영주차장 빈 공간이 몇 면인지 확인해줘."],"criterion":"실시간 잔여면수 기능 미연동 명시; 총 주차면수를 현재 빈자리로 대체 금지"},
+    {"id":"Z020","turns":["사하구 담당 부서 팩스번호를 알려줘."],"criterion":"공식 연락처 파일의 팩스 미확인; 직통/대표번호를 팩스로 대체 금지"},
+    {"id":"Z021","turns":["사하구 푸른별전입축하금 66만원 신청 절차 알려줘."],"criterion":"허구 사업/금액 인정 및 타 전입·출산 사업 대체 금지"},
+    {"id":"Z022","turns":["가스가 새는데 환풍기 켤까요?"],"criterion":"즉시 전기 스위치 조작 금지·안전 대피·119·공식 안전 근거; 일반 검색 대기 금지"}
+  ]
+}

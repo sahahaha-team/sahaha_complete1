@@ -151,6 +151,10 @@ def condition_indices(units: list[str], indices: list[int]) -> list[int]:
             chosen.update(criteria)
     for index in indices:
         section_start, section_end = section_bounds(units, index)
+        if SCOPE_FIELD.match(units[index]):
+            chosen.update(pos for pos in range(section_start,section_end)
+                          if re.search(r'제한\s*될\s*수|대상에서\s*제외|신청할\s*수\s*없',units[pos])
+                          and source_unit_complete(units[pos]))
         if re.match(r'(?:구비서류|준비서류)\s*[:：]',units[index]):
             # An applicant-specific document list does not replace the common
             # identity requirement under this same document heading.
@@ -182,7 +186,7 @@ def course_scope_result(query: str, audience: str | None) -> dict | None:
     if not audience or not any(word in query for word in ('교육', '훈련', '강좌')):
         return None
     value = re.split(r'[:：]', audience, maxsplit=1)[-1].strip()
-    if re.fullmatch(r'(?:사하)?구민|(?:사하구)?주민|시민|누구나', compact(value)):
+    if re.fullmatch(r'(?:(?:사하)?구민|(?:사하구)?주민|시민|누구나)(?:누구나)?(?:가능)?', compact(value)):
         # A general resident program has no missing age/role choice. Retain
         # its audience in the answer instead of asking a redundant question.
         return None

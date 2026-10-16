@@ -1,5 +1,5 @@
 {
-  "protocol": "Frozen on 2026-10-16 after O regression tests, before any Y response is observed. U/V/W/X informed earlier implementation and are DEVELOPMENT. Y001-Y010 are fresh wording of known service families; Y011-Y020 are additional independent question texts about administrative fields and capabilities; Y021-Y022 are false-premise/emergency controls. Some services/source pages were seen in earlier development: this is wording/field generalization, not unseen municipal domains, random sampling or external human evaluation. Manually grade actual request, facts, important conditions, source, date and runtime. Any Y-driven code change invalidates untouched status.",
+  "protocol": "DEVELOPMENT: first Y22 at3f49ccc informed P. Preserve raw failures, important omissions and reasons in3f49ccc_y_development_review_20261016.json. Its follow-up core run was interrupted, not a completed140. U/V/W/X/Y are no longer untouched. Z is frozen separately before observation. No random population or external human evaluation claim.",
   "families": [],
   "scenarios": [
     {"id":"Y001","turns":["민증 신규 발급 신청하는 절차와 교부 방법 좀 알려줘."],"criterion":"공식 신규 발급 절차와 본인/허용 수령 조건; 재발급이나 단순 종류 확인으로 대체 금지"},

@@ -174,6 +174,9 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
     anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','냉장고','세탁기','구직','구인','전자민원'}
     body_text = str(doc.get('content') or '')
+    from chatbot.answer_goal import requested_goals
+    if keywords == {'구청'} and 'location' in requested_goals(query) and '구청' not in title:
+        return False  # Another facility's address cannot locate the district office.
     if '소방' in anchors:
         from chatbot.query_subject import service_term_present
         if not service_term_present('소방', str((doc.get('metadata') or {}).get('title') or '') + '\n' + body_text):
@@ -189,7 +192,7 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
             return False
     # A specific named program/facility cannot be replaced by a different
     # one merely because both pages explain 신청 or contain the same amount.
-    requested_entities = re.findall(r'([가-힣A-Za-z0-9]{2,20})\s*(센터|도서관|체육관|지원금|보조금|장려금|수당|보험|클리닉)', query)
+    requested_entities = re.findall(r'([가-힣A-Za-z0-9]{2,20})\s*(센터|도서관|체육관|지원금|보조금|장려금|축하금|격려금|장학금|환급금|보상금|수당|보험|클리닉)', query)
     owners = [line.lstrip('# ') for line in body_text.splitlines() if line.startswith('#')]
     owners += [line.split(' — ', 1)[0] for line in body_text.splitlines() if ' — ' in line]
     owners += [line.strip() for line in body_text.splitlines() if re.fullmatch(

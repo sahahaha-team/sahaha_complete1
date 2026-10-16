@@ -46,6 +46,11 @@ def answer_goal(query: str) -> str | None:
         return 'precautions'
     if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량|약.*(?:몇알|몇정|먹어야)|하루.*몇(?:알|정)', compact_query):
         return 'medical_details'
+    if re.search(r'소득',compact_query) and re.search(r'기준|대상|자격|선정|몇퍼센트|몇프로|몇%',compact_query):
+        return 'eligibility'
+    if (re.search(r'무료|무상',compact_query) and re.search(r'인가|인지|맞',compact_query)
+            and not re.search(r'방법|절차|어떻게|어디|누가|대상|예약|서류',compact_query)):
+        return 'cost'
     if re.search(r'몇퍼센트|몇프로|몇%',compact_query):
         return 'cost'
     if re.search(r'어디(?:로|에).*연락|전화로만|팩스로만|이메일로만',compact_query):

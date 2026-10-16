@@ -21,6 +21,7 @@ WEAK_WORDS.update({'민원서류','계속'})
 WEAK_WORDS.update({'엄마','아빠','어머니','아버지','공식','부탁'})
 WEAK_WORDS.add('순서')
 WEAK_WORDS.update({'기한','퍼센트','비율','연락','요청','진행'})
+WEAK_WORDS.update({'의미','방문','대표','대표전화','전화번호'})
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
 WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철", "중개수수료": "중개보수", "빌릴": "대여", "빌리": "대여", "감면": "감경"}
 # Keep names intact when morphology splits a service into generic nouns. These
@@ -162,6 +163,9 @@ def subject_query(query: str) -> str:
 def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     subject = subject_query(query)
     text = compact(subject)
+    from chatbot.official_faq import required_faq_ids
+    if required_faq_ids(query) == {1, 2}:
+        return {'구청'}  # Address plus main phone still names one institution.
     if re.search(r'면제|장애인등록증.*(?:공짜|무료)', query) and re.search(r'수수료|발급비|발급|민원서류',query):
         return {'수수료면제'}
     names = service_names(subject_query(query))

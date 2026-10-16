@@ -1,0 +1,1349 @@
+{
+  "protocol": "O commit3f49ccc Y22 informed P, now DEVELOPMENT. Core follow-up audit was interrupted and preserved as pre_p_core_partial.json; do not combine incomplete runs into final140. Manual source/field/condition review by the development assistant.",
+  "run": {
+    "started_at": "2026-10-16T12:59:16.439595+00:00",
+    "finished_at": "2026-10-16T13:02:57.196717+00:00",
+    "commit": "3f49ccc88a38d2471365b6033a939f2beed07559",
+    "case_sha256": "3f2f4eb5c76e1c8a26e4a4001cb79f571fa2e26a9a001ac8eec19cd260da1c48",
+    "code_hashes": {
+      "app.py": "fbbdfb93c9b4ca723fb7ad3edbd782bee074e8548a59c217f4246a3d7a514c76",
+      "config.py": "998e54f44ebed5e2ad91777cf48882c8bafca79f2694a9c4b7e1c26507309191",
+      "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+      "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+      "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+      "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+      "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+      "chatbot\\answer_goal.py": "1ec05733865f073611da873d0c537ab0b9de8c63f2d61dd0bab3d4d41f914c21",
+      "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+      "chatbot\\candidate_search.py": "eea65ac9f2d81e9304e4894990c98f34a9475c80a11494bf4085a4d8c71a7175",
+      "chatbot\\concise_answers.py": "37265f66c0616ffc6141ad016030bee113ad509fde0cbd8a080d704c106b9866",
+      "chatbot\\contact_directory.py": "03dd0e30b326e5d6d0d31b947626bd859341079e1a802fa9cc1689048670a87d",
+      "chatbot\\conversation.py": "95767bc04c4806cc2216b430cac3115bd4cc5ab272ab55e02607c0c537f4c8a2",
+      "chatbot\\crawled_pages.py": "340b400006c5a90aa621c5c84e450b3161b9d0aa6ae8c9478b16e30387ce908a",
+      "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+      "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+      "chatbot\\evidence.py": "6afda65999c43b063c41c95234d08e3e70f9442937509df3fc7d0931a4189167",
+      "chatbot\\evidence_decision.py": "10970bdcf71f0c80edb32ab1b37afa4fa7ac711ef46637bddef23c329f233141",
+      "chatbot\\faq_targets.py": "8c2ecbaf597c38658c3e17bd3a0ef907485c5cea29d8cf2d15df623515f754e6",
+      "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+      "chatbot\\grounded_planner.py": "3cc70f481cb8689736080774fec19b7b6aa3545b1871d4028602d23618622410",
+      "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+      "chatbot\\model_plan_cache.py": "fe7185424276d0eb8e7815430cee6acf09ae8b523a3b40637706a2bca89a0dcf",
+      "chatbot\\official_content.py": "42968c47ad2e21da7da2b571ebf678691f9cb349dfdf689c0ee5a351bb93513a",
+      "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+      "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+      "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+      "chatbot\\passport_documents.py": "b4eed6e854a2de7fe0a7695a6f128794701071eb4784245f8500486b2398adca",
+      "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+      "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+      "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+      "chatbot\\query_subject.py": "9c341fd123808b696de197cc2afd97358723556c5943b9489c1a03d50aecb8ec",
+      "chatbot\\question_intent.py": "29257c1074992d8692819cba707c1c5c6ed682655616d41417c681f369cdb69b",
+      "chatbot\\reference_answers.py": "3bc6aefb3f0dbe23eefc1cee658c15e8678e3e4b406b70ae6dcb9fd140162a09",
+      "chatbot\\response_helpers.py": "1025dcab4f0eefb2e876656f977a4f1961ace762ca0b02d4ebdfe5de19580fb8",
+      "chatbot\\retriever.py": "c8760b53531095eda7b1593efb7397efd49c16c026dd42a2413e20d43ae01059",
+      "chatbot\\semantic_ranker.py": "d594eae32f4078c4cb39cacd46f5345972302235d64bcf69c24ed2c5503ce368",
+      "chatbot\\source_answers.py": "ec7ac4fa35eb1804dd91802758fe5dedd944189884547c6ab205115d5aca1069",
+      "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+      "chatbot\\source_pages.py": "1a360c71c9a923afeda3bbb9a8e708d4fee886bae0eaf58cdbb2854a3382fad1",
+      "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+      "chatbot\\source_scope.py": "fe1f75733c272229adc5b5f58e9636f1fe3fb36ba41be8dd8d5f2bc9b4e619a5",
+      "chatbot\\source_warnings.py": "e95be6182858f4d4cbc88138035af7183d61581a25d5f41460088aca0356cc7e",
+      "chatbot\\structured_answers.py": "2c747306e59f8e53b2bf0697ca20d00a4e38bfa3dd47c2eed0c4bdd97f5054f2",
+      "chatbot\\vaccination.py": "218884750bbd3fc486ed457422a54b71294e388c419e9771fc623afd52d7331f",
+      "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+      "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+      "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+      "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+      "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+      "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+      "crawler\\saha_crawler.py": "9a6fb904e633a4f463b517396c130e33633668e486f144e0d21df965ce18f12c",
+      "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+      "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+      "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+      "processor\\metadata_tagger.py": "d502535096e105e3d90c23a67d43daf004a149a0a5eada2a6a9d954c9d890352",
+      "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+      "resources\\department_contacts.json": "c693069ebb0bde6dc7bc69f90a95bb4eebdcef208745b4e1b57942c1db1a4f52",
+      "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+      "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+      "resources\\official_source_reviews.json": "fde97a7423b71c12c425a13813dee1726ee1fa538370f09981e6b0637f89a928",
+      "resources\\priority_services.json": "e61e39bc6d2082f8454cd72e165bc461b7608b184fb98d79c1027048c8e4092e",
+      "data\\department_contacts.json": "b34f289a0b9e8a4d0d22feceab456224bd12eed40055df00bb01d8db90291c18"
+    },
+    "code_unchanged": true
+  },
+  "records": [
+    {
+      "id": "Y001",
+      "turn": 1,
+      "question": "민증 신규 발급 신청하는 절차와 교부 방법 좀 알려줘.",
+      "criterion": "공식 신규 발급 절차와 본인/허용 수령 조건; 재발급이나 단순 종류 확인으로 대체 금지",
+      "seconds": 1.881,
+      "server_timing": "app;dur=1875.1",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.881
+        }
+      ],
+      "response": {
+        "answer": "**주민등록증 발급신청**\n- 업무처리 흐름도: 신청(민원인) - 접수(동 행정복지센터) - 제작(한국조폐공사, 2주 정도 소요) - 교부(신청인 본인 ※ 본인의 방문신청으로 신청인의 신분이 확인된 경우에는 17세 이상의 동일 세대원, 배우자, 직계혈족에게 교부 가능)",
+        "answer_details": "주민등록증 발급신청의 공식 안내 원문입니다.\n\n> ## 민원편람/서식안내\n> ### 주민등록증 발급신청\n> 민원분야: 주민등록\n> 담당부서: 총무과\n> 담당자 전화번호: 각 동 주민등록증 담당자\n> 처리기간: 즉시\n> 신청서 및 구비서류: ① 주민등록증 발급신청서 1부(주민등록법 시행령 별지 제30호 서식)\n> 신청서 및 구비서류: ② 사진 1매 (6개월 이내에 촬영한 모자 등을 쓰지 않은 상반신 사진)(3.5㎝ × 4.5㎝)\n> 신청서 및 구비서류: ③ 사진이 부착되어 있는 학생증이나 국가·지방자치단체 또는 공공기관에서 발급한 증명서(또는 17세 이상의 동일 세대원, 배우자, 직계혈족과 동행 ※ 신분증명서 지참)\n> 제출처: 동 행정복지센터\n> 수수료 및 기타비용: 기한 내 신청시 무료 / 최고·공고된 자 과태료 최고 10만원\n> 유의사항: 1) 다음의 경우 사진 접수가 불가함\n> 유의사항: ① 화상자료 입력용으로 맞지 않은 사진\n> 유의사항: ② 모자를 쓰거나 안대를 하고 찍은 사진\n> 유의사항: ③ 색안경을 쓰거나 눈을 감고 찍은 사진(시각장애인 제외)\n> 유의사항: ④ 얼굴에 붕대를 감았거나 반창고를 붙이고 찍은 사진\n> 유의사항: ⑤ 사진을 찍은지 6개월 이상 경과되어 본인의 변모, 사진변색 등으로 본인여부를 식별하기가 곤란한 사진\n> 유의사항: ⑥ 이미지·스티커·복사사진 등 현상·인화된 사진외 변형이 가능한 사진\n> 유의사항: ⑦ 천연색 사진이 아니거나 정면 사진이 아닌 사진\n> 유의사항: ⑧ 그 밖에 신분확인이 어려운 사진 등\n> 행정기관의 심사기준: 가. 본인 여부 확인\n> 행정기관의 심사기준: 나. 17세 이상 확인\n> 행정기관의 심사기준: 다. 가족관계등록부\n> 행정기관의 심사기준: 라. 국외 영주권을 가진 해외 교포 여부 확인\n> 업무처리 흐름도: 신청(민원인) - 접수(동 행정복지센터) - 제작(한국조폐공사, 2주 정도 소요) - 교부(신청인 본인 ※ 본인의 방문신청으로 신청인의 신분이 확인된 경우에는 17세 이상의 동일 세대원, 배우자, 직계혈족에게 교부 가능)\n> 목록",
+        "sources": [
+          {
+            "title": "주민등록증 발급신청",
+            "url": "https://www.saha.go.kr/portal/civil/view.do?civilId=1626&mId=0103080100",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      },
+      "grade": "S",
+      "reason": "신규 발급의 접수·제작·교부 및 허용 수령 조건이 실제 편람과 일치한다.",
+      "response_sha256": "9ceaa2a7e0f893d6dfe4e80405146daae402ddc7e3dc423db0e4b21493bc78b0"
+    },
+    {
+      "id": "Y002",
+      "turn": 1,
+      "question": "자전거 전용도로 상세 자료 내려받을 링크를 알려줘.",
+      "criterion": "실제 현황도/PDF 첨부 및2017 파일의 최신성 한계",
+      "seconds": 1.239,
+      "server_timing": "app;dur=1210.9",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.239
+        }
+      ],
+      "response": {
+        "answer": "사하구청 [자전거 도로 현황도](https://www.saha.go.kr/portal/contents.do?mId=0403020000)에서 확인할 수 있습니다.\n\n[자전거도로 자세히보기 (PDF)](https://www.saha.go.kr/portal/Downfiles/saha_bicycle_road2017.pdf)를 열어 상세 자료를 보세요.\n파일명에 **2017**이 포함된 자료이므로 최신 변경 사항은 별도 확인이 필요합니다.",
+        "answer_details": "자전거 도로 현황도의 공식 안내 원문입니다.\n\n> ## 자전거 도로 현황도\n> ### 사하구 자전거 도로 현황도\n> #### 사하구 자전거 도로 현황도\n> 아름다운 사하의 석양과 갈맷길을 따라 바람을 가르는 자전거 도로! 감천로에서 다대포해수욕장, 낙동강 하구둑까지...\n> 자전거도로 자세히보기",
+        "sources": [
+          {
+            "title": "자전거 도로 현황도",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0403020000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "자전거도로 자세히보기",
+                "url": "https://www.saha.go.kr/portal/Downfiles/saha_bicycle_road2017.pdf"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_reference",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "reference"
+          ],
+          "matched_fields": [
+            "reference"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "도로 파손 신고 방법 알려줘",
+          "교통 민원 담당 부서 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      },
+      "grade": "S",
+      "reason": "실제 현황도/PDF와2017 파일 최신성 한계를 보존했다.",
+      "response_sha256": "1fa666beb972b7d27f911ad7f8b851c085df4d6588c847786d125921e732b8d5"
+    },
+    {
+      "id": "Y003",
+      "turn": 1,
+      "question": "공동주택 소방안전 교육의 대상자를 알려줘.",
+      "criterion": "의무관리 공동주택 경비/시설물 안전관리 책임자 대상; 일반 주민 확대 금지",
+      "seconds": 1.656,
+      "server_timing": "app;dur=1639.4",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.656
+        }
+      ],
+      "response": {
+        "answer": "**교육개요**\n- 대 상 : 의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자",
+        "answer_details": "공동주택 관리 안내의 공식 안내 원문입니다.\n\n> ## 공동주택 관리 안내\n> ### 어린이 놀이시설 안전관리\n> #### 안전검사 및 교육기관관련 사이트\n> 검사·교육기관 — 기관명: 한국건설생활환경시험연구원 · 소재지: 부산울산경남지원 (051-974-9675) · 연결사이트주소: http://www.kcl.re.kr\n> 검사·교육기관 — 기관명: 한국기계전기전자시험연구원 · 소재지: 부산지원 (051-336-1566) · 연결사이트주소: http://www.ktc.re.kr\n> 검사·교육기관 — 기관명: (사)대한민국 비상재난안전협회 · 소재지: 서울 강남구 (02-512-3780) · 연결사이트주소: http://www.kedss.kr\n> 교육기관 — 기관명: (사)한국생활안전연합 · 소재지: 서울 서초구 (02-3476-0119) · 연결사이트주소: http://www.safia.org\n> 교육기관 — 기관명: (재)한국재난안전기술원 · 소재지: 서울시 영등포구 (02-780-4624) · 연결사이트주소: http://www.safeleader.org\n> 교육기관 — 기관명: (사)대한민국 비상재난안전협회 · 소재지: 서울 강남구 (02-512-3780) · 연결사이트주소: http://www.kedss.kr\n> 교육인정기관 — 기관명: (사)대한주택관리사협회 · 소재지: 서울 금천구 (02-882-0050) · 연결사이트주소: http://www.khma.org\n> 검사기관 — 기관명: (사)한국생활안전연합 · 소재지: 부산지회 (051-804-5454) · 연결사이트주소: http://www.safety.or.kr\n> ※ 교육수강 신청은 각 기관사이트의 수강신청서 이용\n> ### 공동주택 자체 사이버 안전점검 실시\n> #### 관련법령\n> 주택법 제50조, 재난 및 안전관리기본법 제26조 및 영 제33조\n> #### 점검개요\n> 점검일시 : 상, 하반기 총 2회 이상\n> 대 상 특정관리대상시설 중 의무관리대상시설 ▹자체사이버 안전점검 대상시설 현황 ※ 준공이후 15년이 지난 공동주택 중 300세대 이상, 150대~300세대중 중앙난방방식 또는 E/V가 있는 시설\n> 점검결과 입력 국가재난정보센터 접속(safekorea.go.kr)→특정관리대상 클릭(하단 우측) → 기본정보(시설물관리번호 및 비밀번호) 입력→안전점검결과 입력\n> ### 관리주체 소방 및 방범교육\n> #### 관련법령\n> 주택법 제49조(안전관리계획 및 교육 등) 및 시행규칙 제28조(방범교육 및 안전교육)\n> #### 교육개요\n> 일 시 : 상반기 중 예정\n> 장 소 : 사하구청(예정)\n> 대 상 : 의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자\n> 강 사 : 사하경찰서, 사하소방서\n> 교육내용 방범교육 : 강도․절도 등의 예방 및 대응 소방에 관한 안전교육 : 소화․연소 및 화재예방\n> ### 입주자대표회의 운영 및 윤리교육\n> #### 관련법령\n> 주택법 제43조의2(입주자대표회의의 운영교육)\n> 주택법시행령 제50조의3(입주자대회의의 운영 및 윤리교육)\n> #### 교육개요\n> 일 시 : 미정\n> 장 소 : 사하구청 예정\n> 대 상 : 의무관리대상 공동주택 동별대표자\n> 강 사 : 대한주택관리사협회 부산시회 전문강사 등\n> 교육내용 공동주택관리규약 및 관리에 필요한 모든 규정의 내용 관리비‧사용료 및 장기수선충당금 등 산정방법 관리현황의 공개방법 및 관리업무의 전산화 등 입주자대표회의의 운영에 필요한 사항",
+        "sources": [
+          {
+            "title": "공동주택 관리 안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility"
+          ],
+          "matched_fields": [
+            "eligibility"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "의무관리 공동주택 경비/시설물안전관리 책임자라는 실제 대상을 보존했다.",
+      "response_sha256": "d4becffb84929bba824cdc4719c5add0cf7739ce1c2ac30d74bd013491ed74e3"
+    },
+    {
+      "id": "Y004",
+      "turn": 1,
+      "question": "보건소는 평일 몇 시에 진료하고 어디로 가면 되나요?",
+      "criterion": "기관09~18·점심12~13·검사접종30분전과 하신중앙로185; 다른 사업 장소 대체 금지",
+      "seconds": 21.952,
+      "server_timing": "app;dur=21945.1",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 21.952
+        }
+      ],
+      "response": {
+        "answer": "찾아오시는길\n- 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n- 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)",
+        "answer_details": "찾아오시는길의 공식 안내 원문입니다.\n\n> ## 찾아오시는길\n> ### 약도\n> 지도이미지영역 건너뛰기\n> ### 보건소 정보\n> 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n> 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)\n> 대표전화 : 051)220-5740, 5704, 5706(보건소 민원실) 051)220-5701(보건행정과 사무실) 051)220-5711(건강증진과 사무실)\n> FAX번호 : 051-220-5709(보건행정과) / 5719(건강증진과)",
+        "sources": [
+          {
+            "title": "찾아오시는길",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "grounded_model",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours",
+            "location"
+          ],
+          "matched_fields": [
+            "hours",
+            "location"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "기관 진료시간·점심·검사접종 방문 주의와 주소를 모두 보존했다.",
+      "response_sha256": "a29cf9f00260ea1c2902e455694c3ecaab08441ea5207bfe65dab65b2fe70b18"
+    },
+    {
+      "id": "Y005",
+      "turn": 1,
+      "question": "전입신고 기한이 14일이라는 게 맞나요?",
+      "criterion": "신 거주지 전입일부터14일 이내; 처리기간 즉시와 구분",
+      "seconds": 6.929,
+      "server_timing": "app;dur=6923.1",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 6.929
+        }
+      ],
+      "response": {
+        "answer": "**주민등록 전입신고**\n- 유의사항: ○ 신 거주지에 전입한 날부터 14일 이내에 전입신고를 하여야 합니다.",
+        "answer_details": "주민등록 전입신고의 공식 안내 원문입니다.\n\n> ## 민원편람/서식안내\n> ### 주민등록 전입신고\n> 민원분야: 주민등록\n> 담당부서: 총무과\n> 담당자 전화번호: 각 동 전입담당자\n> 처리기간: 즉시\n> 신청서 및 구비서류: 전입신고서 1부 (주민등록법 시행령 별지 제15호 및 별지 제15호의2 서식- 첨부파일 참조)\n> 신청서 및 구비서류: 신분증 등\n> 신청서 및 구비서류: ※ 신고 구분에 따라 추가 지참서류가 있을 수 있으므로, 관할 동 행정복지센터 문의 필요\n> 제출처: 신 거주지 읍면동 행정복지센터\n> 수수료 및 기타비용: 없음\n> 유의사항: ○ 신 거주지에 전입한 날부터 14일 이내에 전입신고를 하여야 합니다.\n> 유의사항: ○ 전입신고 내용의 사실 여부는 통장이 사후에 확인하며, 거짓으로 신고한 것이 확인되면 처벌을 받을 수 있습니다.\n> 유의사항: ○ 전입신고 시 전입자 전원의 주민등록증을 가지고 오셔서 주소지 변경 정리를 해야 합니다. (주민등록증 소지자만 해당)\n> 유의사항: ○ 임대차 계약서를 제출하면 확정일자를 부여받을 수 있습니다.\n> 행정기관의 심사기준: ○ 전입신고서 구비요건과 기재사항 검토\n> 행정기관의 심사기준: ○ 초등학교 취학 예정 아동이 있을 시 전입신고 접수증에 취학학교명 기재\n> 행정기관의 심사기준: ○ 통장 사후 확인 시 신고내용과 다를 경우 담당공무원이 사실 조사 후 직권조치하고 허위 전입이 명백할 경우 고발조치\n> 목록",
+        "sources": [
+          {
+            "title": "주민등록 전입신고",
+            "url": "https://www.saha.go.kr/portal/civil/view.do?civilId=1785&mId=0103080100",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "새 거주지 전입일부터14일 이내 기한이 맞다.",
+      "response_sha256": "aa15466c99623521590068a8f5722b4c0c3de9a0023d931550c6104b7425d3d7"
+    },
+    {
+      "id": "Y006",
+      "turn": 1,
+      "question": "17살 자녀 여권 신규 신청에 아버지가 챙겨 갈 서류는?",
+      "criterion": "미성년 부모 방문 신청서·최근6개월 사진2매·친권자 신분증·동의서·기존여권 조건",
+      "seconds": 0.52,
+      "server_timing": "app;dur=503.8",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.52
+        }
+      ],
+      "response": {
+        "answer": "**만 18세 미만 · 부모·법정대리인 방문 신청 기준**\n- 여권발급신청서 1부, 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n- 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서\n- 유효기간이 남은 기존 여권도 지참하세요.",
+        "answer_details": "> ## 여권발급안내\n> ### 여권발급 주요 내용\n> 차세대 전자여권 발급\n> 본인이 직접 방문신청(미성년자 제외)\n> 만 18세 미만 미성년자 친권자(부 또는 모), 후견인 등 법정대리인이 신청 공동친권자인 법정대리인이 외국인인 경우, 가족관계등록부에 외국인등록번호 13자리가 등재되어 있고, 외국인등록증을 신분증으로 제출한 경우에만 법정대리인 동의서 대표서명(날인) 가능 미성년자의 사진 및 구여권(유효기간 만료 전 여권), 법정대리인 신분증 지참\n> 일반여권 유효기간이 10년으로 확대 만 18세 미만자 5년, 병역미필자 5년 여권 발급(현역 10년 여권)\n> 최근 5년 이내 3회 이상, 1년 이내 2회 여권 분실자 경찰서 경위 확인 결과에 따라 발급 가능 (유효기간 제한) ※ 여권 분실 횟수에 따른 재발급 시 유효기간 제한\n> 분실 횟수: 여권 유효기간\n> 최근 5년 이내에 여권 분실횟수가 2회인 사람: 5년\n> 최근 5년 이내에 여권 분실횟수가 3회 이상인 사람: 2년\n> 최근 1년 이내에 여권 분실횟수가 2회인 사람: 2년\n> 전자여행 허가제 안내 2016. 3. 15.부터 캐나다를 입국하는 우리 국민은 아래 사이트에서 전자여행허가(eTA)를 취득하여야 함 - 신청 주소 : https://www.Canada.ca/eTA - 승인서 출력 불요, 승인 후 5년간 유효 미국 및 호주 - 미국 ESTA 신청주소 : https://esta.cbp.dhs.gov/esta/ - 호주 ETA 신청주소 : Australian ETA앱에서 신청하기 권장 ※ 기타 비자 발급에 관한 사항은 해당 국 대사관에 직접 문의바랍니다.\n> 온라인 여권 민원 서비스(정부24) 대상민원 : 여권 재발급, 분실신고, 이력 조회, 각종 증명서 발급 신청 주소 : http://www.gov.kr/portal/main\n> ### 신규발급\n> ##### 일반여권\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 만18세 미만 미성년자의 여권 신청 친권자(혹은 법정대리인) 신청시 : 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서 미성년자 본인 신청서 : 친권자(혹은 법정대리인)의 신분증, 인감증명서 및 인감도장, 법정대리인 동의서, 미성년자 본인 신분증(학생증 혹은 청소년증 등) 미성년자의 2촌 이내 친족(만18세 이상) 신청 시 : 법정대리인 동의서, 친권자의 인감증명서 및 인감도장, 위임장 및 위임자(법정대리인) 신분증(사본가능), 방문한 대리인의 신분증\n> #### 긴급여권\n> ※부산시청 여권계, 강서구청 여권계, 김해국제공항 긴급여권 발급 창구에서만 신청 가능하므로 해당 창구로 반드시 개별 문의하신 후에 방문하시기 바랍니다.\n> ※ 해외에서 가족 및 친인척 등의 사건·사고로 긴급히 출국해야하는 경우, 기타 인도적 사유나 사업상 급히 출국할 필요가 있다고 인정되는 경우\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 긴급여권 발급신청사유서\n> 증빙서류 : 항공권 사본, 사망진단서, 초청장 및 계약서 등 사업상 긴급한 사유를 증명할 수 있는 서류 등 증빙서류 첨부\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> #### 관용여권\n> 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 공무원증 또는 재직증명서 1부\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 관계기관 공문(관용여권 발급의뢰 공문-수신처 : 외교부 여권과장)\n> 기존 일반여권(제출 후 관용여권 발급 가능)\n> #### 재발급\n> ‘재발급’ 의미 이미 여권을 발급받은 적이 있는 사람이 새로운 여권을 발급받는 경우로 아래 2가지 중 선택 가능 - 새로운 유효기간을 부여하는 재발급(신규발급에 준하는 수수료 부과) - 기존 여권의 남은 유효기간을 부여하는 재발급\n> ‘재발급’ 사유 여권 수록정보의 정정·변경(개명, 주민등록번호 정정, 사진 변경 등), 분실, 훼손, 사증란 부족 등\n> 구비서류 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재 신분증(주민등록증, 운전면허증 등) 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝) 유효기간 남은 여권은 지참 여권은 새 여권으로 교부(새 여권번호 부여) 구여권은 재발급 신청 시 무효조치 후 본인에게 반환\n> ### 여권발급 등에 관한 수수료\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 52,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 49,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 44,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 41,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 35,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 32,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 단수여권 — 유효기간: 1년\n> 단수여권 — 여권발급수수료: 26면\n> 단수여권 — 여권발급수수료: 17,000원\n> 단수여권 — 대상(생일기준): 6개월 이내 1회만 여행가능\n> 기재사항변경 — 여권발급수수료: 26면\n> 기재사항변경 — 여권발급수수료: 5,000원\n> 기재사항변경 — 대상(생일기준): 여권번호기재, 출생지 표기 (긴급여권 사무대행기관에서만 가능)\n> ### 여권발급 기록 증명서\n> 종류 : 여권발급기록증명서,여권사본증명서(실물여권지참),여권실효 확인서,여권발급신청서류증명서,여권정보증명서\n> #### 구비서류\n> 본인 : 신분증 - 대리인 신청 시 : 사실증명 신청서, 위임장 및 인감증명서, 대리인 신분증\n> 수수료 : 1건당 1,000원\n> ### 국제운전면허증 신청\n> 신청 대상 : 여권 신청자 중 국제운전면허증 발급 희망자\n> 구비서류 : 신청서, 사진1매, 수수료(8,500원), 배달등기료(2,500원)\n> 면허증 수령 : 희망 주소지로 등기 배송\n> ### 여권교부\n> 여권교부 : 여권 신청일로부터 8~10일 정도 소요(근무일 기준)\n> 본인 수령 : 신분증 및 접수증 지참\n> 대리 수령 : 대리인 신분증, 접수증, 위임장 및 위임자의 신분증(사본 가능)\n> 우편 수령 : 여권발급 신청 시 사전에 신청(등기료 5,500원) - 외교부 직송, 3일~4일 소요, 본인 또는 지정한 대리인 직접 수령\n> 여권 수령 후 서명란에 반드시 본인이 자필로 서명 후 사용 ※ 발급일로부터 6개월 이내에 찾아가지 않은 여권은 직권무효 처리되어 폐기됩니다.",
+        "sources": [
+          {
+            "title": "여권발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "passport_documents",
+          "status": "official",
+          "label": "공식 여권 신청 서류 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "17세 부모 방문 준비 서류·사진2매·동의서·기존여권 조건이 원문과 맞다.",
+      "response_sha256": "bcb591609bae040ab4d5e7a2381a47112069f38ed9abb506fb10fff56a8623e0"
+    },
+    {
+      "id": "Y007",
+      "turn": 1,
+      "question": "금연클리닉 청소년 방문 예약은 꼭 필요해요?",
+      "criterion": "청소년 예약 필수·실제 클리닉 범위; 국가 전화상담 대체 금지",
+      "seconds": 17.172,
+      "server_timing": "app;dur=17144.3",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 17.172
+        }
+      ],
+      "response": {
+        "answer": "관련 공식 자료는 찾았지만, 요청하신 항목에 답할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "금연",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0404000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "missing_requested_field",
+        "evidence": {
+          "answer_method": "source_fallback",
+          "status": "partial",
+          "label": "요청 항목 확인 필요",
+          "official_source_count": 1,
+          "decision": "partial",
+          "reasons": [
+            "missing_requested_fields"
+          ],
+          "requested_fields": [
+            "conditions"
+          ],
+          "matched_fields": [
+            "conditions"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "R",
+      "reason": "명확한 청소년 예약필수 조건이 있는데 방문이라는 요청 동작 명사를 별도 근거로 요구하여 거절했다.",
+      "response_sha256": "61ae2eeb9b8ff70d65a48e15f6346528bac35dac4de1ec8a6ae6ca1afffd17fc"
+    },
+    {
+      "id": "Y008",
+      "turn": 1,
+      "question": "보건소 검사 후 보건증 인터넷 발급 가능한 사이트 알려줘.",
+      "criterion": "정상 결과만 공공보건포털/e-health·검사일부터1년; 과거 인증/전화 안내 구분",
+      "seconds": 4.603,
+      "server_timing": "app;dur=4597.0",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.603
+        }
+      ],
+      "response": {
+        "answer": "**제증명온라인발급**\n- 발급 민원 : 건강진단결과서(보건증), 건강진단서, 예방접종증명서, 일반건강진단서 (검사 결과 정상일 경우에만 온라인 발급 가능, 이상시 진료실 문의 ☎ 051-220-5763)\n- 온라인 발급 : 공공보건포털 ( https://www.e-health.go.kr )\n- 보건소 방문없이 집에서도 온라인으로 간편하게 제증명 서류를 발급받으실 수 있습니다.\n- 건강진단결과서, 건강진단서는 검사일로부터 1년간만 발급이 가능합니다.\n\n이 원문의 인증방법·고객센터 표기는 현재 안내와 달라 제외했습니다. 현재 방법은 공공보건포털에서 확인해 주세요.",
+        "answer_details": "제증명온라인발급의 공식 안내 원문입니다.\n\n> ## 제증명온라인발급\n> 보건소 방문없이 집에서도 온라인으로 간편하게 제증명 서류를 발급받으실 수 있습니다.\n> 발급 민원 : 건강진단결과서(보건증), 건강진단서, 예방접종증명서, 일반건강진단서 (검사 결과 정상일 경우에만 온라인 발급 가능, 이상시 진료실 문의 ☎ 051-220-5763)\n> 온라인 발급 : 공공보건포털 ( https://www.e-health.go.kr )\n> ### 공공보건포털 이용시 유의사항\n> 건강진단결과서, 건강진단서는 검사일로부터 1년간만 발급이 가능합니다.",
+        "sources": [
+          {
+            "title": "제증명온라인발급",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0304010000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      },
+      "grade": "S",
+      "reason": "정상 결과만 공공보건포털 발급·1년 범위 및 과거 인증/고객센터 격리를 보존했다.",
+      "response_sha256": "3d67c668e747c3e7a9ddfdc64b0374ef18a1d5db56c8d9591ae259d85ccb6375"
+    },
+    {
+      "id": "Y009",
+      "turn": 1,
+      "question": "작은도서관 희망도서 월 2권이라면 연간 한도는 몇 권인가요?",
+      "criterion": "전체 작은도서관 합산1인 월2권·연15권; 다른 도서관 적용 금지",
+      "seconds": 3.486,
+      "server_timing": "app;dur=3480.1",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.486
+        }
+      ],
+      "response": {
+        "answer": "**희망도서 신청**\n- 신청권수 : 전체 작은도서관 합산 1인 월 2권, 연간 15권",
+        "answer_details": "희망도서 신청의 공식 안내 원문입니다.\n\n> ## 희망도서 신청\n> ### 희망도서 신청\n> 신청대상 : 사하구 작은도서관 통합회원\n> ❖ 사하구 작은 도서관 대출이력이 있는 회원에 한해 신청 가능\n> ❖ 장기연체자는 대출정지일까지 희망도서를 신청할 수 없습니다.\n> 신청권수 : 전체 작은도서관 합산 1인 월 2권, 연간 15권\n> 대상도서 : 국내서\n> #### 신청방법\n> 신청방법: 홈페이지 로그인\n> 신청방법: 도서검색 후 미소장도서 신청 (선정 제외도서 확인)\n> 신청방법: 희망도서 신청\n> 신청방법: 선정·선정취소 (선정기준에 따라 선정 및 취소)\n> 구입 소요기간 : 1개월 (납품상황 및 도서관 사정에 따라 변동 가능)\n> 신청방법: 대출\n> 신청방법: ❖ 서명, 저자, 출판사를 정확하게 기재하시기 바랍니다.\n> 신청방법: ❖ 희망도서는 다수의 이용자가 활용할 수 있는 도서로 신청하여 주시기 바랍니다.\n> 신청방법: ❖ 타 작은도서관 및 다대도서관 소장도서는 상호대차를 이용하여 주시기 바랍니다.\n> ❖ 희망도서 미대출 시 신청 제한: 희망도서 신청 후 미대출 3권 누적 시 누적일(우선 대출 기한 익일)로부터 2개월간 신청 제한\n> 신청자 우선대출 : 대출 안내 받으신 날부터 3일이내(SMS 발송)\n> #### 선정제외기준\n> 선정제외기준: 소장, 구입중, 신청일 현재 미발간도서, 국외서, 정기간행물, 비도서(DVD 등)\n> 선정제외기준: 만화, 로맨스, 라이트노벨, 판타지, 무협소설 중 유해한 도서\n> 선정제외기준: 소장이 적합하지 않은 도서 형태(스티커, 색칠, 교구가 많은 도서 등)\n> 선정제외기준: 개인용 학습서(전공서적, 문제집, 수험서, 연수교재, 중고생 참고도서 등)\n> 선정제외기준: 비슷한 주제를 여러권 신청 할 경우\n> 선정제외기준: 상업적으로 신청된 동일 출판사의 도서\n> 선정제외기준: 고가도서(30,000원이상), 전집, 3권 이상 시리즈, 당해년도 포함 5년이전 출간된 도서\n> 선정제외기준: 1인 출판(POD) 도서\n> 선정제외기준: 그 외 도서관 자료로 부적합한 도서",
+        "sources": [
+          {
+            "title": "희망도서 신청",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607110000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-11"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "전체 작은도서관 합산 월2권/연15권이 맞다.",
+      "response_sha256": "4f6ef06407be8d4d0e375e712d7e970e1c2341f534d8966fbf3aeab4045386a1"
+    },
+    {
+      "id": "Y010",
+      "turn": 1,
+      "question": "부품 탈취로 원형이 훼손된 냉장고 무료수거도 가능한가요?",
+      "criterion": "원형훼손 무상수거 제외; 단순 가능제품 목록으로 예외 대체 금지",
+      "seconds": 16.946,
+      "server_timing": "app;dur=16920.1",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 16.946
+        }
+      ],
+      "response": {
+        "answer": "**대형폐가전**\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n- ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n- 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 페가전 무상처리 안내\n> #### 대형폐가전\n> 대형폐가전 : 무상수거\n> 대 상 : 아래 품목\n> 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 분 류: 온도교환 기기\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 품 명: 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n> 단일수거 가능제품 / TV — 분 류: 디스플레이기기\n> 단일수거 가능제품 / TV — 품 명: TV\n> 단일수거 가능제품 / 복사기 — 분 류: 통신사무기기\n> 단일수거 가능제품 / 복사기 — 품 명: 복사기\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 분 류: 일반 전기 전자제품\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 품 명: 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 분 류: 세트 제품\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 품 명: 오디오세트(구형 전축), PC세트(본체, 모니터)*\n> 다량수거 가능품목 — 분 류: 5개이상 동시배출시 수거가능 제품\n> 다량수거 가능품목 — 품 명: 컴퓨터, 모니터, 오디오, 프린터, 팩시밀리, 음식물처리기, 전기비데, 전기히터, 연수기, 가습기, 전기다리미, 선풍기, 믹서기, 청소기, 비디오플레이어, 휴대폰, 스캐너, 빔프로젝터, 유무선공유기, 전기밥솥, 토스트기, 전기주전자, 전기온수기, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 전기안마기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기\n> ※ 다량수거가능품목 中 전기안마기의 경우, 안마의자는 제외\n> ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n> ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n> #### 소형폐가전\n> 소형폐가전 : 무상수거\n> 대 상 : 아래 품목(40여종)\n> 배출방법 : 단독주택 : 매주 수요일 비닐봉투 등에 담아 문전 배출 공동주택 : 전용수거함이 있는 경우 ▷ 상시 배출 전용수거함이 없는 경우 ▷ 재활용품 배출일자에 배출 레이저프린터, 비레이저프린터, 복사기, 팩시밀리, 컴퓨터자판, 컴퓨터본체, 스캐너, 빔프로젝트, 유무선공유기, 포터블, 오디오본체, 오디오스피커, 오디오차량용, 전기오븐, 전자레인지, 음식물처리기, 식기건조기, 전기비데, 공기청정기, 전기히터, 전기밥솥, 가습기, 다리미, 선풍기, 믹서기, 청소기, 비디오, 토스트기, 전기주전자, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기, 탈수기 ※ 옥매트, 전기장판, 조명기기류, 전기장목재재질의 전자제품(디지털피아노 등)은 제외 - 대형폐기물로 배출(처리 수수료 있음)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "고장은 가능하나 원형훼손/부품탈취는 무상수거가 되지 않는 예외를 보존했다. 동일 예외 중복 표시는 품질 한계다.",
+      "response_sha256": "c1db87ca60a301e3bdbc16a2d24294aec26e73661d576d9f5ec9c9a58ab012fd"
+    },
+    {
+      "id": "Y011",
+      "turn": 1,
+      "question": "사하구청 주소와 대표전화 번호가 궁금해요.",
+      "criterion": "구청 주소·대표전화051-220-4000; 직원 직통/팩스 혼동 금지",
+      "seconds": 22.383,
+      "server_timing": "app;dur=22352.3",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 22.383
+        }
+      ],
+      "response": {
+        "answer": "**부산광역시 글로벌 중개사무소 홈페이지 안내**\n- 1 — 주소: 사하구 을숙도대로 741 상가 1-2호(구평동 영생아파트)\n- 2 — 주소: 사하구 사리로 45, 1층 (괴정동)\n\n**사하구청 대표전화: 051-220-4000**",
+        "answer_details": "글로벌 중개사무소의 공식 안내 원문입니다.\n\n> ## 글로벌 중개사무소\n> ### 부산광역시 글로벌 중개사무소 홈페이지 안내\n> 부동산 거래시장 선진화 및 국제화를 위해 외국인을 위한 글로벌 중개사무소를 다음과 같이 안내하오니 많은 이용바랍니다.\n> 사하구 글로벌 중개업소\n> 1 — 사무소명: 삼성공인중개사사무소 · 대표: 김주호 · 주소: 사하구 을숙도대로 741 상가 1-2호(구평동 영생아파트) · 전화번호: 051-262-2545 · 비고: 영어\n> 2 — 사무소명: W합동부동산중개사무소 · 대표: 김우리 · 주소: 사하구 사리로 45, 1층 (괴정동) · 전화번호: 051-271-0991 · 비고: 영어",
+        "sources": [
+          {
+            "title": "글로벌 중개사무소",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          },
+          {
+            "title": "사하구청 부서별 대표전화",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "사하구청",
+            "contact": "051-220-4000",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15T11:56:35.847706+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 2,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": [
+          "사하구청에서 담당하는 업무 알려줘"
+        ]
+      },
+      "grade": "W",
+      "reason": "구청 주소 대신 글로벌 중개사무소 주소2개를 제시했다. 대표전화가 맞더라도 주소 항목은 다른 시설로 오답이다.",
+      "response_sha256": "5e513839a3cd9305627648166d41ab72419d45a11c2bb36432986633db6d4c18"
+    },
+    {
+      "id": "Y012",
+      "turn": 1,
+      "question": "마을세무사 이용 대상이 누구인가요?",
+      "criterion": "취약계층/영세사업자/전통시장상인 등 세무사 이용이 어려운 구민; 범위/재산보유 제한 유지",
+      "seconds": 1.175,
+      "server_timing": "app;dur=1060.9",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.175
+        }
+      ],
+      "response": {
+        "answer": "**마을세무사**\n- 이용대상: 취약계층, 영세사업자, 전통시장 상인 등 세무사 이용이 어려운 구민\n- 정의: 구민들의 세금고민 해결을 위해 무료 세무상담 서비스(재능기부)를 제공하기로 약속한 우리 이웃 세무사입니다.\n- 이용방법: 전화, 팩스, 이메일을 통한 상담 ※ 추가상담이 필요한 경우, 마을세무사와 시간·장소를 정하여 대면 상담",
+        "answer_details": "마을세무사의 공식 안내 원문입니다.\n\n> ## 마을세무사\n> ### 마을세무사란?\n> 정의: 구민들의 세금고민 해결을 위해 무료 세무상담 서비스(재능기부)를 제공하기로 약속한 우리 이웃 세무사입니다.\n> ### 이용대상\n> 이용대상: 취약계층, 영세사업자, 전통시장 상인 등 세무사 이용이 어려운 구민\n> ### 이용방법\n> 이용방법: 전화, 팩스, 이메일을 통한 상담 ※ 추가상담이 필요한 경우, 마을세무사와 시간·장소를 정하여 대면 상담\n> ### 상담내용\n> 상담내용: 국세 및 지방세 관련 세금고민 상담, 지방세 불복 청구 관련 상담 ※ 어려운 구민을 우선 상담하기 위해 일정금액 이상 재산보유자는 상담이 제한 될 수 있습니다.\n> ### 마을세무사 현황\n> 김성욱 — 전화번호: 051-915-7121\n> 김성욱 — 팩스번호: 051-914-7121\n> 김성욱 — 이메일: [MASKED:이메일]\n> 김연선 — 전화번호: 051-902-7200\n> 김연선 — 팩스번호: 051-902-7203\n> 김연선 — 이메일: [MASKED:이메일]\n> 한재섭 — 전화번호: 051-203-8370\n> 한재섭 — 팩스번호: 051-203-8350\n> 한재섭 — 이메일: [MASKED:이메일]\n> 황철연 — 전화번호: 051-294-2166\n> 황철연 — 팩스번호: 051-294-2128\n> 황철연 — 이메일: [MASKED:이메일]",
+        "sources": [
+          {
+            "title": "마을세무사",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0105060000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility"
+          ],
+          "matched_fields": [
+            "eligibility"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "W",
+      "reason": "마을세무사의 일반 이용대상은 맞지만 같은 사업의 일정금액 이상 재산보유자 제한될 수 있다는 중요한 제한을 미표시했다.",
+      "response_sha256": "6394ed8169b865a2301584be67d962aab72afb750450682028b6dca33a1d0a72"
+    },
+    {
+      "id": "Y013",
+      "turn": 1,
+      "question": "행정서비스헌장의 의미가 뭔지 알고 싶어요.",
+      "criterion": "서비스 기준/내용/절차/방법·시정/보상 등을 약속하는 제도; 운영 연혁만 답하지 않기",
+      "seconds": 4.965,
+      "server_timing": "app;dur=4510.9",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.965
+        }
+      ],
+      "response": {
+        "answer": "죄송합니다. 문의하신 내용에 대해 정확한 정보를 찾지 못했습니다.\n\n보다 정확한 안내를 위해 사하구청 대표전화(051-220-4000) 또는 사하구청 홈페이지(https://www.saha.go.kr)를 통해 문의해 주시기 바랍니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "no_current_evidence",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "최신 근거를 찾지 못함",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "R",
+      "reason": "행정서비스헌장 실제 정의가 있지만 의미라는 요청 필드 단어를 알려지지 않은 주제로 오인하여 거절했다.",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8"
+    },
+    {
+      "id": "Y014",
+      "turn": 1,
+      "question": "정보화교육이 무료 교육인지 궁금해요.",
+      "criterion": "디지털배움터로 전환된 정보화교육의 실제 무료 근거; 평생학습관 수강료 차용 금지",
+      "seconds": 1.243,
+      "server_timing": "app;dur=1236.6",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.243
+        }
+      ],
+      "response": {
+        "answer": "확인된 교육은 구민 누구나 가능 대상입니다.\n이 대상의 교육을 찾으시나요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "R",
+      "reason": "구민 누구나 가능이라는 일반 대상인데 이를 다시 확인했다. 비용 문의에도 답하지 못했다.",
+      "response_sha256": "707cba0508e7e7daa6f8fdc5605979c2266b843c1822a754a724de18600c2ef5"
+    },
+    {
+      "id": "Y015",
+      "turn": 1,
+      "question": "정보공개청구 결정 기한이 얼마나 되나요?",
+      "criterion": "청구받은날10일 이내·10일 범위 연장·사유 문서 통지; 타 민원 기한 대체 금지",
+      "seconds": 0.9,
+      "server_timing": "app;dur=894.1",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.9
+        }
+      ],
+      "response": {
+        "answer": "**정정보공개 여부결정 (처리부서)**\n- 공개여부 결정기간 : 청구를 받은 날부터 10일 이내 (10일 이내의 범위에서 연장가능, 연장사실과 연장사유를 청구인에게 문서로 통지)",
+        "answer_details": "행정정보공개이용안내의 공식 안내 원문입니다.\n\n> ## 행정정보공개이용안내\n> ### 정보공개청구 및 처리절차\n> #### 정보공개청구(청구인)\n> 청구방법 : 당해 정보를 보유·관리하고 있는 공공기관에 정보공개청구서를 제출 또는 구술로 청구\n> 제출방법 : 직접제출, 우편·모사전송, 정보통신망 이용 등\n> 구술방법 : 청구인이 담당공무원의 면전에서 진술, 담당공무원이 정보공개구술 청구서 작성\n> 기재사항 : 이름, 주민등록번호, 주소 및 연락처(전화번호, 전자우편주소), 공개 청구정보의 내용 및 공개방법\n> #### 접수 및 이송 (접수처)\n> 정보공개청구서 접수시 정보공개처리대장에 기록, 청구인에게 접수증 교부\n> 처리부서 또는 소관기관에 청구서 이송\n> #### 정정보공개 여부결정 (처리부서)\n> 공개여부 결정기간 : 청구를 받은 날부터 10일 이내 (10일 이내의 범위에서 연장가능, 연장사실과 연장사유를 청구인에게 문서로 통지)\n> 공개대상정보가 제3자와 관련 있는 경우 제3자에게 통지하고, 필요시 제3자의 의견청취(제3자는 통지받은 날부터 3일 이내 자신과 관련된 정보에 대한 비공개요청 가능)\n> 공개여부 결정이 곤란한 경우 정보공개심의회에서 심의\n> #### 정보공개여부 결정 통지 (처리부서)\n> 정보(공개/비공개/부분공개) 결정통지서 통지 공개결정시 : 공개일시(공개 결정일부터 10일 이내)·공개장소 등을 명시 비공개결정시 : 비공개이유·불복방법 및 불복절차 명시\n> #### 정보공개실시 (처리부서)\n> 정보공개방법 문서·도면·사진 등의 열람 또는 사본의 교부 필름·테이프 등의 시청 또는 인화물·복제물의 교부 마이크로필름·슬라이드 등의 시청·열람 또는 사본·복제물의 교부 전자파일의 전자우편을 통한 송부, 매체에 저장·제공, 열람·시청 또는 사본·출력물의 교부\n> 청구인의 확인 정보공개시 본인 또는 대리인 확인이 필요한 경우 청구인의 신분증명서 또는 대리인의 신분증명서 및 관계서류\n> 비용부담 내용 : 수수료 및 우편요금(우송으로 공개하는 경우) 납부방법 : 수입인지(정부기관), 수입증지(지방자치단체), 현금(기타)",
+        "sources": [
+          {
+            "title": "행정정보공개이용안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0302010300",
+            "category": "정보공개",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-16"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "청구받은날10일·연장10일 범위·사유 문서 통지를 유지했다.",
+      "response_sha256": "4f58029fa90b93ff35d6f99959b78cdf4bef6db824c5752ec0f8b76a934405df"
+    },
+    {
+      "id": "Y016",
+      "turn": 1,
+      "question": "임신부 영양플러스 신청 소득 기준이 몇 퍼센트인지 알려줘.",
+      "criterion": "가구규모별 중위소득80% 이하와 함께 필요한 거주/연령/영양 기준·임신부 판정 예외",
+      "seconds": 0.677,
+      "server_timing": "app;dur=671.0",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.677
+        }
+      ],
+      "response": {
+        "answer": "**영양플러스**\n- ※ 해당하는 모든 가구 구성원은 소득·재산조사 대상에 포함되며, 가구원 수로 산정함.",
+        "answer_details": "영양플러스의 공식 안내 원문입니다.\n\n> ## 영양플러스\n> ### 영양플러스란?\n> 정의: 영양상 위험이 큰 임산부(임신부, 출산수유부) 및 영유아의 건강 증진에 필요한 체계적인 영양 교육을 실시\n> 정의: 필수 영양소를 식품 형태로 지원하여 식생활 관리 능력을 향상시키기 위한 사업\n> ### 신청기준 (아래4가지 조건 모두 만족하는 분만 해당)\n> 거주기준: 사하구민\n> 연령기준: 만 6세 이하 영유아 임신부 출산부(출산 후 6개월까지) 수유부(출산 후 12개월까지) ※ 최소 참여 기간인 6개월 이상 참여가 불가능한 경우, 신청이 제한됩니다.\n> 영양기준: 빈혈, 저체중 저신장 등 영양위험요인 보유자(예약 후 방문 시 평가) ※ 임신부의 경우, 영양위험요인 판정절차 없이 가능\n> 소득기준: 가구 규모별 기준 중위소득의 80% 이하\n> [2026년 소득판정 기준표] (단위:원)\n> 기준 중위소득 80%(원)\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 3,359,434\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 4,287,229\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 5,195,790\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 6,045,375\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 6,844,762\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 7,612,120\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 8,379,478\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> 9,146,837\n> < 소득기준 적합여부 판정방법 > • 신청가구의 소득과 재산을 종합적으로 반영한 소득인정액이 기준 중위소득 이하인 경우에 소득기준을 충족한 것으로 판정 ※ 소득인정액은 신청가구 구성원의 '소득평가액 + 재산의 소득환산액'을 합산한 금액에 해당함. ※ 소득인정액 산출을 위한 기준, 절차, 방법 등은 “사회보장급여 공통업무 안내”를 준용함. • 기초생활보장 또는 차상위계층, 한부모가족 자격 등 보유한 경우(가정위탁 아동 포함) 소득·재산조사 면제 대상임.\n> ※ 가구원 수 포함 대상: 신청인, 신청인의 배우자(사실혼 포함, 외국인 배우자 포함), 미혼 자녀, 신청인과 주민등록 및 건강보험이 함께 등재된 2촌 이내의 직계존비속(태아 포함)\n> ※ 해당하는 모든 가구 구성원은 소득·재산조사 대상에 포함되며, 가구원 수로 산정함.\n> ### 안내사항\n> 구비서류: 임산부 등록수첩 (보건소에 이미 등록된 임산부는 자료제출 생략가능) 기초생활보장 또는 차상위계층 증명서류 (해당자에 한함)\n> 신청 및 문의: 전화문의(☎ 051-220-5729)후 방문 내소하여 빈혈검사, 신체계측 후 서류접수\n> 기타: 신청자가 많아 수개월 대기할 수 있음 대기 기간 중 연령 기준을 초과할 경우 대기자에서 제외 대상자 선정 후 6개월마다 중간평가 실시, 총 수혜기간은 6개월~1년\n> ### 지원내용\n> 지원내용: 영양교육 및 상담 (월 1회 보건소에서 영양교육 실시)\n> 지원내용: 정기적 영양평가 (신체계측, 빈혈검사, 영양섭취상태 조사, 영양지식설문)\n> 지원내용: 보충영양식품 제공\n> 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 — 6-12개월: 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 쌀 1.5kg 달걀 30개 당근 600g 감자 800g\n> 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 — 1-5세: 쌀 1.5kg 달걀 30개 당근 600g 감자 800g 검정콩300g 김 90g 우유 60개\n> 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 — 임신부 6개월이하혼합수유부: 쌀 3kg 달걀 30개 당근 1200g 감자 1600g 검정콩 500g 김 90g 건미역 100g 우유 60개\n> 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 — 7개월이상혼합수유부: 우유 60개\n> 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 — 출산부: 쌀 3kg 달걀 30개 당근 1200g 감자 1600g 검정콩 500g 김 90g 건미역 100g 우유 30개\n> 조제분유 ▶혼합수유:1캔 ▶조제수유:2캔 — 완전모유수유부: 쌀 3kg 달걀 30개 당근 1200g 감자 1600g 검정콩 500g 김 90g 건미역 100g 우유 60개 닭가슴살6캔 주스 6L",
+        "sources": [
+          {
+            "title": "영양플러스",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0402090000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "W",
+      "reason": "소득 비율을 비용으로 읽어 중위소득80%와 필수4조건 대신 가구원 산정 설명을 답했다.",
+      "response_sha256": "572af7e71699820885cc88f69a4d6937f4571fcd968026ef839a5155ad4cd5bb"
+    },
+    {
+      "id": "Y017",
+      "turn": 1,
+      "question": "정화조 청소는 매년 해야 하나요?",
+      "criterion": "연1회 이상 내부청소 의무; 월별 안내 통지와 혼동 금지",
+      "seconds": 32.328,
+      "server_timing": "app;dur=32322.0",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 32.328
+        }
+      ],
+      "response": {
+        "answer": "- 하수도법 제39조 및 같은 법 시행규칙 제33조 규정에 의거 개인하수처리시설(오수처리시설, 정화조)은 연 1회 이상 내부청소를 실시하도록 하고 있으며, 이를 미 이행할 경우 100만원 이하의 과태료를 부과하도록 규정하고 있습니다.",
+        "answer_details": "정화조 청소의 공식 안내 원문입니다.\n\n> ## 정화조 청소\n> ### 정화조 청소안내\n> #### 개인하수처리시설(오수처리시설, 정화조)청소안내\n> 개인하수처리시설은 화장실에서 나오는 오수를 정화하는 시설로서 정상적인 유지를 위해서는 청소가 필요합니다.\n> 하수도법 제39조 및 같은 법 시행규칙 제33조 규정에 의거 개인하수처리시설(오수처리시설, 정화조)은 연 1회 이상 내부청소를 실시하도록 하고 있으며, 이를 미 이행할 경우 100만원 이하의 과태료를 부과하도록 규정하고 있습니다.\n> 우리구에서는 정화조 청소 미 이행으로 인한 민원을 최소화하기 위해 개인하수처리시설 청소 안내를 월1회 이상 통지하고 있으며 개인하수처리시설 청소비율을 높이기 위해 노력하고 있습니다.\n> #### 정화조청소업체\n> 현대정화 — 전화번호: 291-1422\n> 현대정화 — 구 분: 1구역(6개동)\n> 현대정화 — 책임동명: 괴정(1,3,4)동, 당리동,하단(1,2)동\n> 사하환경 — 전화번호: 203-6200\n> 사하환경 — 구 분: 1구역(8개동)\n> 사하환경 — 책임동명: 신평(1,2)동,장림(1,2)동, 감천(1,2)동,다대1동, 구평동\n> 사하정화 — 전화번호: 204-3202\n> 사하정화 — 구 분: 1구역(2개동)\n> 사하정화 — 책임동명: 괴정2동, 다대2동\n> #### 청소 수수료 자동 계산\n> 정화조 용량을 입력하고 계산 버튼을 클릭하시면 수수료가 자동 계산됩니다.\n> 정화조 용량(청소량) m³ 계산\n> #### 정화조 청소요금(시행일 2023. 1. 1.)\n> 기본요금 0.75㎥ 23,620원, 0.1㎥초과 당 1,710원 가산\n> 계산식 : (수거량-0.75)×17,100+23,620 ※ 요금 부과시 100원 미만 절사\n> 0.75㎥ — 요금: 23,620원\n> 0.75㎥ — 수거량: 5.0㎥\n> 0.75㎥ — 요금: 96,200원\n> 0.75㎥ — 수거량: 50.0㎥\n> 0.75㎥ — 요금: 865,700원\n> 1.5㎥ — 요금: 36,400원\n> 1.5㎥ — 수거량: 10.0㎥\n> 1.5㎥ — 요금: 181,700원\n> 1.5㎥ — 수거량: 100.0㎥\n> 1.5㎥ — 요금: 1,720,700원\n> 2.0㎥ — 요금: 44,900원\n> 2.0㎥ — 수거량: 20.0㎥\n> 2.0㎥ — 요금: 352,700원\n> 3.0㎥ — 요금: 62,000원\n> 3.0㎥ — 수거량: 30.0㎥\n> 3.0㎥ — 요금: 523,700원\n> 4.0㎥ — 요금: 79,100원\n> 4.0㎥ — 수거량: 40.0㎥\n> 4.0㎥ — 요금: 694,700원",
+        "sources": [
+          {
+            "title": "정화조 청소",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405140000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "grounded_model",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "연1회 이상 내부청소 의무와 미이행 과태료 상한을 같은 공식 원문에서 안내했다.",
+      "response_sha256": "ec78370c88a9ee3d364cb2ff98d911cffd86dea7633acc09f575af3421a09f73"
+    },
+    {
+      "id": "Y018",
+      "turn": 1,
+      "question": "첫만남이용권은 통장으로 현금 지급되나요?",
+      "criterion": "국민행복카드 포인트 지급; 다른 현금 출산지원금 대체 금지",
+      "seconds": 1.283,
+      "server_timing": "app;dur=1276.3",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.283
+        }
+      ],
+      "response": {
+        "answer": "**첫만남이용권**\n- 지급금액 ▷국민행복카드에 포인트 지급 첫째 출생아 : 200만원(바우처) 둘째이후 출생아 : 300만원(바우처)\n- 대 상 : 2025년 이후 출생아",
+        "answer_details": "출산장려정책의 공식 안내 원문입니다.\n\n> ## 출산장려정책\n> 출산지원금 ※문의 : 통합돌봄과 가족정책계(220-5665)\n> #### 첫만남이용권\n> 대 상 : 2025년 이후 출생아\n> 지급금액 ▷국민행복카드에 포인트 지급 첫째 출생아 : 200만원(바우처) 둘째이후 출생아 : 300만원(바우처)\n> 신청방법 : 주민등록 상 주소지 동 행정복지센터, 복지로, 정부24\n> 사용기간 : 아동 출생일로부터 2년\n> 사용범위 : 전 업종(온라인구매 포함) ※ 단, 유흥업종, 사행업종, 마사지 등 위생업종(이미용실 제외), 레저업종, 면세점 등 제외\n> #### 출산지원금(구비, 시비)\n> 출산지원금 (구비) — 대상: 사하구에 주민등록 되어있는 26년 모든 출생아\n> 출산지원금 (구비) — 지급금액: 첫째부터 50만원 (현금, 일시금)\n> 출산지원금 (구비) — 신청방법: 등본상 동 행정복지센터, 정부24\n> 출산지원금 (구비) — 비고: 출생일로부터 3개월 이내 신청 및 신청서 접수 다음달 10일 지급\n> 출산지원금 (시비) — 대상: 부산시에 주민등록 되어있는 26년 둘째이후 출생아\n> 출산지원금 (시비) — 지급금액: 둘째이후 100만원 (현금, 일시금)\n> 출산지원금 (시비) — 신청방법: 등본상 동 행정복지센터\n> 출산지원금 (시비) — 비고: 출생일로부터 3개월 이내 신청 및 신청서 접수 다음달 10일 지급\n> ※ 단, 부 또는 모와 자녀가 자녀 출생신고일 현재 부산시(사하구) 같은 주민등록지에 등재 및 거주 하여야함 (시비지원금의 경우 부 또는 모와 두자녀 이상 모두가 같은 주민등록지에 등재 및 거주 하여야함)\n> 출산지원금(장애인) ※문의 : 노인장애인복지과 장애인복지계(220-5627)\n> #### 출산지원금\n> 등록한 여성장애인 중 출산 및 유산‧사산한 자 : 120만원\n> 부의 장애정도(사하구 거주) 심한장애 100만원 이내 / 심하지 않은 장애 70만원이내\n> #### 양육지원금\n> 부 또는 모의 장애정도가 심한 장애인가정 월 10만원(사하구 거주)\n> 신생아 36개월까지 매월 지급\n> 보육지원 ※문의 : 복지정책과 보육계(220-5641)\n> #### 부모급여 ※ 종일제 아이돌봄서비스를 이용하는 경우 중복 지원 불가\n> 대상 : 2세 미만의 아동(0~23개월) (만 0세) 가정양육시 현금(100만원), 어린이집 이용 시 보육료 바우처와 현금(차액46만원) (만 1세) 가정양육시 현금(50만원), 어린이집 이용 시 보육료 바우처와 현금(차액2.5만원)\n> 양육수당(가정양육 시) : 24개월~86개월 미만(미취학 아동) 월10만원\n> #### 보육료 지원(어린이집 이용)\n> 대상 : 만0~5세 미취학 영유아(부모소득 무관)\n> 지원내용 : 보육료 전액 지원(정부지원보육료)\n> 신청 : 거주지 동 행정복지센터\n> 모자보건사업 ※문의 : 사하구보건소 아가맘센터(220-5760~2)\n> 임산부 등록관리 : 임산부 앰블럼(가방고리), 임산부 자동차표지증, 철분제·엽산제 지원\n> #### 바우처·의료비 지원\n> 바우처 : 산모·신생아 건강관리 지원, 저소득층 기저귀·조제분유 지원\n> 의료비 : 난임부부 시술비 지원, 고위험 임산부 의료비 지원, 미숙아·선천성 이상아 의료비 지원, 선천성 대사이상 검사비 및 의료비 지원, 선천성 난청 검사비 및 보청기 지원, 영유아 발달장애 정밀 검사비 지원, 청소년산모 임신·출산 의료비 지원, 가임력 검사비 지원\n> #### 건강교실 운영\n> 임산부 출산교실, 태교교실, 베이비 마사지 교실, 모유수유 클리닉 등\n> 산후조리경비지원 ※문의 : 사하구보건소 아가맘센터(220-5760~2)\n> #### 부산형 산후조리경비 지원 ※ 임신․출산 관련 바우처 카드 결제 내역 지원 불가\n> 지원대상 : 2025. 1. 1. 이후 부산시 (사하구) 출생아 ※ 출생아, 출생아 부 또는 모가 출생일 및 신청일 현재 부산시에 주민등록을 둔 가구\n> 지원금액 : 출생아 1인당 최대 100만원\n> 지원내용 : 산모신생아 건강관리 서비스 이용 본인부담금, 산후조리원비(50만원 한도), 병․의원 진료비(약제비 제외, 한약 조제비 포함)\n> 사용기간 : 출산일로부터 6개월\n> 신청기간 : 출산일로부터 1년 이내\n> 신청방법 : 온라인(정부24) 또는 보건소 방문신청\n> 신 청 자 : 산모 및 배우자, 부부의 직계존속",
+        "sources": [
+          {
+            "title": "출산장려정책",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0510070100",
+            "category": "사하복지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "conditions"
+          ],
+          "matched_fields": [
+            "conditions"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "국민행복카드 포인트와200/300만원의2025년 이후 출생 조건을 보존했다.",
+      "response_sha256": "5912c4a0119b657b8a0854978704ea67da98726c08f16e1b76077194a73c813b"
+    },
+    {
+      "id": "Y019",
+      "turn": 1,
+      "question": "현재 공영주차장에 빈자리가 몇 면 있는지 알려줘.",
+      "criterion": "실시간 잔여면수 미연동 명시; 전체 주차면수를 현재 빈자리로 대체 금지",
+      "seconds": 0.038,
+      "server_timing": "app;dur=4.9",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.038
+        }
+      ],
+      "response": {
+        "answer": "현재 상담에는 **실시간 주차 잔여면수 조회 기능이 없습니다.** 주차장의 전체 주차면수를 현재 빈자리 수로 안내할 수는 없습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "live_data_unavailable",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "실행·조회 기능 확인 필요",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "I",
+      "reason": "실시간 주차 잔여면수 기능 미연동을 명시하고 전체 면수를 현재 빈자리로 대체하지 않았다.",
+      "response_sha256": "69791db2415bfda1787460e0632dcb2929f31b6b835d1fe6c30d535dfd807d5a"
+    },
+    {
+      "id": "Y020",
+      "turn": 1,
+      "question": "AI를 담당하는 부서의 팩스번호 확인해줘.",
+      "criterion": "현재 연락처 파일의 팩스 미확인 명시; 담당 직통번호/대표번호를 팩스로 대체 금지",
+      "seconds": 0.027,
+      "server_timing": "app;dur=4.5",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.027
+        }
+      ],
+      "response": {
+        "answer": "현재 공식 연락처 파일에서는 **팩스번호를 확인할 수 없습니다.** 직통전화와 같은 번호라고 안내할 수 없습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "fax_not_verified",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "문의 업무 확인 필요",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "I",
+      "reason": "공식 파일에서 팩스 미확인을 명시하고 직원 직통/대표전화를 대신 쓰지 않았다.",
+      "response_sha256": "933cdd5fe4b180c6d7d393b24c13db2fc2bb0e255ae7bd930ee18e6573669888"
+    },
+    {
+      "id": "Y021",
+      "turn": 1,
+      "question": "사하구 새가족우주축하금 99만원 신청 방법 알려줘.",
+      "criterion": "허구 사업·금액 인정/다른 출산 사업 대체 금지",
+      "seconds": 11.584,
+      "server_timing": "app;dur=11567.6",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 11.584
+        }
+      ],
+      "response": {
+        "answer": "**출산장려정책**\n- 신청방법 : 주민등록 상 주소지 동 행정복지센터, 복지로, 정부24\n- 출산지원금 (구비) — 신청방법: 등본상 동 행정복지센터, 정부24\n- 출산지원금 (시비) — 신청방법: 등본상 동 행정복지센터\n- 대 상 : 2025년 이후 출생아\n- 대상 : 2세 미만의 아동(0~23개월) (만 0세) 가정양육시 현금(100만원), 어린이집 이용 시 보육료 바우처와 현금(차액46만원) (만 1세) 가정양육시 현금(50만원), 어린이집 이용 시 보육료 바우처와 현금(차액2.5만원)\n- 대상 : 만0~5세 미취학 영유아(부모소득 무관)\n- 신청방법 : 온라인(정부24) 또는 보건소 방문신청",
+        "answer_details": "출산장려정책의 공식 안내 원문입니다.\n\n> ## 출산장려정책\n> 출산지원금 ※문의 : 통합돌봄과 가족정책계(220-5665)\n> #### 첫만남이용권\n> 대 상 : 2025년 이후 출생아\n> 지급금액 ▷국민행복카드에 포인트 지급 첫째 출생아 : 200만원(바우처) 둘째이후 출생아 : 300만원(바우처)\n> 신청방법 : 주민등록 상 주소지 동 행정복지센터, 복지로, 정부24\n> 사용기간 : 아동 출생일로부터 2년\n> 사용범위 : 전 업종(온라인구매 포함) ※ 단, 유흥업종, 사행업종, 마사지 등 위생업종(이미용실 제외), 레저업종, 면세점 등 제외\n> #### 출산지원금(구비, 시비)\n> 출산지원금 (구비) — 대상: 사하구에 주민등록 되어있는 26년 모든 출생아\n> 출산지원금 (구비) — 지급금액: 첫째부터 50만원 (현금, 일시금)\n> 출산지원금 (구비) — 신청방법: 등본상 동 행정복지센터, 정부24\n> 출산지원금 (구비) — 비고: 출생일로부터 3개월 이내 신청 및 신청서 접수 다음달 10일 지급\n> 출산지원금 (시비) — 대상: 부산시에 주민등록 되어있는 26년 둘째이후 출생아\n> 출산지원금 (시비) — 지급금액: 둘째이후 100만원 (현금, 일시금)\n> 출산지원금 (시비) — 신청방법: 등본상 동 행정복지센터\n> 출산지원금 (시비) — 비고: 출생일로부터 3개월 이내 신청 및 신청서 접수 다음달 10일 지급\n> ※ 단, 부 또는 모와 자녀가 자녀 출생신고일 현재 부산시(사하구) 같은 주민등록지에 등재 및 거주 하여야함 (시비지원금의 경우 부 또는 모와 두자녀 이상 모두가 같은 주민등록지에 등재 및 거주 하여야함)\n> 출산지원금(장애인) ※문의 : 노인장애인복지과 장애인복지계(220-5627)\n> #### 출산지원금\n> 등록한 여성장애인 중 출산 및 유산‧사산한 자 : 120만원\n> 부의 장애정도(사하구 거주) 심한장애 100만원 이내 / 심하지 않은 장애 70만원이내\n> #### 양육지원금\n> 부 또는 모의 장애정도가 심한 장애인가정 월 10만원(사하구 거주)\n> 신생아 36개월까지 매월 지급\n> 보육지원 ※문의 : 복지정책과 보육계(220-5641)\n> #### 부모급여 ※ 종일제 아이돌봄서비스를 이용하는 경우 중복 지원 불가\n> 대상 : 2세 미만의 아동(0~23개월) (만 0세) 가정양육시 현금(100만원), 어린이집 이용 시 보육료 바우처와 현금(차액46만원) (만 1세) 가정양육시 현금(50만원), 어린이집 이용 시 보육료 바우처와 현금(차액2.5만원)\n> 양육수당(가정양육 시) : 24개월~86개월 미만(미취학 아동) 월10만원\n> #### 보육료 지원(어린이집 이용)\n> 대상 : 만0~5세 미취학 영유아(부모소득 무관)\n> 지원내용 : 보육료 전액 지원(정부지원보육료)\n> 신청 : 거주지 동 행정복지센터\n> 모자보건사업 ※문의 : 사하구보건소 아가맘센터(220-5760~2)\n> 임산부 등록관리 : 임산부 앰블럼(가방고리), 임산부 자동차표지증, 철분제·엽산제 지원\n> #### 바우처·의료비 지원\n> 바우처 : 산모·신생아 건강관리 지원, 저소득층 기저귀·조제분유 지원\n> 의료비 : 난임부부 시술비 지원, 고위험 임산부 의료비 지원, 미숙아·선천성 이상아 의료비 지원, 선천성 대사이상 검사비 및 의료비 지원, 선천성 난청 검사비 및 보청기 지원, 영유아 발달장애 정밀 검사비 지원, 청소년산모 임신·출산 의료비 지원, 가임력 검사비 지원\n> #### 건강교실 운영\n> 임산부 출산교실, 태교교실, 베이비 마사지 교실, 모유수유 클리닉 등\n> 산후조리경비지원 ※문의 : 사하구보건소 아가맘센터(220-5760~2)\n> #### 부산형 산후조리경비 지원 ※ 임신․출산 관련 바우처 카드 결제 내역 지원 불가\n> 지원대상 : 2025. 1. 1. 이후 부산시 (사하구) 출생아 ※ 출생아, 출생아 부 또는 모가 출생일 및 신청일 현재 부산시에 주민등록을 둔 가구\n> 지원금액 : 출생아 1인당 최대 100만원\n> 지원내용 : 산모신생아 건강관리 서비스 이용 본인부담금, 산후조리원비(50만원 한도), 병․의원 진료비(약제비 제외, 한약 조제비 포함)\n> 사용기간 : 출산일로부터 6개월\n> 신청기간 : 출산일로부터 1년 이내\n> 신청방법 : 온라인(정부24) 또는 보건소 방문신청\n> 신 청 자 : 산모 및 배우자, 부부의 직계존속",
+        "sources": [
+          {
+            "title": "출산장려정책",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0510070100",
+            "category": "사하복지",
+            "service_type": "복지",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-15"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      },
+      "grade": "W",
+      "reason": "허구 축하금 질문을 다른 출산·보육 사업의 신청 방법/대상으로 대체했다.99만원을 반복하지 않아도 업무 불일치로 오답이다.",
+      "response_sha256": "65871fd6e40ddac67a5baf18c9528c31781010e34bfdefce180d6c278d3fb67e"
+    },
+    {
+      "id": "Y022",
+      "turn": 1,
+      "question": "가스가 새는 중인데 전등 스위치를 누르면 위험해?",
+      "criterion": "즉시 스위치 조작 금지·안전 대피·119·공식 안전 근거; 일반 검색 대기 금지",
+      "seconds": 0.008,
+      "server_timing": "app;dur=2.8",
+      "status": 200,
+      "error": null,
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.008
+        }
+      ],
+      "response": {
+        "answer": "**가스 누출이 의심되면 안전한 곳으로 이동한 뒤 119에 상황을 알리세요.**\n스파크로 점화될 수 있으므로 전등·환풍기 등 전기기구의 스위치를 조작하거나 불을 켜지 마세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "행정안전부 국민안전24 · 가스 누출 시 행동요령",
+            "url": "https://www.safekorea.go.kr/safekorea-kor/acts/nacts/action-guide.do?category=electircGasAccident&menuSn=4",
+            "category": "재난안전",
+            "service_type": "긴급신고",
+            "department": "",
+            "contact": "119",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-16"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 가스사고 안전 안내",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      },
+      "grade": "S",
+      "reason": "가스 누출에 즉시 전등 등 스위치 조작 금지·안전 대피·119를 제공했다.",
+      "response_sha256": "c9e471480180ea0ac2cd608346d2aedfbca3940f4fa603281361d74bdb391b01"
+    }
+  ]
+}
