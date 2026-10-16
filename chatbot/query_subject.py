@@ -20,6 +20,7 @@ WEAK_WORDS.update("어떤 얼마나 몇 며칠 한참 대신 직접 없이 장�
 WEAK_WORDS.update({'민원서류','계속'})
 WEAK_WORDS.update({'엄마','아빠','어머니','아버지','공식','부탁'})
 WEAK_WORDS.add('순서')
+WEAK_WORDS.update({'기한','퍼센트','비율','연락','요청','진행'})
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
 WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철", "중개수수료": "중개보수", "빌릴": "대여", "빌리": "대여", "감면": "감경"}
 # Keep names intact when morphology splits a service into generic nouns. These
@@ -51,6 +52,7 @@ SERVICE_NAMES += ('b형간염','a형간염','수수료면제')
 SERVICE_NAMES += ('쓰레기',)
 SERVICE_NAMES += ('주민등록증', '소방', '자전거도로')
 SERVICE_NAMES += ('인감증명', '본인서명사실확인서')
+SERVICE_NAMES += ('정보공개', '금연')
 WORDING_ALIASES.update({'인감증명서':'인감증명'})
 WORDING_ALIASES.update({'껍데기':'껍질'})
 WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
@@ -85,6 +87,7 @@ def normalize_query(query: str) -> str:
         text = text.replace(typo, name)
     text = re.sub(r'재\s+발급', '재발급', text)
     text = re.sub(r'다시\s*발급', '재발급', text)
+    text = re.sub(r'돈\s*(?:을\s*)?안\s*내고', '무료로', text)
     # Known service words may be spaced between syllables. Keep the surrounding
     # sentence, including negation and applicant facts, intact.
     text = _SERVICE_SPACING.sub(lambda match: re.sub(r'\s+', '', match.group()), text)
@@ -123,17 +126,17 @@ def compact(value: str) -> str:
 
 
 def service_term_present(term: str, text: str) -> bool:
-    if term == '소방':
+    if term in ('소방','지진','구인','구직'):
         # Removing spaces from "보건소 방문" creates the unrelated string
         # "소방". Accept a real fire-service word, including 사하소방서.
-        return bool(re.search(r'(?<![가-힣])(?:사하|부산(?:광역시)?)?소방', text))
+        return bool(re.search(r'(?<![가-힣])(?:사하구(?:청)?|사하|부산(?:광역시)?)?'+re.escape(term), normalize_query(text)))
     return term in compact(text)
 
 
 def service_names(query: str) -> set[str]:
     """Preserve the specific administrative topic, not just its broad family."""
     text = compact(query)
-    names = {name for name in SERVICE_NAMES if name in text}
+    names = {name for name in SERVICE_NAMES if name in text and service_term_present(name,query)}
     if re.search(r'자전거(?:전용)?도로', text):
         names.add('자전거도로')
     return {name for name in names if not any(name != other and name in other for other in names)}

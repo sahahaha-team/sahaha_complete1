@@ -46,6 +46,15 @@ def answer_goal(query: str) -> str | None:
         return 'precautions'
     if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량|약.*(?:몇알|몇정|먹어야)|하루.*몇(?:알|정)', compact_query):
         return 'medical_details'
+    if re.search(r'몇퍼센트|몇프로|몇%',compact_query):
+        return 'cost'
+    if re.search(r'어디(?:로|에).*연락|전화로만|팩스로만|이메일로만',compact_query):
+        return 'method'
+    if re.search(r'제한|제외|내도되|내도돼|연장할수|연장가능|연장하면',compact_query):
+        if not re.search(r'서류|준비|기간|몇개월|언제|몇일|며칠',compact_query):
+            return 'conditions'
+    if re.search(r'예약.*(?:있어야|없어도|필요한가)',compact_query):
+        return 'conditions'
     # The requested field wins over an incidental action such as 신청/버리는.
     # Applicant conditions and identity-copy questions are not application steps.
     if re.search(r'신분증|증명서', compact_query) and re.search(r'원본|사본|휴대폰사진|사진이면|사진으로', compact_query):
@@ -199,13 +208,13 @@ def requested_goals(query: str) -> tuple[str, ...]:
     if asks_opening_hours(query) and 'hours' not in goals:
         goals.append('hours')
     if (asks_location(query) and 'location' not in goals
-            and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출)|(?:신청|접수|예약).{0,12}어디(?:로|서)해',query.replace(' ',''))):
+            and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출|연락)|(?:신청|접수|예약).{0,12}어디(?:로|서)해',query.replace(' ',''))):
         goals.append('location')
     if primary != 'reference':
         extra = [('documents', r'(?:준비|구비|필요(?:한)?).*서류|서류.*(?:필요|무엇|뭐|지참)|준비물|가져가|가져갈|지참'),
                  ('eligibility', r'누가|누구|대상|조건|자격|몇\s*살|어떤\s*(?:주민|구민|사람)'),
                  ('schedule', r'언제|주기|날짜'),
-                 ('method', r'어떻게|방법')]
+                 ('method', r'어떻게|방법|어디(?:서|로).*신청|어디(?:로|에).*연락')]
         extra += [('cost',r'비용|발급비|수수료|요금|사용료|얼마(?!나)|얼마나\s*(?:주|지원)|공짜|무료'),
                   ('schedule',r'몇\s*(?:월|주|권|번|년|개월)|한\s*달|기한'),
                   ('conditions',r'제외|금지|제한')]
@@ -214,7 +223,8 @@ def requested_goals(query: str) -> tuple[str, ...]:
         for goal, pattern in extra:
             if (goal not in goals and re.search(pattern, query)
                     and not (goal == 'documents' and re.search(r'수거|가져가.*서비스|와서.*가져가',query))
-                    and not (primary in ('precautions','hours','location','specifications','conditions') and goal == 'method')
+                    and not (primary in ('precautions','hours','location','specifications') and goal == 'method')
+                    and not (primary == 'conditions' and goal == 'method' and not re.search(r'어떻게|방법|어디',query))
                     and not (primary == 'method' and goal == 'cost' and re.search(r'계산|거래금액|환산',query) and not '얼마' in query)
                     and not (primary == 'conditions' and goal == 'cost' and not re.search(r'얼마|비용은|수수료는',query))
                     and not (primary == 'cost' and goal == 'method' and not re.search(r'방법|절차|어떻게|어디',query))):

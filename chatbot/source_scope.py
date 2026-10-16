@@ -17,6 +17,7 @@ FOCUS_STOP.update({'요청','시험','응시','선정','개방','정도','임신
 FOCUS_STOP.update({'주소','위치','장소','연락처','전화','번호','운영시간','서류','절차',
                    '제외','한도','권수','횟수'})
 FOCUS_STOP.update({'부탁','상한'})
+FOCUS_STOP.update({'기한','퍼센트','비율','연락','요청','진행','고충','예약'})
 
 
 @lru_cache(maxsize=256)
@@ -59,6 +60,8 @@ def unanswered_details(query: str, selected: str, title: str, keywords: set[str]
         details.discard('대리')
     if '청소년' in query and '청소년' in selected:
         details.discard('학생')  # A confirmed age group, not an inferred one.
+    if re.search(r'법원|재판',query) and re.search(r'소송.*진행|불복.*진행',selected):
+        details -= {'법원','재판','진행'}
     if '여권' in compact(query) and re.search(r'\d+(?:세|살)',compact(query)):
         details -= {'대학','학생','대학생','고등학생','초등학생'}  # Explicit legal age is retained separately.
     return frozenset(t for t in details if t not in compact(selected))
@@ -131,6 +134,17 @@ def focus_units(query: str, units: list[str]) -> list[str]:
             units = [u for u in units if ' — ' not in u or u.split(' — ',1)[0] in matching]
             groups = {key:rows for key,rows in groups.items() if key in matching}
     request = compact(query)
+    from chatbot.answer_goal import requested_goals
+    if 'documents' in requested_goals(query):
+        # A source's explicitly labelled applicant rows are alternatives.
+        # Common documents remain; a directly visiting heir needs no proxy row.
+        roles=('상속인','대리인','본인')
+        wanted={role for role in roles if role in request}
+        if re.search(r'대리|위임',request):
+            wanted={'대리인'}
+        if wanted:
+            units=[u for u in units if not (m:=re.match(r'(?:구비서류|준비서류)\s*[:：]\s*(상속인|대리인|본인)\s*신청',u))
+                   or m[1] in wanted]
     # A test mentioned inside a bundled panel is not a standalone fee/guide.
     bundled = {key for key in groups if '[' in key and ',' in key
                and compact(key.split('[',1)[0]) not in request}

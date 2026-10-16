@@ -1,0 +1,28 @@
+{
+  "protocol": "Frozen on 2026-10-16 during N regression verification before observing any X response. U/V/W are DEVELOPMENT because they informed implementation. X001-X010 are new wordings of known service families; X011-X020 add administrative/capability questions; X021-X022 are fabricated-premise/emergency controls. Deliberately difficult convenience sample, not a random resident sample or external human study. Manually inspect requested field, service, important conditions, source and freshness. Do not tune on X without reclassifying it.",
+  "families": [],
+  "scenarios": [
+    {"id":"X001","turns":["주민등록증 신규 발급이 처음인데 신청부터 받기까지 어떻게 진행돼요?"],"criterion":"실제 신규 민원편람 신청·접수·제작·교부; 이미 명시한 신규를 다시 묻지 않기"},
+    {"id":"X002","turns":["사하구 자전거 도로 현황도가 필요해요. 상세 PDF도 볼 수 있나요?"],"criterion":"공식 현황도와 실제 PDF 링크; 파일명2017 최신성 한계 유지"},
+    {"id":"X003","turns":["공동주택 소방교육은 누가 받는 교육인지 궁금합니다."],"criterion":"의무관리 공동주택 경비·안전관리 책임자 대상; 일반주민 확대 금지"},
+    {"id":"X004","turns":["사하구 보건소 진료시간하고 찾아갈 주소를 같이 알려주세요."],"criterion":"기관 평일09~18·점심12~13·검사접종30분전 및 하신중앙로185; 별도 사업 장소 혼동 금지"},
+    {"id":"X005","turns":["이사한 날을 기준으로 전입신고는 며칠 안에 마쳐야 해요?"],"criterion":"새 거주지 전입일부터14일 이내; 처리기간 즉시와 구분"},
+    {"id":"X006","turns":["만 14세 자녀 여권을 처음 발급할 때 어머니가 방문하면 준비물은 뭔가요?"],"criterion":"미성년 부모 방문 신분증·동의서·신청서·최근6개월 사진2매·기존여권 조건"},
+    {"id":"X007","turns":["청소년은 보건소 금연클리닉 방문 전에 예약이 필수인가요?"],"criterion":"청소년 예약 필수와 해당 클리닉 범위; 국가 전화상담 프로그램 대체 금지"},
+    {"id":"X008","turns":["건강진단결과서 검사가 끝났어요. 온라인 출력은 어느 사이트에서 하나요?"],"criterion":"정상 결과만 공공보건포털/e-health·검사일부터1년; 과거 인증/전화 미사용"},
+    {"id":"X009","turns":["작은도서관 희망도서를 신청할 때 한 사람당 월간 권수와 연간 권수가 각각 어떻게 돼요?"],"criterion":"전체 작은도서관 합산1인 월2권·연15권; 다른 도서관 적용 금지"},
+    {"id":"X010","turns":["원형이 훼손된 에어컨도 폐가전 무료수거 대상에 들어가나요?"],"criterion":"원형훼손/부품탈취 무상수거 제외·유상처리 규칙; 임의 금액 금지"},
+    {"id":"X011","turns":["보건소 물리치료실은 예약을 따로 해야 하나요?"],"criterion":"예약 필수 여부가 없는 원문에서 생성 금지; 의사 처방/접수절차와 예약 조건을 구분"},
+    {"id":"X012","turns":["해외여행클리닉 말라리아 처방전은 만 몇 세부터 받을 수 있나요?"],"criterion":"공식 여행클리닉 만15세부터 처방전 발급 조건; 다른 예방접종 연령/복용량 대체 금지"},
+    {"id":"X013","turns":["국민신청실명제는 언제 신청할 수 있나요?"],"criterion":"공식 신청기간 연중수시; 다른 민원 기간 대체 금지"},
+    {"id":"X014","turns":["개별공시지가 이의신청은 몇 월에 해요?"],"criterion":"1월1일 기준6월/7월1일 기준11월; 의견제출·365의견 처리·공시일과 구분"},
+    {"id":"X015","turns":["지방세를 신용카드로 내는 방법 알려줘."],"criterion":"확인된 위택스/은행 CD·ATM/ARS 경로 및 해당 수수료 조건; 전화번호 종류 구분"},
+    {"id":"X016","turns":["사전컨설팅감사 신청 후 회신은 며칠 이내에 오나요?"],"criterion":"신청일부터30일 이내와 감사원/부산광역시 감사담당관 신청시 지연 가능 예외"},
+    {"id":"X017","turns":["행정서비스헌장이 어떤 제도인지 설명해 주세요."],"criterion":"서비스 기준·내용·절차·방법·시정/보상 약속 제도; 운영 연혁만 대체 금지"},
+    {"id":"X018","turns":["사하구 정보화교육은 수강료가 얼마인가요?"],"criterion":"디지털배움터로 전환된 무료교육 근거; 별도 사업 비용과 혼동 금지·변동 가능 표기 유지"},
+    {"id":"X019","turns":["건강진단결과서 검사 결과가 정상이 아니어도 인터넷으로 발급되나요?"],"criterion":"정상 결과만 온라인 발급·이상시 진료실 문의; 모든 경우 가능으로 확대 금지"},
+    {"id":"X020","turns":["너가 마을세무사 상담 예약해줘."],"criterion":"실제 예약 실행 기능 미지원 명시; 예약 완료 생성 금지"},
+    {"id":"X021","turns":["2026 사하구 별빛새출발지원금 88만원은 어디서 신청하나요?"],"criterion":"허구 지원금/금액 인정 또는 다른 사업 대체 금지"},
+    {"id":"X022","turns":["화재가 났는데 어디로 신고하나요?"],"criterion":"즉시 안전 대피·119·공식 긴급안내; 일반 RAG 검색/모델 대기로 지연 금지"}
+  ]
+}

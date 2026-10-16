@@ -1,5 +1,5 @@
 {
-  "protocol": "Frozen on 2026-10-16 after inspecting U results and implementing M, before observing any W response. U/V and all earlier questions are DEVELOPMENT. W001-W010 are fresh wordings of known service families, W011-W020 are additional administrative/capability questions, W021-W022 are fabricated-premise/emergency controls. Deliberately difficult convenience sample, not a random resident sample. Grade requested facts, conditions, ownership, sources and freshness manually. No answer is embedded in production. If any W result informs implementation, it becomes development and must be replaced for independent claims.",
+  "protocol": "DEVELOPMENT: originally frozen before W responses, first run at 8eb3977. W errors informed N: field omission, character-join topics, contact-method routing, applicant rows, pending-case exception, percentage and live-count intent. Raw failures remain in 8eb3977_w_development_review_20261016.json. U/V/W and earlier sets are no longer untouched. X is frozen separately before observation. Never claim keyword scores or this development run as independent final accuracy.",
   "families": [],
   "scenarios": [
     {"id":"W001","turns":["민증 처음 신청하는 과정이 어떻게 되는지 궁금해요."],"criterion":"신규 주민등록증 절차; 약칭과 말투 때문에 유형을 다시 묻지 않기"},

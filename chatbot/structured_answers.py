@@ -35,6 +35,14 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return False
     request = compact(query)
     scoped = context + ' ' + unit
+    if goal == 'conditions' and re.search(r'법원|재판|소송',request):
+        return bool(re.search(r'소송|재판|법원',unit) and re.search(r'제외|불가|진행|가능',unit))
+    if goal == 'conditions' and '연장' in request:
+        return bool(re.search(r'연장|통지',unit))
+    if goal == 'conditions' and '예약' in request:
+        if re.search(r'고등학생|청소년',request):
+            return bool(re.search(r'청소년|학생',unit) and '예약' in unit)
+        return '예약' in unit
     if goal in ('eligibility', 'conditions') and '외국인' in request:
         from chatbot.source_requirements import applicant_qualification_supported
         if not applicant_qualification_supported(query, [unit]):
@@ -78,6 +86,9 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         count_unit = quantity_unit(query)
         if count_unit:
             return bool(re.search(r'\d+\s*' + count_unit, unit))
+        if re.search(r'기한|며칠이내|언제까지',request) and re.search(r'신고|신청|제출',request):
+            return bool(re.search(r'\d+\s*(?:일|개월|년)\s*이내|까지',unit)
+                        and re.search(r'신고|신청|제출|전입',unit))
         if re.search(r'한참뒤|출산.*(?:지나|지난|뒤)',request):
             return bool(re.search(r'신청기간|접수기간|신청시기',scoped))
         if re.search(r'배출|쓰레기',query) and re.search(r'아무때|낮|시간',query):
@@ -234,7 +245,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         return None
     units = scoped_units(query, body, keywords)
     if (goal == 'conditions' and '예약' in query and '학생' in query
-            and not re.search(r'청소년|성인|\d+\s*(?:세|살)',query)
+            and not re.search(r'청소년|중학생|고등학생|성인|\d+\s*(?:세|살)',query)
             and any(re.search(r'청소년.*예약',u) for u in units)):
         return {'answer':'공식 안내에서는 청소년의 예약을 구분하고 있습니다. **청소년인가요, 성인인가요?**',
                 'is_clarification':True,'documents':[], 'answer_method':'structured_source',
@@ -332,7 +343,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     # A named row in a multi-service table has its own explicit subject.
     row_matches = [u for u in units if ' — ' in u and anchors and
                    all(a in compact(u.split(' — ', 1)[0]) for a in anchors - {'보건소'})]
-    if row_matches and any(field_matches(goal, u) for u in row_matches):
+    if row_matches and any(field_matches(goal, u, query) for u in row_matches):
         units = row_matches
     if goal == 'schedule':
         ranges = [u for u in units if re.match(r'\d+차 — 유효기간의 범위:',u)]
