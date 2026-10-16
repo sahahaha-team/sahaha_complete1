@@ -70,11 +70,13 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
 
 def unavailable_capability(message: str) -> dict | None:
     text = topic_compact(message)
-    if re.search(r'주차장|주차면',text) and re.search(r'빈자리|빈공간|남은자리|잔여|몇대가능|비어|비었|빈주차',text) and re.search(r'지금|현재|실시간|오늘',text):
+    if re.search(r'주차장|주차면',text) and re.search(r'빈자리|빈공간|남은자리|잔여|몇대가능|비어|비었|빈주차|자리수',text) and re.search(r'지금|현재|실시간|오늘',text):
         answer = '현재 상담에는 **실시간 주차 잔여면수 조회 기능이 없습니다.** 주차장의 전체 주차면수를 현재 빈자리 수로 안내할 수는 없습니다.'
         reason = 'live_data_unavailable'
     elif re.search(r'대신|알아서|너가|네가',text) and re.search(r'신청접수해|신청해줘|예약해줘|접수해줘',text):
-        answer = '챗봇은 **신청·접수를 대신 실행할 수 없습니다.** 필요한 서류와 공식 신청 방법은 안내할 수 있어요. 어떤 업무를 신청하시나요?'
+        answer = '챗봇은 **신청·접수를 대신 실행할 수 없습니다.** 필요한 서류와 공식 신청 방법은 안내할 수 있어요.'
+        if not service_names(message):
+            answer += ' 어떤 업무를 신청하시나요?'
         reason = 'action_not_supported'
     else:
         return None

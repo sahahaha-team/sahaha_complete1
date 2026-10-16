@@ -145,8 +145,18 @@ def topic_section_bounds(units: list[str], query: str, keywords: set[str]) -> tu
 def condition_indices(units: list[str], indices: list[int]) -> list[int]:
     """Keep field scope and adjacent exceptions beside a selected fact."""
     chosen = set(indices)
+    from chatbot.source_requirements import mandatory_criteria_groups
+    for header,criteria in mandatory_criteria_groups(units):
+        if header in chosen or chosen.intersection(criteria):
+            chosen.update(criteria)
     for index in indices:
         section_start, section_end = section_bounds(units, index)
+        if re.match(r'(?:구비서류|준비서류)\s*[:：]',units[index]):
+            # An applicant-specific document list does not replace the common
+            # identity requirement under this same document heading.
+            chosen.update(pos for pos in range(section_start,section_end)
+                          if re.match(r'^(?:신분증|공통(?:구비)?서류|기본서류)\s*[:：]',units[pos])
+                          and source_unit_complete(units[pos]))
         if re.search(r'아래\s*(?:요건|조건).*모두',units[index]):
             for pos in range(index + 1,min(section_end,index + 7)):
                 if pos in _section_headings(units):
@@ -507,6 +517,10 @@ def concise_source_answer(query: str, original_answer: str, documents: list[dict
     from chatbot.answer_goal import requested_goals
     from chatbot.structured_answers import field_matches
     fields = requested_goals(query)
+    if set(fields).intersection({'eligibility', 'conditions'}):
+        from chatbot.source_requirements import applicant_qualification_supported
+        if not applicant_qualification_supported(query, answer.splitlines()):
+            return scope_question(query, body)
     missing = [field for field in fields if not any(field_matches(field, line.removeprefix('- ').strip(), query)
         for line in answer.splitlines())] if len(fields) > 1 and not course_scope else []
     if missing:

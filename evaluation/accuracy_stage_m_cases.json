@@ -1,0 +1,14 @@
+{
+ "protocol":"M development probes from U validation failures. U is now exposed development, not final validation for M.",
+ "families":[],
+ "scenarios":[
+  {"id":"U009","turns":["사하구 작은도서관 희망도서의 월·연 신청가능 권수가 궁금해요."],"criterion":"기관 회원과 같은 사업의 원문 관계; 월2/연15권"},
+  {"id":"U011","turns":["조상 땅 찾기 신청 시 상속인이 챙길 구비서류가 궁금해요."],"criterion":"공통 신분증과 사망 시점별 상속 서류, 대리인 위임장 혼입 방지"},
+  {"id":"U017","turns":["부산 사하구 납세자보호관은 어떤 일을 하는지 알려주세요."],"criterion":"목적 설명 대신 실제 처리업무"},
+  {"id":"U018","turns":["영양플러스는 영유아도 대상인가요? 소득 기준도 함께 알려주세요."],"criterion":"모두 충족할 거주·연령·영양·소득 및 참여기간·임신부 예외"},
+  {"id":"U019","turns":["보건증 발급을 대신 신청해줘."],"criterion":"신청 실행 불가, 이미 명시한 업무를 다시 묻지 않기"},
+  {"id":"U020","turns":["현재 공영주차장 자리 수 실시간 조회가 가능한가요?"],"criterion":"실시간 연동 없음 명시; 전체면수를 현재 빈자리로 대체 금지"},
+  {"id":"M_foreign","turns":["외국인 영유아도 영양플러스 신청 대상인가요?"],"criterion":"가구원 외국인 배우자 포함을 외국인 영유아 신청자격으로 확대하지 않기"},
+  {"id":"M_other_library","turns":["다대도서관 희망도서의 월 신청 한도 알려줘"],"criterion":"작은도서관 통합회원 프로그램을 다른 도서관 규정으로 확대하지 않기"}
+ ]
+}

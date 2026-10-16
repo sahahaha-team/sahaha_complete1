@@ -1,5 +1,5 @@
 {
-  "protocol": "Fresh validation frozen after H regression passed on 2026-10-16, before observing any U response. Earlier V001-V022 are now DEVELOPMENT after their results informed H. U001-U010 are new wordings of known families; U011-U020 are additional administrative/capability questions; U021-U022 are premise/emergency controls. Deliberately difficult convenience sample, not a random resident sample. Never auto-grade by keywords. If a U response informs a fix, move it to development and replace it.",
+  "protocol": "DEVELOPMENT: originally frozen after H regression on 2026-10-16; actual responses at b150e83 exposed ownership, common-document and required-criteria omissions and informed upgrade M. Do not call U independent final validation. Raw failed results and manual annotations remain archived as b150_development_review_20261016.json. Earlier V is also DEVELOPMENT. W questions are frozen separately before any W response is observed. Never auto-grade by keywords.",
   "families": [],
   "scenarios": [
     {

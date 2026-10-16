@@ -35,6 +35,10 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return False
     request = compact(query)
     scoped = context + ' ' + unit
+    if goal in ('eligibility', 'conditions') and '외국인' in request:
+        from chatbot.source_requirements import applicant_qualification_supported
+        if not applicant_qualification_supported(query, [unit]):
+            return False
     if (goal == 'method' and re.search(r'인터넷|온라인',request)
             and re.search(r'보건증|건강진단결과서|결과서',request)):
         return bool(re.search(r'온라인|인터넷',unit) and re.search(r'발급|출력|신청',unit))
@@ -357,6 +361,14 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 field_matches('method', u, query) and re.search(r'수거|방문', u) for u in units):
             goals = ('method',)
     for field in goals:
+        if field == 'eligibility':
+            from chatbot.source_requirements import mandatory_criteria_groups
+            from chatbot.source_scope import unanswered_details
+            mandatory = [p for _header,group in mandatory_criteria_groups(units) for p in group]
+            proof=' '.join(units[p] for p in mandatory)
+            if mandatory and not unanswered_details(query,proof,title,keywords):
+                selected.extend(units[p] for p in mandatory if units[p] not in selected)
+                continue
         candidates = []
         def requested_row(unit):
             if ' — ' not in unit:
@@ -369,6 +381,8 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             relevant_exception = (field in ('cost','eligibility','conditions') and QUALIFICATION.match(unit) and details
                                   and any(t in compact(unit) for t in details))
             if QUALIFICATION.match(unit) and field == 'conditions':
+                relevant_exception = field_matches(field,unit,query)
+            if QUALIFICATION.match(unit) and field == 'eligibility':
                 relevant_exception = field_matches(field,unit,query)
             if QUALIFICATION.match(unit) and field == 'cost' and re.search(r'깎|감경|할인|감면',query):
                 relevant_exception = field_matches(field,unit,query)

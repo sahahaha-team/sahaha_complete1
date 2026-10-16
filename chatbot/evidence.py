@@ -206,7 +206,23 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
                                           '주민등록등본', '주민등록초본'})):
             continue
         if name and compact(name + kind) not in source_text:
-            return False
+            # A named program's membership requirement can establish its
+            # institution association, but never the institution's address or
+            # hours. The membership must belong to that SAME program heading.
+            from chatbot.answer_goal import requested_goals
+            from chatbot.concise_answers import _source_units
+            from chatbot.source_hierarchy import heading_path
+            facility=compact(name+kind)
+            programs=anchors-{facility}
+            units=_source_units(body_text.splitlines())
+            member_scope=(kind in ('도서관','센터','체육관') and programs
+                and not set(requested_goals(query)).intersection({'location','hours'})
+                and any(re.match(r'^(?:신청|이용)?대\s*상\s*[:：]',unit)
+                    and re.search(re.escape(facility)+r'(?:통합)?회원',compact(unit))
+                    and any(p in compact(heading_path(units,i)) for p in programs)
+                    for i,unit in enumerate(units)))
+            if not member_scope:
+                return False
     if (answer_goal(query) == 'necessity' and re.search(r'서류|행정|기관|제출', query)
             and (re.search(r'임산부|임신|출산|미숙아|선천성|영유아', title) or '/health/' in str((doc.get('metadata') or {}).get('url') or ''))
             and not re.search(r'임산부|임신|출산|산모|아기|미숙아|선천성|영유아|보건|건강|검진|검사|접종|치매', query)):
