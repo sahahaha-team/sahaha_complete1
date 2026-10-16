@@ -455,6 +455,15 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         if not candidates:
             missing.append(field)
             continue
+        if field == 'cost' and re.search(r'무료|무상',query):
+            # An explicit same-service free route answers a free-service
+            # inquiry before its separate paid fee table. Keep the whole
+            # source unit, including its eligibility and paid exceptions.
+            free_route = [item for item in candidates
+                          if re.search(r'무료|무상',item[2])
+                          and anchors and all(a in compact(item[2]) for a in anchors - {'보건소'})]
+            if free_route:
+                candidates = free_route
         candidates.sort(key=lambda item: (-item[0], item[1]))
         field_details = {t for t in details if t not in compact(title)}
         global_fee = field == 'cost' and ' — ' not in candidates[0][2] and bool(re.search(r'수수료.*(?:무료|무상)',candidates[0][2]))

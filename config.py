@@ -90,8 +90,8 @@ CONVERSATION_TTL_DAYS = int(os.getenv("CONVERSATION_TTL_DAYS", "30"))
 PERSIST_CONVERSATIONS = os.getenv("PERSIST_CONVERSATIONS", "false").lower() == "true"
 
 # ===== 하이브리드 검색 가중치 (벡터:BM25) =====
-# 합이 1.0이 되도록 설정. 50개 행정 질의 그리드 서치에서
-# 0.3:0.7이 Recall@1 96%, Recall@3/5 100%, MRR 0.977로 가장 우수했다.
+# 합이 1.0이 되도록 설정. 이전50개 키워드 보조 평가에서 선택한 설정이다.
+# 정답 문서 라벨 기반 검색 성능이나 실제 상담 정답률을 입증하는 수치가 아니다.
 HYBRID_VECTOR_WEIGHT = float(os.getenv("HYBRID_VECTOR_WEIGHT", "0.30"))
 HYBRID_BM25_WEIGHT = float(os.getenv("HYBRID_BM25_WEIGHT", "0.70"))
 # BM25 후보 풀 크기 (벡터 검색 후 BM25로 재랭킹할 후보 수)

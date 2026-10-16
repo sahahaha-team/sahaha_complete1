@@ -72,6 +72,9 @@ def answer_goal(query: str) -> str | None:
         return 'reference'
     if re.search(r'예약.*(?:해야|필수|먼저)|(?:먼저|사전).*예약', compact_query):
         return 'conditions'
+    if (re.search(r'예약.*(?:없이|안하고|않고|안해도|안하)',compact_query)
+            and not re.search(r'방법|절차|어떻게',compact_query)):
+        return 'conditions'
     if re.search(r'서류.*(?:제출|내).*(?:생략|안내도)|기관.*서류.*확인', compact_query):
         return 'necessity'
     if re.search(r'돈이?들|수강료|재료비|주차장마다.*(?:같|똑같)', compact_query):

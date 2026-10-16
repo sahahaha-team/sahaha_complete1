@@ -1,0 +1,11 @@
+{
+ "protocol":"L development timing/functionality probes. Same CPU Gemma4, source checks retained; one repeated query and one wording variant are not population latency statistics.",
+ "families":[],
+ "scenarios":[
+  {"id":"F018", "turns":["냉장고 무료 방문수거 신청은 어디로 해요?"], "criterion":"무상수거 접수와 원형훼손 제외를 같은 원문에서 안내; 유상 규격표로 바꾸지 않기"},
+  {"id":"L_repeat", "turns":["냉장고 무료 방문수거 신청은 어디로 해요?"], "criterion":"반복에도 조건·출처 유지"},
+  {"id":"L_wording", "turns":["냉장고 무상 방문수거는 어디로 신청해요?"], "criterion":"같은 요청 항목의 표현 변형; 중요한 예외 유지"},
+  {"id":"L_paid", "turns":["냉장고 500ℓ이상 처리 수수료는 얼마인가요?"], "criterion":"유상 수수료 문의를 무료 접수 안내로 대체하지 않기; 실제 규격 행을 보거나 미확인 표시"},
+  {"id":"N015", "turns":["무료 법률상담은 예약 없이 아무 때나 찾아가면 되나요?"], "criterion":"예약 없이 질문은 조건 문의다. 실제 예약 필수·상담 일정 안내; 묻지 않은 비용 미확인으로 대체하지 않기"}
+ ]
+}

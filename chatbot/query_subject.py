@@ -156,7 +156,8 @@ def subject_query(query: str) -> str:
 
 
 def query_keywords(query: str, words: Iterable[str]) -> set[str]:
-    text = compact(subject_query(query))
+    subject = subject_query(query)
+    text = compact(subject)
     if re.search(r'면제|장애인등록증.*(?:공짜|무료)', query) and re.search(r'수수료|발급비|발급|민원서류',query):
         return {'수수료면제'}
     names = service_names(subject_query(query))
@@ -169,6 +170,11 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
         names.add('행정정보공동이용')
         return {'행정정보공동이용'}
     topics = substantive_keywords(words)
+    # Kiwi can split '방문수거는' into 방문/수/거 while preserving 수거
+    # before another noun. Preserve the explicitly written request noun;
+    # do not promote arbitrary character fragments to service names.
+    if re.search(r'(?<![가-힣])수거(?=\s|는|은|를|가|이|해|하|[?？]|$)|(?:방문|무상)\s*수거', subject):
+        topics.add('수거')
     if re.search(r'가구.*(?:버리|배출)|소파.*(?:버리|배출|수수료|비용)',query):
         return {'대형폐기물'}
     if '금연' in query and '클리닉' in query:
