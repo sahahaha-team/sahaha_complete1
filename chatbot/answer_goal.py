@@ -59,7 +59,7 @@ def answer_goal(query: str) -> str | None:
         return 'cost'
     if re.search(r'어디(?:로|에).*연락|전화로만|팩스로만|이메일로만',compact_query):
         return 'method'
-    if re.search(r'제한|제외|내도되|내도돼|연장할수|연장가능|연장하면',compact_query):
+    if re.search(r'제한|제외|내도되|내도돼|연장할수|연장가능|연장하면|연장되|연장사유|연장사실',compact_query):
         if not re.search(r'서류|준비|기간|몇개월|언제|몇일|며칠',compact_query):
             return 'conditions'
     if re.search(r'예약.*(?:있어야|없어도|필요한가)',compact_query):
@@ -86,7 +86,7 @@ def answer_goal(query: str) -> str | None:
         return 'conditions'
     if re.search(r'보조제|제공품|지원품목', compact_query) and re.search(r'지원|제공|주나|주요', compact_query):
         return 'services'
-    if re.search(r'어디로해|어디서해', compact_query) and re.search(r'신청|접수|예약|수거', compact_query):
+    if re.search(r'어디(?:로|서)(?:해|하)', compact_query) and re.search(r'신청|접수|예약|수거', compact_query):
         return 'method'
     if re.search(r'(?:지도|노선도|현황도|공식페이지|공식사이트).*(?:볼수|보려|보고싶|보여|알려|확인|조회)|(?:볼수|확인|조회).*(?:지도|노선도|현황도|공식페이지|공식사이트)', compact_query):
         return 'reference'
@@ -219,7 +219,7 @@ def requested_goals(query: str) -> tuple[str, ...]:
     if asks_opening_hours(query) and 'hours' not in goals:
         goals.append('hours')
     if (asks_location(query) and 'location' not in goals
-            and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출|연락)|(?:신청|접수|예약).{0,12}어디(?:로|서)해',query.replace(' ',''))):
+            and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출|연락)|(?:신청|접수|예약).{0,12}어디(?:로|서)(?:해|하)',query.replace(' ',''))):
         goals.append('location')
     if primary != 'reference':
         extra = [('documents', r'(?:준비|구비|필요(?:한)?).*서류|서류.*(?:필요|무엇|뭐|지참)|준비물|가져가|가져갈|지참'),

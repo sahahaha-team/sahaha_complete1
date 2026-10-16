@@ -1,5 +1,5 @@
 {
-  "protocol": "Frozen after R regression and before any AB response; known service/source convenience sample. AB001-010 new wordings of ten known service families; AB011-020 additional administrative question texts/facets; AB021-022 false-premise/emergency controls. U/V/W/X/Y/Z/AA used in development. No random resident/new-domain/external human accuracy claim. Any implementation informed by AB requires reclassification.",
+  "protocol": "DEVELOPMENT after S fixes from AB010/013/014/016. Original wording retained. Frozen after R regression and before any AB response; known service/source convenience sample. AB001-010 new wordings of ten known service families; AB011-020 additional administrative question texts/facets; AB021-022 false-premise/emergency controls. U/V/W/X/Y/Z/AA used in development. No random resident/new-domain/external human accuracy claim. Any implementation informed by AB requires reclassification.",
   "families": [],
   "scenarios": [
     {

@@ -114,6 +114,8 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return bool(re.search(r'거래금액.*(?:보증금|월차임)|환산',unit))
     if goal == 'cost' and re.search(r'깎|감경|할인|감면',request):
         return bool(re.search(r'감경|할인|감면|자진납부',scoped)) and bool(re.search(FIELD['cost'],unit))
+    if goal == 'cost' and re.search(r'몇퍼센트|몇프로|몇%',request):
+        return bool(re.search(r'\d[\d,.]*\s*(?:%|퍼센트|프로)',unit))
     if goal == 'cost' and re.search(r'기부.*까지만|기부한도|연간한도|상한',request):
         return bool(re.search(r'연간|개인별.*최대',unit))
     if goal == 'hours':
@@ -136,6 +138,20 @@ def scoped_units(query: str, body: str, keywords: set[str] | None = None) -> lis
     bounds = detail_section_bounds(query, units)
     if bounds is None:
         bounds = topic_section_bounds(units,query,keywords) if keywords else named_section_bounds(units,query)
+    if bounds and answer_goal(query) == 'conditions' and not any(
+            field_matches('conditions',u,query) for u in units[bounds[0]:bounds[1]]):
+        # An expanded subservice can inherit its provider's common exclusions
+        # only when the provider explicitly lists that same service as a duty.
+        heading = compact(units[bounds[0]])
+        links = []
+        for pos,u in enumerate(units[:bounds[0]]):
+            named = re.search(r'^처리업무\s*[:：].*\s([가-힣]{2,}(?:민원|요청|상담))$',u)
+            if named and named[1] in compact(query) and named[1] in heading:
+                owner = section_bounds(units,pos)
+                if any(field_matches('conditions',v,query) for v in units[owner[0]:owner[1]]):
+                    links.append(owner)
+        if len(set(links)) == 1:
+            bounds = links[0]
     units = units[bounds[0]:bounds[1]] if bounds else units
     detail = detail_section_bounds(query, units)
     if detail:
