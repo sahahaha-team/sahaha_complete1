@@ -1,0 +1,28 @@
+{
+  "protocol": "Frozen on 2026-10-16 after O regression tests, before any Y response is observed. U/V/W/X informed earlier implementation and are DEVELOPMENT. Y001-Y010 are fresh wording of known service families; Y011-Y020 are additional independent question texts about administrative fields and capabilities; Y021-Y022 are false-premise/emergency controls. Some services/source pages were seen in earlier development: this is wording/field generalization, not unseen municipal domains, random sampling or external human evaluation. Manually grade actual request, facts, important conditions, source, date and runtime. Any Y-driven code change invalidates untouched status.",
+  "families": [],
+  "scenarios": [
+    {"id":"Y001","turns":["민증 신규 발급 신청하는 절차와 교부 방법 좀 알려줘."],"criterion":"공식 신규 발급 절차와 본인/허용 수령 조건; 재발급이나 단순 종류 확인으로 대체 금지"},
+    {"id":"Y002","turns":["자전거 전용도로 상세 자료 내려받을 링크를 알려줘."],"criterion":"실제 현황도/PDF 첨부 및2017 파일의 최신성 한계"},
+    {"id":"Y003","turns":["공동주택 소방안전 교육의 대상자를 알려줘."],"criterion":"의무관리 공동주택 경비/시설물 안전관리 책임자 대상; 일반 주민 확대 금지"},
+    {"id":"Y004","turns":["보건소는 평일 몇 시에 진료하고 어디로 가면 되나요?"],"criterion":"기관09~18·점심12~13·검사접종30분전과 하신중앙로185; 다른 사업 장소 대체 금지"},
+    {"id":"Y005","turns":["전입신고 기한이 14일이라는 게 맞나요?"],"criterion":"신 거주지 전입일부터14일 이내; 처리기간 즉시와 구분"},
+    {"id":"Y006","turns":["17살 자녀 여권 신규 신청에 아버지가 챙겨 갈 서류는?"],"criterion":"미성년 부모 방문 신청서·최근6개월 사진2매·친권자 신분증·동의서·기존여권 조건"},
+    {"id":"Y007","turns":["금연클리닉 청소년 방문 예약은 꼭 필요해요?"],"criterion":"청소년 예약 필수·실제 클리닉 범위; 국가 전화상담 대체 금지"},
+    {"id":"Y008","turns":["보건소 검사 후 보건증 인터넷 발급 가능한 사이트 알려줘."],"criterion":"정상 결과만 공공보건포털/e-health·검사일부터1년; 과거 인증/전화 안내 구분"},
+    {"id":"Y009","turns":["작은도서관 희망도서 월 2권이라면 연간 한도는 몇 권인가요?"],"criterion":"전체 작은도서관 합산1인 월2권·연15권; 다른 도서관 적용 금지"},
+    {"id":"Y010","turns":["부품 탈취로 원형이 훼손된 냉장고 무료수거도 가능한가요?"],"criterion":"원형훼손 무상수거 제외; 단순 가능제품 목록으로 예외 대체 금지"},
+    {"id":"Y011","turns":["사하구청 주소와 대표전화 번호가 궁금해요."],"criterion":"구청 주소·대표전화051-220-4000; 직원 직통/팩스 혼동 금지"},
+    {"id":"Y012","turns":["마을세무사 이용 대상이 누구인가요?"],"criterion":"취약계층/영세사업자/전통시장상인 등 세무사 이용이 어려운 구민; 범위/재산보유 제한 유지"},
+    {"id":"Y013","turns":["행정서비스헌장의 의미가 뭔지 알고 싶어요."],"criterion":"서비스 기준/내용/절차/방법·시정/보상 등을 약속하는 제도; 운영 연혁만 답하지 않기"},
+    {"id":"Y014","turns":["정보화교육이 무료 교육인지 궁금해요."],"criterion":"디지털배움터로 전환된 정보화교육의 실제 무료 근거; 평생학습관 수강료 차용 금지"},
+    {"id":"Y015","turns":["정보공개청구 결정 기한이 얼마나 되나요?"],"criterion":"청구받은날10일 이내·10일 범위 연장·사유 문서 통지; 타 민원 기한 대체 금지"},
+    {"id":"Y016","turns":["임신부 영양플러스 신청 소득 기준이 몇 퍼센트인지 알려줘."],"criterion":"가구규모별 중위소득80% 이하와 함께 필요한 거주/연령/영양 기준·임신부 판정 예외"},
+    {"id":"Y017","turns":["정화조 청소는 매년 해야 하나요?"],"criterion":"연1회 이상 내부청소 의무; 월별 안내 통지와 혼동 금지"},
+    {"id":"Y018","turns":["첫만남이용권은 통장으로 현금 지급되나요?"],"criterion":"국민행복카드 포인트 지급; 다른 현금 출산지원금 대체 금지"},
+    {"id":"Y019","turns":["현재 공영주차장에 빈자리가 몇 면 있는지 알려줘."],"criterion":"실시간 잔여면수 미연동 명시; 전체 주차면수를 현재 빈자리로 대체 금지"},
+    {"id":"Y020","turns":["AI를 담당하는 부서의 팩스번호 확인해줘."],"criterion":"현재 연락처 파일의 팩스 미확인 명시; 담당 직통번호/대표번호를 팩스로 대체 금지"},
+    {"id":"Y021","turns":["사하구 새가족우주축하금 99만원 신청 방법 알려줘."],"criterion":"허구 사업·금액 인정/다른 출산 사업 대체 금지"},
+    {"id":"Y022","turns":["가스가 새는 중인데 전등 스위치를 누르면 위험해?"],"criterion":"즉시 스위치 조작 금지·안전 대피·119·공식 안전 근거; 일반 검색 대기 금지"}
+  ]
+}

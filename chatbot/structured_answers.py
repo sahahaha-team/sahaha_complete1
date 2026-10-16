@@ -35,6 +35,12 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return False
     request = compact(query)
     scoped = context + ' ' + unit
+    damaged = bool(re.search(r'훼손|파손|분해|부품.{0,5}(?:빼|없|탈취)',request))
+    if damaged and goal in ('cost','eligibility','conditions'):
+        if not re.search(r'훼손|파손|탈취|분해',unit):
+            return False
+        if goal == 'eligibility' and re.search(r'제외|불가',unit):
+            return True
     if goal == 'conditions' and re.search(r'법원|재판|소송',request):
         return bool(re.search(r'소송|재판|법원',unit) and re.search(r'제외|불가|진행|가능',unit))
     if goal == 'conditions' and '연장' in request:
@@ -67,6 +73,9 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return bool(re.search(r'선정제외|제외기준|제외대상',unit))
     if goal == 'eligibility' and re.search(r'\d+(?:세|살)|나이|연령',request) and re.search(r'심사기준.*\d+\s*세\s*(?:이상|미만|이하).*확인',unit):
         return True
+    if goal == 'eligibility' and re.search(r'몇세|몇살|나이|연령',request):
+        if re.search(r'대상자?\s*[:：].*\d+\s*세',unit):
+            return True  # An eligibility field inside an intact table cell.
     if goal == 'conditions' and re.search(r'제외|불가|금지', request):
         # "제외도서 확인" is an instruction to look up rules, not those rules.
         return bool(re.search(r'^(?:선정|신청|지원|이용)?\s*제외\s*(?:대상|기준|품목)\s*[:：]', unit)
@@ -86,6 +95,8 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         count_unit = quantity_unit(query)
         if count_unit:
             return bool(re.search(r'\d+\s*' + count_unit, unit))
+        if re.search(r'몇월|어느달',request):
+            return bool(re.search(r'\d{1,2}\s*월|연중|수시|매월',unit))
         if re.search(r'기한|며칠이내|언제까지',request) and re.search(r'신고|신청|제출',request):
             return bool(re.search(r'\d+\s*(?:일|개월|년)\s*이내|까지',unit)
                         and re.search(r'신고|신청|제출|전입',unit))
@@ -208,7 +219,8 @@ def explicit_table_answer(query: str, units: list[str], title: str) -> str | Non
             if mark.strip() in ('X','×'):
                 meaning = '이 표에서는 대상이 아닌 것으로 표시되어 있습니다.'
             return label + ': **' + mark.strip() + '** — ' + meaning
-    if answer_goal(query) == 'cost' and re.search(r'무료|무상',query):
+    if (answer_goal(query) == 'cost' and re.search(r'무료|무상',query)
+            and not re.search(r'훼손|파손|분해|부품.{0,5}(?:빼|없|탈취)',request)):
         for row in rows:
             owner, field = row.split(' — ',1)
             if not re.match(r'품\s*명\s*:',field):
@@ -443,6 +455,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 score += 15
             if field == 'definition':
                 score += 20 if unit.startswith('정의:') else 0
+                score += 20 if re.search(r'이란|(?:제도|기술|활동|사업|의미)(?:입니다|를 말)',unit) else 0
             if field == 'schedule' and re.search(r'주말|공휴일|토요일|일요일',query):
                 if not re.search(r'주말|공휴일|토요일|일요일',unit):
                     continue

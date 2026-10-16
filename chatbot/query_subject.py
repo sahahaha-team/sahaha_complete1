@@ -53,6 +53,7 @@ SERVICE_NAMES += ('쓰레기',)
 SERVICE_NAMES += ('주민등록증', '소방', '자전거도로')
 SERVICE_NAMES += ('인감증명', '본인서명사실확인서')
 SERVICE_NAMES += ('정보공개', '금연')
+SERVICE_NAMES += ('정보화교육',)
 WORDING_ALIASES.update({'인감증명서':'인감증명'})
 WORDING_ALIASES.update({'껍데기':'껍질'})
 WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
@@ -231,6 +232,10 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
         strong = names - {'구직','구인','디지털','컴퓨터','자전거','냉장고','세탁기'}
         if strong:
             topics = strong | (topics & {'신규','도로','일반'} if '쓰레기' in strong else topics & {'신규','도로'})
+            if '주민등록증' in strong:
+                # Its official first-issue guide says 발급신청, while the
+                # separate lifecycle guard still rejects 재발급 for 신규.
+                topics.discard('신규')
             if '암환자' in strong and re.search(r'치료비|의료비',query):
                 topics.add('의료비')
     if "정부24" in names:
