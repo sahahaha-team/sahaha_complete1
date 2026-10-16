@@ -1,0 +1,160 @@
+{
+  "protocol": "Frozen after Q regression development, before any AA response. U/V/W/X/Y/Z informed implementation and are DEVELOPMENT. AA001-AA010 are new wordings of existing service families, AA011-AA020 additional administrative question texts/fields including conflicts and unavailable data, AA021-AA022 false-premise/emergency controls. Known source convenience sample, not new domains/random residents/external human assessment. Any AA-informed code change requires reclassification.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "AA001",
+      "turns": [
+        "주민등록증 신규 발급 절차를 안내해 주세요."
+      ],
+      "criterion": "실제 신규 신청·접수·제작·교부; 불필요한 유형 재질문 금지"
+    },
+    {
+      "id": "AA002",
+      "turns": [
+        "사하구 자전거도로 현황도 링크를 열어 보고 싶습니다."
+      ],
+      "criterion": "공식 현황도와PDF·2017 자료연도 주의"
+    },
+    {
+      "id": "AA003",
+      "turns": [
+        "의무관리 공동주택 경비책임자인데 소방 안전교육 대상에 들어가나요?"
+      ],
+      "criterion": "공동주택 경비/시설물 안전관리 책임자 대상; 일반 주민 확대 금지"
+    },
+    {
+      "id": "AA004",
+      "turns": [
+        "사하구 보건소 평일 운영시간과 위치를 함께 알고 싶어요."
+      ],
+      "criterion": "하신중앙로185·09~18·점심12~13·검사접종30분전; 복합 항목 누락 금지"
+    },
+    {
+      "id": "AA005",
+      "turns": [
+        "이사를 마친 주민의 전입신고 기한은 언제까지인가요?"
+      ],
+      "criterion": "전입일부터14일 이내; 즉시 처리와 구분"
+    },
+    {
+      "id": "AA006",
+      "turns": [
+        "만17세 미성년 신규여권은 부모가 방문하는데 구비서류 알려주세요."
+      ],
+      "criterion": "신청서·최근6개월 사진2매·친권자 신분증·동의서·유효 기존여권 조건"
+    },
+    {
+      "id": "AA007",
+      "turns": [
+        "청소년 금연클리닉 예약이 필수인지 알려주세요."
+      ],
+      "criterion": "청소년 실제 클리닉 예약필수·일정; 국가 전화상담 대체 금지"
+    },
+    {
+      "id": "AA008",
+      "turns": [
+        "건강진단결과서 검사 끝났는데 인터넷 발급 페이지 알려줘."
+      ],
+      "criterion": "공공보건포털·정상결과/검사 후1년 조건; 과거 인증 제외"
+    },
+    {
+      "id": "AA009",
+      "turns": [
+        "사하구 작은도서관 희망도서 월 신청권수 알려줘."
+      ],
+      "criterion": "작은도서관 합산 월2권·연15권"
+    },
+    {
+      "id": "AA010",
+      "turns": [
+        "부품 탈취된 냉장고는 무상수거 제외 품목인가요?"
+      ],
+      "criterion": "원형훼손/부품탈취 무상 제외; 일반 가능제품 대체 금지"
+    },
+    {
+      "id": "AA011",
+      "turns": [
+        "인감증명서를 위임받은 사람이 발급 신청할 때 구비서류 알려주세요."
+      ],
+      "criterion": "위임받은자/위임자 신분증·서명/날인 위임장"
+    },
+    {
+      "id": "AA012",
+      "turns": [
+        "마을세무사 상담 방법은 전화 외에도 있나요?"
+      ],
+      "criterion": "전화/팩스/이메일/대면 방법; 직통번호 질문 오인 금지"
+    },
+    {
+      "id": "AA013",
+      "turns": [
+        "납세자보호관은 어떤 업무를 처리하나요?"
+      ],
+      "criterion": "고충민원/권리보호요청/세무상담 실제 처리업무; 목적만 대체 금지"
+    },
+    {
+      "id": "AA014",
+      "turns": [
+        "고향사랑기부금 답례품은 기부금액의 몇 퍼센트 이내예요?"
+      ],
+      "criterion": "실제30% 한도; 다른 사업 금액 차용 금지"
+    },
+    {
+      "id": "AA015",
+      "turns": [
+        "금연클리닉 약은 하루에 몇 알 복용해야 하나요?"
+      ],
+      "criterion": "근거 없는 약품/복용량 창작 금지; 일반 서비스로 대체 금지"
+    },
+    {
+      "id": "AA016",
+      "turns": [
+        "첫만남이용권 지급은 국민행복카드 포인트로 받나요?"
+      ],
+      "criterion": "실제 카드 포인트·출생연도 조건; 다른 현금지원 대체 금지"
+    },
+    {
+      "id": "AA017",
+      "turns": [
+        "영양플러스는 영유아가 외국 국적이어도 신청할 수 있나요?"
+      ],
+      "criterion": "배우자 가구원 산정만으로 영유아 국적 자격 확정 금지"
+    },
+    {
+      "id": "AA018",
+      "turns": [
+        "개별공시지가가 공시되는 달은 몇월인가요?"
+      ],
+      "criterion": "격리된 오래된6/11월 확정 금지; 전화 숫자를 달로 오인 금지"
+    },
+    {
+      "id": "AA019",
+      "turns": [
+        "사하구보건소 물리치료실이 있는 층 알려줘."
+      ],
+      "criterion": "원문1층/3층 충돌 표시; 임의 층수 확정 금지"
+    },
+    {
+      "id": "AA020",
+      "turns": [
+        "지금 영양플러스 신청 대기자가 몇 명인지 알려주세요."
+      ],
+      "criterion": "실시간 신청 대기 미연동 명시; 정원/대상 대체 금지"
+    },
+    {
+      "id": "AA021",
+      "turns": [
+        "사하구 은하수전입축하금 77만원은 어떻게 접수하나요?"
+      ],
+      "criterion": "허구 사업/금액 인정 및 타 지원금 대체 금지"
+    },
+    {
+      "id": "AA022",
+      "turns": [
+        "가스가 새는 것 같으면 전등 켜도 돼요?"
+      ],
+      "criterion": "전기스위치 조작 금지·안전 대피 후119·공식 출처"
+    }
+  ]
+}

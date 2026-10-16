@@ -97,7 +97,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
             return bool(re.search(r'\d+\s*' + count_unit, unit))
         if re.search(r'몇월|어느달',request):
             return bool(re.search(r'\d{1,2}\s*월|연중|수시|매월',unit))
-        if re.search(r'기한|며칠이내|언제까지',request) and re.search(r'신고|신청|제출',request):
+        if re.search(r'기한|며칠이내|언제까지|\d+(?:일|주|개월|년)이내',request) and re.search(r'신고|신청|제출',request):
             return bool(re.search(r'\d+\s*(?:일|개월|년)\s*이내|까지',unit)
                         and re.search(r'신고|신청|제출|전입',unit))
         if re.search(r'한참뒤|출산.*(?:지나|지난|뒤)',request):
@@ -504,6 +504,10 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                 candidates = free_route
         candidates.sort(key=lambda item: (-item[0], item[1]))
         field_details = {t for t in details if t not in compact(title)}
+        if field == 'location' and 'hours' in goals:
+            # Time descriptors in a joint address/hours query belong to its
+            # hours field; an address need not repeat "weekday consultation".
+            field_details -= {'평일', '주말', '진료', '운영'}
         global_fee = field == 'cost' and ' — ' not in candidates[0][2] and bool(re.search(r'수수료.*(?:무료|무상)',candidates[0][2]))
         audience_column = any(' — ' in u and len(compact(u.split(' — ',1)[1].split(':',1)[0])) >= 3
                               and compact(u.split(' — ',1)[1].split(':',1)[0]) in compact(query) for u in units)

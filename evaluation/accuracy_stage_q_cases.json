@@ -1,0 +1,27 @@
+{
+  "protocol": "Q development reproduction; official source fields, numeric false-premise control. Not independent final accuracy.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "Z004",
+      "turns": [
+        "보건소 찾아가는 주소랑 평일 진료시간이 궁금합니다."
+      ],
+      "criterion": "기관 자체09~18·점심12~13·검사접종30분전·하신중앙로185; 다른 사업 장소 대체 금지"
+    },
+    {
+      "id": "Z005",
+      "turns": [
+        "전입신고는 새집으로 전입한 뒤 14일 이내에 하는 게 맞죠?"
+      ],
+      "criterion": "새 거주지 전입일부터14일 이내; 처리기간 즉시와 구분"
+    },
+    {
+      "id": "Q003",
+      "turns": [
+        "전입신고는 이사 후 30일 이내 하면 맞나요?"
+      ],
+      "criterion": "사용자30일을 인정하지 않고 실제 원문14일 기한 안내"
+    }
+  ]
+}
