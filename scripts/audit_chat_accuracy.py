@@ -24,8 +24,9 @@ def save_report(path, report):
 
 
 def code_hashes():
-    files = [ROOT / 'app.py', ROOT / 'config.py']
-    for folder in ('chatbot', 'database_db', 'crawler'):
+    files = [ROOT / 'app.py', ROOT / 'config.py', ROOT / 'main.py',
+             ROOT / 'worker.py', ROOT / 'worker_recovery.py']
+    for folder in ('chatbot', 'database_db', 'crawler', 'processor'):
         files.extend((ROOT / folder).glob('*.py'))
     files.extend((ROOT / 'resources').glob('*.json'))
     contacts = ROOT / 'data/department_contacts.json'

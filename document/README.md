@@ -3,6 +3,9 @@
 > 2026-10-13 검색·근거 판정 변경과 검증 범위는
 > [RAG 개선 보고서](rag_upgrade_report_20261013.md)를 참고하세요.
 
+> 2026-10-16: 로컬 모델을 Gemma4:E4B로 전환했으며 내부망 vLLM 연결을 지원합니다.
+> 비용·설정·검증 범위는 [모델 실행 안내](gemma4_runtime_20261016.md)를 참고하세요.
+
 부산광역시 사하구청 홈페이지 공식 정보를 기반으로, 주민의 질문에 자연어로 답변하는 RAG 기반 AI 챗봇 시스템입니다.
 
 2026-2학기 수행계획서의 개발 방향과 현재 변경 사항은
@@ -28,7 +31,7 @@
 |------|------|
 | 언어 | Python 3.12 |
 | 웹 서버 | FastAPI + Uvicorn |
-| LLM | 로컬 Ollama (`gemma2:2b`, 환경변수로 변경 가능) |
+| LLM | 로컬 Ollama `gemma4:e4b` / 내부망 vLLM의 실제 served model ID 선택 |
 | 임베딩 | HuggingFace sentence-transformers (MiniLM-L12-v2) |
 | 의미 재정렬 | 로컬 Cross-Encoder (`mmarco-mMiniLMv2-L12-H384-v1`, 필요한 검색에만 적용) |
 | 벡터 DB | Supabase PostgreSQL + pgvector |
@@ -46,7 +49,7 @@
         |
     (2) 텍스트 정제 (DataCleaner)
         |
-    (3) LLM 메타데이터 태깅 (로컬 Ollama)
+    (3) LLM 메타데이터 태깅 (선택한 모델 서버, 실패 시 원문 기반 보완)
         |
     (4) 벡터 임베딩 (MiniLM-L12-v2)
         |
@@ -151,7 +154,9 @@ sahahaha/
 
 ### 1. 환경 설정
 
-Python 3.12와 Ollama를 준비합니다. 새 PC에서 Python 가상환경을 만드는 예시입니다.
+Python 3.12와 선택한 모델 서버를 준비합니다. 로컬 실행은 Ollama를 사용합니다.
+vLLM 운영 환경은 [별도 설정](gemma4_runtime_20261016.md#설정)을 따릅니다.
+새 PC에서 Python 가상환경을 만드는 예시입니다.
 
 ```powershell
 py -3.12 -m venv .venv
@@ -168,8 +173,9 @@ Python 경로는 `.\.venv\python.exe`이므로, 아래 `python` 명령 대신 �
 기존 `.env`가 있으면 해당 파일의 설정을 수정합니다.
 
 ```ini
+LLM_PROVIDER=ollama
 OLLAMA_BASE_URL=http://127.0.0.1:11434
-OLLAMA_MODEL=gemma2:2b
+OLLAMA_MODEL=gemma4:e4b
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_KEY=your_supabase_service_key
@@ -201,7 +207,7 @@ ollama serve
 
 ```powershell
 # 다른 터미널에서 최초 1회 모델 다운로드 후 설치 목록 확인
-ollama pull gemma2:2b
+ollama pull gemma4:e4b
 ollama list
 ```
 

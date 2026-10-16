@@ -1,5 +1,5 @@
 """
-LLM 기반 메타데이터 자동 태깅 (로컬 Ollama)
+LLM 기반 메타데이터 자동 태깅 (설정된 Ollama 또는 vLLM)
 - 청크 다중 묶음을 1회 LLM 호출로 일괄 태깅 (배치 처리)
 - 단일 호출 폴백 + JSON 파싱 실패 시 단건 재시도
 """
@@ -7,17 +7,10 @@ LLM 기반 메타데이터 자동 태깅 (로컬 Ollama)
 import json
 import time
 import logging
-try:
-    # 최신 LangChain에서는 Ollama 통합이 별도 패키지로 분리되었다.
-    from langchain_ollama import ChatOllama
-except ImportError:  # 구버전 환경 호환
-    from langchain_community.chat_models import ChatOllama
 from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnableLambda
+from chatbot.llm_runtime import create_llm
 
-from config import (
-    OLLAMA_BASE_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT, OLLAMA_NUM_CTX,
-    OLLAMA_KEEP_ALIVE,
-)
 from chatbot.dept_directory import correct_dept, department_is_supported
 from processor.metadata_defaults import fallback_keywords
 
@@ -64,10 +57,20 @@ JSON으로만 응답하세요 (설명 없이).
 }}
 """)
 
-# 로컬 Ollama는 외부 호출 제한이 없으며 순차 배치만 유지한다.
+# 순차 배치를 유지한다. 원문 수집/색인은 태깅 모델 실패 시에도 보존한다.
 BATCH_SIZE = 5
 BATCH_DELAY_SEC = 0.0
 SINGLE_DELAY_SEC = 0.0
+
+TAG_SCHEMA = {'type': 'object', 'properties': {
+    'service_type': {'type': 'string', 'enum': ['민원','복지','세금','교통','환경','교육','문화','기타']},
+    'department': {'anyOf': [{'type':'string','maxLength':50}, {'type':'null'}]},
+    'target_audience': {'type':'array','items':{'type':'string'}},
+    'keywords': {'type':'array','items':{'type':'string'},'maxItems':5},
+    'has_deadline': {'type':'boolean'}, 'has_contact_info': {'type':'boolean'},
+    'summary': {'type':'string','maxLength':50},
+}, 'required': ['service_type','department','target_audience','keywords',
+                'has_deadline','has_contact_info','summary'], 'additionalProperties':False}
 
 
 def _base_meta(chunk) -> dict:
@@ -83,7 +86,9 @@ def _base_meta(chunk) -> dict:
 
 def ensure_metadata(meta: dict, chunk) -> dict:
     """LLM 응답의 누락 필드를 결정적 폴백으로 보완한다."""
-    normalized = {**_base_meta(chunk), **(meta or {})}
+    # Source identity belongs to the crawler, never to model-generated tags.
+    normalized = {**{k:v for k,v in (meta or {}).items() if k in TAG_SCHEMA['properties']},
+                  **_base_meta(chunk)}
     normalized["service_type"] = normalized.get("service_type") or "기타"
     department_hint = correct_dept(getattr(chunk, "department_hint", "") or "")
     proposed_department = correct_dept(normalized.get("department") or "")
@@ -120,21 +125,16 @@ def _parse_json_block(text: str):
 class MetadataTagger:
     def __init__(self):
         try:
-            self.llm = ChatOllama(
-                base_url=OLLAMA_BASE_URL,
-                model=OLLAMA_MODEL,
-                temperature=0,
-                num_predict=1000,
-                num_ctx=OLLAMA_NUM_CTX,
-                timeout=OLLAMA_TIMEOUT,
-                keep_alive=OLLAMA_KEEP_ALIVE,
-                format="json",
-            )
-            self.batch_chain = BATCH_TAGGING_PROMPT | self.llm
-            self.single_chain = SINGLE_TAGGING_PROMPT | self.llm
-            logger.info(f"Ollama 태깅 모델 설정: {OLLAMA_MODEL} ({OLLAMA_BASE_URL})")
+            self.llm = create_llm().model_copy(update={'temperature':0,'num_predict':1000})
+            single = self.llm.model_copy(update={'format':TAG_SCHEMA})
+            batch = self.llm.model_copy(update={'format':{'type':'array','items':TAG_SCHEMA}})
+            self.single_chain = RunnableLambda(lambda values: single.invoke(
+                SINGLE_TAGGING_PROMPT.format(**values), stream=False))
+            self.batch_chain = RunnableLambda(lambda values: batch.invoke(
+                BATCH_TAGGING_PROMPT.format(**values), stream=False))
+            logger.info('태깅 모델 설정: %s', self.llm.model)
         except Exception as e:
-            logger.warning(f"Ollama 초기화 실패 - 태깅 폴백 사용: {e}")
+            logger.warning('태깅 초기화 실패 - 원문 메타데이터 사용: %s', type(e).__name__)
             self.llm = None
 
     def _tag_single(self, chunk) -> dict:
@@ -150,7 +150,7 @@ class MetadataTagger:
                 if meta.get("department"):
                     meta["department"] = correct_dept(meta["department"])
         except Exception as e:
-            logger.warning(f"단건 태깅 실패 ({chunk.chunk_id}): {e}")
+            logger.warning('단건 태깅 실패 (%s): %s', chunk.chunk_id, type(e).__name__)
         return ensure_metadata(meta, chunk)
 
     def _tag_batch_one_call(self, batch: list) -> list[dict]:
@@ -166,7 +166,7 @@ class MetadataTagger:
             response = self.batch_chain.invoke({"items": items_text})
             parsed = _parse_json_block(response.content)
         except Exception as e:
-            logger.warning(f"배치 태깅 호출 실패: {e}")
+            logger.warning('배치 태깅 호출 실패: %s', type(e).__name__)
             return []
 
         if not isinstance(parsed, list) or len(parsed) != len(batch):
