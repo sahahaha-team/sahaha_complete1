@@ -1,5 +1,5 @@
 {
-  "protocol": "Frozen after S regression and before any AC response. AC001-010 new wordings of ten known service families; AC011-020 additional administrative question texts and unsupported requests; AC021-022 false-premise/emergency controls. Known-source convenience sample, not unknown domains, random residents or external human evaluation. All earlier U/V/W/X/Y/Z/AA/AB sets informed development. Any AC-informed code modification requires reclassification.",
+  "protocol": "DEVELOPMENT after T fixes from AC008/015/016/017. Original wording retained. Frozen after S regression and before any AC response. AC001-010 new wordings of ten known service families; AC011-020 additional administrative question texts and unsupported requests; AC021-022 false-premise/emergency controls. Known-source convenience sample, not unknown domains, random residents or external human evaluation. All earlier U/V/W/X/Y/Z/AA/AB sets informed development. Any AC-informed code modification requires reclassification.",
   "families": [],
   "scenarios": [
     {

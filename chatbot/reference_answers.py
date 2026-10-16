@@ -60,6 +60,12 @@ def reference_answer(query: str, document: dict, body: str, keywords: set[str],
     answer = f'사하구청 [{label}]({url})에서 확인할 수 있습니다.'
     attachments = [a for a in meta.get('attachments') or [] if isinstance(a, dict)
                    and safe_official_link(str(a.get('url') or ''))]
+    requested_format = re.search(r'\b(pdf|hwpx|hwp)\b', query, re.I)
+    if requested_format:
+        extension = requested_format[1].lower()
+        attachments = [a for a in attachments if urlparse(a['url']).path.lower().endswith('.'+extension)
+                       or re.search(r'\b'+extension+r'\b',str(a.get('name') or ''),re.I)]
+    missing_attachment = bool(re.search(r'첨부|파일|\b(?:pdf|hwpx|hwp)\b',query,re.I) and not attachments)
     attachments.sort(key=lambda a: not any(w in str(a.get('name') or '') for w in ('현황', '지도', '자세히')))
     if attachments:
         attachment = attachments[0]
@@ -79,6 +85,11 @@ def reference_answer(query: str, document: dict, body: str, keywords: set[str],
         answer = f'사하구청 공식 「{label}」 페이지에서 확인할 수 있습니다. 아래 출처의 첨부자료를 열어 상세 내용을 보세요.'
         if attachments and years and max(map(int, years)) < datetime.now().year:
             answer += f'\n파일명에 **{max(years)}**이 포함된 자료이므로 최신 변경 사항은 별도 확인이 필요합니다.'
+    if missing_attachment:
+        requested_label = requested_format[1].upper()+' 첨부파일' if requested_format else '요청하신 첨부파일'
+        answer += f'\n{requested_label}은 현재 확인한 자료에 없습니다. 위 링크는 공식 안내 페이지입니다.'
     return {'answer': answer, 'answer_details': original,
             'is_clarification': False, 'suggested_questions': [],
-            'documents': [document], 'answer_method': 'official_reference'}
+            'documents': [document], 'answer_method': 'official_reference',
+            'degraded': missing_attachment,
+            **({'degraded_reason':'attachment_not_verified'} if missing_attachment else {})}

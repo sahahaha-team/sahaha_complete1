@@ -232,7 +232,8 @@ def requested_goals(query: str) -> tuple[str, ...]:
         if re.search(r'(?:발급|뽑을|출력).{0,10}수|증명서도.*(?:있나요|돼요)',query) and primary == 'cost':
             goals.append('services')
         for goal, pattern in extra:
-            if (goal not in goals and re.search(pattern, query)
+            field_query = re.sub(r'제외\s*대상', '', query) if goal == 'eligibility' and primary == 'conditions' else query
+            if (goal not in goals and re.search(pattern, field_query)
                     and not (goal == 'documents' and re.search(r'수거|가져가.*서비스|와서.*가져가',query))
                     and not (primary in ('precautions','hours','location','specifications') and goal == 'method')
                     and not (primary == 'conditions' and goal == 'method' and not re.search(r'어떻게|방법|어디',query))

@@ -71,7 +71,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         return bool(re.search(r'외국인|국적|내국인',unit))
     if goal == 'conditions' and re.search(r'전부사주|모두사주',request):
         return bool(re.search(r'선정제외|제외기준|제외대상',unit))
-    if goal == 'eligibility' and re.search(r'\d+(?:세|살)|나이|연령',request) and re.search(r'심사기준.*\d+\s*세\s*(?:이상|미만|이하).*확인',unit):
+    if goal == 'eligibility' and re.search(r'(?:\d+|몇)(?:세|살)|나이|연령',request) and re.search(r'심사기준.*\d+\s*세\s*(?:이상|미만|이하).*확인',unit):
         return True
     if goal == 'eligibility' and re.search(r'몇세|몇살|나이|연령',request):
         if re.search(r'대상자?\s*[:：].*\d+\s*세',unit):
