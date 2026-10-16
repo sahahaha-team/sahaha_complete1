@@ -73,6 +73,14 @@ class FollowupFieldTests(unittest.TestCase):
         p={'units':body.splitlines(),'body':body,'document':document}
         self.assertIsNone(render_plan(q,{'mode':'answer','source':0,'units':[2]},[p],{'음식물쓰레기'}))
 
+    def test_shell_wording_matches_the_actual_exclusion_without_inventing_food_rules(self):
+        q='닭뼈와 조개껍데기를 음식물쓰레기통에 넣어도 돼요?'
+        body='## 음식물쓰레기\n음식물 쓰레기 — 음식물 전용용기에 넣어서는 안되는 물질: 육류 : 예) 동물의 뼈 어패류 : 예) 조개류의 껍질'
+        r=structured_brief(q,doc(body,'폐기물'),body,{'쓰레기'})
+        self.assertIsNotNone(r)
+        self.assertIn('넣어서는 안되는',r['answer'])
+        self.assertIn('껍질',r['answer'])
+
     def test_old_rule_mentioned_to_ask_about_now_is_not_a_historical_request(self):
         d=doc('개인별 연간 최대 500만원(2025년부터 2천만원까지 가능)','고향사랑기부')
         self.assertTrue(is_time_compatible('2024년에 500만원이라던데 지금도 그대로예요?',d))

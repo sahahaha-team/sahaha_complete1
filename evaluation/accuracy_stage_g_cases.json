@@ -1,0 +1,20 @@
+{
+  "protocol": "G development regression probes; not independent evaluation.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "shells",
+      "turns": [
+        "닭뼈와 조개껍데기를 음식물쓰레기통에 넣어도 돼요?"
+      ],
+      "criterion": "실제 음식물쓰레기 제외 항목과 연결; 원문의 동물뼈·조개껍질"
+    },
+    {
+      "id": "unseen_food",
+      "turns": [
+        "라면 국물은 음식물쓰레기 봉투에 담아 버려도 돼요?"
+      ],
+      "criterion": "특정 국물 근거 부족을 다른 음식 예시로 대체 금지"
+    }
+  ]
+}
