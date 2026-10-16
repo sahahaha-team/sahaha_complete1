@@ -60,6 +60,13 @@ def canonical(text: str) -> str:
     return value
 
 
+def asks_communication_method(query: str) -> bool:
+    text = compact(query)
+    return (bool(re.search(r'전화|팩스|이메일', text))
+            and bool(re.search(r'방법|경로|수단|(?:전화|팩스|이메일)(?:외에|말고|대신|로만|으로만)', text))
+            and not re.search(r'번호|연락처|담당부서|문의처|어느부서|어느과', text))
+
+
 def fresh(timestamp: str) -> bool:
     try:
         checked = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
@@ -172,6 +179,8 @@ class ContactDirectoryResponder:
         # Let the original-page answer include the verified main number.
         from chatbot.official_faq import required_faq_ids
         if required_faq_ids(query) == {1, 2}:
+            return None
+        if asks_communication_method(query):
             return None
         # Phone-number administration is a procedure question, unless it also
         # explicitly asks which office to contact.
@@ -419,6 +428,8 @@ def _matching_duty_excerpt(duties: str, terms: set[str]) -> str:
 def is_contact_lookup_question(query: str) -> bool:
     value = (query or "").lower()
     compact = _compact(value)
+    if asks_communication_method(query):
+        return False
     asks_office_basics = (
         any(term in compact for term in ("사하구청", "구청"))
         and any(term in compact for term in ("위치", "주소", "대표", "오시는길"))

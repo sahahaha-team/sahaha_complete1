@@ -11,7 +11,8 @@
 기록하고 업무·요청 항목·대상·예외·숫자·출처·확인일을 문항별로 수기 검수한다.
 결과와 재현 조건은 `document/accuracy_final_review_20261016.md`,
 `evaluation/results/accuracy_review_20261016.json`을 따른다.
-`accuracy_final_validation_aa_20261016.json`의 AA22는 Q 이후 응답 관찰 전에 고정한 최종 검증 질문이다.
+`accuracy_final_validation_ab_20261016.json`의 AB22는 R 이후 응답 관찰 전에 고정한 최종 검증 질문이다.
+`accuracy_final_validation_aa_20261016.json`의 AA22는 R 거절 경로 수정에 사용되어 개발셋으로 재분류했다.
 `accuracy_final_validation_z_20261016.json`의 Z22는 Q의 항목 누락 수정에 사용되어 개발셋으로 재분류했다.
 `accuracy_final_validation_y_20261016.json`의 Y22도 P 수정에 사용되어 개발셋으로 재분류했다.
 `accuracy_final_validation_x_20261016.json`의 X22도 O 수정에 사용되어 개발셋으로 재분류했다.

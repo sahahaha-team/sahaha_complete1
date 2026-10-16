@@ -65,7 +65,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
     if goal == 'conditions' and re.search(r'신분증|증명서',request) and re.search(r'원본|사본|휴대폰사진|사진이면|사진으로',request):
         return bool(re.search(r'(?:신분증|증명서).{0,35}(?:사본|원본)|(?:사본|원본).{0,35}(?:신분증|증명서)',unit)
                     and re.search(r'가능|불가|필수|인정|허용|제출|지참',unit))
-    if goal == 'conditions' and re.search(r'현금|계좌|통장',request) and re.search(r'지급|들어|받|나오',request):
+    if goal == 'conditions' and re.search(r'현금|계좌|통장|포인트|바우처|카드로|카드에',request) and re.search(r'지급|들어|받|나오',request):
         return bool(re.search(r'지급|바우처|국민행복카드|포인트|현금|계좌|통장',unit))
     if goal == 'conditions' and re.search(r'외국인',request):
         return bool(re.search(r'외국인|국적|내국인',unit))
@@ -79,7 +79,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
     if goal == 'conditions' and re.search(r'제외|불가|금지', request):
         # "제외도서 확인" is an instruction to look up rules, not those rules.
         return bool(re.search(r'^(?:선정|신청|지원|이용)?\s*제외\s*(?:대상|기준|품목)\s*[:：]', unit)
-            or re.search(r'제외(?:됩니다|합니다|대상|품목)|불가|금지|안되는|안 되는', unit))
+            or re.search(r'제외(?:됩니다|합니다|대상|품목)|불가|금지|안되는|안 되는|되지\s*않음', unit))
     if goal == 'conditions' and re.search(r'되어도|되면|그대로받',request):
         ages = re.findall(r'\d{1,2}세',request)
         if ages and not any(age in compact(scoped) for age in ages):

@@ -1,5 +1,5 @@
 {
-  "protocol": "Frozen after Q regression development, before any AA response. U/V/W/X/Y/Z informed implementation and are DEVELOPMENT. AA001-AA010 are new wordings of existing service families, AA011-AA020 additional administrative question texts/fields including conflicts and unavailable data, AA021-AA022 false-premise/emergency controls. Known source convenience sample, not new domains/random residents/external human assessment. Any AA-informed code change requires reclassification.",
+  "protocol": "DEVELOPMENT after R fixes informed by AA010/012/014/016. Original wording retained. Frozen after Q regression development, before any AA response. U/V/W/X/Y/Z informed implementation and are DEVELOPMENT. AA001-AA010 are new wordings of existing service families, AA011-AA020 additional administrative question texts/fields including conflicts and unavailable data, AA021-AA022 false-premise/emergency controls. Known source convenience sample, not new domains/random residents/external human assessment. Any AA-informed code change requires reclassification.",
   "families": [],
   "scenarios": [
     {

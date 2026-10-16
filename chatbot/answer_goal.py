@@ -74,6 +74,8 @@ def answer_goal(query: str) -> str | None:
         return 'eligibility'
     if re.search(r'현금|계좌|통장', compact_query) and re.search(r'지급|들어|받|나오', compact_query):
         return 'conditions'
+    if re.search(r'지급|받',compact_query) and re.search(r'포인트|바우처|카드로|카드에',compact_query):
+        return 'conditions'
     if re.search(r'뭐가필요|무엇이필요|뭘챙|무엇을챙|챙길(?:것|거)', compact_query):
         return 'documents'
     if re.search(r'수수료|요금|비용|가격|상한', compact_query) and re.search(r'얼마|상한|최대|한도|그대로', compact_query):
