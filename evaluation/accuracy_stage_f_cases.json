@@ -1,0 +1,27 @@
+{
+  "protocol": "F targeted development HTTP checks after full regression; conditions must remain sourced.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "proxy_papers",
+      "turns": [
+        "동 주민센터에서 인감증명서를 대리로 떼려면 뭐가 필요해요?"
+      ],
+      "criterion": "위임받은자 신분증·서명/날인 위임장·위임자 신분증"
+    },
+    {
+      "id": "disclosure_decision",
+      "turns": [
+        "정보공개청구를 내면 공개 여부 결정은 언제 알려주나요?"
+      ],
+      "criterion": "청구받은날10일 및10일범위연장 통지"
+    },
+    {
+      "id": "other_certificate",
+      "turns": [
+        "본인서명사실확인서 발급 준비물 알려줘"
+      ],
+      "criterion": "본인신분증; 인감 대리조건 대체 금지"
+    }
+  ]
+}

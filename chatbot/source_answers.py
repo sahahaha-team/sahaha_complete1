@@ -172,8 +172,9 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
     from chatbot.semantic_ranker import has_semantic_support, semantic_keywords
     if topic_keywords is not None or has_semantic_support(query, lead):
         topic_keywords = semantic_keywords(query, lead, topic_keywords or set())
-    if details and not has_semantic_support(query,lead) and answer_goal(query) not in ('reference','specifications') and not any(
-            term in re.sub(r'\s+','',text) for term in details):
+    from chatbot.source_scope import unanswered_details
+    if (details and not has_semantic_support(query,lead) and answer_goal(query) not in ('reference','specifications')
+            and details.issubset(unanswered_details(query,text,str(meta.get('title') or ''),topic_keywords or set()))):
         return "", []
     # A later retrieval chunk may omit the board header. Check the complete
     # original too, so pagination/search fields cannot masquerade as an answer.

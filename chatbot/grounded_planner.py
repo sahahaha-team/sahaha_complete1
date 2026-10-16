@@ -51,8 +51,9 @@ def prepare_evidence(query: str, documents: list[dict], client, keywords: set[st
         if not text or not is_answerable_document(query, {"content": text, "metadata": meta}):
             continue
         body = normalize_plain_source(strip_page_chrome(text), str(meta.get('title') or '공식 안내'))
+        from chatbot.source_scope import unanswered_details
         if (details and not semantic and answer_goal(query) not in ('reference','specifications','cost')
-                and not any(t in compact(body) for t in details)):
+                and details.issubset(unanswered_details(query,body,str(meta.get('title') or ''),keywords))):
             continue
         if not topic_support({"content": body, "metadata": {"url": url}}, keywords)[0]:
             continue

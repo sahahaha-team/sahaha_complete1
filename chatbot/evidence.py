@@ -197,6 +197,14 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     source_text = compact(title + ' ' + ' '.join(owners))
     for name, kind in requested_entities:
         name = re.sub(r'^(?:사하구청|사하구|부산광역시)', '', name)
+        # A generic issuing counter is incidental to a certificate's papers.
+        # Do not require a 주민센터 heading in the district's issuance guide;
+        # this does not establish any particular centre's address or hours.
+        if (kind == '센터' and name in {'주민', '동주민', '행정복지', '동행정복지'}
+                and answer_goal(query) == 'documents'
+                and anchors.intersection({'인감증명', '본인서명사실확인서',
+                                          '주민등록등본', '주민등록초본'})):
+            continue
         if name and compact(name + kind) not in source_text:
             return False
     if (answer_goal(query) == 'necessity' and re.search(r'서류|행정|기관|제출', query)

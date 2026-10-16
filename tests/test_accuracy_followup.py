@@ -96,6 +96,32 @@ class FollowupFieldTests(unittest.TestCase):
     def test_polite_request_is_not_an_unknown_service_detail(self):
         self.assertNotIn('부탁',focus_terms('자전거 도로 안내 부탁드립니다'))
 
+    def test_generic_issuing_counter_does_not_hide_certificate_papers(self):
+        from chatbot.evidence import is_service_source
+        from chatbot.grounded_planner import prepare_evidence
+        from chatbot.source_answers import build_source_answer
+        body='## 민원실 이용안내\n#### 인감증명발급\n구비서류 : 위임을 받은 자의 신분증, 위임장, 위임자 신분증'
+        d=doc(body,'민원실 이용안내','0103010000')
+        self.assertTrue(is_service_source('동 주민센터에서 인감증명서 대리 발급 준비물',d,{'인감증명'}))
+        self.assertFalse(is_service_source('괴정복지센터 인감증명서 대리 발급 준비물',d,{'인감증명'}))
+        self.assertFalse(is_service_source('주민센터 인감증명서 발급 장소',d,{'인감증명'}))
+        q='동 주민센터에서 인감증명서를 대리로 떼려면 뭐가 필요해요?'
+        self.assertTrue(prepare_evidence(q,[d],None,{'인감증명'}))
+        self.assertTrue(build_source_answer([d],None,query=q,topic_keywords={'인감증명'})[0])
+
+    def test_procedure_deadline_keeps_owning_parent_and_extension(self):
+        import json
+        from pathlib import Path
+        f=json.loads((Path(__file__).parent/'fixtures/information_procedure_20261016.json').read_text(encoding='utf8'))
+        q='정보공개청구를 내면 공개 여부 결정은 언제 알려주나요?'
+        d={'content':f['content'],'metadata':{'title':f['title'],'url':f['url']}}
+        r=structured_brief(q,d,f['content'],{'정보공개청구'})
+        self.assertIsNotNone(r)
+        self.assertIn('청구를 받은 날부터 10일',r['answer'])
+        self.assertIn('연장사유',r['answer'])
+        body='## 민원실\n### 인감증명발급\n구비서류 : 신분증\n### 가족관계증명서\n수수료 : 1,000원'
+        self.assertIsNone(structured_brief('인감증명서 수수료',doc(body,'민원실'),body,{'인감증명'}))
+
     def test_sofa_fee_requires_missing_size(self):
         self.assertIsNotNone(build_clarification('소파 버리는 수수료 얼마예요?'))
         self.assertIsNone(build_clarification('2인용 소파 수수료 얼마예요?'))

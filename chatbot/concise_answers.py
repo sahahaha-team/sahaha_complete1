@@ -98,11 +98,19 @@ def topic_section_bounds(units: list[str], query: str, keywords: set[str]) -> tu
             and all(s in compact(units[0]) for s in subjects)):
         return section_bounds(units,0)
     regions, body_regions = [], []
-    for start in _section_headings(units):
+    owning_headings = set(_section_headings(units)) | {
+        i for i,u in enumerate(units) if u.startswith('#') and all(s in compact(u) for s in subjects)
+    }
+    for start in sorted(owning_headings):
         bounds = section_bounds(units,start)
-        if explicit and not explicit[0] <= start < explicit[1]:
-            continue
         heading = compact(units[start])
+        if explicit and not explicit[0] <= start < explicit[1]:
+            # A named step (청구인) may omit the requested decision deadline
+            # kept in its parent procedure. Consider that owning parent only,
+            # never an unrelated sibling's field with an incidental mention.
+            if not (start <= explicit[0] and explicit[1] <= bounds[1]
+                    and all(s in heading for s in subjects)):
+                continue
         # Facts/documents can mention another program incidentally. Only a
         # program name in the heading can narrow a structured page's scope.
         if all(s in heading for s in subjects):
