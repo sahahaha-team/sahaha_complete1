@@ -12,6 +12,12 @@
 결과와 재현 조건은 `document/accuracy_final_review_20261016.md`,
 `evaluation/results/accuracy_review_20261016.json`을 따른다.
 `accuracy_final_validation_ae_20261017.json`의 AE22는 U 이후 응답 관찰 전에 고정한 최종 검증 질문이다.
+10/17 최종 실행은 동일 서비스 코드 `b1a7812`의140턴(138개 질문 문자열)이며,
+질문별 실제 답변·판정 이유는 [최종 검수 기록](results/accuracy_cases_20261017.md)에 있다.
+수기 판정은 `results/accuracy_labels_20261016.json`의 응답 해시와 연결하며,
+`package_accuracy_review_20261016.py`는 원래 로컬 HTTP 기록과 연결된 판정을 검증해
+집계만 한다. 새 실행은 응답이 달라지면 다시 검수해야 한다. 필요한 확인/부분 답변/
+근거 부족을 충분 답변 정답률에 합산하지 않는다.
 `accuracy_final_validation_ad_20261016.json`의 AD22는 U 공통 해석 보강에 사용되어 개발셋으로 재분류했다.
 `accuracy_final_validation_ac_20261016.json`의 AC22는 T 필드/첨부 보강에 사용되어 개발셋으로 재분류했다.
 `accuracy_final_validation_ab_20261016.json`의 AB22는 S 요청 항목 수정에 사용되어 개발셋으로 재분류했다.

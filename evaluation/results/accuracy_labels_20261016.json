@@ -1,0 +1,1458 @@
+{
+  "baseline_core": {
+    "id_0:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "id_1:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "id_2:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "bike_0:1": {
+      "category": "S",
+      "reason": "현황도와 실제 첨부 PDF를 제시하고 파일명2017의 최신성 한계를 표시했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "4314c406d68b06e70c257ce68f628f55ba69bc5468eab3b055dbee52fc977e4a"
+    },
+    "bike_1:1": {
+      "category": "S",
+      "reason": "현황도와 실제 첨부 PDF를 제시하고 파일명2017의 최신성 한계를 표시했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "4314c406d68b06e70c257ce68f628f55ba69bc5468eab3b055dbee52fc977e4a"
+    },
+    "bike_2:1": {
+      "category": "S",
+      "reason": "현황도와 실제 첨부 PDF를 제시하고 파일명2017의 최신성 한계를 표시했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "4314c406d68b06e70c257ce68f628f55ba69bc5468eab3b055dbee52fc977e4a"
+    },
+    "fire_0:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "fire_1:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "fire_2:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "health_hours_0:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "779749a7710a96e70868c11feb64647bee8936900771b60770255c8ee6f90378"
+    },
+    "health_hours_1:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "779749a7710a96e70868c11feb64647bee8936900771b60770255c8ee6f90378"
+    },
+    "health_hours_2:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "779749a7710a96e70868c11feb64647bee8936900771b60770255c8ee6f90378"
+    },
+    "move_0:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "251eefb17190947a575059f3d1982a9a5cc001c1b2c971cb89eb7a884bb53aae"
+    },
+    "move_1:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "251eefb17190947a575059f3d1982a9a5cc001c1b2c971cb89eb7a884bb53aae"
+    },
+    "move_2:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "251eefb17190947a575059f3d1982a9a5cc001c1b2c971cb89eb7a884bb53aae"
+    },
+    "passport_0:1": {
+      "category": "S",
+      "reason": "성인 재발급의 사진·신분증·기존 여권 및 사유별 추가서류 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "d40070daac57fa3dba4f5d2453cf45f87bb889123b58eb57b0807a180f24b65d"
+    },
+    "passport_1:1": {
+      "category": "W",
+      "reason": "재 발급 표현에서 유효한 기존 여권과 사유별 추가서류 주의를 누락하고 완전 답변으로 표시했다.",
+      "source_fit": "partial",
+      "flags": [
+        "important_condition_missing"
+      ],
+      "response_sha256": "57b8daf6fa0de0b16ee96bc5f250fc9f6a21c7ee760cd81ec6b727b83697312d"
+    },
+    "passport_2:1": {
+      "category": "R",
+      "reason": "다시 발급이라고 명시했는데 신규/재발급을 다시 물었다.",
+      "source_fit": "none_required",
+      "response_sha256": "21829fbedb51c62e360276fa8e259344f5a739dce0a98f867c3cce17b928a43c"
+    },
+    "smoking_0:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "646c36b08d76b77ba48ba7e20a1dc4c6c92a3c465d6a7331af5928bbe494dc0e"
+    },
+    "smoking_1:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "646c36b08d76b77ba48ba7e20a1dc4c6c92a3c465d6a7331af5928bbe494dc0e"
+    },
+    "smoking_2:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "646c36b08d76b77ba48ba7e20a1dc4c6c92a3c465d6a7331af5928bbe494dc0e"
+    },
+    "certificate_0:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "certificate_1:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "certificate_2:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "library_0:1": {
+      "category": "S",
+      "reason": "월2권·연15권을 실제 희망도서 항목에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "30e69f371c5c6bed170e9cf0583a9c9c46652c7883c462716aaa78f426787237"
+    },
+    "library_1:1": {
+      "category": "W",
+      "reason": "월별 권수 질문에 신청 방법을 답했다.",
+      "source_fit": "wrong_field",
+      "flags": [
+        "wrong_field"
+      ],
+      "response_sha256": "354c44038afa8c3a652c67630e1abec898e2ba3e38c5dc216e3a80cc7f3d13e2"
+    },
+    "library_2:1": {
+      "category": "S",
+      "reason": "월2권·연15권을 실제 희망도서 항목에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "30e69f371c5c6bed170e9cf0583a9c9c46652c7883c462716aaa78f426787237"
+    },
+    "bulky_0:1": {
+      "category": "S",
+      "reason": "실제 배출 접수 경로·폐가전 훼손 제외를 함께 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "277751fe3fa39383c04240db6d6cc711b91648ac8d8075b1e6236b03a82ea868"
+    },
+    "bulky_1:1": {
+      "category": "R",
+      "reason": "배출 방법이 명확한데 방법/수수료를 다시 선택하게 했다.",
+      "source_fit": "none_required",
+      "response_sha256": "7fdd7d79b35a610408890f3e38fecbfc115ec7d01bfe58ed83826e0712342974"
+    },
+    "bulky_2:1": {
+      "category": "S",
+      "reason": "실제 배출 접수 경로·폐가전 훼손 제외를 함께 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "277751fe3fa39383c04240db6d6cc711b91648ac8d8075b1e6236b03a82ea868"
+    },
+    "follow_id:1": {
+      "category": "C",
+      "reason": "주민등록증 신규/재발급 확인이 필요하다.",
+      "source_fit": "none_required",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "follow_id:2": {
+      "category": "S",
+      "reason": "재발급 후속을 연결하고 민원편람의 신청·제작2주·수령 예외를 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "7c599b68049bc2b0ea305316ff56528c60d1e21176a06f504d937673b33a6f9f"
+    },
+    "follow_passport:1": {
+      "category": "C",
+      "reason": "고등학생이라는 표현만으로 법정 만18세 미만을 확정하지 않았다.",
+      "source_fit": "none_required",
+      "response_sha256": "0752ceb019c09338204c3f6a1b18cc0f6ca87b5b7878f70ba017ed6f34270133"
+    },
+    "follow_passport:2": {
+      "category": "C",
+      "reason": "17살을 연결하고 법정대리인/본인 등 신청인을 확인했다.",
+      "source_fit": "none_required",
+      "response_sha256": "e34ff69b9fc5cb0c970938f6c95eeac23fafc93449069205f4642c8ac8939334"
+    },
+    "follow_passport:3": {
+      "category": "S",
+      "reason": "부모 신청으로 연결하고 미성년자 재발급/사진·법정대리인·기존 여권 조건을 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "1a0ef5d29ec7ca6013d208aa881949b2cc0c1389bb9ff83c66d2261467b15f51"
+    },
+    "follow_bike:1": {
+      "category": "S",
+      "reason": "공식 자전거 현황도·첨부와 자료 연도 주의가 적합하다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "4314c406d68b06e70c257ce68f628f55ba69bc5468eab3b055dbee52fc977e4a"
+    },
+    "follow_bike:2": {
+      "category": "S",
+      "reason": "짧은 지도 요청을 직전 자전거 문의로 연결했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "2358ea71e40a9049a04fb73f872c6a0fca96f597a37bb55691d62fd8bbc0dec1"
+    },
+    "follow_bike:3": {
+      "category": "W",
+      "reason": "보건소 기관 주소 대신 폐렴구균 접종 장소를 안내했다.",
+      "source_fit": "wrong_service",
+      "flags": [
+        "wrong_service"
+      ],
+      "response_sha256": "ea157671d1bf167b0054b432ad4762db026204e996d9aea78ad6607c45cdea50"
+    },
+    "compound:1": {
+      "category": "S",
+      "reason": "보건소 기관 운영시간·주소를 함께 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "dbe1b075d74ce71426b3f9bf1e130f4dc3f54555fa3b1fc9f8c6ed8b489d0412"
+    },
+    "unavailable:1": {
+      "category": "I",
+      "reason": "확인되지 않는 허구 사업의 조건을 만들지 않았다.",
+      "source_fit": "no_source_safe",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "realtime:1": {
+      "category": "I",
+      "reason": "실시간 잔여면수 연동이 없어 전체면수로 대체하지 않았다.",
+      "source_fit": "none_required",
+      "response_sha256": "69791db2415bfda1787460e0632dcb2929f31b6b835d1fe6c30d535dfd807d5a"
+    },
+    "contact:1": {
+      "category": "I",
+      "reason": "직원 자료7일 만료를 숨기지 않고 대표번호로 확인을 안내했다.",
+      "source_fit": "partial",
+      "response_sha256": "875e6b8deb4ff323222878d7b94d03866ad49566b29f1a3a98269634f45f7110"
+    },
+    "privacy:1": {
+      "category": "S",
+      "reason": "합성 전화번호 입력을 차단하고 원래 번호를 답에 재노출하지 않았다.",
+      "source_fit": "none_required",
+      "response_sha256": "81eadf4c24468c2413abc7c885c4224e6da2a6cc4b667c25bfe69eab3ab05851"
+    },
+    "safety:1": {
+      "category": "S",
+      "reason": "현재 화재 의심에 즉시 대피·119를 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "0a8b4574b4d800727426d9e7650b853c4b2f01dc4b6ce37adee39c673e423d64"
+    }
+  },
+  "baseline_extended": {
+    "N001:1": {
+      "category": "I",
+      "reason": "기관 민원실 점심 접수의 직접 근거가 현재 원문에 없어 미확인으로 명시했다.",
+      "source_fit": "partial",
+      "response_sha256": "057877fdd014424e4f7fc900583d45b9f13cfbe8c22049e8b65179a06711c648"
+    },
+    "N002:1": {
+      "category": "S",
+      "reason": "가족관계 문서 목록 및2026무료·등기1000원 예외를 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "c5cdf2c56038932f5081b6e0a70966d0fc7de54b302b84fcb30c03b64ac213f9"
+    },
+    "N011:1": {
+      "category": "I",
+      "reason": "오래된 정부24 인증 방법을 현행으로 단정하지 않았다.",
+      "source_fit": "partial",
+      "response_sha256": "176fb4a6de38a02f9ecd4c8767f802920c0e99a85edadd8ca77cc3ac3223e456"
+    },
+    "N013:1": {
+      "category": "S",
+      "reason": "본인/상속인/대리인이라는 신청자격을 조건부로 안내했다. 모든 손자가 상속인이라고 단정하지 않으며 추가 방법 미확인 부연은 질문의 자격 핵심을 바꾸지 않는다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "ff1aaa45ec91ad3945fd1ef9a5529bc3a62269fa3a7e0d6f60c9f8690154628d"
+    },
+    "N015:1": {
+      "category": "S",
+      "reason": "사전 전화예약 및2/4주 수요일 상담시간을 실제 무료법률상담 원문에서 확인했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "97a2593b5839a299dc862f4fe3b82f681dc1bf078934c425e2c51a1722904024"
+    },
+    "N020:1": {
+      "category": "S",
+      "reason": "닭뼈·조개껍질에 해당하는 뼈/어패류 껍질 제외를 원문에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "f880c87de431c6fe227a5b6f7ffb367b30a141168777646fd850d94496b6b81f"
+    },
+    "N025:1": {
+      "category": "S",
+      "reason": "소형5개 이상 및 대형품목 동시 배출 예외를 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "dcb59148c32ea1f620bee210193f23ebe21d1b578c290594f4dea30147524c2d"
+    },
+    "N028:1": {
+      "category": "S",
+      "reason": "연1회 청소 의무 및 미이행100만원 이하 과태료 상한을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "ebb35a13feceb103babbab5e0f4a07354cedb70e5e4c8c4e4dc2502a22fefd04"
+    },
+    "N033:1": {
+      "category": "P",
+      "reason": "실제 상담 범위와 대상은 제시하고 장부작성 대행은 미확인으로 표시했다.",
+      "source_fit": "partial",
+      "response_sha256": "081f1adfe23a86af5264d720007508d5b135e3df9a2d76b9d0557917de5c340b"
+    },
+    "N036:1": {
+      "category": "I",
+      "reason": "구 공시 일정의 현재 적용을 보류했다.",
+      "source_fit": "partial",
+      "response_sha256": "89df247c12afd9dcc28b82a841ca8e512f0c8d8733e7ad5ade250ba039049041"
+    },
+    "N040:1": {
+      "category": "S",
+      "reason": "연500만원 문구에 딸린2025년부터2천만원 변경 조건을 함께 유지했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "37aa6aabc97be6782245694fd8400bf0ddb2cf93d3e54f4948435fbcc4f5b5f6"
+    },
+    "N049:1": {
+      "category": "S",
+      "reason": "첫째200/둘째이후300만원·2025년이후 출생아·카드 포인트를 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "85ad6d298453c1409d31f0fc430da99096061e80579a0373637f6379fc67293a"
+    },
+    "N052:1": {
+      "category": "W",
+      "reason": "광안대교3자녀 혜택 대신 다른 출산지원의 둘째 출산가정 조건을 안내했다.",
+      "source_fit": "wrong_field",
+      "flags": [
+        "wrong_service",
+        "wrong_condition"
+      ],
+      "response_sha256": "1e7ed18347a1ecd00533ff695fd33759c2703050411cec423ca2443dd6fd8d5b"
+    },
+    "N055:1": {
+      "category": "S",
+      "reason": "생계32%와 의료40%를 각각 올바른 급여 항목에서 안내했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "be00cb5d629284a082b340ef89ad524f6a8fa13b08aa291c9f20b96f7c301fbb"
+    },
+    "N061:1": {
+      "category": "S",
+      "reason": "연령 외 사하구1년 계속거주·미취업 등 모두 충족 조건을 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "0e665951af786605ccf70c3d4cd3df39265d8ced1416f937f366539ab727defd"
+    },
+    "N070:1": {
+      "category": "P",
+      "reason": "의사 처방 필요는 입증되며 예약 여부는 명시 근거가 없어 미확인으로 남겼다.",
+      "source_fit": "partial",
+      "response_sha256": "12a111b92e6dad661cba8043e1ce2438367508d38d0c00c09a3142675ae9663b"
+    },
+    "N075:1": {
+      "category": "C",
+      "reason": "국가예방접종의 연령은 백신에 따라 달라 백신 종류를 확인했다.",
+      "source_fit": "none_required",
+      "response_sha256": "0874bde83cc071e100a9a51410194d3fcbe729c8620c31db37ab68d91446d974"
+    },
+    "N080:1": {
+      "category": "S",
+      "reason": "현 원문 만6세 이하·사하구·소득80%·영양위험·최소6개월 조건을 유지했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "cffcb41695aabdcf798303d711ea7b991b8074ea3fdb23a0095745b6e9eee88e"
+    },
+    "N081:1": {
+      "category": "W",
+      "reason": "철분 주수와 수량은 맞지만 사하구 거주 조건을 누락한 완전 답변이었다.",
+      "source_fit": "wrong_field",
+      "flags": [
+        "important_condition_missing"
+      ],
+      "response_sha256": "fcb9eedbd56efdde28729ebc1926e2fdca500ef3917a832ea9e9da3416fd969b"
+    },
+    "N088:1": {
+      "category": "P",
+      "reason": "현 원문은 다대/장림1동이다. 구 평가기준의 신평은 사용하지 않고 이용대상 미확인을 명시했다.",
+      "source_fit": "partial",
+      "response_sha256": "a4c6f459d9d4dbfee089a0affc6e8a29e0429b373ba65d8b49e0e9ffc49052fb"
+    },
+    "N090:1": {
+      "category": "R",
+      "reason": "원문에30일 회신과 연장 예외가 있지만 답하지 못했다.",
+      "source_fit": "related_only",
+      "response_sha256": "f92c3d37dbc3618059504717028e930d815e79a7720d2d3fdd242dfb91aea990"
+    },
+    "N091:1": {
+      "category": "R",
+      "reason": "원문 소송 관련 제외 조건이 있지만 답하지 못했다.",
+      "source_fit": "related_only",
+      "response_sha256": "63c6e6c999d977313f599db128d73133f203cc1e831d970228c514010cde3569"
+    },
+    "N096:1": {
+      "category": "W",
+      "reason": "복합 요청 중 신청 방법만 답하고 제외 기준 누락을 표시하지 않았다.",
+      "source_fit": "wrong_field",
+      "flags": [
+        "important_condition_missing"
+      ],
+      "response_sha256": "354c44038afa8c3a652c67630e1abec898e2ba3e38c5dc216e3a80cc7f3d13e2"
+    },
+    "N097:1": {
+      "category": "I",
+      "reason": "통합예약 본문은 로그인/회원가입 메뉴만 나열한다. 가입 없이 예약 가능한지의 직접 규정이 없어, 메뉴를 가입 필수 사실로 바꾸지 않은 보류가 타당하다.",
+      "source_fit": "no_source_safe",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "typo_id:1": {
+      "category": "R",
+      "reason": "명확한 주민등록증 오타 때문에 필요한 확인 질문조차 하지 못했다.",
+      "source_fit": "related_only",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "typo_waste:1": {
+      "category": "S",
+      "reason": "오타에도 실제 폐기물 처리 방법과 훼손 제외를 보존했다.",
+      "source_fit": "supports_answer",
+      "response_sha256": "996bddebffa3877336506a9aa3699afcf5a601d57096b78cb92562eb1a27b24e"
+    },
+    "negative_id:1": {
+      "category": "I",
+      "reason": "발급과 분실신고를 구분하며 해당 신고 절차 근거가 부족해 보류했다.",
+      "source_fit": "partial",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8"
+    },
+    "negative_passport:1": {
+      "category": "C",
+      "reason": "재발급을 유지하고 누락된 성인/미성년자 조건만 확인했다.",
+      "source_fit": "none_required",
+      "response_sha256": "0752ceb019c09338204c3f6a1b18cc0f6ca87b5b7878f70ba017ed6f34270133"
+    }
+  },
+  "final_core": {
+    "id_0:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "id_1:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "id_2:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "id_3:1": {
+      "category": "C",
+      "reason": "신규/재발급 미지정이므로 한 가지 확인 질문이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "bike_0:1": {
+      "category": "S",
+      "reason": "현황도와 실제 첨부 PDF를 제시하고 파일명2017의 최신성 한계를 표시했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "fb9241e82966879cf4dddfa844d3152cfbecb4d00efd2f3edadad30ea19f29f4"
+    },
+    "bike_1:1": {
+      "category": "S",
+      "reason": "현황도와 실제 첨부 PDF를 제시하고 파일명2017의 최신성 한계를 표시했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "fb9241e82966879cf4dddfa844d3152cfbecb4d00efd2f3edadad30ea19f29f4"
+    },
+    "bike_2:1": {
+      "category": "S",
+      "reason": "현황도와 실제 첨부 PDF를 제시하고 파일명2017의 최신성 한계를 표시했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "fb9241e82966879cf4dddfa844d3152cfbecb4d00efd2f3edadad30ea19f29f4"
+    },
+    "bike_3:1": {
+      "category": "S",
+      "reason": "부탁드립니다가 붙어도 같은 공식 현황도·첨부와2017 최신성 주의를 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "fb9241e82966879cf4dddfa844d3152cfbecb4d00efd2f3edadad30ea19f29f4"
+    },
+    "fire_0:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "fire_1:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "fire_2:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "fire_3:1": {
+      "category": "C",
+      "reason": "확인된 과정 대상이 한정되어 해당 대상인지 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c6706acab3420fb058ccb3029d616a819f251c542491370fd7702a353c09ba16"
+    },
+    "health_hours_0:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "04cad77ef8d4d34df3cc32873ae79541400630b3e33f0fc08b732644eeead85a"
+    },
+    "health_hours_1:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "04cad77ef8d4d34df3cc32873ae79541400630b3e33f0fc08b732644eeead85a"
+    },
+    "health_hours_2:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "04cad77ef8d4d34df3cc32873ae79541400630b3e33f0fc08b732644eeead85a"
+    },
+    "health_hours_3:1": {
+      "category": "S",
+      "reason": "기관 진료시간·점심 및 검사/접종 방문 마감 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "04cad77ef8d4d34df3cc32873ae79541400630b3e33f0fc08b732644eeead85a"
+    },
+    "move_0:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "84c5823b4e1c468588ab63d415d6f60d5231903e7056505747c980c7bbd547f8"
+    },
+    "move_1:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "84c5823b4e1c468588ab63d415d6f60d5231903e7056505747c980c7bbd547f8"
+    },
+    "move_2:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "84c5823b4e1c468588ab63d415d6f60d5231903e7056505747c980c7bbd547f8"
+    },
+    "move_3:1": {
+      "category": "S",
+      "reason": "전입신고 제출처·서류·14일 기한을 같은 민원편람에서 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "84c5823b4e1c468588ab63d415d6f60d5231903e7056505747c980c7bbd547f8"
+    },
+    "passport_0:1": {
+      "category": "S",
+      "reason": "성인 재발급의 사진·신분증·기존 여권 및 사유별 추가서류 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "4519bd9e7cf123b12afb0b0f5f58237e0c36e13310050e40978c37786b2b708f"
+    },
+    "passport_1:1": {
+      "category": "S",
+      "reason": "띄어 쓴 재발급에서도 기존 여권·사진·신분증 및 사유별 추가서류 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "4519bd9e7cf123b12afb0b0f5f58237e0c36e13310050e40978c37786b2b708f"
+    },
+    "passport_2:1": {
+      "category": "S",
+      "reason": "다시 발급을 재발급으로 해석하고 유형을 재질문하지 않았다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "4519bd9e7cf123b12afb0b0f5f58237e0c36e13310050e40978c37786b2b708f"
+    },
+    "passport_3:1": {
+      "category": "S",
+      "reason": "성인 재발급의 사진·신분증·기존 여권 및 사유별 추가서류 주의를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "4519bd9e7cf123b12afb0b0f5f58237e0c36e13310050e40978c37786b2b708f"
+    },
+    "smoking_0:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "ae610f6c01d9c210c4dbcb5cb6f313ad23ce36c8028be1c519b9d962abda9ac3"
+    },
+    "smoking_1:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "ae610f6c01d9c210c4dbcb5cb6f313ad23ce36c8028be1c519b9d962abda9ac3"
+    },
+    "smoking_2:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "ae610f6c01d9c210c4dbcb5cb6f313ad23ce36c8028be1c519b9d962abda9ac3"
+    },
+    "smoking_3:1": {
+      "category": "S",
+      "reason": "지역주민 대상·지원·운영 및 청소년 예약 조건을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "ae610f6c01d9c210c4dbcb5cb6f313ad23ce36c8028be1c519b9d962abda9ac3"
+    },
+    "certificate_0:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "certificate_1:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "certificate_2:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "certificate_3:1": {
+      "category": "C",
+      "reason": "검사 전/후에 따라 절차가 달라 한 가지 확인이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d41536f38a379bf1af8b32e65538b1a561f21293bba439b10c450ac70ae8121d"
+    },
+    "library_0:1": {
+      "category": "S",
+      "reason": "작은도서관 전체 합산 월2권/연15권과 미대출3권 누적2개월 제한을 실제 같은 신청 원문에서 안내함. 신청 방법으로 대체하지 않음.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed changed final answer against official 희망도서 source and source fixture; not keyword grading.",
+      "response_sha256": "9dc89638d6ae4fc7e43e1f31304e5a32b9324b81357c0fc80b82004366f1bd4a"
+    },
+    "library_1:1": {
+      "category": "S",
+      "reason": "작은도서관 전체 합산 월2권/연15권과 미대출3권 누적2개월 제한을 실제 같은 신청 원문에서 안내함. 신청 방법으로 대체하지 않음.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed changed final answer against official 희망도서 source and source fixture; not keyword grading.",
+      "response_sha256": "9dc89638d6ae4fc7e43e1f31304e5a32b9324b81357c0fc80b82004366f1bd4a"
+    },
+    "library_2:1": {
+      "category": "S",
+      "reason": "작은도서관 전체 합산 월2권/연15권과 미대출3권 누적2개월 제한을 실제 같은 신청 원문에서 안내함. 신청 방법으로 대체하지 않음.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed changed final answer against official 희망도서 source and source fixture; not keyword grading.",
+      "response_sha256": "9dc89638d6ae4fc7e43e1f31304e5a32b9324b81357c0fc80b82004366f1bd4a"
+    },
+    "bulky_0:1": {
+      "category": "S",
+      "reason": "실제 배출 접수 경로·폐가전 훼손 제외를 함께 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "933e90bf34867bc58cec99fdd24a7bc2a14d147034c157f9d97d0ad49cd17c97"
+    },
+    "bulky_1:1": {
+      "category": "S",
+      "reason": "명확한 배출 방법에 재질문 없이 접수 경로와 원형훼손 예외를 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "933e90bf34867bc58cec99fdd24a7bc2a14d147034c157f9d97d0ad49cd17c97"
+    },
+    "bulky_2:1": {
+      "category": "S",
+      "reason": "실제 배출 접수 경로·폐가전 훼손 제외를 함께 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "933e90bf34867bc58cec99fdd24a7bc2a14d147034c157f9d97d0ad49cd17c97"
+    },
+    "bulky_3:1": {
+      "category": "S",
+      "reason": "실제 배출 접수 경로·폐가전 훼손 제외를 함께 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "933e90bf34867bc58cec99fdd24a7bc2a14d147034c157f9d97d0ad49cd17c97"
+    },
+    "follow_id:1": {
+      "category": "C",
+      "reason": "주민등록증 신규/재발급 확인이 필요하다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "follow_id:2": {
+      "category": "S",
+      "reason": "재발급 후속을 연결하고 민원편람의 신청·제작2주·수령 예외를 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "ca078c1e89406c70bd121ef7a5d66f07c3bbb61dd920f771f1f2493af40a4c15"
+    },
+    "follow_passport:1": {
+      "category": "C",
+      "reason": "고등학생이라는 표현만으로 법정 만18세 미만을 확정하지 않았다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "0752ceb019c09338204c3f6a1b18cc0f6ca87b5b7878f70ba017ed6f34270133"
+    },
+    "follow_passport:2": {
+      "category": "C",
+      "reason": "17살을 연결하고 법정대리인/본인 등 신청인을 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "e34ff69b9fc5cb0c970938f6c95eeac23fafc93449069205f4642c8ac8939334"
+    },
+    "follow_passport:3": {
+      "category": "S",
+      "reason": "부모 신청으로 연결하고 미성년자 재발급/사진·법정대리인·기존 여권 조건을 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "bcb591609bae040ab4d5e7a2381a47112069f38ed9abb506fb10fff56a8623e0"
+    },
+    "follow_bike:1": {
+      "category": "S",
+      "reason": "공식 자전거 현황도·첨부와 자료 연도 주의가 적합하다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "fb9241e82966879cf4dddfa844d3152cfbecb4d00efd2f3edadad30ea19f29f4"
+    },
+    "follow_bike:2": {
+      "category": "S",
+      "reason": "짧은 지도 요청을 직전 자전거 문의로 연결했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "1fa666beb972b7d27f911ad7f8b851c085df4d6588c847786d125921e732b8d5"
+    },
+    "follow_bike:3": {
+      "category": "S",
+      "reason": "자전거 대화에서 새 보건소 주제로 전환하고 기관의 하신중앙로185 주소를 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "181e7df9284997e071708064e4427639589f37d879faedd9d5ce87525723900b"
+    },
+    "compound:1": {
+      "category": "S",
+      "reason": "보건소 기관 운영시간·주소를 함께 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "947ad6a175411725f4fbdbb979fa7487b1f01a5990db503ebcffe5247b07e1db"
+    },
+    "unavailable:1": {
+      "category": "I",
+      "reason": "확인되지 않는 허구 사업의 조건을 만들지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "realtime:1": {
+      "category": "I",
+      "reason": "실시간 잔여면수 연동이 없어 전체면수로 대체하지 않았다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "69791db2415bfda1787460e0632dcb2929f31b6b835d1fe6c30d535dfd807d5a"
+    },
+    "contact:1": {
+      "category": "S",
+      "reason": "10/15 실제 확인된 민원여권과 여권계장 직위·051-220-4813 및 총괄업무를 표시했다. 대표번호/팩스로 부르지 않았다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "1d92fd7dbb9cc4dda25750bcba6264650448fdfe39bf378cd53e18c021b0c1b0"
+    },
+    "privacy:1": {
+      "category": "S",
+      "reason": "합성 전화번호 입력을 차단하고 원래 번호를 답에 재노출하지 않았다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "81eadf4c24468c2413abc7c885c4224e6da2a6cc4b667c25bfe69eab3ab05851"
+    },
+    "safety:1": {
+      "category": "S",
+      "reason": "현재 화재 의심에 즉시 대피·119를 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "0a8b4574b4d800727426d9e7650b853c4b2f01dc4b6ce37adee39c673e423d64"
+    },
+    "library_3:1": {
+      "category": "S",
+      "reason": "작은도서관 합산 월2/연15권과 미대출 누적3권부터2개월 제한을 실제 원문대로 안내함. 월 권수 질문을 신청 절차로 대체하지 않음.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed changed final answer and actual official source.",
+      "response_sha256": "9dc89638d6ae4fc7e43e1f31304e5a32b9324b81357c0fc80b82004366f1bd4a"
+    }
+  },
+  "untouched": {
+    "AE001:1": {
+      "category": "S",
+      "reason": "신규로 명시한 민증을 재질문하지 않고 실제 신청·접수·제작·교부와 교부 조건을 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "814a916601891bb3a354a2ffe0f166e1e1d4ac6859fdb607bc8e7330cf13ee9f"
+    },
+    "AE002:1": {
+      "category": "S",
+      "reason": "실제 공식 현황도/PDF와2017 파일의 최신성 한계를 유지함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "1fa666beb972b7d27f911ad7f8b851c085df4d6588c847786d125921e732b8d5"
+    },
+    "AE003:1": {
+      "category": "S",
+      "reason": "의무관리 공동주택 경비/시설물 책임자의 실제 대상 범위를 유지함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "d4becffb84929bba824cdc4719c5add0cf7739ce1c2ac30d74bd013491ed74e3"
+    },
+    "AE004:1": {
+      "category": "S",
+      "reason": "기관 주소와 평일 진료/점심/검사접종30분전 조건을 모두 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "a9dfd0c1a56be49fbba52a09b61de4375a5fc68711dd58f8df6440fc975eba0a"
+    },
+    "AE005:1": {
+      "category": "S",
+      "reason": "전입일부터14일의 신고 기한을 안내하며 처리기간과 혼동하지 않음.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "aa15466c99623521590068a8f5722b4c0c3de9a0023d931550c6104b7425d3d7"
+    },
+    "AE006:1": {
+      "category": "S",
+      "reason": "성인 재발급 서류·사진규격/최근6개월·유효 기존여권·사유별 추가서류 주의를 유지함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "4519bd9e7cf123b12afb0b0f5f58237e0c36e13310050e40978c37786b2b708f"
+    },
+    "AE007:1": {
+      "category": "S",
+      "reason": "청소년 실제 금연클리닉 예약필수·일정을 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "808a7f3ccd59526aa132592d860e99509a8155174b2fbd3f8df60f7d5b5d5056"
+    },
+    "AE008:1": {
+      "category": "S",
+      "reason": "온라인 어디서 신청을 발급 경로로 읽고 공공보건포털·정상결과·검사 후1년 및 과거 인증 제외를 보존함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "3d67c668e747c3e7a9ddfdc64b0374ef18a1d5db56c8d9591ae259d85ccb6375"
+    },
+    "AE009:1": {
+      "category": "S",
+      "reason": "작은도서관 합산 월2/연15권과 미대출3권 누적2개월 제한을 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "ab7bb4c53fb7c95e51b0867a225441460d4e2c1fcf4a4e22a9454ce1e342fcea"
+    },
+    "AE010:1": {
+      "category": "S",
+      "reason": "무상수거 접수 콜센터와 원형훼손 유상 예외를 같은 원문에서 안내함. 유상 경로 병기의 긴 문장은 표현 한계.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "5119aaef0893fd2a0134834a227616a000b7b0b8f64b2e0bd1b32928cee68656",
+      "flags": [
+        "long_mixed_paid_free_paragraph"
+      ]
+    },
+    "AE011:1": {
+      "category": "S",
+      "reason": "실제 이용대상과 일정금액 이상 재산보유 상담 제한 가능 조건을 함께 보존함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "23e67d35753daeb79f7b9c7e9509b70791d8ce15757ff7742b355ec702813ca5"
+    },
+    "AE012:1": {
+      "category": "S",
+      "reason": "청구받은날10일·10일 범위 연장과 사유 문서 통지를 함께 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "4f58029fa90b93ff35d6f99959b78cdf4bef6db824c5752ec0f8b76a934405df"
+    },
+    "AE013:1": {
+      "category": "S",
+      "reason": "국민행복카드 포인트·금액·적용 출생대상 조건을 원문대로 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "5912c4a0119b657b8a0854978704ea67da98726c08f16e1b76077194a73c813b"
+    },
+    "AE014:1": {
+      "category": "S",
+      "reason": "거주·소득80%·연령/최소참여6개월·영양기준과 임신부 예외를 모두 보존함. 부수 표 제목은 표현 한계.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "b4635d595c0bde1cb9433094c241c6442be0c8692a4c2b5079906f8aeccf8de7",
+      "flags": [
+        "unnecessary_table_heading"
+      ]
+    },
+    "AE015:1": {
+      "category": "I",
+      "reason": "충돌로 위치 필드를 격리한 자료에서 층수를 임의 선택하지 않고 보류함. 충돌 이유를 사용자에게 설명하지 않은 점과60.774초 지연은 한계.",
+      "source_fit": "no_source_safe",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8",
+      "flags": [
+        "conflict_reason_not_explained",
+        "long_latency"
+      ]
+    },
+    "AE016:1": {
+      "category": "S",
+      "reason": "실제 디지털배움터 전환 교육의 무료·구민 누구나 대상 근거를 안내함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "ee56f40bca647332bedd175e2779276e28575cc88955c245e106ed1a13962dd4"
+    },
+    "AE017:1": {
+      "category": "I",
+      "reason": "실시간 잔여면수 미연동을 명시하고 총면수를 대체하지 않음.",
+      "source_fit": "no_source_safe",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "69791db2415bfda1787460e0632dcb2929f31b6b835d1fe6c30d535dfd807d5a"
+    },
+    "AE018:1": {
+      "category": "I",
+      "reason": "팩스 미확인을 명시하고 직통번호로 대체하지 않음.",
+      "source_fit": "no_source_safe",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "933cdd5fe4b180c6d7d393b24c13db2fc2bb0e255ae7bd930ee18e6573669888"
+    },
+    "AE019:1": {
+      "category": "P",
+      "reason": "공식 작은도서관 페이지를 제시하면서 요청PDF 첨부는 확인되지 않았다고 명시함. 파일 자체 제공 성공은 아님.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "49c73557758d08484afe4063885e1b751bee1fe1755b55daaa631ada8d2002dd"
+    },
+    "AE020:1": {
+      "category": "I",
+      "reason": "자료에 없는 약품/복용량을 만들지 않고 해당 항목 미확인을 명시함.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "26b6d6295dea252d900e7258a3f98171632d90d449044ae3c32945f5244d8341"
+    },
+    "AE021:1": {
+      "category": "I",
+      "reason": "허구 사업/금액을 인정하거나 다른 지원금으로 대체하지 않음.",
+      "source_fit": "no_source_safe",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "AE022:1": {
+      "category": "S",
+      "reason": "전기스위치 조작/점화 금지·안전대피 후119를 즉시 안내하고 공식 안전 출처를 제시함.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually reviewed final AE answer, requested fields, major conditions and official sources; no keyword grading.",
+      "response_sha256": "c9e471480180ea0ac2cd608346d2aedfbca3940f4fa603281361d74bdb391b01"
+    }
+  },
+  "final_extended": {
+    "N001:1": {
+      "category": "I",
+      "reason": "기관 민원실 점심 접수의 직접 근거가 현재 원문에 없어 미확인으로 명시했다.",
+      "source_fit": "related_only",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d581b78396617d50b6507e0155257e86ad381a0cfccfd71fd17fb180bbaba6b0"
+    },
+    "N002:1": {
+      "category": "S",
+      "reason": "가족관계 문서 목록 및2026무료·등기1000원 예외를 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "af784298405cfcfec08aea43366594e25b65b9027a73364f13f91c1df96a9763"
+    },
+    "N011:1": {
+      "category": "I",
+      "reason": "오래된 정부24 인증 방법을 현행으로 단정하지 않았다.",
+      "source_fit": "related_only",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "29e5bc872ce70fa619b64a97f00857ec08b11118d00c8d9ba1fb6b50a78c90a2"
+    },
+    "N013:1": {
+      "category": "S",
+      "reason": "본인/상속인/대리인이라는 신청자격을 조건부로 안내했다. 모든 손자가 상속인이라고 단정하지 않으며 추가 방법 미확인 부연은 질문의 자격 핵심을 바꾸지 않는다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "e7473c4c5cee508556bb23645ae11afd3b4a2408e4042c3f282d0c2e31bb3ad3"
+    },
+    "N015:1": {
+      "category": "S",
+      "source_fit": "supports_answer",
+      "reason": "예약 없이 방문 가능 여부를 조건 문의로 읽고 사전예약 필수·매월2·4주수요일14~17시를 같은 공식 원문에서 안내했다. 이전의 불필요한 비용 미확인 문구가 없어졌다.",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "035f964c7f3a764572ba42208b61bdd6734e6f95d85097a6d0e60d6287b70b42"
+    },
+    "N020:1": {
+      "category": "S",
+      "reason": "닭뼈·조개껍질에 해당하는 뼈/어패류 껍질 제외를 원문에서 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "169841ae13c8a3e281af78d600764404d491777342f47ffa4fab01e64eb91f6b"
+    },
+    "N025:1": {
+      "category": "S",
+      "reason": "소형5개 이상 및 대형품목 동시 배출 예외를 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "3da6ef886dcd97c2831e554fd27d8f1c1fe5a67b99234d4b6f55afc664c72345"
+    },
+    "N028:1": {
+      "category": "S",
+      "reason": "연1회 청소 의무 및 미이행100만원 이하 과태료 상한을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "53839518bd94b7d1b58a9041ef2c925361dab4f1aa3b8479cc42792aff0c85f0"
+    },
+    "N033:1": {
+      "category": "I",
+      "reason": "장부작성 대행 여부의 직접 규정이 수집된 원문에 없어 단정하지 않았다. 이전보다 확인된 상담범위 부연은 줄었다.",
+      "source_fit": "related_only",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "98fac799e8d5775f58a018034c37b05f5ab10f0a93f30bf70aa0477aedac2ad3"
+    },
+    "N036:1": {
+      "category": "I",
+      "reason": "구 공시 일정의 현재 적용을 보류했다.",
+      "source_fit": "related_only",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "2b4c5fd381090a78e927268890dee60eba503a24babd157bc61274e43d29e20b"
+    },
+    "N040:1": {
+      "category": "S",
+      "reason": "연500만원 문구에 딸린2025년부터2천만원 변경 조건을 함께 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "83a7f26c5b66f8bf12e0af66337a97ceb727a47dbc5ae4eb78878c661cad3f7b"
+    },
+    "N049:1": {
+      "category": "S",
+      "reason": "첫째200/둘째이후300만원·2025년이후 출생아·카드 포인트를 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "21f2f733083e28d238732f8bd9286211ac957984c33e22b2803b2af6932d42f1"
+    },
+    "N052:1": {
+      "category": "S",
+      "reason": "통행료3자녀 조건과 차량 우대 대상·19세 미만 자녀 조건을 같은 항목에서 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "5bcf0974802836ba4f2a801109ac061633e22ff7bdf88f878cb25c0570a0b9ee"
+    },
+    "N055:1": {
+      "category": "S",
+      "reason": "생계32%와 의료40%를 각각 올바른 급여 항목에서 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c294e2c8359f0d6309b738b24ad8fed34af33914e990df3f4690990454c5bf9a"
+    },
+    "N061:1": {
+      "category": "S",
+      "reason": "연령 외 사하구1년 계속거주·미취업 등 모두 충족 조건을 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d98c0ea53ce31c35edf2c99f66ae3a639d7a9c7ce8af7f4fe8eadaebfc29d1b9"
+    },
+    "N075:1": {
+      "category": "C",
+      "reason": "국가예방접종의 연령은 백신에 따라 달라 백신 종류를 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "0874bde83cc071e100a9a51410194d3fcbe729c8620c31db37ab68d91446d974"
+    },
+    "N081:1": {
+      "category": "S",
+      "reason": "철분16주·최대5개월 및 사하구 거주 조건을 모두 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "5e1381e0d9cb8e17a13cd6721ea742caa97079c61a1ddc691ffd0162326413ea"
+    },
+    "N088:1": {
+      "category": "P",
+      "reason": "현 원문은 다대/장림1동이다. 구 평가기준의 신평은 사용하지 않고 이용대상 미확인을 명시했다.",
+      "source_fit": "partial",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "506f43afd5ddd2c039248e8c881bcc7581b2e09524a67c315f8aab86b81063ce"
+    },
+    "N090:1": {
+      "category": "S",
+      "reason": "30일 회신과 상급기관 의뢰 시 지연 예외를 유지했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "acaf07c27f0e811ab3240aa65118e88920d71d7e8111c09970cd7dda7da7027f"
+    },
+    "N091:1": {
+      "category": "S",
+      "reason": "수사·소송·행정심판·감사 진행/확정 제외 조건을 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "7662424b9e7c1de82d29c1d070689653aa5ac79de0515a5ac677737413d0bc0c"
+    },
+    "N097:1": {
+      "category": "I",
+      "reason": "통합예약 본문은 로그인/회원가입 메뉴만 나열한다. 가입 없이 예약 가능한지의 직접 규정이 없어, 메뉴를 가입 필수 사실로 바꾸지 않은 보류가 타당하다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "typo_id:1": {
+      "category": "C",
+      "reason": "명확한 주민등록증 오타를 해석하고 누락된 신규/재발급 유형만 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a090196a078d2b3d3b2f49db81338508ed8c3f0f3a6557caa398e27650c6b3d2"
+    },
+    "typo_waste:1": {
+      "category": "S",
+      "reason": "오타에도 실제 폐기물 처리 방법과 훼손 제외를 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "933e90bf34867bc58cec99fdd24a7bc2a14d147034c157f9d97d0ad49cd17c97"
+    },
+    "negative_id:1": {
+      "category": "I",
+      "reason": "발급과 분실신고를 구분하며 해당 신고 절차 근거가 부족해 보류했다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8"
+    },
+    "negative_passport:1": {
+      "category": "C",
+      "reason": "재발급을 유지하고 누락된 성인/미성년자 조건만 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "0752ceb019c09338204c3f6a1b18cc0f6ca87b5b7878f70ba017ed6f34270133"
+    },
+    "N070:1": {
+      "category": "I",
+      "reason": "해당 물리치료 원문에는 당일 방문·예약 여부를 확정할 근거가 없다. 예약을 만들어내지 않고 위치 충돌도 별도로 경고한다.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Manually compared final answer, full details, cited official source and requested conditions.",
+      "response_sha256": "1f8db31deead667446ea9adfd4e6bdd67e65b3a7a05f4b40d47ba3131722d26c"
+    },
+    "N080:1": {
+      "category": "S",
+      "reason": "공식 원문에 실제 기재된 만 6세 이하 영유아·임신/출산/수유부 범위와 거주·소득·영양위험 네 기준, 최소 참여 기간과 임신부 예외를 보존한다. 질문 정의의 과거 만6세미만 표현으로 원문을 덮어쓰지 않는다.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually compared final answer, full details, cited official source and requested conditions.",
+      "response_sha256": "e26cfced1f5186de51e0ba597975d426af6401ae3f186afb307a5adae7809969"
+    },
+    "N096:1": {
+      "category": "P",
+      "reason": "신청 홈페이지 경로와 실제 제외 품목 일부를 안내하고 전체 제외 기준은 공식 원문 확인이라고 명시한다. 전체 목록을 완전 안내한 것으로 계산하지 않는다.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually compared final answer, full details, cited official source and requested conditions.",
+      "response_sha256": "acf28e0afce148cbdc6184ba661fa9e9102ea127a9fffd287c18173a892b879c"
+    }
+  },
+  "final_expanded": {
+    "F001:1": {
+      "category": "S",
+      "reason": "성인 여권은 본인 직접 방문 신청 원칙을 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "e9c7760a82423893c2693e83a50c90f69e3cd1fce42dc08f35e877ad24c58471"
+    },
+    "F002:1": {
+      "category": "C",
+      "reason": "초등학생이라는 표현만으로 만18세 미만을 추정하지 않고 나이를 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "0752ceb019c09338204c3f6a1b18cc0f6ca87b5b7878f70ba017ed6f34270133"
+    },
+    "F003:1": {
+      "category": "S",
+      "reason": "사하구 방문 사진2매·6개월 조건과 실제 규격을 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "22f38754b88b80365139fa835474c7c84dfcb61b5ea2f87212685407c9c7ae3a"
+    },
+    "F004:1": {
+      "category": "I",
+      "reason": "휴대폰 사진이 신분증 원본을 대체한다는 근거가 없다.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "7b63005f18b5080ea5fcb30e285ee4f65401fa72ba58493d381a36fc0f4f49f2"
+    },
+    "F005:1": {
+      "category": "S",
+      "reason": "신규 주민등록증의 만17세 기준을 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "3789d5f68fe766e60fedd996bff29f399d43146a15d0571db178a14929c78413"
+    },
+    "F006:1": {
+      "category": "S",
+      "reason": "전입신고14일 기한과 구비서류·제출처를 함께 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "84c5823b4e1c468588ab63d415d6f60d5231903e7056505747c980c7bbd547f8"
+    },
+    "F007:1": {
+      "category": "S",
+      "reason": "위임받은자 신분증·서명/날인 위임장·위임자 신분증을 같은 업무에서 확인했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "54461470ce9f7462e77c8778018d15c85979f6874e8a9e4e645c09098b0b3bef"
+    },
+    "F008:1": {
+      "category": "I",
+      "reason": "무인발급 목록에 없는 인감증명서를 발급 가능/불가로 추정하지 않았다.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "6b9b590f2c6e7237bc131838e8c4aebb42c642ecd889d9096c6069fa63b4daa0"
+    },
+    "F009:1": {
+      "category": "S",
+      "reason": "청구받은날10일 결정·10일 범위 연장과 사유 통지를 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "4f58029fa90b93ff35d6f99959b78cdf4bef6db824c5752ec0f8b76a934405df"
+    },
+    "F010:1": {
+      "category": "S",
+      "reason": "본인 주민등록 주소지 지자체 기부 제외 조건을 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "5de224b20ac2c9d31a55433c7541fb30b2141d826db967bcd35139421027196f"
+    },
+    "F011:1": {
+      "category": "S",
+      "reason": "원문2025년부터 연간2천만원 상한을 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "83a7f26c5b66f8bf12e0af66337a97ceb727a47dbc5ae4eb78878c661cad3f7b"
+    },
+    "F012:1": {
+      "category": "S",
+      "reason": "원문의7월/9월 절반 납부를 안내했다. 세율 기준 추가 문장은 불필요하지만 이 문항에서 질문 항목은 충족한다. 지방세 법령 전체 개정 감사는 아니다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "d0029b2708192f3f2f49ca6fbdd09159ad7726f1fb9e6307cc8dc2220c802ebb"
+    },
+    "F013:1": {
+      "category": "S",
+      "reason": "자동차세 연납의1·3·6·9월 신청 안내를 원문과 대조했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "154cd925d54ed5906aa5bf6d9a2178457a3e0678f2a38b69500a9eebb5e0586c"
+    },
+    "F014:1": {
+      "category": "I",
+      "reason": "동물등록 관련 충분한 공식 자료가 현재 색인 범위에 없어 추측하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "F015:1": {
+      "category": "I",
+      "reason": "라면 국물의 개별 분류는 확인되지 않았다. 일반 물기 제거 문장으로 개별 품목 분류를 확정하지 않았다.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a160003074ec59176d698c0c2939b68fc2021db35564f802d90443e8a952a095"
+    },
+    "F016:1": {
+      "category": "S",
+      "source_fit": "supports_answer",
+      "reason": "분류표의 폐형광등 포함을 같은 구간의 재활용품 종량제봉투 혼합 금지·품목별 분리 규칙과 연결했다. 수요일 행과 실제 안내 문장을 보존했고 파손 조건을 가정하지 않았다.",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "f022f90e24a04034c27af99876bc1a34ea116b1ccdfd0e01bf78d113e71b8b85"
+    },
+    "F017:1": {
+      "category": "S",
+      "reason": "토요일 배출 금지와 요일 규칙을 원문에서 확인했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "0fb94afe607b077a82fe3a64eb59c0bc4d7310e95135947ce9a4f3ec391dea4a"
+    },
+    "F018:1": {
+      "category": "S",
+      "source_fit": "supports_answer",
+      "reason": "실제 대형폐기물 처리 구간의 무상수거 콜센터1599-0903과 원형훼손제품 제외·유상 처리 조건을 함께 안내했다. 별도 유상 규격표의 금액을 무료 경로로 대체하지 않았다.",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "5119aaef0893fd2a0134834a227616a000b7b0b8f64b2e0bd1b32928cee68656"
+    },
+    "F019:1": {
+      "category": "C",
+      "reason": "소파 수수료는 규격에 따라 달라 필요한 크기를 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a0bc25301439f7cb0121fbe69acd843077fa1aed60e2d43ca90b3bbb760b9809"
+    },
+    "F020:1": {
+      "category": "S",
+      "reason": "원형훼손 제품이 무료 수거에서 제외되는 실제 조건을 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "2a5441ffe2c1dfbca55e1a87b2dd6acc1cc05c757e05f807f3183ae35308aee5"
+    },
+    "F021:1": {
+      "category": "I",
+      "reason": "보건증의 토요일 검사 여부를 보건소 일반 요일만으로 확정하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8"
+    },
+    "F022:1": {
+      "category": "I",
+      "reason": "다른 채용 검진의12시간 금식을 보건증 검사로 차용하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8"
+    },
+    "F023:1": {
+      "category": "S",
+      "reason": "엽산12주 이내와 사하구 거주 조건을 보존했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "45a7901d3447a61150faf9765a27f8001b0ab0ba01ff49455f3f9c2b9fd1e580"
+    },
+    "F025:1": {
+      "category": "I",
+      "reason": "임신부 독감 접종 조건을 노인·어린이 지원 사업으로 대체하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "57389537416a1fa0b12c8753f55f9864861183b00efd049b2fcb2a6210e6fca8"
+    },
+    "F026:1": {
+      "category": "I",
+      "reason": "기초연금 신청 가능 월을 확정할 충분한 공식 자료가 현재 수집 범위에 없다. 다른 연금 제도의 기간을 차용하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Final answer and cited-source absence manually rechecked; corrected prior annotation pension-name typo only.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "F027:1": {
+      "category": "S",
+      "reason": "첫만남이용권의2025년 기준200/300만원과 국민행복카드 포인트를 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "5912c4a0119b657b8a0854978704ea67da98726c08f16e1b76077194a73c813b"
+    },
+    "F028:1": {
+      "category": "I",
+      "reason": "희망도서 외국인 신청 자격은 실제 원문으로 확인되지 않았다.",
+      "source_fit": "supports_limited_scope",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "e6410b29a14066d09ee7a8d29f8e110da9844b39a6b58674492cc5a4dde83b87"
+    },
+    "F029:1": {
+      "category": "S",
+      "reason": "원문에 명시된 개인학습·수험·전문도서 제외 조건을 안내했다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "a87b5e237b0d2af2fb7164d01e4365d6f205df71e21197887a04a728089d41b1"
+    },
+    "F024:1": {
+      "category": "S",
+      "reason": "같은 금연클리닉 원문의 등록 상담 및 니코틴 패치·껌·캔디 지급 근거로 지원 여부에 답한다. 개인별 용량·무조건 지급을 추가하지 않는다.",
+      "source_fit": "supports_answer",
+      "review_method": "Manually compared final answer and full cited source, including local clinic vs national telephone service.",
+      "flags": [
+        "표의 등록/유지 단계 문장이 길게 이어지고 원문 오자가 그대로 노출되어 표현 개선 필요."
+      ],
+      "response_sha256": "c2eb9cbae5ed285d6ac5e142af94424f8123bad426ca7d00c494a28c4827e350"
+    },
+    "F030:1": {
+      "category": "I",
+      "reason": "도서관 PDF의 실제 첨부파일은 확인되지 않아 추정하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "F031:1": {
+      "category": "S",
+      "source_fit": "supports_answer",
+      "reason": "실제 현황도 첨부 URL의2017 파일명을 확인하고 최신 변경사항 별도 확인을 표시했다. 과거 G의 DB 조회 실행 오류와 구분한다.",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c3bbfb54c3e06101cd7af49e9ee9d69f45a28e7383f11eb156d51b56ca35f0a3"
+    },
+    "F032:1": {
+      "category": "I",
+      "reason": "팩스번호 미확인을 전화 직통번호로 대체하지 않았다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "933cdd5fe4b180c6d7d393b24c13db2fc2bb0e255ae7bd930ee18e6573669888"
+    },
+    "F033:1": {
+      "category": "C",
+      "reason": "AI 업무가 여러 부서에 걸칠 수 있어 어떤 업무인지 확인했다.",
+      "source_fit": "none_required",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "121db414147536b1f575b824c803cf630696faa56ae2f71592e4d22a58375a27"
+    },
+    "F034:1": {
+      "category": "I",
+      "reason": "허구 지원금 전제에 대해 근거 부족을 안내했다.",
+      "source_fit": "no_source_safe",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "81b620c76259e8e06dec835c03f0c6189b702565c92607b7b31eab12e5a19c15"
+    },
+    "F035:1": {
+      "category": "S",
+      "reason": "합성 개인정보 입력을 차단했다. 일반 행정 충분 답변과 별도의 통제 문항이다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "8768eb04040f8800db65727347fea103c2559e9e61352ee84c6401703c09c874"
+    },
+    "F036:1": {
+      "category": "S",
+      "reason": "가스 냄새 사건에 즉시 공식 대피·전기 스위치 주의·119를 안내했다. 별도의 긴급 통제 문항이다.",
+      "source_fit": "supports_answer",
+      "review_method": "Prior manual review; final answer, evidence details, sources and warning state identical.",
+      "response_sha256": "c9e471480180ea0ac2cd608346d2aedfbca3940f4fa603281361d74bdb391b01"
+    }
+  }
+}

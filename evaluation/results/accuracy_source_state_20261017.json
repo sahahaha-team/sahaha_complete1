@@ -1,0 +1,12 @@
+{
+  "protocol": "DB read after final HTTP timing, before worker restart. Comparison supports snapshot stability between two reads, not a transaction lock or a live policy correctness guarantee.",
+  "before_captured_at": "2026-10-16T03:50:26.308195+00:00",
+  "after_captured_at": "2026-10-17T03:04:45.143637+00:00",
+  "before_rows": 186,
+  "after_rows": 186,
+  "new_urls": [],
+  "removed_urls": [],
+  "changed_content_urls": [],
+  "changed_checked_at_urls": [],
+  "changed_attachments_urls": []
+}

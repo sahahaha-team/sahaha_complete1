@@ -1,0 +1,59 @@
+{
+  "captured_at": "2026-10-17T03:16:37.109601+00:00",
+  "protocol": "Read-only post-refresh comparison against completed-audit snapshot. Final 140-turn metrics describe pre-refresh state; changed public landing pages are listed explicitly.",
+  "new_urls": [],
+  "removed_urls": [],
+  "changed_sources": [
+    {
+      "url": "https://www.saha.go.kr/reserve/main.do",
+      "title": "사하구 통합예약",
+      "content_changed": true,
+      "official_body_changed": true,
+      "attachments_changed": false,
+      "body_before_sha256": "c2a6eb47bcc2fc112f1b42e5186ee9913805216c3879ade6bdeba6864ff0ace4",
+      "body_after_sha256": "98bfd18bd48f766f72b97c8370fe9fbfba3eac32e707350ab003104ce668b8b0",
+      "body_diff": [
+        "--- ",
+        "+++ ",
+        "@@ -99,7 +99,7 @@",
+        " [재능기부]그림책과 함께하는 마음이음 몬테소리",
+        " 교육기간:",
+        " 2026.10.17~2026.11.14",
+        "-접수중",
+        "+접수완료",
+        " 사하아카데미",
+        " 정원 42명",
+        " 제120회 사하아카데미-개그우먼 정선희와 함께하는 \"스트레스를 디자인하라\""
+      ]
+    },
+    {
+      "url": "https://www.saha.go.kr/welfare.do",
+      "title": "부산광역시 사하구",
+      "content_changed": true,
+      "official_body_changed": true,
+      "attachments_changed": false,
+      "body_before_sha256": "7f666559887b9d2949a86cb4dc9adffd2af81e69620c9f25cfd5969aefc5b327",
+      "body_after_sha256": "7d34dccd2d04957e221e225abe275420050036e8b64238fad4f6340130a53123",
+      "body_diff": [
+        "--- ",
+        "+++ ",
+        "@@ -506,11 +506,11 @@",
+        " 서비스검색",
+        " 서비스의 키워드를 입력하세요.",
+        " 인기키워드",
+        "-어린이집",
+        "-폐기물",
+        "-신고서",
+        "-광견병",
+        "+가덕도신공항",
+        "+홍보",
+        " 고시공고",
+        "+결산서",
+        "+체육시설",
+        " 사하복지",
+        " 복지정책",
+        " 희망복지지원단"
+      ]
+    }
+  ]
+}
