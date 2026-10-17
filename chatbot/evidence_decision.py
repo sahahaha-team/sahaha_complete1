@@ -109,6 +109,9 @@ def assess_documents(query: str, documents: list[dict], keywords: set[str], *, m
 
 def unavailable_answer(reason: str = 'insufficient') -> dict:
     messages = {
+        'processing_timeout': '공식 자료를 검토하는 데 시간이 오래 걸려 답변을 마치지 못했습니다. 잠시 후 다시 질문해 주세요.',
+        'model_busy': '현재 다른 상담이나 자료 검토를 처리 중이어서 답변을 마치지 못했습니다. 잠시 후 다시 질문해 주세요.',
+        'model_unavailable': '답변 검토 중 모델 연결에 문제가 생겼습니다. 잠시 후 다시 질문해 주세요.',
         'retrieval_error': '공식 자료를 조회하는 중 문제가 생겨 지금은 충분한 근거를 확인하지 못했습니다. 잠시 후 다시 질문해 주세요.',
         'stale_evidence': '관련 자료는 있지만 최신 내용으로 확인할 수 없어 확정해서 안내하기 어렵습니다.',
         'insufficient': '확인한 사하구청 공식 자료에서 질문에 답할 충분한 근거를 찾지 못했습니다.',

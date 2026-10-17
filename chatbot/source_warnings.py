@@ -3,6 +3,20 @@ from datetime import datetime
 import re
 import json
 from pathlib import Path
+from functools import lru_cache
+
+
+@lru_cache(maxsize=1)
+def _read_reviews(path: str, modified: int, size: int):
+    return json.loads(Path(path).read_text(encoding='utf-8'))
+
+
+def source_reviews():
+    path = Path(__file__).resolve().parents[1] / 'resources' / 'official_source_reviews.json'
+    if not path.is_file():
+        return []
+    stat = path.stat()
+    return _read_reviews(str(path), stat.st_mtime_ns, stat.st_size)
 
 
 def reviewed_source(body: str, metadata: dict) -> tuple[str, dict]:
@@ -11,9 +25,7 @@ def reviewed_source(body: str, metadata: dict) -> tuple[str, dict]:
     This registry stores review decisions, never replacement factual answers.
     A changed official page no longer matching the marker is not quarantined.
     """
-    path = Path(__file__).resolve().parents[1] / 'resources' / 'official_source_reviews.json'
-    reviews = json.loads(path.read_text(encoding='utf-8')) if path.is_file() else []
-    for review in reviews:
+    for review in source_reviews():
         if review['url'] == metadata.get('url') and re.search(review['marker'],body):
             blocked = review['unverified_fields']
             from chatbot.structured_answers import field_matches
@@ -39,8 +51,12 @@ def reviewed_field_answer(query: str, documents: list[dict], client, keywords: s
     fields = set(requested_goals(query))
     if not fields or 'reference' in fields:
         return None
+    reviewed_urls = {review['url'] for review in source_reviews()}
+    marked = [doc for doc in documents if (doc.get('metadata') or {}).get('url') in reviewed_urls]
+    if not marked:
+        return None
     blocked_documents = []
-    for doc in documents:
+    for doc in marked:
         body, reviewed = source_document(doc, client)
         result = document_decision(query, {**reviewed, 'content': body, '_raw_page': {
             'content': body}}, keywords)
@@ -48,12 +64,21 @@ def reviewed_field_answer(query: str, documents: list[dict], client, keywords: s
             continue
         meta = reviewed.get('metadata') or {}
         blocked = set(meta.get('unverified_fields') or [])
-        if not fields.intersection(blocked) and fields.issubset(result['matched_fields']):
-            return None
         if fields.issubset(blocked) and meta.get('source_warning'):
             blocked_documents.append(reviewed)
     if not blocked_documents:
         return None
+    blocked_urls = {(doc.get('metadata') or {}).get('url') for doc in blocked_documents}
+    for doc in documents:
+        meta = doc.get('metadata') or {}
+        if meta.get('url') in blocked_urls or meta.get('category') == 'staff_directory':
+            continue
+        # This preflight must not issue one raw-page query per candidate.
+        # Unknown originals defer to the ordinary hydrated-source reader.
+        result = document_decision(query, doc, keywords)
+        if result['relevant'] and ('_raw_page' not in doc and meta.get('source_type') != 'crawled_page'
+                                   or fields.issubset(result['matched_fields'])):
+            return None
     metadata = blocked_documents[0]['metadata']
     conflict = metadata.get('source_review_status') == 'conflict'
     reason = 'source_conflict' if conflict else 'source_review_required'

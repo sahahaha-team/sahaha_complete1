@@ -139,6 +139,8 @@ async def lifespan(app: FastAPI):
         logger.warning(ollama["message"])
     try:
         await run_in_threadpool(get_chatbot)
+        from chatbot.semantic_ranker import semantic_ranker
+        await run_in_threadpool(semantic_ranker.warmup)
         logger.info("챗봇 사전 초기화 완료")
     except Exception as e:
         logger.warning(f"챗봇 사전 초기화 실패 (첫 요청 시 재시도): {e}")

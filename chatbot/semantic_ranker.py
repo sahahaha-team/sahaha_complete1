@@ -80,6 +80,11 @@ class SemanticRanker:
         self._lock=threading.RLock();self._model=None;self._tokenizer=None
         self._failed_at=0.0;self._cache=OrderedDict()
 
+    def warmup(self):
+        """Load local weights before accepting a resident's first request."""
+        with self._lock:
+            return self._load()
+
     def _load(self):
         if self._model is not None:return True
         if not RAG_RERANK_ENABLED or time.monotonic()-self._failed_at<60:return False

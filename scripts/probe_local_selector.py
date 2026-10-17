@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from langchain_core.messages import HumanMessage
 from chatbot.llm_runtime import create_llm
 from chatbot.grounded_planner import PROMPT
+from chatbot.local_inference import invoke_selection
 
 
 def main():
@@ -23,7 +24,7 @@ def main():
         '자료 1: 다른 교육\n[0] 교육은 월 2회 실시합니다.'))
     params = llm._chat_params([HumanMessage(content=prompt)], stream=False)
     started = time.perf_counter()
-    response = llm.invoke(prompt, stream=False)
+    response = invoke_selection(llm, prompt)
     result = {'at': datetime.now(timezone.utc).isoformat(), 'model': llm.model,
               'protocol': 'Synthetic source-ID selection only; not resident answer accuracy.',
               'request_contract': {k: params[k] for k in ('model', 'stream', 'think', 'options', 'format')},

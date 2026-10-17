@@ -14,6 +14,18 @@ def chunk(i=0):
 
 
 class TaggingProviderTests(unittest.TestCase):
+    def test_busy_batch_preserves_source_metadata_without_per_chunk_retries(self):
+        from chatbot.local_inference import ModelBusy
+        model = Mock()
+        model.model_copy.return_value = model
+        model.invoke.side_effect = ModelBusy()
+        with patch('processor.metadata_tagger.create_llm', return_value=model), \
+             patch('processor.metadata_tagger.time.sleep'):
+            tagger = MetadataTagger()
+            result = tagger.tag_batch([chunk(), chunk(1)])
+        self.assertEqual(model.invoke.call_count, 1)
+        self.assertEqual([meta['url'] for _, meta in result], [chunk().url, chunk(1).url])
+
     def test_vllm_single_and_batch_use_provider_schema_without_ollama(self):
         model=VLLMSelector('http://127.0.0.1:8000/v1','served-gemma4')
         reply=Mock(status_code=200)

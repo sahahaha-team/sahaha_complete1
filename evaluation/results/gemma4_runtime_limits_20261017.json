@@ -1,0 +1,131 @@
+{
+  "contract": {
+    "at": "2026-10-17T04:11:02.475161+00:00",
+    "model": "gemma4:e4b",
+    "protocol": "Synthetic source-ID selection only; not resident answer accuracy.",
+    "request_contract": {
+      "model": "gemma4:e4b",
+      "stream": false,
+      "think": false,
+      "options": {
+        "num_ctx": 4096,
+        "num_predict": 100,
+        "temperature": 0
+      },
+      "format": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "answer",
+                  "clarify",
+                  "unavailable"
+                ]
+              },
+              "source": {
+                "type": "integer",
+                "enum": [
+                  0
+                ]
+              },
+              "units": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "enum": [
+                    0
+                  ]
+                },
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "mode",
+              "source",
+              "units"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "answer",
+                  "clarify",
+                  "unavailable"
+                ]
+              },
+              "source": {
+                "type": "integer",
+                "enum": [
+                  1
+                ]
+              },
+              "units": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "enum": [
+                    0
+                  ]
+                },
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "mode",
+              "source",
+              "units"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "seconds": 1.7716346001252532,
+    "content": "{\"mode\":\"answer\",\"source\":0,\"units\":[0]}",
+    "metadata": {
+      "done_reason": "stop",
+      "total_duration": 1643917700,
+      "load_duration": 37380400,
+      "prompt_eval_count": 259,
+      "prompt_eval_duration": 394378000,
+      "eval_count": 14,
+      "eval_duration": 1178438000
+    },
+    "thinking_returned": false
+  },
+  "initial_cancellation": {
+    "started_at": "2026-10-17T04:10:36.522542+00:00",
+    "protocol": "Synthetic deadline/cancellation test, not an administrative answer test.",
+    "deadline_outcome": "TimeoutError",
+    "deadline_seconds": 1.0295714000239968,
+    "followup_seconds": 18.122520399978384,
+    "followup_content": "{\"choice\": 1}",
+    "followup_metadata": {
+      "done_reason": "stop",
+      "total_duration": 18090813100,
+      "load_duration": 46745300,
+      "prompt_eval_count": 25,
+      "prompt_eval_duration": 1220954000,
+      "eval_count": 7,
+      "eval_duration": 1000138000
+    },
+    "finished_at": "2026-10-17T04:10:55.673857+00:00"
+  },
+  "recovery_gate": {
+    "started_at": "2026-10-17T08:10:05.742884+00:00",
+    "protocol": "Synthetic deadline/cancellation test, not an administrative answer test.",
+    "deadline_outcome": "TimeoutError",
+    "deadline_seconds": 1.0556030001025647,
+    "followup_outcome": "ModelBusy",
+    "followup_seconds": 0.022422200068831444,
+    "finished_at": "2026-10-17T08:10:06.819979+00:00"
+  },
+  "observed_backend": "Initial actual Ollama log: request task85 canceled and released at512/1325 prompt tokens; next task87 took18.091s total with prompt1.221s+generation1.000s, so stop was not instantaneous. Recovery gate probe later blocked the follow-up with ModelBusy in0.022s and submitted no new backend request."
+}

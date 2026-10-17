@@ -128,10 +128,11 @@ class MetadataTagger:
             self.llm = create_llm().model_copy(update={'temperature':0,'num_predict':1000})
             single = self.llm.model_copy(update={'format':TAG_SCHEMA})
             batch = self.llm.model_copy(update={'format':{'type':'array','items':TAG_SCHEMA}})
-            self.single_chain = RunnableLambda(lambda values: single.invoke(
-                SINGLE_TAGGING_PROMPT.format(**values), stream=False))
-            self.batch_chain = RunnableLambda(lambda values: batch.invoke(
-                BATCH_TAGGING_PROMPT.format(**values), stream=False))
+            from chatbot.local_inference import invoke_selection
+            self.single_chain = RunnableLambda(lambda values: invoke_selection(single,
+                SINGLE_TAGGING_PROMPT.format(**values), background=True))
+            self.batch_chain = RunnableLambda(lambda values: invoke_selection(batch,
+                BATCH_TAGGING_PROMPT.format(**values), background=True))
             logger.info('태깅 모델 설정: %s', self.llm.model)
         except Exception as e:
             logger.warning('태깅 초기화 실패 - 원문 메타데이터 사용: %s', type(e).__name__)
@@ -166,6 +167,11 @@ class MetadataTagger:
             response = self.batch_chain.invoke({"items": items_text})
             parsed = _parse_json_block(response.content)
         except Exception as e:
+            from chatbot.local_inference import ModelBusy
+            if isinstance(e, (ModelBusy, TimeoutError)):
+                # Optional tags can use source metadata while a resident's
+                # model request is running. Do not retry every chunk at once.
+                return [ensure_metadata(_base_meta(c), c) for c in batch]
             logger.warning('배치 태깅 호출 실패: %s', type(e).__name__)
             return []
 

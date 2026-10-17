@@ -15,6 +15,13 @@ def clinic(body=None):
 
 
 class ReviewedFieldGateTests(unittest.TestCase):
+    def test_preflight_without_a_reviewed_url_does_not_fetch_any_original(self):
+        document = {'content': '다른 업무 안내', 'metadata': {
+            'title': '다른 업무', 'url': 'https://www.saha.go.kr/portal/other'}}
+        client = Mock()
+        self.assertIsNone(reviewed_field_answer('위치', [document], client, {'다른업무'}))
+        client.table.assert_not_called()
+
     def test_conflict_is_explained_with_source_without_calling_model(self):
         llm = Mock()
         with request_metrics() as metrics:

@@ -324,14 +324,18 @@ class ChatBot:
         with measure('verify'):
             fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
         verification_failed = getattr(fresh_results,'verification_failed',False)
+        from chatbot.source_warnings import reviewed_field_answer
+        with measure('review_gate'):
+            pre_reviewed = reviewed_field_answer(search_query, fresh_results, self.retriever.db.client,
+                                                 self.retriever._content_keywords(search_query))
         rerank_info = {'used': False}
-        if search_outcome.get('retrieval', {}).get('mode') == 'hybrid_rrf':
+        if not pre_reviewed and search_outcome.get('retrieval', {}).get('mode') == 'hybrid_rrf':
             from chatbot.semantic_ranker import semantic_ranker
             with measure('rerank'):
                 fresh_results, rerank_info = semantic_ranker.rerank(search_query, fresh_results,
                     self.retriever._content_keywords(search_query))
         with measure('grounding'):
-            results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
+            results = pre_reviewed['documents'] if pre_reviewed else self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
         logger.info("상담 근거 단계: 검색=%s, 최근 확인=%s, 서로 다른 근거 URL=%s",
             len(search_outcome["results"]), len(fresh_results), len(results))
         logger.info("상담 검색 시간: %.3fs", time.perf_counter() - search_started)
@@ -357,9 +361,9 @@ class ChatBot:
             grounded_results = hydrate_source_documents(results, self.retriever.db.client)
         # General questions use Gemma to choose complete evidence and conditions.
         # Static emergency/contact/table routes above keep their fast response.
-        planned = None if SOURCE_ONLY_ANSWERS else answer_with_grounded_model(
+        planned = pre_reviewed or (None if SOURCE_ONLY_ANSWERS else answer_with_grounded_model(
             search_query, grounded_results, self.retriever.db.client,
-            self.retriever._content_keywords(search_query), self.llm)
+            self.retriever._content_keywords(search_query), self.llm))
         if planned and planned["is_clarification"]:
             return self._clarification_result(session_id, user_message, search_query, planned)
         if planned:
@@ -370,6 +374,11 @@ class ChatBot:
             original, used_results = build_source_answer(grounded_results, self.retriever.db.client,
                 query=search_query, topic_keywords=self.retriever._content_keywords(search_query), require_brief=True)
             if not original:
+                from chatbot.request_metrics import model_failure_reason
+                failure = model_failure_reason()
+                if failure:
+                    from chatbot.evidence_decision import unavailable_answer
+                    return unavailable_answer(failure)
                 return {
                     "answer": LOW_CONFIDENCE_MESSAGE, "sources": [], "is_clarification": False,
                     "degraded": True, "degraded_reason": "no_current_evidence",
@@ -382,6 +391,16 @@ class ChatBot:
             if concise["is_clarification"]:
                 return self._clarification_result(session_id, user_message, search_query, concise)
             method = concise.get('answer_method') or ("source_extract" if SOURCE_ONLY_ANSWERS else "source_fallback")
+            from chatbot.request_metrics import model_failure_reason
+            failure = model_failure_reason()
+            if failure and concise.get('degraded'):
+                from chatbot.evidence_decision import unavailable_answer
+                notice = unavailable_answer(failure)['answer']
+                concise = {**concise,
+                    'answer': concise['answer'] + '\n\n' + notice if evidence.get('matched_fields') else notice,
+                    'degraded_reason': failure,
+                    'evidence_status': 'partial' if evidence.get('matched_fields') else 'unavailable',
+                    'evidence_label': '답변 검토를 마치지 못함', 'evidence_reasons': [failure]}
         from chatbot.privacy import mask_answer
         answer, _ = mask_answer(concise["answer"])
         details, _ = mask_answer(concise.get("answer_details", ""))

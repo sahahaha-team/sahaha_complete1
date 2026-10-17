@@ -396,8 +396,8 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         started = time.perf_counter()
         try:
             with measure('model'):
-                response = selector.invoke(
-                    PROMPT.format(question=query, context=context), stream=False)
+                from chatbot.local_inference import invoke_selection
+                response = invoke_selection(selector, PROMPT.format(question=query, context=context))
         except Exception as error:
             record_model(time.perf_counter() - started, outcome='error', error=error)
             raise

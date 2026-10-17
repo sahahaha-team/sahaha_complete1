@@ -45,6 +45,12 @@ def plan_key(query, packets, keywords, llm, prompt):
         identity = (type(llm).__module__, type(llm).__name__,
                     str(getattr(llm, 'base_url', '')), model,
                     str(getattr(llm, 'num_ctx', '')), str(getattr(llm, 'reasoning', '')))
+    from chatbot.local_inference import is_local_chat_model, local_model_revision
+    if is_local_chat_model(llm):
+        revision = local_model_revision(llm)
+        if not revision:
+            return None  # A tag lookup failure must not reuse an unknown weight revision.
+        identity = (*identity, revision)
     material = {'query': query, 'model': model, 'runtime': identity, 'prompt': prompt,
                 'keywords': sorted(keywords), 'packets': packets}
     return hashlib.sha256(json.dumps(material, ensure_ascii=False, sort_keys=True,

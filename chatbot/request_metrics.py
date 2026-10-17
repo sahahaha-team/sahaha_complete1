@@ -56,12 +56,19 @@ def decision(value):
         metrics.decisions.append(value)
 
 
+def add_duration(stage, seconds):
+    metrics = _current.get()
+    if metrics is not None:
+        metrics.timings[stage] = metrics.timings.get(stage, 0) + seconds
+
+
 def record_model(seconds, metadata=None, *, outcome, error=None):
     metrics = _current.get()
     if metrics is None:
         return
     metadata = metadata or {}
-    row = {'seconds': seconds, 'outcome': outcome}
+    row = {'seconds': seconds, 'outcome': outcome,
+           'submission_attempted': not error or type(error).__name__ != 'ModelBusy'}
     for name in ('load_duration', 'prompt_eval_duration', 'eval_duration', 'total_duration'):
         value = metadata.get(name)
         row[name + '_seconds'] = value / 1e9 if isinstance(value, (int, float)) else None
@@ -70,4 +77,16 @@ def record_model(seconds, metadata=None, *, outcome, error=None):
     if error:
         row['error_type'] = type(error).__name__
     metrics.model_calls.append(row)
+
+
+def model_failure_reason():
+    metrics = _current.get()
+    if not metrics:
+        return None
+    failures = [row for row in metrics.model_calls if row['outcome'] == 'error']
+    if not failures:
+        return None
+    error = failures[-1].get('error_type')
+    return ('processing_timeout' if error == 'TimeoutError' else
+            'model_busy' if error == 'ModelBusy' else 'model_unavailable')
 
