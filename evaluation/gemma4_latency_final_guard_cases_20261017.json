@@ -1,0 +1,52 @@
+{
+  "protocol": "Final contact-intent boundary verification after the 28-turn regression; four earlier failures repeated plus two minimal intent variants. All development regression, no new accuracy-population claim.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "CrossEstate2007",
+      "turns": [
+        "조상 땅 찾기에서 2007년에 사망한 분의 상속인은 어떤 증명서를 챙기나요?"
+      ],
+      "criterion": "상속인, 2008.1.1 이전 사망자는 제적등본. 공통 신분증 유지; 2008 이후 증명서만 대신 안내하면 안 됨.",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0404180000"
+    },
+    {
+      "id": "CrossEstate2009",
+      "turns": [
+        "조상 땅 찾기에서 2009년에 사망한 분의 상속인은 어떤 증명서를 챙기나요?"
+      ],
+      "criterion": "상속인, 2008.1.1 이후 사망자는 가족관계증명서와 기본증명서. 공통 신분증 유지; 제적등본만 대신 안내하면 안 됨.",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0404180000"
+    },
+    {
+      "id": "CrossTax",
+      "turns": [
+        "마을세무사 상담은 전화만 되는 건가요? 다른 방식도 알려주세요."
+      ],
+      "criterion": "전화/팩스/이메일; 추가상담 필요시 시간·장소 정하여 대면상담. 일반 담당자 전화번호로 대체하지 않음.",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0105060000"
+    },
+    {
+      "id": "CrossExam",
+      "turns": [
+        "자격증 응시료 지원금의 최대 한도가 얼마예요?"
+      ],
+      "criterion": "정기시험 응시료 기준 최대8만원 한도, 1인 연1회. 소득지원금이나 다른 사업 금액으로 대체하지 않음.",
+      "source_anchor": "https://www.saha.go.kr/job/contents.do?mId=0301070000"
+    },
+    {
+      "id": "ContactOnly",
+      "turns": [
+        "여권 전화만 알려줘"
+      ],
+      "criterion": "상담 수단 질문으로 오인하지 않고 공식 여권 담당 업무·직통 번호/출처를 확인"
+    },
+    {
+      "id": "MethodOnly",
+      "turns": [
+        "마을세무사 상담은 전화만 되나요?"
+      ],
+      "criterion": "전화/팩스/이메일/추가상담 시 대면, 번호 조회로 대체하지 않음"
+    }
+  ]
+}

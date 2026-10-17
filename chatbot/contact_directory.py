@@ -63,7 +63,8 @@ def canonical(text: str) -> str:
 def asks_communication_method(query: str) -> bool:
     text = compact(query)
     return (bool(re.search(r'전화|팩스|이메일', text))
-            and bool(re.search(r'방법|경로|수단|(?:전화|팩스|이메일)(?:외에|말고|대신|로만|으로만)', text))
+            and bool(re.search(r'방법|방식|경로|수단|(?:전화|팩스|이메일)(?:외에|말고|대신|로만|으로만)|'
+                               r'(?:전화|팩스|이메일)만(?:으로)?(?:되|가능|받|이용|해|해야|하나요|인가|인지)', text))
             and not re.search(r'번호|연락처|담당부서|문의처|어느부서|어느과', text))
 
 
@@ -436,7 +437,8 @@ def is_contact_lookup_question(query: str) -> bool:
     )
     if asks_office_basics or any(term in value for term in ("대표전화", "대표 전화", "구청 연락처")):
         return False
-    return any(term in value for term in _INTENT_TERMS)
+    return any(term in value for term in _INTENT_TERMS) or bool(re.search(
+        r'(?:전화|팩스)(?:만)?(?:좀)?(?:알려|가뭐|는뭐)', compact))
 
 
 def build_contact_payload(staff_data: dict) -> dict:

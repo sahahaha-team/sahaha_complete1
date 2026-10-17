@@ -6,7 +6,7 @@ from functools import lru_cache
 
 from chatbot.query_subject import compact, SERVICE_NAMES, WEAK_WORDS, AREA_PATTERN, service_names
 
-FIELD_LABEL = re.compile(r'^(?:신청대상|신청권수|신청방법|선정제외기준|신청기간|처리절차|청구주체|신청대상|준비물|구비서류|지원내용|상담내용|이용시간|진료시간|제외대상|지원제외|납부기간|납기|예약방법|처리기간|대상|내용|방법|수수료|위치|문의)$')
+FIELD_LABEL = re.compile(r'^(?:신청대상|신청권수|신청방법|선정제외기준|신청기간|처리절차|청구주체|신청대상|준비물|구비서류|지원내용|지원금액|금액|비용|요금|상담내용|이용시간|진료시간|제외대상|지원제외|납부기간|납기|예약방법|처리기간|대상|내용|방법|수수료|위치|문의)$')
 FOCUS_STOP = WEAK_WORDS | set('구청 보건소 나이 주민등록증 주민등록 신청인 이유 이용 기준 무료 무상 신규 등록 서류 준비물 검사 치료 병원 주사 차이 똑같 사람 장소 채택 결과 필요 친구 낮 밤 직장 상태 계좌 중 하나 모든 전부 꼭 아무 이용권 받을 통장 보건지원 세금 도움 청구'.split())
 AREAS = re.compile(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동')
 FOCUS_STOP.update('가정 자녀 부분 상세 운영 주차장 공영 이름 방식 각종 성명 매 기간 최대 과정 하루'.split())
@@ -17,6 +17,7 @@ FOCUS_STOP.update({'요청','시험','응시','선정','개방','정도','임신
 FOCUS_STOP.update({'주소','위치','장소','연락처','전화','번호','운영시간','서류','절차',
                    '제외','한도','권수','횟수'})
 FOCUS_STOP.update({'부탁','상한'})
+FOCUS_STOP.update({'지원금','보조금'})  # Funding fields, not a separate program name.
 FOCUS_STOP.update({'기한','퍼센트','비율','연락','요청','진행','고충','예약','수강료'})
 
 

@@ -53,6 +53,11 @@ def answer_goal(query: str) -> str | None:
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
     compact_query = query.replace(' ', '')
+    from chatbot.contact_directory import asks_communication_method
+    if asks_communication_method(query):
+        return 'method'
+    if re.search(r'(?:서류|증명서|준비물).*(?:챙|가져|지참)|(?:챙|가져|지참).*(?:서류|증명서)', compact_query):
+        return 'documents'
     if quantity_unit(query):
         return 'schedule'
     if re.search(r'통행규칙|안전수칙', compact_query):
@@ -241,7 +246,7 @@ def requested_goals(query: str) -> tuple[str, ...]:
         goals.append('location')
     if primary != 'reference':
         extra = [('documents', r'(?:준비|구비|필요(?:한)?).*서류|서류.*(?:필요|무엇|뭐|지참)|준비물|가져가|가져갈|지참'),
-                 ('eligibility', r'누가|누구|대상|조건|자격|몇\s*살|어떤\s*(?:주민|구민|사람)'),
+                 ('eligibility', r'누가|누구|대상|조건|자격(?!증)|몇\s*살|어떤\s*(?:주민|구민|사람)'),
                  ('schedule', r'언제|주기|날짜'),
                  ('method', r'어떻게|방법|어디(?:서|로).*신청|어디(?:로|에).*연락')]
         extra += [('cost',r'비용|발급비|수수료|요금|사용료|얼마(?!나)|얼마나\s*(?:주|지원)|공짜|무료'),

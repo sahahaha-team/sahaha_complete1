@@ -21,7 +21,16 @@ def is_official_document(doc: dict) -> bool:
 def is_time_compatible(query: str, doc: dict) -> bool:
     """Historical reports cannot establish today's service rules or 2026 counts."""
     meta = doc.get("metadata") or {}
-    requested_years = {int(year) for year in re.findall(r"(20\d{2})\s*년", query or "")}
+    # An applicant's event date is a condition for today's rule, not the
+    # publication year requested. Mask only that occurrence; a separate
+    # historical policy/statistics year must still match the actual source.
+    reference_query = query or ''
+    if not re.search(r'통계|건수|보고서|추이', reference_query):
+        reference_query = re.sub(
+            r'20\d{2}\s*년(?:\s*\d{1,2}\s*월)?(?:\s*\d{1,2}\s*일)?(?:\s*에)?\s*'
+            r'(?=(?:사망|출생|전입|입사|퇴사|퇴직|이사)(?:한|하신|했|하였|자)|태어(?:난|나신|났|나셨))',
+            '', reference_query)
+    requested_years = {int(year) for year in re.findall(r"(20\d{2})\s*년", reference_query)}
     # A quoted old rule followed by "지금도 그대로?" asks for today's rule.
     # Explicit historical statistics/comparisons still retain their years.
     if (re.search(r'지금|현재|아직', query or '') and re.search(r'라던|이전|예전|그대로', query or '')
@@ -198,8 +207,12 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     owners += [line.strip() for line in body_text.splitlines() if re.fullmatch(
         r'[^:：,.。]{2,40}(?:센터|도서관|체육관|지원금|보조금|장려금|수당|보험|클리닉)(?:\s*(?:운영|안내))?', line.strip())]
     source_text = compact(title + ' ' + ' '.join(owners))
+    program_names = compact(re.sub(r'\s+등\s+', ' ',
+        str((doc.get('metadata') or {}).get('title') or '') + ' ' + ' '.join(owners)))
     for name, kind in requested_entities:
         name = re.sub(r'^(?:사하구청|사하구|부산광역시)', '', name)
+        if kind == '지원금' and compact(name + '지원') in program_names:
+            continue  # The same named program's grant is not a new facility.
         # A generic issuing counter is incidental to a certificate's papers.
         # Do not require a 주민센터 heading in the district's issuance guide;
         # this does not establish any particular centre's address or hours.

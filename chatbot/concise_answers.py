@@ -151,6 +151,13 @@ def condition_indices(units: list[str], indices: list[int]) -> list[int]:
             chosen.update(criteria)
     for index in indices:
         section_start, section_end = section_bounds(units, index)
+        if re.search(r'\d[\d,.]*\s*(?:원|만원)', units[index]):
+            # A monetary amount must keep the same program's per-person
+            # frequency cap, even when it is under a sibling field heading.
+            chosen.update(pos for pos in range(section_start, section_end)
+                if re.match(r'^(?:지원내용|지원한도|지급한도)\s*[:：]',units[pos])
+                and re.search(r'(?:1인(?:당)?|개인별|가구당|1가구).{0,20}(?:연|월|일).{0,10}\d+\s*회',units[pos])
+                and source_unit_complete(units[pos]))
         if SCOPE_FIELD.match(units[index]):
             chosen.update(pos for pos in range(section_start,section_end)
                           if re.search(r'제한\s*될\s*수|대상에서\s*제외|신청할\s*수\s*없',units[pos])
