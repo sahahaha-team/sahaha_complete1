@@ -391,7 +391,7 @@ class ChatBot:
                             for d in used_results if (d.get('metadata') or {}).get('source_warning')))
         if source_notes:
             warning = ' '.join(source_notes)
-        if warning:
+        if warning and warning not in answer:
             if len(answer) + len(warning) + 2 > 480:
                 answer = re.sub(r'^\*\*[^\n]+\*\*\s*\n', '', answer)
             if len(answer) + len(warning) + 2 <= 480:
@@ -416,12 +416,12 @@ class ChatBot:
             sources=json.dumps([source["url"] for source in sources], ensure_ascii=False))
         return {
             "answer": answer, "answer_details": details, "sources": sources, "is_clarification": False,
-            "degraded": degraded or bool(concise.get('degraded')), "degraded_reason": 'missing_requested_field' if concise.get('degraded') else degraded_reason,
-            "evidence": {"status": "partial" if concise.get('degraded') else "official", "label": "요청 항목 확인 필요" if concise.get('degraded') else "원문 최신 확인 필요" if warning else "공식 자료 핵심 안내",
-                "decision": "partial" if concise.get('degraded') else "supported",
-                "reasons": ["missing_requested_fields"] if concise.get('degraded') else [],
+            "degraded": degraded or bool(concise.get('degraded')), "degraded_reason": concise.get('degraded_reason') or ('missing_requested_field' if concise.get('degraded') else degraded_reason),
+            "evidence": {"status": concise.get('evidence_status') or ("partial" if concise.get('degraded') else "official"), "label": concise.get('evidence_label') or ("요청 항목 확인 필요" if concise.get('degraded') else "원문 최신 확인 필요" if warning else "공식 자료 핵심 안내"),
+                "decision": "unavailable" if concise.get('evidence_status') else "partial" if concise.get('degraded') else "supported",
+                "reasons": concise.get('evidence_reasons') or (["missing_requested_fields"] if concise.get('degraded') else []),
                 "requested_fields": evidence.get('requested_fields', []),
-                "matched_fields": evidence.get('matched_fields', []),
+                "matched_fields": concise.get('matched_fields', evidence.get('matched_fields', [])),
                 "retrieval_mode": search_outcome.get('retrieval', {}).get('mode', ''),
                 "vector_invoked": search_outcome.get('retrieval', {}).get('vector_invoked', False),
                 "reranker_used": rerank_info.get('used', False),

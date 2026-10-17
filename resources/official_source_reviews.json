@@ -2,6 +2,7 @@
   {
     "url": "https://www.saha.go.kr/health/contents.do?mId=0201020000",
     "reviewed_at": "2026-10-16",
+    "status": "conflict",
     "marker": "Step\\s*4[.]?\\s*치료\\s*1층[\\s\\S]*진료장소\\s*[:：]\\s*3층",
     "unverified_fields": ["location"],
     "unverified_line_pattern": "Step\\s*4.*1층\\s*물리치료실|진료장소\\s*[:：].*3층\\s*물리치료실",

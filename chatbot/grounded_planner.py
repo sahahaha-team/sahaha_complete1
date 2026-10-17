@@ -315,6 +315,12 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
 
 
 def answer_with_grounded_model(query: str, documents: list[dict], client, keywords: set[str], llm) -> dict | None:
+    from chatbot.source_warnings import reviewed_field_answer
+    with measure('review'):
+        reviewed = reviewed_field_answer(query, documents, client, keywords)
+    if reviewed:
+        decision('reviewed_source_field')
+        return reviewed
     with measure('prepare'):
         candidates = prepare_evidence(query, documents, client, keywords)
     # Navigation has an answer in verified page/file metadata. Selecting prose
@@ -354,6 +360,10 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         return partial
     for packet in candidates:
         packet['eligible_ids'] = eligible_ids(query, packet, packet.get('keywords',keywords))
+        # Audience/exception units are context, not a substitute for an absent
+        # requested fact (e.g. medication dose). A model cannot recover it.
+        if not any(matches_goal(query, packet['units'][i]) for i in packet['eligible_ids']):
+            packet['eligible_ids'] = set()
     context, packets = plan_context(candidates)
     if not context:
         decision('no_eligible_context')

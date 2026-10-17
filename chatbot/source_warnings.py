@@ -21,8 +21,48 @@ def reviewed_source(body: str, metadata: dict) -> tuple[str, dict]:
                              if not any(field_matches(field,line) for field in blocked)
                              and not re.search(review.get('unverified_line_pattern') or r'(?!)',line))
             return safe, {**metadata,'unverified_fields':blocked,
+                          'source_review_status':review.get('status', 'review_required'),
                           'source_warning':review.get('user_warning') or '공식 원문의 해당 항목은 최신 안내 확인이 필요합니다.'}
     return body, metadata
+
+
+def reviewed_field_answer(query: str, documents: list[dict], client, keywords: set[str]) -> dict | None:
+    """Explain a reviewed blocked field before asking a model to guess it.
+
+    Only relevant originals can establish a warning. An alternative verified
+    source with the requested field wins over a quarantined source. Mixed
+    requests continue through the ordinary partial-answer path.
+    """
+    from chatbot.answer_goal import requested_goals
+    from chatbot.source_pages import source_document
+    from chatbot.evidence_decision import document_decision
+    fields = set(requested_goals(query))
+    if not fields or 'reference' in fields:
+        return None
+    blocked_documents = []
+    for doc in documents:
+        body, reviewed = source_document(doc, client)
+        result = document_decision(query, {**reviewed, 'content': body, '_raw_page': {
+            'content': body}}, keywords)
+        if not result['relevant']:
+            continue
+        meta = reviewed.get('metadata') or {}
+        blocked = set(meta.get('unverified_fields') or [])
+        if not fields.intersection(blocked) and fields.issubset(result['matched_fields']):
+            return None
+        if fields.issubset(blocked) and meta.get('source_warning'):
+            blocked_documents.append(reviewed)
+    if not blocked_documents:
+        return None
+    metadata = blocked_documents[0]['metadata']
+    conflict = metadata.get('source_review_status') == 'conflict'
+    reason = 'source_conflict' if conflict else 'source_review_required'
+    return {'answer': metadata['source_warning'], 'answer_details': '',
+            'is_clarification': False, 'degraded': True, 'degraded_reason': reason,
+            'evidence_status': 'conflicting' if conflict else 'insufficient',
+            'evidence_label': '공식 원문 항목이 서로 다름' if conflict else '공식 원문 항목 확인 필요',
+            'evidence_reasons': [reason], 'matched_fields': [],
+            'documents': blocked_documents, 'answer_method': 'reviewed_source_field'}
 
 
 def dated_invitation_warning(body: str, *, year: int | None = None) -> str:
