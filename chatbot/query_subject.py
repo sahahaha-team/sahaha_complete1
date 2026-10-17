@@ -24,6 +24,7 @@ WEAK_WORDS.update({'기한','퍼센트','비율','연락','요청','진행'})
 WEAK_WORDS.update({'의미','방문','대표','대표전화','전화번호'})
 WEAK_WORDS.update({'기부금액', '이내'})  # Amount/bound fields, not separate benefits.
 WEAK_WORDS.add('출력')  # Output action; the requested document remains the topic.
+WEAK_WORDS.update({'도로명주소', '도로명'})  # Address field; parcel-address requests stay distinct.
 AREA_PATTERN = re.compile(r"부산(?:광역시)?|사하구(?:청)?|(?:괴정|당리|하단|신평|장림|다대|구평|감천)(?:[1-4])?동|인근|근처|주변")
 WORDING_ALIASES = {"보건증": "건강진단결과서", "불법건축물": "위반건축물", "불법주차": "불법주정차", "출산장려금": "출산지원금", "인공지능": "ai", "독감": "인플루엔자", "무료": "무상", "온라인": "인터넷", "도시철도": "지하철", "중개수수료": "중개보수", "빌릴": "대여", "빌리": "대여", "감면": "감경"}
 # Keep names intact when morphology splits a service into generic nouns. These
@@ -91,6 +92,7 @@ def normalize_query(query: str) -> str:
         text = text.replace(typo, name)
     text = re.sub(r'재\s+발급', '재발급', text)
     text = re.sub(r'다시\s*발급', '재발급', text)
+    text = re.sub(r'몇\s*일', '며칠', text)
     text = re.sub(r'돈\s*(?:을\s*)?안\s*내고', '무료로', text)
     # Known service words may be spaced between syllables. Keep the surrounding
     # sentence, including negation and applicant facts, intact.

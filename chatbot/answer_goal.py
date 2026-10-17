@@ -163,6 +163,9 @@ def answer_goal(query: str) -> str | None:
         return "reference"
     if re.search(r'인터넷|온라인|홈페이지', query) and re.search(r'찾아볼|조회할', query):
         return 'reference'
+    if (re.search(r'인터넷|온라인|홈페이지',query) and re.search(r'발급|신청|접수|예약',query)
+            and not re.search(r'실제\s*방문|현장|장소|주소|위치',query)):
+        return 'method'
     if asks_opening_hours(query):
         return "hours"
     if re.search(r'점심|저녁|낮에|밤에|야간',compact_query) and re.search(r'민원|여권|접수|신청|방문',compact_query):
@@ -184,7 +187,7 @@ def answer_goal(query: str) -> str | None:
         return "cost"
     if any(word in query for word in ("대상", "조건", "자격", "누가", "누구", "몇 살", "몇살")):
         return "eligibility"
-    if any(word in query for word in ("언제", "기간", "며칠", "주기", "자주", "날짜", "몇 번", "몇 월", "몇월", "몇 주", "몇주", "몇 권", "몇권", "기한", "저녁", "밤에")):
+    if any(word in query for word in ("언제", "기간", "며칠", "주기", "자주", "날짜", "몇 번", "몇 월", "몇월", "몇 주", "몇주", "몇 권", "몇권", "기한", "저녁", "밤에")) or re.search(r'몇\s*일',query):
         return "schedule"
     if any(word in query for word in ("방법", "순서", "어떻게", "하는 법", "받는 법", "신청", "접수", "신고", "발급")):
         return "method"
@@ -219,6 +222,8 @@ def requested_goals(query: str) -> tuple[str, ...]:
     if asks_opening_hours(query) and 'hours' not in goals:
         goals.append('hours')
     if (asks_location(query) and 'location' not in goals
+            and not (primary == 'method' and re.search(r'인터넷|온라인|홈페이지',query)
+                     and not re.search(r'실제\s*방문|현장|장소|주소|위치',query))
             and not re.search(r'어디에?\s*쓰|이익.*어디|어디(?:서|로).{0,6}(?:신청|접수|제출|연락)|(?:신청|접수|예약).{0,12}어디(?:로|서)(?:해|하)',query.replace(' ',''))):
         goals.append('location')
     if primary != 'reference':

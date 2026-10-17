@@ -136,6 +136,14 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
 def scoped_units(query: str, body: str, keywords: set[str] | None = None) -> list[str]:
     units = _source_units(body.splitlines())
     bounds = detail_section_bounds(query, units)
+    goals = requested_goals(query)
+    def covers(region):
+        return bool(goals) and all(any(field_matches(g,u,query) for u in region) for g in goals)
+    if bounds and not covers(units[bounds[0]:bounds[1]]):
+        owning = topic_section_bounds(units,query,keywords) if keywords else named_section_bounds(units,query)
+        if (owning and owning[0] <= bounds[0] and bounds[1] <= owning[1]
+                and covers(units[owning[0]:owning[1]])):
+            bounds = owning
     if bounds is None:
         bounds = topic_section_bounds(units,query,keywords) if keywords else named_section_bounds(units,query)
     if bounds and answer_goal(query) == 'conditions' and not any(
@@ -154,7 +162,7 @@ def scoped_units(query: str, body: str, keywords: set[str] | None = None) -> lis
             bounds = links[0]
     units = units[bounds[0]:bounds[1]] if bounds else units
     detail = detail_section_bounds(query, units)
-    if detail:
+    if detail and (covers(units[detail[0]:detail[1]]) or not covers(units)):
         units = units[detail[0]:detail[1]]
     return focus_units(query, units)
 

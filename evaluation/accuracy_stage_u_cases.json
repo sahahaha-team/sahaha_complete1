@@ -1,0 +1,27 @@
+{
+  "protocol": "U development reproductions for online/physical routing and requested fields.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "AD008",
+      "turns": [
+        "보건증 검사를 받았어요. 인터넷 발급 홈페이지가 어디인가요?"
+      ],
+      "criterion": "공공보건포털·정상결과·검사 후1년·과거 인증 제외"
+    },
+    {
+      "id": "AD011",
+      "turns": [
+        "사하구청의 도로명주소와 대표전화가 궁금합니다."
+      ],
+      "criterion": "구청 낙동대로398번길12·대표051-220-4000; 타시설주소/직통 혼동 금지"
+    },
+    {
+      "id": "AD014",
+      "turns": [
+        "정보공개청구 공개여부 결정은 몇 일 이내에 통지하나요?"
+      ],
+      "criterion": "청구받은날10일·10일 범위 연장·사유 문서 통지"
+    }
+  ]
+}
