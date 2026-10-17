@@ -35,6 +35,19 @@ def quantity_unit(query: str) -> str | None:
     return None
 
 
+def asks_medication_use(query: str) -> bool:
+    """A stated dose with an ingestion question is still a dose request.
+
+    Korean number words and Arabic quantities have the same role; neither
+    provides evidence that a particular dose is safe.
+    """
+    text = re.sub(r'\s+', '', query).lower()
+    medical = re.search(r'약|처방|복용|정제|캡슐|니코틴|금연보조제', text)
+    amount = re.search(r'(?:\d+(?:\.\d+)?|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)(?:알|정|mg|㎎|ml|㎖|캡슐|장)', text)
+    action = re.search(r'먹|복용|투여|붙이|사용', text)
+    return bool(medical and amount and action)
+
+
 @lru_cache(maxsize=512)
 def answer_goal(query: str) -> str | None:
     from chatbot.query_subject import interpret_query
@@ -48,7 +61,7 @@ def answer_goal(query: str) -> str | None:
             and re.search(r'신고|신청|제출',query)
             and not re.search(r'서류|준비물|수수료|비용|어디|방법|절차',query)):
         return 'schedule'
-    if re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량|약.*(?:몇알|몇정|먹어야)|하루.*몇(?:알|정)', compact_query):
+    if asks_medication_use(query) or re.search(r'복용량|복용법|약품명|약이름|어떤약|처방.*이름|용량|약.*(?:몇알|몇정|먹어야)|하루.*몇(?:알|정)', compact_query):
         return 'medical_details'
     if re.search(r'소득',compact_query) and re.search(r'기준|대상|자격|선정|몇퍼센트|몇프로|몇%',compact_query):
         return 'eligibility'

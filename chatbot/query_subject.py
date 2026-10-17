@@ -64,6 +64,7 @@ WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
 WORDING_ALIASES.update({'자전거길':'자전거도로'})
 WORDING_ALIASES.update({'시험비':'응시료','시험료':'응시료'})
 WORDING_ALIASES.update({'대피소':'대피시설'})
+WORDING_ALIASES.update({'희망책':'희망도서'})
 WORDING_ALIASES.update({'다대포 축구장':'다대포체육시설 축구장',
     '다대포축구장':'다대포체육시설 축구장','공시 지가':'공시지가',
     '부동산 등기부등본':'등기사항증명서','부동산등기부등본':'등기사항증명서'})
@@ -93,6 +94,7 @@ def normalize_query(query: str) -> str:
     text = re.sub(r'재\s+발급', '재발급', text)
     text = re.sub(r'다시\s*발급', '재발급', text)
     text = re.sub(r'몇\s*일', '며칠', text)
+    text = re.sub(r'희망\s*책', '희망도서', text)
     text = re.sub(r'돈\s*(?:을\s*)?안\s*내고', '무료로', text)
     # Known service words may be spaced between syllables. Keep the surrounding
     # sentence, including negation and applicant facts, intact.

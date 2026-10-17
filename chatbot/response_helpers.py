@@ -28,10 +28,11 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     """Only attach a short answer to the specific question we just asked."""
     if not pending:
         return message
+    from chatbot.passport_documents import merge_applicant_followup
     current = re.sub(r"\s+", "", message)
     if ('여권' in pending.get('query','') and '세' in pending.get('reply_terms',[]) and
             len(current) <= 40 and re.match(r'^(?:만)?\d{1,2}(?:세|살)', current)):
-        return pending['query'] + ' ' + message
+        return merge_applicant_followup(pending['query'], message)
     if pending.get('affirmative_context') and current.rstrip('.!?') in ('네', '예', '응', '맞아', '맞아요'):
         return pending['query'] + ' ' + pending['affirmative_context']
     if pending.get('negative_context') and current.rstrip('.!?') in ('아니', '아니요', '아니야'):
@@ -41,7 +42,7 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     previous = re.sub(r"\s+", "", pending.get("query", ""))
     if (len(current) <= 25 and not answer_goal(message)
             and any(term in current for term in pending.get('reply_terms',[]))):
-        return pending['query'] + ' ' + message
+        return merge_applicant_followup(pending['query'], message)
     for topic in ("여권", "보건증", "폐기물", "복지", "주차", "화재", "출산", "건축", "세금", "등본"):
         if topic in current and topic not in previous:
             return message
@@ -52,8 +53,11 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
             if goal in current and goal not in previous:
                 return message
     if len(current) <= 60 and any(term in current for term in pending.get("reply_terms", [])):
-        return pending["query"] + " " + message
-    return message
+        return merge_applicant_followup(pending['query'], message)
+    # A user may change the applicant instead of answering the requested role.
+    # Reuse ordinary follow-up routing, including its new-service boundary.
+    return build_contextual_search_query(message, [
+        {'role': 'user', 'content': pending.get('query', '')}])
 
 
 def is_obviously_out_of_domain(user_message: str) -> bool:
@@ -70,7 +74,7 @@ def is_obviously_out_of_domain(user_message: str) -> bool:
 
 def unavailable_capability(message: str) -> dict | None:
     text = topic_compact(message)
-    if re.search(r'주차장|주차면',text) and re.search(r'빈자리|빈공간|남은자리|잔여|몇대가능|비어|비었|빈주차|자리수',text) and re.search(r'지금|현재|실시간|오늘',text):
+    if re.search(r'주차장|주차면',text) and re.search(r'빈자리|빈공간|(?:남은|잔여|여유)(?:주차)?(?:칸|자리|공간|면)|잔여|몇대가능|비어|비었|빈주차|자리수',text) and re.search(r'지금|현재|실시간|오늘',text):
         answer = '현재 상담에는 **실시간 주차 잔여면수 조회 기능이 없습니다.** 주차장의 전체 주차면수를 현재 빈자리 수로 안내할 수는 없습니다.'
         reason = 'live_data_unavailable'
     elif (re.search(r'지금|현재|실시간',text) and
@@ -321,6 +325,9 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     is_follow_up = is_follow_up or field_follow_up or bool(previous_query and old_names and len(compact) <= 60 and
         (not names or names <= old_names) and re.search(
             r'가져갈|등록장소|가입자|사업자등록|실직|소득이|몇급지|보상받|서류랑|주민등록등본이요',compact))
+    from chatbot.passport_documents import applicant_age, merge_applicant_followup
+    is_follow_up = is_follow_up or bool('여권' in previous_query and len(compact) <= 16
+        and applicant_age(current) and not names)
     # A short reply to an actual contact choice can omit its work topic.
     # Complete questions such as '보건소 위치' keep their own topic.
     last_reply = next((str(m.get('content') or '') for m in reversed(history or [])
@@ -339,7 +346,10 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         if message.get("role") == "user" and (message.get("content") or "").strip()
     ]
     previous = recent_user_messages[-1] if recent_user_messages else ""
-    if answer_goal(current) and old_names:
+    profile_reply = bool('여권' in previous and len(compact) <= 32
+        and re.search(r'성인|어른|미성년|\d{1,2}(?:세|살)|신규|처음|재발급', compact)
+        and not re.search(r'서류|준비|구비|챙|가져|방법|절차|어떻게|어디|언제|기간|시간|며칠|수수료|비용|얼마|대상|자격|조건|사진|규격|담당|연락|번호', compact))
+    if answer_goal(current) and old_names and not profile_reply:
         # Carry the service and explicit profile, not the previous requested
         # field (e.g. automatic enrolment must not replace a benefit question).
         profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}세|성인|미성년자|부모|친족|신규|재발급',previous)
@@ -357,4 +367,4 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         previous = re.sub(r"준비물|준비서류|구비서류|서류|준비|기간|시간|며칠|수수료|비용|얼마", "", previous)
     if previous in current or previous == current:
         return current
-    return (previous + " " + current).strip()
+    return merge_applicant_followup(previous, current)

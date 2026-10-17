@@ -71,7 +71,13 @@ def document_decision(query: str, document: dict, keywords: set[str], *, min_sim
     lexical, matched = topic_support(topic_document, effective_keywords)
     if not lexical: reasons.append('topic_not_established')
     raw_similarity = float(document.get('vector_similarity', 0) or 0)
-    fields, covered = _coverage(query, body, str(metadata.get('title') or ''), tuple(sorted(effective_keywords)))
+    if reasons:
+        # Field extraction cannot make a different service, expired document or
+        # untrusted source eligible. Avoid scanning its full body again.
+        from chatbot.answer_goal import requested_goals
+        fields, covered = tuple(requested_goals(query)), ()
+    else:
+        fields, covered = _coverage(query, body, str(metadata.get('title') or ''), tuple(sorted(effective_keywords)))
     missing = tuple(field for field in fields if field not in covered)
     relevant = not reasons
     # Absence of a field is not absence of a related source. The source reader

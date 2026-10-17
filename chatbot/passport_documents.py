@@ -43,6 +43,26 @@ def applicant_role(query: str) -> str | None:
     return None
 
 
+def merge_applicant_followup(previous: str, current: str) -> str:
+    """Replace explicitly changed profile slots in an already linked follow-up.
+
+    The caller decides whether this is a follow-up. Keep the service and
+    requested field, while avoiding simultaneous old/new applicant conditions.
+    """
+    if '여권' not in previous:
+        return (previous + ' ' + current).strip()
+    old_age, new_age = applicant_age(previous), applicant_age(current)
+    if new_age:
+        previous = re.sub(r'(?:만\s*)?\d{1,2}\s*(?:세|살)(?:\s*(?:이상|이하|미만))?|미성년자?|성인|어른|아이|자녀', '', previous)
+    if applicant_role(current) or (new_age and (new_age == 'adult' or (old_age and new_age != old_age))):
+        previous = re.sub(r'법정\s*대리인|친권자|후견인|부모|아빠|엄마|어머니|아버지|친족|본인|직접', '', previous)
+        if applicant_role(current) == 'self' or new_age == 'adult':
+            previous = re.sub(r'대리|대신', '', previous)
+    if re.search(r'재\s*발급|신규|처음|새로', current):
+        previous = re.sub(r'재\s*발급|신규\s*(?:발급)?|처음\s*(?:발급)?|새로', '', previous)
+    return re.sub(r'\s+', ' ', previous + ' ' + current).strip()
+
+
 def parse_passport_documents(query: str, content: str) -> str | None:
     """Accept both legacy lines and HTML paragraphs; retain role boundaries."""
     from chatbot.query_subject import interpret_query

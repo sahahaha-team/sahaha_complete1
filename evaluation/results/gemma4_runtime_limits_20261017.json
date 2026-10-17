@@ -127,5 +127,45 @@
     "followup_seconds": 0.022422200068831444,
     "finished_at": "2026-10-17T08:10:06.819979+00:00"
   },
-  "observed_backend": "Initial actual Ollama log: request task85 canceled and released at512/1325 prompt tokens; next task87 took18.091s total with prompt1.221s+generation1.000s, so stop was not instantaneous. Recovery gate probe later blocked the follow-up with ModelBusy in0.022s and submitted no new backend request."
+  "observed_backend": "Initial actual Ollama log: request task85 canceled and released at512/1325 prompt tokens; next task87 took18.091s total with prompt1.221s+generation1.000s, so stop was not instantaneous. Recovery gate probe later blocked the follow-up with ModelBusy in0.022s and submitted no new backend request.",
+  "tagging_transport": {
+    "at": "2026-10-17T08:24:18.294277+00:00",
+    "seconds": 21.911421899916604,
+    "protocol": "Synthetic optional-tag transport only; no DB writes or administrative accuracy claim.",
+    "model": "gemma4:e4b",
+    "captured": {
+      "metadata": {
+        "done_reason": "stop",
+        "total_duration": 21641114700,
+        "load_duration": 41572200,
+        "prompt_eval_count": 251,
+        "prompt_eval_duration": 11188643000,
+        "eval_count": 114,
+        "eval_duration": 10153773000
+      },
+      "content": "{\n  \"service_type\": \"기타\",\n  \"department\": null,\n  \"target_audience\": [\n    \"전체시민\"\n  ],\n  \"keywords\": [\n    \"합성 검사\",\n    \"주민 신청\",\n    \"서류 안내\"\n  ],\n  \"has_deadline\": false,\n  \"has_contact_info\": false,\n  \"summary\": \"주민 신청 시 필요한 서류를 안내하는 합성 검사 문서입니다.\"\n}"
+    },
+    "result": {
+      "service_type": "기타",
+      "department": null,
+      "target_audience": [
+        "전체시민"
+      ],
+      "keywords": [
+        "합성 검사",
+        "주민 신청",
+        "서류 안내"
+      ],
+      "has_deadline": false,
+      "has_contact_info": false,
+      "summary": "주민 신청 시 필요한 서류를 안내하는 합성 검사 문서입니다.",
+      "url": "https://www.saha.go.kr/synthetic-transport-probe",
+      "title": "합성 전송 검사",
+      "category": "민원",
+      "sub_category": "",
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "source_identity_preserved": true
+  }
 }
