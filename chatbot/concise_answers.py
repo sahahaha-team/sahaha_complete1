@@ -205,8 +205,12 @@ def course_scope_result(query: str, audience: str | None) -> dict | None:
             return {"answer": f"확인된 교육은 {value} 대상입니다. 일반 주민이 신청할 수 있는 교육의 장소·일정은 이 자료에서 확인되지 않았습니다.",
                     "is_clarification": False, "suggested_questions": []}
         return None
+    # Each choice is a complete question so an older choice can be clicked
+    # safely after another topic. Free-text replies use the same scope state.
+    yes, no = f'{query} ({value} 대상)', f'일반 주민 {query}'
     return {"answer": f"확인된 교육은 {value} 대상입니다.\n이 대상의 교육을 찾으시나요?",
-            "answer_details": "", "is_clarification": True, "suggested_questions": [],
+            "answer_details": "", "is_clarification": True, "suggested_questions": [yes, no],
+            "choice_contexts": {yes: value, no: '일반 주민'},
             "affirmative_context": value, "negative_context": "일반 주민",
             "reply_terms": ["네", "맞아", "아니", "일반", "주민", "관리", "책임자"]}
 

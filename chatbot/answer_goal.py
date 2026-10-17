@@ -50,6 +50,8 @@ def asks_medication_use(query: str) -> bool:
 
 @lru_cache(maxsize=512)
 def answer_goal(query: str) -> str | None:
+    from chatbot.dialogue_profile import request_without_profile
+    query = request_without_profile(query)
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
     compact_query = query.replace(' ', '')
@@ -205,7 +207,7 @@ def answer_goal(query: str) -> str | None:
         return "cost"
     if any(word in query for word in ("대상", "조건", "자격", "누가", "누구", "몇 살", "몇살")):
         return "eligibility"
-    if any(word in query for word in ("언제", "기간", "며칠", "주기", "자주", "날짜", "몇 번", "몇 월", "몇월", "몇 주", "몇주", "몇 권", "몇권", "기한", "저녁", "밤에")) or re.search(r'몇\s*일',query):
+    if any(word in query for word in ("언제", "일정", "기간", "며칠", "주기", "자주", "날짜", "몇 번", "몇 월", "몇월", "몇 주", "몇주", "몇 권", "몇권", "기한", "저녁", "밤에")) or re.search(r'몇\s*일',query):
         return "schedule"
     if any(word in query for word in ("방법", "순서", "어떻게", "하는 법", "받는 법", "신청", "접수", "신고", "발급")):
         return "method"
@@ -231,6 +233,8 @@ def answer_goal(query: str) -> str | None:
 @lru_cache(maxsize=512)
 def requested_goals(query: str) -> tuple[str, ...]:
     """Keep both requested facility fields when hours and location are asked."""
+    from chatbot.dialogue_profile import request_without_profile
+    query = request_without_profile(query)
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
     primary = answer_goal(query)

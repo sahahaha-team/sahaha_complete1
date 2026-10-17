@@ -1,0 +1,66 @@
+{
+  "protocol": "Fixed before viewing upgraded API outputs. Development regression and adjacent-domain controls; not an independent population accuracy estimate. School network excluded.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "NaturalYes",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "네 맞아요",
+        "그럼 일정은요?"
+      ],
+      "criterion": "C 후 대상 유지. 신청방법·확정 일정이 근거에 없으면 한계 명시. 예정 시점을 확정하지 않음."
+    },
+    {
+      "id": "NoGeneral",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "아니요 일반 주민이에요"
+      ],
+      "criterion": "일반 주민 대상 안내 근거 부족을 분리; 경비책임자 교육 장소·다른 사업 신청방법을 안내하지 않음."
+    },
+    {
+      "id": "Uncertain",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "잘 모르겠어",
+        "아니요"
+      ],
+      "criterion": "불확실 답변을 예로 확정하지 않음. 확인 선택 유지 후 일반 주민 자료 한계."
+    },
+    {
+      "id": "NewTopic",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "네 성인 신규 여권 준비물 알려줘"
+      ],
+      "criterion": "명시한 새 여권 업무로 전환하고 소방교육 대상을 붙이지 않음. 공식 준비물·사진 조건·출처."
+    },
+    {
+      "id": "PassportRoles",
+      "turns": [
+        "여권 준비물 알려줘",
+        "미성년자야",
+        "부모가 신청해"
+      ],
+      "criterion": "연령 확인 후 신청자 확인, 부모 신청 서류와 공통 준비물/조건 보존."
+    },
+    {
+      "id": "BedSlots",
+      "turns": [
+        "침대 수수료 얼마야",
+        "일반침대",
+        "2인용"
+      ],
+      "criterion": "종류/규격 확인 후 해당 공식 표 행의 금액과 포함 부속 조건."
+    },
+    {
+      "id": "VaccineKind",
+      "turns": [
+        "백신 접종 하는곳 알려줘",
+        "독감"
+      ],
+      "criterion": "백신 종류 답변을 새 독립 주제로 오인하지 않고 접종 장소 질문 유지."
+    }
+  ]
+}

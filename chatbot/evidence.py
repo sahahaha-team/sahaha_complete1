@@ -183,6 +183,14 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
     anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','냉장고','세탁기','구직','구인','전자민원'}
     body_text = str(doc.get('content') or '')
+    # A scope confirmed from one program is a source constraint, not merely
+    # extra search words. Shared topics (e.g. fire education for children and
+    # apartment managers) cannot exchange schedules after a field follow-up.
+    from chatbot.dialogue_profile import confirmed_audience
+    audience = confirmed_audience(query)
+    if (audience and compact(audience) not in {'일반주민', '일반구민'}
+            and compact(audience) not in compact(body_text)):
+        return False
     from chatbot.answer_goal import requested_goals
     if keywords == {'구청'} and 'location' in requested_goals(query) and '구청' not in title:
         return False  # Another facility's address cannot locate the district office.

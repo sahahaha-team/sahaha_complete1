@@ -1,0 +1,31 @@
+{
+  "protocol": "Actual choice strings returned by the application; fixed before choice API observation; development regression, no population accuracy claim.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "ChoiceYes",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "소방교육 참여방법 알려줘 (의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자 대상)"
+      ],
+      "criterion": "화면에 실제 반환된 해당 대상 선택지 문장으로 확정. 재확인·다른 교육 방법 안내 금지."
+    },
+    {
+      "id": "ChoiceNo",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "일반 주민 소방교육 참여방법 알려줘"
+      ],
+      "criterion": "실제 일반 주민 선택지로 소방교육 범위 유지. 전문 대상의 장소를 일반 주민에게 적용하지 않음."
+    },
+    {
+      "id": "OldChoice",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "성인 신규 여권 준비물 알려줘",
+        "소방교육 참여방법 알려줘 (의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자 대상)"
+      ],
+      "criterion": "이전 선택지도 소방 업무가 명시된 완전한 질문이므로 여권 문맥과 섞이지 않음. 신청방법은 없으면 한계 명시."
+    }
+  ]
+}

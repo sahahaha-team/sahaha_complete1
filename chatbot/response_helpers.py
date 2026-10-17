@@ -24,22 +24,68 @@ def clarification_question(answer: str, questions: list[str], reply_terms: list[
     return {"answer": answer, "suggested_questions": questions[:3], "reply_terms": reply_terms}
 
 
+def _scope_confirmation(message: str) -> tuple[str | None, str]:
+    """Parse a reply to a yes/no scope question, never a substring in a question.
+
+    Only a standalone acknowledgement or one followed by an elided field is
+    accepted. New services, uncertainty and negated confirmations stay intact.
+    """
+    text = re.sub(r'[\s,.!?。？!]', '', message)
+    if re.search(r'모르|아마|글쎄|맞는지|맞나요|맞을까|아닌지', text):
+        return None, ''
+    negative = r'(?:아니(?:요|야|에요)?|아냐|아닌데(?:요)?|안맞아(?:요)?|맞지않아(?:요)?)'
+    positive = r'(?:(?:어|아)?(?:네네|네|예|응|넵)|(?:어|아)?(?:그교육|그대상|해당대상|그거)?맞(?:아요|아|습니다|으니까)|그래(?:요)?)'
+    for value, pattern in (('negative', negative), ('affirmative', positive)):
+        match = re.match(r'^(?:' + pattern + r')+', text)
+        if not match:
+            continue
+        tail = text[match.end():]
+        if not tail or is_field_only_question(tail):
+            return value, tail
+        if value == 'negative' and re.fullmatch(r'일반(?:주민|구민)(?:이야|이에요|입니다)?', tail):
+            return value, ''
+    return None, ''
+
+
+def _scoped_query(query: str, scope: str, field: str = '') -> str:
+    # Keep the confirmed audience as a separate profile when the next turn
+    # changes only the requested field. This is internal search context.
+    scoped = f'{query} (확인대상: {scope})'
+    if field:
+        return build_contextual_search_query(field, [{'role': 'user', 'content': query, 'search_query': scoped}])
+    return scoped
+
+
 def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     """Only attach a short answer to the specific question we just asked."""
     if not pending:
         return message
     from chatbot.passport_documents import merge_applicant_followup
     current = re.sub(r"\s+", "", message)
+    previous = re.sub(r"\s+", "", pending.get("query", ""))
+    # A complete new subject takes precedence even if it starts with "네".
+    if pending.get('affirmative_context'):
+        names, old_names = service_names(message), service_names(pending.get('query', ''))
+        if any(not any(n in old or old in n for old in old_names) for n in names):
+            return message
+        for topic in ("여권", "보건증", "폐기물", "복지", "주차", "화재", "출산", "건축", "세금", "등본", "보건소"):
+            if topic in current and topic not in previous:
+                return message
+    choices = pending.get('choice_contexts', {})
+    if message in choices:
+        return _scoped_query(pending['query'], choices[message])
+    if pending.get('affirmative_context'):
+        decision, field = _scope_confirmation(message)
+        context = pending.get(f'{decision}_context') if decision else None
+        if context:
+            return _scoped_query(pending['query'], context, field)
+        if re.fullmatch(r'(?:잘|그게)?(?:맞는지|해당하는지)?모르(?:겠어|겠어요|겠습니다|겠는데요)', current.rstrip('.!?')):
+            return pending['query']
     if ('여권' in pending.get('query','') and '세' in pending.get('reply_terms',[]) and
             len(current) <= 40 and re.match(r'^(?:만)?\d{1,2}(?:세|살)', current)):
         return merge_applicant_followup(pending['query'], message)
-    if pending.get('affirmative_context') and current.rstrip('.!?') in ('네', '예', '응', '맞아', '맞아요'):
-        return pending['query'] + ' ' + pending['affirmative_context']
-    if pending.get('negative_context') and current.rstrip('.!?') in ('아니', '아니요', '아니야'):
-        return pending['query'] + ' ' + pending['negative_context']
     if message in pending.get("suggested_questions", []):
         return message  # Buttons already contain a complete, narrowed question.
-    previous = re.sub(r"\s+", "", pending.get("query", ""))
     if (len(current) <= 25 and not answer_goal(message)
             and any(term in current for term in pending.get('reply_terms',[]))):
         return merge_applicant_followup(pending['query'], message)
@@ -96,8 +142,9 @@ def is_field_only_question(message: str) -> bool:
     """Recognize elided fields without treating a new service as a follow-up."""
     text = re.sub(r'[\s?!.,？]', '', message or '')
     text = re.sub(r'^(?:그럼|그러면|그건|그거|관련)', '', text)
+    text = re.sub(r'(?:은|는)?어떻게(?:하나요|해요|해|받아요|받아)[?？]?$', '방법', text)
     text = re.sub(r'(?:좀)?(?:알려(?:줘|주세요)|설명해줘|보고싶(?:어|어요)|보여(?:줘|주세요)|확인하고싶(?:어|어요)|궁금(?:해|해요))$', '', text)
-    fields = r'현황도|현황|노선도|노선|지도|위치|주소|장소|시간|일정|기간|비용|수수료|준비물|서류|대상|자격|조건|신청방법|신청절차|발급절차|방법'
+    fields = r'현황도|현황|노선도|노선|지도|위치|주소|장소|시간|일정|기간|비용|수수료|준비물|서류|대상|자격|조건|참여방법|신청방법|이용방법|신청절차|발급절차|신청|접수|방법'
     return bool(text and re.fullmatch(r'(?:(?:' + fields + r')(?:과|와|이랑|랑|하고|및)?)+(?:은|는|을|를|도|가|이|요|좀)*', text))
 
 
@@ -301,6 +348,16 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     recent = [(m.get('search_query') or m.get('content') or '').strip()
               for m in history or [] if m.get('role') == 'user']
     previous_query = recent[-1] if recent else ''
+    from chatbot.dialogue_profile import confirmed_profile
+    decision, field = _scope_confirmation(current)
+    if decision == 'affirmative':
+        if not field and confirmed_profile(previous_query):
+            return previous_query
+        if field:
+            # Without a remembered service, the resulting field-only query
+            # asks for the topic instead of retrieving an arbitrary program.
+            current = field
+            compact = re.sub(r'\s+', '', current)
     generic = {'자전거','디지털','컴퓨터','냉장고','세탁기','구직','구인','건강검진','영유아'}
     names = service_names(current) - generic
     old_names = service_names(previous_query) - generic
@@ -353,7 +410,12 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         # Carry the service and explicit profile, not the previous requested
         # field (e.g. automatic enrolment must not replace a benefit question).
         profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}세|성인|미성년자|부모|친족|신규|재발급',previous)
+        scope = confirmed_profile(previous)
+        if scope:
+            profile.append(scope)
         subjects = sorted(old_names,key=len,reverse=True)
+        if scope and re.search(r'교육|훈련|강좌', previous) and not any(re.search(r'교육|훈련|강좌', s) for s in subjects):
+            subjects.append(re.search(r'교육|훈련|강좌', previous).group())
         if '인플루엔자' in subjects and '독감' in previous:
             subjects[subjects.index('인플루엔자')] = '독감'
         previous = ' '.join(subjects + profile)

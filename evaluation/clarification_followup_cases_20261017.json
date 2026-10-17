@@ -1,0 +1,24 @@
+{
+  "protocol": "Screenshot multi-turn reproduction fixed before editing; development regression. Preserve first observed responses.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "Screenshot",
+      "turns": [
+        "소방 교육 하는방법 알려줘",
+        "어 맞아",
+        "맞으니까 참여방법 알려줘"
+      ],
+      "criterion": "교육 대상 확인 후 소방교육 신청방법으로 연결; 대상 재확인 반복이나 구강보건 등 다른 업무 안내 금지. 자료에 신청방법 없으면 해당 소방교육의 확인 한계를 안내."
+    },
+    {
+      "id": "ExactYes",
+      "turns": [
+        "소방교육 참여방법 알려줘",
+        "네",
+        "신청은 어떻게 해요?"
+      ],
+      "criterion": "같은 소방교육 및 확정한 대상 유지; 최신 공식 근거의 신청방법만 안내."
+    }
+  ]
+}

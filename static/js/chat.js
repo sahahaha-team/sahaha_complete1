@@ -359,7 +359,7 @@
         }
 
         if (role !== "user" && suggestedQuestions && suggestedQuestions.length > 0) {
-            contentDiv.appendChild(createSuggestedQuestionsEl(suggestedQuestions));
+            contentDiv.appendChild(createSuggestedQuestionsEl(suggestedQuestions, evidence && evidence.status === "clarification"));
         }
 
         msg.appendChild(avatar);
@@ -394,13 +394,13 @@
         return badge;
     }
 
-    function createSuggestedQuestionsEl(questions) {
+    function createSuggestedQuestionsEl(questions, isClarification) {
         const wrap = document.createElement("div");
         wrap.className = "followup-panel";
 
         const label = document.createElement("div");
         label.className = "followup-label";
-        label.textContent = "고우니에게 이어서 묻기";
+        label.textContent = isClarification ? "선택하거나 직접 답해주세요" : "고우니에게 이어서 묻기";
         wrap.appendChild(label);
 
         const actions = document.createElement("div");
