@@ -318,15 +318,20 @@ class ChatBot:
         search_query = normalize_query(resolved_message)
         search_started = time.perf_counter()
 
-        search_outcome = self.retriever.search(search_query, k=15)
-        fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
+        from chatbot.request_metrics import measure
+        with measure('search'):
+            search_outcome = self.retriever.search(search_query, k=15)
+        with measure('verify'):
+            fresh_results = self.retriever.filter_fresh_results(search_query, search_outcome["results"])
         verification_failed = getattr(fresh_results,'verification_failed',False)
         rerank_info = {'used': False}
         if search_outcome.get('retrieval', {}).get('mode') == 'hybrid_rrf':
             from chatbot.semantic_ranker import semantic_ranker
-            fresh_results, rerank_info = semantic_ranker.rerank(search_query, fresh_results,
-                self.retriever._content_keywords(search_query))
-        results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
+            with measure('rerank'):
+                fresh_results, rerank_info = semantic_ranker.rerank(search_query, fresh_results,
+                    self.retriever._content_keywords(search_query))
+        with measure('grounding'):
+            results = self.retriever.select_grounded_results(search_query, fresh_results, limit=15)
         logger.info("상담 근거 단계: 검색=%s, 최근 확인=%s, 서로 다른 근거 URL=%s",
             len(search_outcome["results"]), len(fresh_results), len(results))
         logger.info("상담 검색 시간: %.3fs", time.perf_counter() - search_started)
@@ -348,7 +353,8 @@ class ChatBot:
             return response
 
         from chatbot.source_pages import hydrate_source_documents
-        grounded_results = hydrate_source_documents(results, self.retriever.db.client)
+        with measure('originals'):
+            grounded_results = hydrate_source_documents(results, self.retriever.db.client)
         # General questions use Gemma to choose complete evidence and conditions.
         # Static emergency/contact/table routes above keep their fast response.
         planned = None if SOURCE_ONLY_ANSWERS else answer_with_grounded_model(

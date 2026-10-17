@@ -92,9 +92,10 @@ def main():
                         body = response.json()
                         error = None
                         timing = response.headers.get('Server-Timing', '')
+                        request_id = response.headers.get('X-Request-ID', '')
                     except Exception as exc:
                         elapsed = time.perf_counter() - start
-                        status, body, timing, error = None, {}, '', type(exc).__name__
+                        status, body, timing, request_id, error = None, {}, '', '', type(exc).__name__
                     attempts.append({'status': status, 'seconds': round(elapsed, 3)})
                     if status != 429 or len(attempts) >= 4:
                         break
@@ -102,6 +103,7 @@ def main():
                 record = {'id': scenario['id'], 'turn': turn, 'question': query,
                           'criterion': scenario['criterion'], 'seconds': round(elapsed,3),
                           'server_timing': timing, 'status': status, 'error': error,
+                          'request_id': request_id,
                           'attempts': attempts, 'response': body}
                 report['records'].append(record)
                 report['code_unchanged'] = hashes == code_hashes()

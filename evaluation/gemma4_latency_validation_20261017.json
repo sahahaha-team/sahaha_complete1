@@ -1,0 +1,79 @@
+{
+  "protocol": "Fixed before implementation on 2026-10-17. New wording in familiar domains, not independent population sample. First failure preserved; classify as development if used to repair. Expected facts from frozen final-review source excerpts; revalidate freshness at execution.",
+  "families": [],
+  "scenarios": [
+    {
+      "id": "V01",
+      "turns": [
+        "정보공개 결정기간이 늘어날 수 있나요? 연장 한도도 알려주세요."
+      ],
+      "criterion": "동일 업무 결정10일/연장10일 범위/사유 문서통지 보존",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0302010300"
+    },
+    {
+      "id": "V02",
+      "turns": [
+        "작은 도서관 희망책은 한달에 몇권 신청해요?"
+      ],
+      "criterion": "작은도서관 합산 월2권/연15권. 공백과 어미변화.",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0607110000"
+    },
+    {
+      "id": "V03",
+      "turns": [
+        "미성년 자녀 여권을 다시 만들 때 준비할 서류는요?",
+        "그럼 어른 재발급은요?"
+      ],
+      "criterion": "미성년 재발급 조건/법정대리인 서류와 유효 기존여권, 성인서류 차용금지; 후속 성인 재발급으로 변경",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0104020000"
+    },
+    {
+      "id": "V05",
+      "turns": [
+        "물리 치료 받는 곳이 보건소 몇층이에요?"
+      ],
+      "criterion": "1층/3층 충돌 안내, 확정금지, 공식출처",
+      "source_anchor": "https://www.saha.go.kr/health/contents.do?mId=0201020000"
+    },
+    {
+      "id": "V06",
+      "turns": [
+        "물리치료실 이용 대상도 알려주세요."
+      ],
+      "criterion": "충돌 위치와 별개인 실제 대상만 안내, 과잉거절금지",
+      "source_anchor": "https://www.saha.go.kr/health/contents.do?mId=0201020000"
+    },
+    {
+      "id": "V07",
+      "turns": [
+        "냉장고가 망가졌는데 무상으로 방문 수거해 주나요?"
+      ],
+      "criterion": "단순 고장과 원형훼손 구분 필요, 예외누락금지",
+      "source_anchor": "https://www.saha.go.kr/portal/contents.do?mId=0405050103"
+    },
+    {
+      "id": "V08",
+      "turns": [
+        "금연약을 두 알 먹어도 되나요?"
+      ],
+      "criterion": "약품/용량 근거 없으므로 확정금지, 일반클리닉으로대체금지",
+      "source_anchor": "https://www.saha.go.kr/health/contents.do?mId=0203010100"
+    },
+    {
+      "id": "V09",
+      "turns": [
+        "지금 공영 주차장 남은 칸 알려줘요."
+      ],
+      "criterion": "실시간미연동과 총면수구분",
+      "source_anchor": "existing capability contract; no realtime feed"
+    },
+    {
+      "id": "V10",
+      "turns": [
+        "영양플러스 소득 기준만 맞으면 바로 지원되나요?"
+      ],
+      "criterion": "소득만으로 자격확정금지, 지역/영양위험등필수조건",
+      "source_anchor": "https://www.saha.go.kr/health/contents.do?mId=0402090000"
+    }
+  ]
+}

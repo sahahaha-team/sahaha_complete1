@@ -34,6 +34,7 @@ from config import (
 from chatbot.llm_runtime import get_llm_status
 from chatbot.contact_directory import contact_responder
 from chatbot.emergency_guidance import answer_emergency_question
+from chatbot.request_metrics import request_metrics
 
 logger = logging.getLogger(__name__)
 
@@ -169,7 +170,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
-    expose_headers=["Server-Timing"],
+    expose_headers=["Server-Timing", "X-Request-ID"],
 )
 
 # 정적 파일 / 템플릿 (Flask와 동일 경로)
@@ -182,8 +183,14 @@ templates = Jinja2Templates(directory="templates")
 @app.middleware("http")
 async def security_headers(request: Request, call_next):
     """클릭재킹/XSS 방지 보안 헤더 부착"""
-    started = time.perf_counter()
-    response = await call_next(request)
+    with request_metrics() as metrics:
+        try:
+            response = await call_next(request)
+        finally:
+            if request.url.path == '/api/chat':
+                import json
+                metrics.timings['app'] = time.perf_counter() - metrics.started
+                logger.info('consultation_metrics %s', json.dumps(metrics.summary(), ensure_ascii=False))
     allowed = " ".join(CORS_ALLOWED_ORIGINS) if CORS_ALLOWED_ORIGINS else "'self'"
     # 공식 홈페이지에 삽입되는 위젯은 CSP frame-ancestors로 허용 출처를 제한한다.
     # SAMEORIGIN을 함께 보내면 브라우저가 saha.go.kr의 iframe까지 차단할 수 있다.
@@ -199,7 +206,8 @@ async def security_headers(request: Request, call_next):
         "img-src 'self' data: https:; "
         "connect-src 'self'"
     )
-    response.headers["Server-Timing"] = f"app;dur={(time.perf_counter() - started) * 1000:.1f}"
+    response.headers["Server-Timing"] = metrics.server_timing()
+    response.headers["X-Request-ID"] = metrics.request_id
     return response
 
 

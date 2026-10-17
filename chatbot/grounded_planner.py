@@ -9,6 +9,7 @@ import json
 import logging
 import re
 import time
+from chatbot.request_metrics import measure, decision, record_model
 
 from chatbot.answer_completion import source_unit_complete, QUALIFICATION
 from chatbot.answer_goal import answer_goal, requested_goals, GOAL_WORDS
@@ -314,7 +315,8 @@ def render_plan(query: str, plan: dict, packets: list[dict], keywords: set[str])
 
 
 def answer_with_grounded_model(query: str, documents: list[dict], client, keywords: set[str], llm) -> dict | None:
-    candidates = prepare_evidence(query, documents, client, keywords)
+    with measure('prepare'):
+        candidates = prepare_evidence(query, documents, client, keywords)
     # Navigation has an answer in verified page/file metadata. Selecting prose
     # cannot recover links removed by get_text(), and may choose a slogan.
     for packet in candidates:
@@ -323,6 +325,7 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         original = f'{title}의 공식 안내 원문입니다.\n\n' + '\n'.join('> ' + line for line in packet['body'].splitlines())
         reference = reference_answer(query, packet['document'], packet['body'], packet_keywords, original)
         if reference:
+            decision('reference_source')
             return reference
     from chatbot.structured_answers import structured_brief
     partial = None
@@ -343,26 +346,31 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         result = structured_brief(query, packet['document'], packet['section_body'], packet.get('keywords', keywords))
         if result:
             if not result.get('degraded'):
+                decision('structured_source')
                 return result
             partial = partial or result
     if partial:
+        decision('partial_source')
         return partial
     for packet in candidates:
         packet['eligible_ids'] = eligible_ids(query, packet, packet.get('keywords',keywords))
     context, packets = plan_context(candidates)
     if not context:
+        decision('no_eligible_context')
         return None
     key = plan_key(query, packets, keywords, llm, PROMPT)
     cached = model_plan_cache.get(key) if key else None
     if cached is not None:
         result = render_plan(query, cached, packets, keywords)
         if result:
+            decision('validated_selection_cache')
             logger.info('Gemma 근거 선택 재사용: 현재 원문·조건 재검증 완료')
             return result
     try:
         allowed_ids = sorted({i for packet in packets for i in packet['visible_ids']
                               if i in packet['eligible_ids']})
         if not allowed_ids:
+            decision('no_eligible_ids')
             return None
         choices = []
         for source, packet in enumerate(packets):
@@ -376,17 +384,25 @@ def answer_with_grounded_model(query: str, documents: list[dict], client, keywor
         schema = choices[0] if len(choices) == 1 else {"oneOf": choices}
         selector = llm.model_copy(update={"format": schema, "temperature": 0, "num_predict": 100})
         started = time.perf_counter()
-        response = selector.invoke(
-            PROMPT.format(question=query, context=context), stream=False)
+        try:
+            with measure('model'):
+                response = selector.invoke(
+                    PROMPT.format(question=query, context=context), stream=False)
+        except Exception as error:
+            record_model(time.perf_counter() - started, outcome='error', error=error)
+            raise
         metadata = getattr(response, "response_metadata", {}) or {}
-        logger.info("상담 모델 시간: wall=%.3fs, load=%.3fs, prompt=%.3fs/%s tokens, output=%.3fs/%s tokens",
-                    time.perf_counter() - started, float(metadata.get('load_duration') or 0) / 1e9,
-                    float(metadata.get('prompt_eval_duration') or 0) / 1e9, metadata.get('prompt_eval_count', 0),
-                    float(metadata.get('eval_duration') or 0) / 1e9, metadata.get('eval_count', 0))
         if metadata.get("done_reason") in ("length", "max_tokens"):
+            record_model(time.perf_counter() - started, metadata, outcome='truncated')
             return None
-        plan = json.loads(response.content)
+        try:
+            plan = json.loads(response.content)
+        except (TypeError, ValueError) as error:
+            record_model(time.perf_counter() - started, metadata, outcome='invalid_json', error=error)
+            return None
         result = render_plan(query, plan, packets, keywords)
+        record_model(time.perf_counter() - started, metadata,
+                     outcome='validated' if result else 'rejected')
         if result and key:
             model_plan_cache.put(key, plan)
         logger.info("Gemma 근거 선택: mode=%s, 검증=%s", plan.get("mode"), bool(result))
