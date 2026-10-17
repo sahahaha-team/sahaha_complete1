@@ -78,12 +78,30 @@ def passages(query: str, document: dict, keywords: set[str]) -> list[str]:
 class SemanticRanker:
     def __init__(self):
         self._lock=threading.RLock();self._model=None;self._tokenizer=None
-        self._failed_at=0.0;self._cache=OrderedDict()
+        self._failed_at=0.0;self._cache=OrderedDict();self._warmed=False
 
     def warmup(self):
-        """Load local weights before accepting a resident's first request."""
+        """Prepare one bounded CPU batch before accepting the first request.
+
+        Synthetic scores are discarded; no source or selection cache is filled.
+        Shape-dependent costs can still occur for other batch sizes.
+        """
         with self._lock:
-            return self._load()
+            if not self._load(): return False
+            if self._warmed: return True
+            try:
+                import torch
+                batch_size=min(4,max(1,RAG_RERANK_LIMIT))
+                encoded=self._tokenizer(['공식 행정 안내']*batch_size,
+                    ['신청 대상과 절차를 공식 자료에서 확인합니다.']*batch_size,
+                    padding='max_length',truncation=True,max_length=384,return_tensors='pt')
+                with torch.inference_mode(): self._model(**encoded)
+                self._warmed=True
+                logger.info('로컬 의미 재정렬 첫 계산 준비 완료')
+                return True
+            except Exception as exc:
+                logger.warning('의미 재정렬 첫 계산 준비 실패 (%s)',type(exc).__name__)
+                return False
 
     def _load(self):
         if self._model is not None:return True

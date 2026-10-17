@@ -48,7 +48,8 @@ def source_body(document: dict) -> str:
     return str(document.get('content') or '')
 
 
-def document_decision(query: str, document: dict, keywords: set[str], *, min_similarity: float = .45) -> dict:
+def document_decision(query: str, document: dict, keywords: set[str], *, min_similarity: float = .45,
+                      check_fields: bool = True) -> dict:
     from chatbot.evidence import (is_official_document, is_time_compatible,
                                   is_answerable_document, is_service_source, topic_support)
     metadata = document.get('metadata') or {}
@@ -71,7 +72,7 @@ def document_decision(query: str, document: dict, keywords: set[str], *, min_sim
     lexical, matched = topic_support(topic_document, effective_keywords)
     if not lexical: reasons.append('topic_not_established')
     raw_similarity = float(document.get('vector_similarity', 0) or 0)
-    if reasons:
+    if reasons or not check_fields:
         # Field extraction cannot make a different service, expired document or
         # untrusted source eligible. Avoid scanning its full body again.
         from chatbot.answer_goal import requested_goals

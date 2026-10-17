@@ -58,14 +58,17 @@ def reviewed_field_answer(query: str, documents: list[dict], client, keywords: s
     blocked_documents = []
     for doc in marked:
         body, reviewed = source_document(doc, client)
-        result = document_decision(query, {**reviewed, 'content': body, '_raw_page': {
-            'content': body}}, keywords)
-        if not result['relevant']:
-            continue
         meta = reviewed.get('metadata') or {}
         blocked = set(meta.get('unverified_fields') or [])
-        if fields.issubset(blocked) and meta.get('source_warning'):
-            blocked_documents.append(reviewed)
+        if not fields.issubset(blocked) or not meta.get('source_warning'):
+            continue
+        # The reviewed field is quarantined already. Establish service/source
+        # eligibility without extracting facts from the removed field again.
+        result = document_decision(query, {**reviewed, 'content': body, '_raw_page': {
+            'content': body}}, keywords, check_fields=False)
+        if not result['relevant']:
+            continue
+        blocked_documents.append(reviewed)
     if not blocked_documents:
         return None
     blocked_urls = {(doc.get('metadata') or {}).get('url') for doc in blocked_documents}

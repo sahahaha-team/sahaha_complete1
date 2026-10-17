@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from chatbot.grounded_planner import answer_with_grounded_model
 from chatbot.source_warnings import reviewed_field_answer
@@ -15,6 +15,19 @@ def clinic(body=None):
 
 
 class ReviewedFieldGateTests(unittest.TestCase):
+    def test_quarantined_field_checks_eligibility_without_extracting_removed_field(self):
+        with patch('chatbot.evidence_decision._coverage') as coverage:
+            result = reviewed_field_answer('물리치료실 위치', [clinic()], None, {'물리치료'})
+        coverage.assert_not_called()
+        self.assertEqual(result['degraded_reason'], 'source_conflict')
+
+    def test_eligibility_only_never_marks_a_source_as_supported(self):
+        from chatbot.evidence_decision import document_decision
+        result = document_decision('물리치료실 대상', clinic(), {'물리치료'}, check_fields=False)
+        self.assertTrue(result['relevant'])
+        self.assertEqual(result['decision'], 'needs_evidence')
+        self.assertEqual(result['matched_fields'], [])
+
     def test_preflight_without_a_reviewed_url_does_not_fetch_any_original(self):
         document = {'content': '다른 업무 안내', 'metadata': {
             'title': '다른 업무', 'url': 'https://www.saha.go.kr/portal/other'}}

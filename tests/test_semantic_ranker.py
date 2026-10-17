@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from config import RAG_RERANK_MODEL
 from chatbot.semantic_ranker import SemanticRanker, text_hash, source_hash, semantic_keywords, has_semantic_support, passages
@@ -22,6 +22,27 @@ def bound(query, doc, terms=('금연',), logit=1, margin=3):
 
 
 class SemanticRankerTests(unittest.TestCase):
+    def test_warmup_runs_one_bounded_batch_without_caching_synthetic_scores(self):
+        ranker=SemanticRanker()
+        ranker._tokenizer=Mock(return_value={})
+        ranker._model=Mock()
+        with patch.object(ranker,'_load',return_value=True):
+            self.assertTrue(ranker.warmup())
+            self.assertTrue(ranker.warmup())
+        ranker._model.assert_called_once()
+        self.assertLessEqual(len(ranker._tokenizer.call_args.args[0]),4)
+        self.assertEqual(ranker._tokenizer.call_args.kwargs['max_length'],384)
+        self.assertFalse(ranker._cache)
+
+    def test_failed_precalculation_does_not_remove_loaded_model(self):
+        ranker=SemanticRanker()
+        ranker._tokenizer=Mock(side_effect=RuntimeError('synthetic failure'))
+        ranker._model=Mock()
+        with patch.object(ranker,'_load',return_value=True):
+            self.assertFalse(ranker.warmup())
+        self.assertIsNotNone(ranker._model)
+        self.assertFalse(ranker._warmed)
+
     def test_synonym_binding_can_establish_topic_but_not_missing_field(self):
         query='담배를 끊고 싶은데 어디서 상담해요?'
         doc=bound(query,source('## 금연\n대상 : 금연을 희망하는 지역주민'))
