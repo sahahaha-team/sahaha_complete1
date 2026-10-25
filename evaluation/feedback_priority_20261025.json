@@ -1,0 +1,273 @@
+{
+  "families": [],
+  "scenarios": [
+    {
+      "id": "P1001",
+      "turns": [
+        "사하구 요일별 쓰레기 배출 방법은 어떻게 되나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1001,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1002",
+      "turns": [
+        "소방특화 들락날락 체험은 어떻게 예약하나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1002,
+        "source_url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1003",
+      "turns": [
+        "작은도서관 교육 프로그램은 어떻게 예약하나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1003,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1004",
+      "turns": [
+        "사하구보건소 운영시간은 어떻게 되나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1004,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1005",
+      "turns": [
+        "사하구보건소 성인 예방접종은 언제 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1005,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1006",
+      "turns": [
+        "사하구 복지 서비스에는 무엇이 있나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1006,
+        "source_url": "https://www.saha.go.kr/welfare.do",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1007",
+      "turns": [
+        "사하구 지방세에는 어떤 종류가 있나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1007,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105010000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1008",
+      "turns": [
+        "사하구보건소에서는 어떤 업무를 이용할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1008,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1009",
+      "turns": [
+        "사하구 통합예약에서는 무엇을 예약할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1009,
+        "source_url": "https://www.saha.go.kr/reserve/main.do",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "P1010",
+      "turns": [
+        "사하구의 주요 민원 서비스에는 무엇이 있나요?"
+      ],
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1010,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      }
+    },
+    {
+      "id": "D01",
+      "turns": [
+        "여권 준비물 알려줘",
+        "아이는 8살",
+        "엄마가 가요",
+        "아니 12살이야",
+        "신청 말고 장소 알려줘"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D02",
+      "turns": [
+        "보건소 예방접종 어디서 해?",
+        "폐렴구균",
+        "아니 독감이야"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D03",
+      "turns": [
+        "소방 교육 하는방법 알려줘",
+        "아니 일반 주민이야",
+        "아이는 8살",
+        "신청 말고 장소 알려줘"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D04",
+      "turns": [
+        "소방특화 들락날락 예약 방법 알려줘",
+        "아이는 8살",
+        "아니 12살이야",
+        "그럼 전화번호는?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D05",
+      "turns": [
+        "대형폐기물 담당 전화번호",
+        "그럼 소파 버리는 절차도 알려줘"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D06",
+      "turns": [
+        "여권 준비물 알려줘",
+        "잘 모르겠어"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D07",
+      "turns": [
+        "사하구 소방교육 신청 방법",
+        "잘 모르겠어"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D08",
+      "turns": [
+        "작은도서관 교육 프로그램 예약 방법 알려줘",
+        "신청 말고 장소 알려줘",
+        "그럼 전화번호는?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1003,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "C01",
+      "turns": [
+        "대형쓰레기 담당자 번호 알려주세요"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "C02",
+      "turns": [
+        "대형폐기물 팩스번호 알려줘"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "C03",
+      "turns": [
+        "예방접종은 전화로만 신청할 수 있어?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    }
+  ],
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    }
+  }
+}

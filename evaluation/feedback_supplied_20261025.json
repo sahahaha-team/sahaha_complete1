@@ -1,0 +1,1215 @@
+{
+  "families": [],
+  "scenarios": [
+    {
+      "id": "F001",
+      "turns": [
+        "사하구청은 어디에 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 1,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F002",
+      "turns": [
+        "사하구청 대표전화는 몇 번인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 2,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F003",
+      "turns": [
+        "사하구청 민원실 창구가 어디에 있는지 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 3,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F004",
+      "turns": [
+        "사하구 홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 4,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F005",
+      "turns": [
+        "사하구청 민원실 이용 안내는 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 5,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F006",
+      "turns": [
+        "사하구 무인민원발급기 수수료는 얼마인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 6,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F007",
+      "turns": [
+        "정부24를 이용하면 구청에 가지 않고도 민원서류를 발급받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 7,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F008",
+      "turns": [
+        "행정기관이 이미 가지고 있는 서류도 민원 신청할 때 다시 제출해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 8,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F009",
+      "turns": [
+        "사하구청에 온라인으로 민원을 신청하려면 어떻게 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 9,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F010",
+      "turns": [
+        "기초생활수급자나 한부모가족은 민원 수수료를 면제받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 10,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103090000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F011",
+      "turns": [
+        "성인이 여권을 새로 만들 때 무엇을 준비해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 11,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F012",
+      "turns": [
+        "재산세는 어떤 날짜를 기준으로 누가 내나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 12,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020100",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F013",
+      "turns": [
+        "부동산이나 차량을 취득하면 취득세는 언제까지 신고해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 13,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F014",
+      "turns": [
+        "자동차세는 누가 내나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 14,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020600",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F015",
+      "turns": [
+        "주민세 사업소분이나 종업원분은 인터넷으로 신고할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 15,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030400",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F016",
+      "turns": [
+        "가구나 소파 같은 대형폐기물은 어떻게 버리나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 16,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F017",
+      "turns": [
+        "냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 17,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F018",
+      "turns": [
+        "음식물쓰레기는 물기를 빼고 버려야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 18,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050102",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F019",
+      "turns": [
+        "일반 생활쓰레기는 어떤 봉투에 버려야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 19,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F020",
+      "turns": [
+        "정화조는 얼마나 자주 청소해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 20,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405140000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F021",
+      "turns": [
+        "환경개선부담금은 어떤 차량에 부과되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 21,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F022",
+      "turns": [
+        "도심에서 멧돼지를 마주치면 어떻게 해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 22,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405060500",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F023",
+      "turns": [
+        "불법주정차 과태료를 사전통지 기간에 자진 납부하면 감면받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 23,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403080000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F024",
+      "turns": [
+        "사하구 공영주차장 위치는 어디에서 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 24,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F025",
+      "turns": [
+        "사하구 자전거도로는 어디에서 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 25,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F026",
+      "turns": [
+        "기초생활보장 수급자는 어떤 기준으로 선정되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 26,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F027",
+      "turns": [
+        "기초생활보장 수급자가 받을 수 있는 급여에는 무엇이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 27,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501010200",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F028",
+      "turns": [
+        "갑자기 생계가 어려워졌을 때 긴급복지지원을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 28,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501040800",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F029",
+      "turns": [
+        "장애인연금은 누가 신청할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 29,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0504020200",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F030",
+      "turns": [
+        "아이돌봄 지원사업은 몇 살까지 이용할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 30,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0503030400",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F031",
+      "turns": [
+        "청소년부모 가정은 어떤 지원을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 31,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0510060200",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F032",
+      "turns": [
+        "첫만남이용권은 얼마를 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 32,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0510070100",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F033",
+      "turns": [
+        "둘째 이상 아이를 낳으면 사하구에서 출산축하 지원이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 33,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0510070200",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F034",
+      "turns": [
+        "사하구보건소에서 보건증을 발급받으려면 비용과 기간이 얼마나 드나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 34,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0301010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F035",
+      "turns": [
+        "보건증을 보건소에 다시 가지 않고 온라인으로 발급받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 35,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0304010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F036",
+      "turns": [
+        "사하구보건소 진료시간과 위치는 어떻게 되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 36,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F037",
+      "turns": [
+        "사하구 임산부 등록은 누가 할 수 있고 무엇을 가져가야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 37,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402010100",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F038",
+      "turns": [
+        "사하구보건소 금연클리닉은 누가 이용할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 38,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F039",
+      "turns": [
+        "사하구보건소 성인 예방접종은 언제 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 39,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F040",
+      "turns": [
+        "영양플러스 사업은 누가 신청할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 40,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402090000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F041",
+      "turns": [
+        "고위험 임산부 의료비는 얼마나 지원받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 41,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402100000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F042",
+      "turns": [
+        "사하구보건소에서 구강건강 상담도 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 42,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0400000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F043",
+      "turns": [
+        "돌아가신 부모님이나 조상의 땅을 찾을 수 있는 서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 43,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F044",
+      "turns": [
+        "개별공시지가는 무엇이고 언제 공시되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 44,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F045",
+      "turns": [
+        "개별공시지가에 대한 의견을 정해진 기간이 아니어도 낼 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 45,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404010300",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F046",
+      "turns": [
+        "개별주택가격과 공동주택가격은 언제 공시되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 46,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0106010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F047",
+      "turns": [
+        "부동산 중개보수를 법정 한도보다 많이 받으면 어디에 신고하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 47,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F048",
+      "turns": [
+        "사하구 일자리지원센터에서 구직 등록은 어떻게 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 48,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F049",
+      "turns": [
+        "사하구 평생학습관 프로그램 수강료는 얼마인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 49,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F050",
+      "turns": [
+        "사하구청에서 무료 법률상담을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 50,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0309060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F051",
+      "turns": [
+        "사하구민은 구민안전보험에 따로 가입해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 51,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0410120000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F052",
+      "turns": [
+        "여권은 주소지와 관계없이 사하구청에서 신청할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 52,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F053",
+      "turns": [
+        "여권 영문성명은 어떻게 표기하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 53,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F054",
+      "turns": [
+        "지방세를 기한 내에 내지 않으면 어떤 불이익이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 54,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F055",
+      "turns": [
+        "부당한 지방세 처분 때문에 어려움이 있을 때 도움을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 55,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F056",
+      "turns": [
+        "세무사 비용이 부담되는데 무료 세무상담을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 56,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F057",
+      "turns": [
+        "지방세나 공시지가, 주정차 과태료 같은 정보를 온라인에서 찾아볼 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 57,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F058",
+      "turns": [
+        "사하구에서 토익이나 토익스피킹 응시료 지원을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 58,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F059",
+      "turns": [
+        "사하구 공공근로사업은 어떤 사업인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 59,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F060",
+      "turns": [
+        "사하구를 지나는 버스나 도시철도 정보를 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 60,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F061",
+      "turns": [
+        "외국인이 이용할 수 있는 사하구 부동산 중개사무소가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 61,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F062",
+      "turns": [
+        "민간임대주택 임대사업자 등록제도는 무엇인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 62,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F063",
+      "turns": [
+        "아파트 등 공동주택 관리에 필요한 정보는 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 63,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F064",
+      "turns": [
+        "전기·수도·도시가스를 절약하면 탄소포인트 혜택을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 64,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F065",
+      "turns": [
+        "오존경보가 발령되면 어떻게 행동해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 65,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F066",
+      "turns": [
+        "석면이 무엇이고 왜 관리가 필요한가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 66,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405070000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F067",
+      "turns": [
+        "가게 간판을 설치하기 전에 허가나 신고가 필요한가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 67,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F068",
+      "turns": [
+        "사하구에서 자전거를 무료로 빌릴 수 있는 곳이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 68,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0407020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F069",
+      "turns": [
+        "사하구에서 디지털·컴퓨터 교육을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 69,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F070",
+      "turns": [
+        "사하구 민방위 대피시설이나 비상급수시설은 어디에 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 70,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0409020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F071",
+      "turns": [
+        "사하구 지진 옥외대피장소는 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 71,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0410100000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F072",
+      "turns": [
+        "폭염특보가 있을 때 주민은 어떻게 행동해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 72,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0410060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F073",
+      "turns": [
+        "사하구 1인가구가 받을 수 있는 지원은 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 73,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0509020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F074",
+      "turns": [
+        "사하구 통합돌봄은 어떤 사람을 위한 사업인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 74,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F075",
+      "turns": [
+        "사하구 고향사랑기부제는 어떻게 이용하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 75,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F076",
+      "turns": [
+        "사하구보건소 1진료실에서는 어떤 진료를 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 76,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F077",
+      "turns": [
+        "사하구보건소에서 물리치료를 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 77,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F078",
+      "turns": [
+        "결핵이 의심될 때 사하구보건소에서 검사나 상담을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 78,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F079",
+      "turns": [
+        "해외여행 전에 필요한 예방접종이나 건강정보를 보건소에서 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 79,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F080",
+      "turns": [
+        "국가건강검진 대상과 검진방법은 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 80,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0202020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F081",
+      "turns": [
+        "결혼을 앞두거나 신혼인 부부가 보건소 건강검진을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 81,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0202030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F082",
+      "turns": [
+        "아이 국가예방접종은 어디에서 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 82,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0203010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F083",
+      "turns": [
+        "사하구보건소 각종 검사 비용은 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 83,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0301030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F084",
+      "turns": [
+        "보건소에서 받은 검사 결과를 온라인으로 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 84,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F085",
+      "turns": [
+        "출산 후 산모와 신생아를 돌봐주는 지원서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 85,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F086",
+      "turns": [
+        "미숙아나 선천성이상아의 의료비 지원을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 86,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F087",
+      "turns": [
+        "영유아 건강검진은 언제 어떻게 받아야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 87,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402130000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F088",
+      "turns": [
+        "거동이 불편하거나 건강관리가 필요한 주민에게 방문건강서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 88,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F089",
+      "turns": [
+        "우울감이나 정신건강 문제를 상담받을 곳이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 89,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F090",
+      "turns": [
+        "치매검사나 치매지원 서비스는 어디에서 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 90,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F091",
+      "turns": [
+        "장애인이 보건소 재활서비스를 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 91,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F092",
+      "turns": [
+        "보건소에서 운동이나 영양관리 프로그램도 운영하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 92,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F093",
+      "turns": [
+        "대사증후군 검사를 받거나 건강상담을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 93,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F094",
+      "turns": [
+        "고혈압·당뇨 등 심뇌혈관질환 예방관리는 어떻게 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 94,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F095",
+      "turns": [
+        "집 가까운 곳에서 건강상담을 받을 수 있는 마을건강센터가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 95,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F096",
+      "turns": [
+        "사하구 건강생활지원센터에서는 어떤 서비스를 이용할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 96,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F097",
+      "turns": [
+        "법정감염병에는 어떤 종류가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 97,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F098",
+      "turns": [
+        "암환자 의료비 지원을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 98,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0406020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F099",
+      "turns": [
+        "소아암 환자의 의료비 지원제도가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 99,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0406030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    },
+    {
+      "id": "F100",
+      "turns": [
+        "국가암검진 대상인지 어떻게 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 100,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0408010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+      }
+    }
+  ],
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    }
+  }
+}
