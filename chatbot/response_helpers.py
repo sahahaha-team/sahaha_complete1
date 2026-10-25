@@ -478,8 +478,8 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         from chatbot.faq_targets import priority_entities
         subjects.extend(entity for entity in priority_entities(previous)
                         if not any(entity in subject for subject in subjects))
-        if scope and re.search(r'교육|훈련|강좌', previous) and not any(re.search(r'교육|훈련|강좌', s) for s in subjects):
-            subjects.append(re.search(r'교육|훈련|강좌', previous).group())
+        if re.search(r'교육|훈련|강좌|체험', previous) and not any(re.search(r'교육|훈련|강좌|체험', s) for s in subjects):
+            subjects.append(re.search(r'교육|훈련|강좌|체험', previous).group())
         if '인플루엔자' in subjects and '독감' in previous:
             subjects[subjects.index('인플루엔자')] = '독감'
         previous = ' '.join(subjects + profile)

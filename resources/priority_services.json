@@ -36,6 +36,8 @@
   {
     "id": 1003,
     "navigation_terms": ["작은도서관"],
+    "source_name": "작은도서관 프로그램",
+    "navigation_terms": ["작은도서관"],
     "question": "작은도서관 교육 프로그램은 어떻게 예약하나요?",
     "aliases": [
       "도서관 교육 예약 방법 알려줘",

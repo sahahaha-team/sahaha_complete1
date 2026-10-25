@@ -12,6 +12,39 @@ from chatbot.source_warnings import reviewed_source
 
 
 class BusinessFieldTests(unittest.TestCase):
+    def test_elided_course_location_keeps_age_and_program_type(self):
+        from chatbot.response_helpers import build_contextual_search_query
+        from chatbot.dialogue_profile import child_course_conflict
+        previous='소방 교육 하는방법 알려줘 아이는 8살'
+        query=build_contextual_search_query('신청 말고 장소 알려줘', [{'role':'user','content':'아이는 8살','search_query':previous}])
+        self.assertIn('교육', query)
+        self.assertIn('8살', query)
+        self.assertTrue(child_course_conflict(query, '대상: 공동주택 경비책임자\n장소: 구청'))
+        self.assertFalse(child_course_conflict(query, '이용대상: 어린이\n장소: 체험관'))
+
+    def test_spaced_library_program_is_only_a_navigation_hint(self):
+        from chatbot.faq_targets import match_official_page
+        self.assertEqual(match_official_page('작은 도서관 강좌 신청 어떻게 하나요?'),
+                         'https://www.saha.go.kr/portal/contents.do?mId=0408030000')
+        self.assertIsNone(match_official_page('큰 도서관에 코끼리 입양 신청 어떻게 하나요?'))
+        from chatbot.candidate_search import complete_direct_candidates
+        doc={'content':'## 작은도서관\n### 작은도서관 프로그램 운영 안내\n대상: 사하구민\n접수방법: 사하구 통합예약 온라인접수',
+             'metadata':{'title':'작은도서관','url':'https://www.saha.go.kr/portal/contents.do?mId=0408030000','source_type':'crawled_page'}}
+        self.assertEqual(len(complete_direct_candidates('작은도서관 강좌 신청 어떻게 하나요?', [doc], {'작은도서관'})),1)
+        self.assertIn('코딩',focus_terms('작은도서관 코딩 강좌 신청 어떻게 하나요?'))
+
+    def test_outdated_flu_age_does_not_remove_other_vaccine_fields(self):
+        body=('### 폐렴구균\n대상 : 65세 이상인 자\n접종장소 : 전국 위탁의료기관\n'
+              '### 인플루엔자 예방접종\n대상 : 12세 이하 어린이, 65세 이상 어르신 및 부산시 지자체 대상자\n'
+              '접종장소 : 전국 지정 위탁의료기관 (지자체 대상자는 부산시 지정 기관)')
+        safe,meta=reviewed_source(body, {'url':'https://www.saha.go.kr/health/contents.do?mId=0203020000'})
+        self.assertNotIn('12세', safe)
+        self.assertIn('대상 : 65세 이상인 자', safe)
+        self.assertIn('지자체 대상자는 부산시', safe)
+        self.assertIn('연령', meta['source_warning'])
+        changed,_=reviewed_source(body.replace('12세','새 절기 확인'), {'url':'https://www.saha.go.kr/health/contents.do?mId=0203020000'})
+        self.assertIn('새 절기 확인', changed)
+
     def test_registered_business_never_falls_back_to_another_business(self):
         query='아파트 등 공동주택 관리에 필요한 정보는 어디에서 확인하나요?'
         url=confident_official_page(query)

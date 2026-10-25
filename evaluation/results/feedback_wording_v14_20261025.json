@@ -1,0 +1,922 @@
+{
+  "started_at": "2026-10-25T13:42:55.250277+00:00",
+  "commit": "d8d2d8cc3acb6407f325528e5dada16d992749d9",
+  "case_sha256": "ec2058b8e8376179fe59e1cd41a8c3e92c7181bb8386fc83f9686103e1ca086b",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "011f5444428cb09fe32bbfb81cd2074fd1459dbbebc247775ea64b74f404e710",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "701156eba70a2e38b39c4631255731b7f731fdf39832260636db5b7cd62c188b",
+    "chatbot\\concise_answers.py": "784f614f58b350d4e691344f4bf04bc5fcc8877103db7850351fac17ef92f65e",
+    "chatbot\\contact_directory.py": "eec7677a045fb16a6622675c325a96087a4692e44a5856ec9ca09710b373f1e6",
+    "chatbot\\conversation.py": "374bfc155a69e900c29d75c833debfac93ed8adf18af43b6002271b3114f7277",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "879bf6e6cfb02307e08279ee9c017e273bb1660429468ecc4907a17a61f6583e",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "35aa15831202a3cc60106b08f3efd145db541b457ed60bddb0d372cdfb76ff8d",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "c57afd762ef646e4f668fba01246be542b77dad4b9f35c160c4d23aad9fab412",
+    "chatbot\\faq_targets.py": "707b9b521da2f23b8112e239a9b90441549f96be73cf1a2e7685980066b8b7d9",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "1eb2ca06eeba46c2ac43c6e8781120951576aaa9a7bd599b54c816a752102f62",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "440ab2fe89ab1372153d8f4c425fb53cdb9852bfd98bd437347b6f8c46218b27",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "5284bb391ec6f547092fa3129812625cf4b8c8a2d04b0d32db9d3b06b7b87ad5",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "67dc010124494e02e2062eb8106c2bad2c88d186f83ea74e555289be42c2be97",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "developer_derived_wording_regression",
+    "note": "표현 변화 검사용 개발 질문이며 구청 원본100문항이나 독립 검수 표본이 아니다."
+  },
+  "records": [
+    {
+      "id": "V01",
+      "turn": 1,
+      "question": "요일별 쓰레기 어떻게 내놓으면 돼요?",
+      "criterion": {
+        "parent_id": 1001,
+        "required_review": "배출 요일·품목·금토 금지와 시간 조건"
+      },
+      "seconds": 0.778,
+      "server_timing": "app;dur=758.2",
+      "status": 200,
+      "error": null,
+      "request_id": "d683189fa58d490683be2e5bd935524a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.778
+        }
+      ],
+      "response": {
+        "answer": "요일별 배출 품목은 다음과 같습니다.\n- **월요일**: 플라스틱류(유색페트병포함),비닐류,요구르트병,의류.\n- **수요일**: 투명페트병,골판지류(박스등),기타종이류,종이팩류,유리병류,스티로폼,캔‧고철류,폐형광등,폐건전지등,일반쓰레기(불연성),소형폐가전.\n- **화·목·일요일**: 일반쓰레기(가연성)·음식물쓰레기.\n- **금·토요일**: 배출 금지.",
+        "answer_details": "> Home\n> >\n> 분야별정보\n> >\n> 환경/청소\n> >\n> 폐기물\n> 열기\n> 블로그\n> 인스타그램\n> 페이스북\n> 카카오\n> 닫기\n> 인쇄하기\n> 폐기물\n> 생활폐기물처리안내\n> 생활쓰레기 배출요령\n> 쓰레기 종량제는\n> 쓰레기 없는 쾌적한 환경을 만들기 위하여 95년 1월부터 실시하고있는 제도로서 주택의 크기 또는 재산세액에 따라 차등적으로 수수료를 적용하던 종전의 제도와 달리, 배출자에게 본인이 배출있는 쓰레기의 양만큼 비용을 부담하도록 함으로써 스스로 쓰레기를 줄이고 재활용품도 최대한 분리 배출하도록 한 제도입니다.\n> 구민이 지켜야 할 사항\n> 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.\n> 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과),\n> 재활용품은 반드시 품목별로 분리하여 요일별로\n> 지정된 쓰레기만 배출하여야 합니다.\n> 쓰레기 배출요일은 다음과 같습니다.\n> 요일별 쓰레기 배출요령 다운로드\n> 쓰레기 배출요일과 쓰레기 종류 표입니다.\n> 배출요일\n> 월\n> 화\n> 수\n> 목\n> 금\n> 토\n> 일\n> 쓰레기\n> 종류\n> 재활용품\n> (플라스틱류(유색페트병\n> 포함),비닐류,\n> 요구르트병, 의류)\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 재활용품(투명페트병,골판지류\n> (박스 등), 기타종이류,\n> 종이팩류,유리병류, 스티로폼,\n> 캔‧고철류, 폐형광등,폐건전지등),\n> 일반쓰레기(불연성), 소형폐가전\n> 일반쓰레기 (가연성)\n> 음식물쓰레기\n> 배출\n> 금지\n> 배출\n> 금지\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 이럴때는 쓰레기를 수거하지 않습니다.\n> 일반쓰레기와 재활용품을 분리배출하지 않은 경우\n> 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우\n> 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우\n> 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우\n> 대형폐기물(냉장고, 장롱, 책상 등)\n> 기타사항\n> 종량제 규격봉투를 사용하지 않고 배출하거나, 무단투기 및 소각행위시에는 100만원 이하의 과태료가 부과됩니다.\n> 생활폐기물 수집·운반업체\n> 생활폐기물 수집 및 운반업체 표입니다.\n> 업체명\n> 담당구역\n> 전화번호\n> 세화산업\n> 괴정 1,2,3동, 하단 1,2동\n> 051-264-8301\n> 미진산업\n> 괴정4동, 당리동, 신평1동, 장림2동, 다대 1,2동\n> 051-264-0894\n> 동진산업\n> 신평2동, 장림1동, 구평동, 감천 1,2동\n> 051-207-2030\n> 쓰레기 규격봉투 가격표 (시행일 : 2012.9.14., 금액:원)\n> 쓰레기 규격봉투 가격표\n> 규격\n> 5ℓ\n> 10ℓ\n> 20ℓ\n> 30ℓ\n> 50ℓ\n> 75ℓ\n> 불연성쓰레기\n> 전용마대 (30ℓ)\n> 건설폐기물\n> 마대 (30ℓ)\n> 일반\n> 220\n> 430\n> 850\n> 1,280\n> 2,070\n> 3,080\n> 1,280\n> 3,000\n> ※ 쓰레기 규격봉투 100ℓ는 2020년 10월 중순부터 제작 중단. (단, 판매처 재고물량에 한해 구입 및 사용 가능)\n> 음식물쓰레기 전용용기 가격표 및 수수료\n> 음식물쓰레기 전용용기 가격표 및 수수료 표입니다.\n> 구분\n> 일반가정용\n> 업소용\n> 공동주택\n> 업소용\n> 용기규격\n> 3ℓ\n> 5ℓ\n> 20ℓ\n> 120ℓ\n> 120ℓ\n> 용기 판매액\n> 6,500원\n> 7,000원\n> 16,000원\n> 개별구매\n> 수거업체 문의\n> 용기 판매처\n> 새마을금고\n> 개별구매\n> 수거업체 문의\n> 납부필증(칩) 수수료\n> 240원/개\n> 400원/개\n> 2,000원/매\n> 8,400원/매\n> 12,000원/개\n> 납부필증(칩) 판매처\n> 종량제 봉투 판매소\n> 새마을금고\n> 수거업체\n> (동진, 미진, 세화)\n> ※용기판매 가격은 업체사정에 따라 변경될 수 있음.\n> 만족도조사\n> 이 페이지에서 제공하는 정보에 만족하십니까?\n> 매우만족(5점)\n> 만족(4점)\n> 보통(3점)\n> 불만족(2점)\n> 매우불만족(1점)\n> 의견\n> 담당자\n> 자원순환과\t\t\t\n> \t\t\t\n> \t\t\t\t\n> \t\t\t\t(051-220-4432)\n> 최근업데이트\n> 2026-01-13",
+        "sources": [
+          {
+            "title": "생활쓰레기 배출요령",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+            "category": "환경/청소",
+            "service_type": "환경",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V02",
+      "turn": 1,
+      "question": "소방특화들락날락 체험 신청은 어떻게 해요?",
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "같은 어린이 시설 안내, 관리자 교육 차용 금지, 예약 시점과 실행 절차 구분"
+      },
+      "seconds": 3.136,
+      "server_timing": "search;dur=2515.8, verify;dur=522.6, review_gate;dur=2.8, grounding;dur=3.2, originals;dur=0.0, review;dur=1.2, prepare;dur=17.4, app;dur=3115.5",
+      "status": 200,
+      "error": null,
+      "request_id": "f99a93744a324bd19e21726f67f2b9a1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.136
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락**\n- ▹ 이용대상 : 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V03",
+      "turn": 1,
+      "question": "작은 도서관 강좌 신청 어떻게 하나요?",
+      "criterion": {
+        "parent_id": 1003,
+        "required_review": "작은도서관 교육의 통합예약 접수, 희망도서 신청과 구분"
+      },
+      "seconds": 11.92,
+      "server_timing": "search;dur=4036.5, verify;dur=2944.0, review_gate;dur=2.0, rerank;dur=4660.3, grounding;dur=58.0, originals;dur=0.0, review;dur=1.0, prepare;dur=147.9, app;dur=11902.5",
+      "status": 200,
+      "error": null,
+      "request_id": "a3c13bce2ce04a72a5b3f96a386505e1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 11.92
+        }
+      ],
+      "response": {
+        "answer": "**작은도서관 프로그램 운영 안내**\n- 접수방법 : 온라인접수(사하구 통합예약)\n- 대 상 : 사하구민",
+        "answer_details": "작은도서관의 공식 안내 원문입니다.\n\n> ## 작은도서관\n> ### 작은도서관 프로그램 운영 안내\n> 대 상 : 사하구민\n> 수 강 료 : 무료(단, 교재 및 재료비 별도)\n> 운영기간 : 연중\n> 독서문화 프로그램 — 구 분: 겨울방학\n> 독서문화 프로그램 — 운 영: 1월\n> 독서문화 프로그램 — 구 분: 체험형 동화구연\n> 독서문화 프로그램 — 운 영: 3월~12월\n> 독서문화 프로그램 — 구 분: 상반기\n> 독서문화 프로그램 — 운 영: 3월~6월\n> 독서문화 프로그램 — 구 분: 도서관주간 행사\n> 독서문화 프로그램 — 운 영: 4월\n> 독서문화 프로그램 — 구 분: 여름방학\n> 독서문화 프로그램 — 운 영: 7월~8월\n> 독서문화 프로그램 — 구 분: 원데이 특강\n> 독서문화 프로그램 — 운 영: 5월~6월 11월~12월\n> 독서문화 프로그램 — 구 분: 하반기\n> 독서문화 프로그램 — 운 영: 9월~12월\n> 독서문화 프로그램 — 구 분: 어린이 독서캠프\n> 독서문화 프로그램 — 운 영: 10월\n> 접수방법 : 온라인접수(사하구 통합예약)\n> 문 의 : 사하구 평생교육과(☎ 051-220-4834)\n> 통합예약 신청하기",
+        "sources": [
+          {
+            "title": "작은도서관",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V04",
+      "turn": 1,
+      "question": "보건소 문 여는 시간이랑 위치 좀 알려주세요",
+      "criterion": {
+        "parent_id": 36,
+        "required_review": "보건소 시간·점심·검사 마감주의 및 주소"
+      },
+      "seconds": 2.036,
+      "server_timing": "search;dur=1772.3, verify;dur=199.9, review_gate;dur=2.0, grounding;dur=1.9, originals;dur=0.0, review;dur=1.3, prepare;dur=2.7, app;dur=2010.2",
+      "status": 200,
+      "error": null,
+      "request_id": "4056303d3a7c474b815f6f132e542a50",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.036
+        }
+      ],
+      "response": {
+        "answer": "**보건소 정보**\n- 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n- 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)",
+        "answer_details": "찾아오시는길의 공식 안내 원문입니다.\n\n> ## 찾아오시는길\n> ### 약도\n> 지도이미지영역 건너뛰기\n> ### 보건소 정보\n> 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n> 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)\n> 대표전화 : 051)220-5740, 5704, 5706(보건소 민원실) 051)220-5701(보건행정과 사무실) 051)220-5711(건강증진과 사무실)\n> FAX번호 : 051-220-5709(보건행정과) / 5719(건강증진과)",
+        "sources": [
+          {
+            "title": "찾아오시는길",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours",
+            "location"
+          ],
+          "matched_fields": [
+            "hours",
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V05",
+      "turn": 1,
+      "question": "폐렴구균 예방 주사 어디서 맞아요?",
+      "criterion": {
+        "parent_id": 39,
+        "required_review": "보건소 미운영·위탁기관 장소·65세 대상, 일반 운영시간 차용 금지"
+      },
+      "seconds": 1.607,
+      "server_timing": "search;dur=915.9, verify;dur=617.4, review_gate;dur=4.3, grounding;dur=2.9, originals;dur=0.0, review;dur=3.0, prepare;dur=6.4, app;dur=1584.9",
+      "status": 200,
+      "error": null,
+      "request_id": "aaddb96f0c2a493db9b39ceeacb3a4ea",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.607
+        }
+      ],
+      "response": {
+        "answer": "**유료 및 성인예방접종**\n- 접종장소 : 보건소 접종 미운영, 전국 지정 위탁의료기관에서 주소지 무관 접종 가능\n- 대상 : 65세 이상인 자 (1961.12.31.이전 출생자)\n\n원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요.",
+        "answer_details": "유료 및 성인예방접종의 공식 안내 원문입니다.\n\n> ## 유료 및 성인예방접종\n> 65세 이상 어르신 폐렴구균 예방접종\n> 대상 : 65세 이상인 자 (1961.12.31.이전 출생자)\n> 관내 위탁의료기관 현황:\n> 접종장소 : 보건소 접종 미운영, 전국 지정 위탁의료기관에서 주소지 무관 접종 가능\n> 시행일자 : 연중\n> 시행백신 : 다당질 백신 프로디악스 23가(PPSV23)\n> 준 비 물 : 신분증\n> 접종횟수 : 만 65세 이상 평생 1회 접종\n> 과거 65세 이상 연령에서 폐렴구균 23가 다당질백신(PPSV23)을 접종(의료기관에서 유료로 접종했거나, 보건소에서 무료로 접종했을 때)한 경우 접종 불필요\n> 과거 65세 미만 연령에서 폐렴구균 23가 다당질백신(PPSV23)을 접종한 경우 5년경과 후 1회에 한하여 재접종\n> 폐렴구균 예방접종 전 담당 주치의와 상담이 필요한 기저질환자\n> 뇌척수액 누출자\n> 인공와우 이식 환자\n> 기능적 또는 해부학적 무비증 환자\n> 면역저하자: 종양질환, 백혈병, 림프종, 호치킨병, 다발성골수종, 방사선 치료, 면역억제제(스테로이드 포함) 투여, 조혈모세포 이식, 고형장기 이식, 만성 신부증, 신증후군, HIV감염, 선천성 면역저하 등",
+        "sources": [
+          {
+            "title": "유료 및 성인예방접종",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "다운로드",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000184787&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "V06",
+      "turn": 1,
+      "question": "대형 쓰레기 담당자 전화만 알려주세요",
+      "criterion": {
+        "parent_id": 16,
+        "required_review": "공식 담당 부서와 업무 직통번호, 대표·팩스 혼동 금지"
+      },
+      "seconds": 0.241,
+      "server_timing": "app;dur=232.6",
+      "status": 200,
+      "error": null,
+      "request_id": "59838a622b2746fc8b5772ff596965e4",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.241
+        }
+      ],
+      "response": {
+        "answer": "**자원순환과**\n\n- **051-220-4452** (주무관)\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "answer_details": "주무관 · 051-220-4452\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "sources": [
+          {
+            "title": "사하구청 직원업무안내",
+            "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "자원순환과",
+            "contact": "051-220-4452",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25T04:34:42.697959+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V07",
+      "turn": 1,
+      "question": "소방 교육 하는방법 알려줘",
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "대상 질문의 모호한 긍정은 업무를 유지하며 재확인하고 나이 후속과 장소 변경을 연결. 모호한 긍정으로 대상을 임의 선택하지 않음"
+      },
+      "seconds": 0.053,
+      "server_timing": "app;dur=23.3",
+      "status": 200,
+      "error": null,
+      "request_id": "0d448180c2014d8da57a0e3e83536318",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.053
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V07",
+      "turn": 2,
+      "question": "어 맞아",
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "대상 질문의 모호한 긍정은 업무를 유지하며 재확인하고 나이 후속과 장소 변경을 연결. 모호한 긍정으로 대상을 임의 선택하지 않음"
+      },
+      "seconds": 0.034,
+      "server_timing": "app;dur=22.0",
+      "status": 200,
+      "error": null,
+      "request_id": "c3bcf6f6c0b44e63ab59f53b089c78d9",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.034
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V07",
+      "turn": 3,
+      "question": "아이는 8살",
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "대상 질문의 모호한 긍정은 업무를 유지하며 재확인하고 나이 후속과 장소 변경을 연결. 모호한 긍정으로 대상을 임의 선택하지 않음"
+      },
+      "seconds": 5.751,
+      "server_timing": "search;dur=2893.8, verify;dur=2085.5, review_gate;dur=2.5, rerank;dur=696.1, grounding;dur=6.3, originals;dur=0.0, review;dur=1.4, prepare;dur=8.4, app;dur=5724.9",
+      "status": 200,
+      "error": null,
+      "request_id": "bbee26bb739e43fdb623084a5c0b47b2",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 5.751
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락**\n- ▹ 이용대상 : 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V07",
+      "turn": 4,
+      "question": "신청 말고 장소 알려줘",
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "대상 질문의 모호한 긍정은 업무를 유지하며 재확인하고 나이 후속과 장소 변경을 연결. 모호한 긍정으로 대상을 임의 선택하지 않음"
+      },
+      "seconds": 4.598,
+      "server_timing": "search;dur=2077.0, verify;dur=1622.0, review_gate;dur=95.3, rerank;dur=755.0, grounding;dur=5.8, originals;dur=0.0, review;dur=1.1, prepare;dur=5.4, app;dur=4592.6",
+      "status": 200,
+      "error": null,
+      "request_id": "54fe86115aea4a4d8003afd75db14b62",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.598
+        }
+      ],
+      "response": {
+        "answer": "**이용정보**\n- ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "V08",
+      "turn": 1,
+      "question": "여권 준비물 알려줘",
+      "criterion": {
+        "parent_id": 11,
+        "required_review": "모호한 긍정 뒤 여권 주제 유지, 나이·부모 역할을 받고 서류 안내. 3회 내 미완결도 그대로 집계"
+      },
+      "seconds": 0.014,
+      "server_timing": "app;dur=8.0",
+      "status": 200,
+      "error": null,
+      "request_id": "64f484a94a514ba195100542af103994",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.014
+        }
+      ],
+      "response": {
+        "answer": "여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "성인 신규 여권 준비물 알려줘",
+          "성인 여권 재발급 준비물 알려줘",
+          "미성년자 여권 준비물 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "V08",
+      "turn": 2,
+      "question": "응",
+      "criterion": {
+        "parent_id": 11,
+        "required_review": "모호한 긍정 뒤 여권 주제 유지, 나이·부모 역할을 받고 서류 안내. 3회 내 미완결도 그대로 집계"
+      },
+      "seconds": 0.032,
+      "server_timing": "app;dur=7.2",
+      "status": 200,
+      "error": null,
+      "request_id": "2462d62094f34b4a9a9a03febc36c9b6",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.032
+        }
+      ],
+      "response": {
+        "answer": "여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "성인 신규 여권 준비물 알려줘",
+          "성인 여권 재발급 준비물 알려줘",
+          "미성년자 여권 준비물 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "V08",
+      "turn": 3,
+      "question": "아이는 8살",
+      "criterion": {
+        "parent_id": 11,
+        "required_review": "모호한 긍정 뒤 여권 주제 유지, 나이·부모 역할을 받고 서류 안내. 3회 내 미완결도 그대로 집계"
+      },
+      "seconds": 0.019,
+      "server_timing": "app;dur=10.0",
+      "status": 200,
+      "error": null,
+      "request_id": "8ec90bc7c35a42fd9e594370dcf26aab",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.019
+        }
+      ],
+      "response": {
+        "answer": "미성년자 여권은 **누가 신청**하시나요? 부모·본인·친족 대리인을 구분해 주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "부모가 미성년자 여권 신청할 때 준비물",
+          "미성년자 본인이 여권 신청할 때 준비물",
+          "친족이 미성년자 여권 대리 신청할 때 준비물"
+        ]
+      }
+    },
+    {
+      "id": "V08",
+      "turn": 4,
+      "question": "엄마가 가요",
+      "criterion": {
+        "parent_id": 11,
+        "required_review": "모호한 긍정 뒤 여권 주제 유지, 나이·부모 역할을 받고 서류 안내. 3회 내 미완결도 그대로 집계"
+      },
+      "seconds": 0.815,
+      "server_timing": "app;dur=808.3",
+      "status": 200,
+      "error": null,
+      "request_id": "0d9f4c69de024c3caebd3cfa32293091",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.815
+        }
+      ],
+      "response": {
+        "answer": "**만 18세 미만 · 부모·법정대리인 방문 신청 기준**\n- 여권발급신청서 1부, 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n- 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서\n- 유효기간이 남은 기존 여권도 지참하세요.",
+        "answer_details": "> ## 여권발급안내\n> ### 여권발급 주요 내용\n> 차세대 전자여권 발급\n> 본인이 직접 방문신청(미성년자 제외)\n> 만 18세 미만 미성년자 친권자(부 또는 모), 후견인 등 법정대리인이 신청 공동친권자인 법정대리인이 외국인인 경우, 가족관계등록부에 외국인등록번호 13자리가 등재되어 있고, 외국인등록증을 신분증으로 제출한 경우에만 법정대리인 동의서 대표서명(날인) 가능 미성년자의 사진 및 구여권(유효기간 만료 전 여권), 법정대리인 신분증 지참\n> 일반여권 유효기간이 10년으로 확대 만 18세 미만자 5년, 병역미필자 5년 여권 발급(현역 10년 여권)\n> 최근 5년 이내 3회 이상, 1년 이내 2회 여권 분실자 경찰서 경위 확인 결과에 따라 발급 가능 (유효기간 제한) ※ 여권 분실 횟수에 따른 재발급 시 유효기간 제한\n> 분실 횟수: 여권 유효기간\n> 최근 5년 이내에 여권 분실횟수가 2회인 사람: 5년\n> 최근 5년 이내에 여권 분실횟수가 3회 이상인 사람: 2년\n> 최근 1년 이내에 여권 분실횟수가 2회인 사람: 2년\n> 전자여행 허가제 안내 2016. 3. 15.부터 캐나다를 입국하는 우리 국민은 아래 사이트에서 전자여행허가(eTA)를 취득하여야 함 - 신청 주소 : https://www.Canada.ca/eTA - 승인서 출력 불요, 승인 후 5년간 유효 미국 및 호주 - 미국 ESTA 신청주소 : https://esta.cbp.dhs.gov/esta/ - 호주 ETA 신청주소 : Australian ETA앱에서 신청하기 권장 ※ 기타 비자 발급에 관한 사항은 해당 국 대사관에 직접 문의바랍니다.\n> 온라인 여권 민원 서비스(정부24) 대상민원 : 여권 재발급, 분실신고, 이력 조회, 각종 증명서 발급 신청 주소 : http://www.gov.kr/portal/main\n> ### 신규발급\n> ##### 일반여권\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 만18세 미만 미성년자의 여권 신청 친권자(혹은 법정대리인) 신청시 : 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서 미성년자 본인 신청서 : 친권자(혹은 법정대리인)의 신분증, 인감증명서 및 인감도장, 법정대리인 동의서, 미성년자 본인 신분증(학생증 혹은 청소년증 등) 미성년자의 2촌 이내 친족(만18세 이상) 신청 시 : 법정대리인 동의서, 친권자의 인감증명서 및 인감도장, 위임장 및 위임자(법정대리인) 신분증(사본가능), 방문한 대리인의 신분증\n> #### 긴급여권\n> ※부산시청 여권계, 강서구청 여권계, 김해국제공항 긴급여권 발급 창구에서만 신청 가능하므로 해당 창구로 반드시 개별 문의하신 후에 방문하시기 바랍니다.\n> ※ 해외에서 가족 및 친인척 등의 사건·사고로 긴급히 출국해야하는 경우, 기타 인도적 사유나 사업상 급히 출국할 필요가 있다고 인정되는 경우\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 긴급여권 발급신청사유서\n> 증빙서류 : 항공권 사본, 사망진단서, 초청장 및 계약서 등 사업상 긴급한 사유를 증명할 수 있는 서류 등 증빙서류 첨부\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> #### 관용여권\n> 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 공무원증 또는 재직증명서 1부\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 관계기관 공문(관용여권 발급의뢰 공문-수신처 : 외교부 여권과장)\n> 기존 일반여권(제출 후 관용여권 발급 가능)\n> #### 재발급\n> ‘재발급’ 의미 이미 여권을 발급받은 적이 있는 사람이 새로운 여권을 발급받는 경우로 아래 2가지 중 선택 가능 - 새로운 유효기간을 부여하는 재발급(신규발급에 준하는 수수료 부과) - 기존 여권의 남은 유효기간을 부여하는 재발급\n> ‘재발급’ 사유 여권 수록정보의 정정·변경(개명, 주민등록번호 정정, 사진 변경 등), 분실, 훼손, 사증란 부족 등\n> 구비서류 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재 신분증(주민등록증, 운전면허증 등) 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝) 유효기간 남은 여권은 지참 여권은 새 여권으로 교부(새 여권번호 부여) 구여권은 재발급 신청 시 무효조치 후 본인에게 반환\n> ### 여권발급 등에 관한 수수료\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 52,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 49,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 44,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 41,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 35,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 32,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 단수여권 — 유효기간: 1년\n> 단수여권 — 여권발급수수료: 26면\n> 단수여권 — 여권발급수수료: 17,000원\n> 단수여권 — 대상(생일기준): 6개월 이내 1회만 여행가능\n> 기재사항변경 — 여권발급수수료: 26면\n> 기재사항변경 — 여권발급수수료: 5,000원\n> 기재사항변경 — 대상(생일기준): 여권번호기재, 출생지 표기 (긴급여권 사무대행기관에서만 가능)\n> ### 여권발급 기록 증명서\n> 종류 : 여권발급기록증명서,여권사본증명서(실물여권지참),여권실효 확인서,여권발급신청서류증명서,여권정보증명서\n> #### 구비서류\n> 본인 : 신분증 - 대리인 신청 시 : 사실증명 신청서, 위임장 및 인감증명서, 대리인 신분증\n> 수수료 : 1건당 1,000원\n> ### 국제운전면허증 신청\n> 신청 대상 : 여권 신청자 중 국제운전면허증 발급 희망자\n> 구비서류 : 신청서, 사진1매, 수수료(8,500원), 배달등기료(2,500원)\n> 면허증 수령 : 희망 주소지로 등기 배송\n> ### 여권교부\n> 여권교부 : 여권 신청일로부터 8~10일 정도 소요(근무일 기준)\n> 본인 수령 : 신분증 및 접수증 지참\n> 대리 수령 : 대리인 신분증, 접수증, 위임장 및 위임자의 신분증(사본 가능)\n> 우편 수령 : 여권발급 신청 시 사전에 신청(등기료 5,500원) - 외교부 직송, 3일~4일 소요, 본인 또는 지정한 대리인 직접 수령\n> 여권 수령 후 서명란에 반드시 본인이 자필로 서명 후 사용 ※ 발급일로부터 6개월 이내에 찾아가지 않은 여권은 직권무효 처리되어 폐기됩니다.",
+        "sources": [
+          {
+            "title": "여권발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "passport_documents",
+          "status": "official",
+          "label": "공식 여권 신청 서류 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-25T13:44:26.220167+00:00"
+}

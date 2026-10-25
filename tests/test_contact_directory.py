@@ -38,6 +38,15 @@ def fixture():
 
 
 class ContactDirectoryTests(unittest.TestCase):
+    def test_spaced_alias_keeps_only_the_verified_duty(self):
+        self.data['departments'].append({'name':'자원순환과','representative_phone':'','contacts':[
+            {'title':'주무관','phone':'051-220-4452','duties':'대형폐기물 관련 업무','keywords':['대형폐기물']}]})
+        self.save()
+        for query in ('대형 쓰레기 담당자 전화만 알려주세요','대 형 쓰레기 담당자 연락처'):
+            answer=self.responder.respond('spaced',query)
+            self.assertIn('051-220-4452',answer['answer'])
+        self.assertNotIn('051-220-4452',self.responder.respond('other','대형 쓰레기 바다축제 담당자 연락처')['answer'])
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)

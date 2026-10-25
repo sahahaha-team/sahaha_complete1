@@ -1,0 +1,890 @@
+{
+  "checked_at": "2026-10-25T12:11:09.184062+00:00",
+  "requested": 110,
+  "present": 109,
+  "html_present": 109,
+  "missing": [
+    "https://www.saha.go.kr/portal/contents.do?mId=0407020000"
+  ],
+  "sources": [
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0403020000",
+      "title": "자전거 도로 현황도",
+      "last_checked_at": "2026-10-25T11:29:26.792575+00:00",
+      "html_sha256": "3bc6556aafc3609b3a8cbe453fc2a141f7a2657a8d4484e23974d5966ca61a9c",
+      "text_sha256": "06356c103a8df369c5ba778da213e497a7ac2606aae6c8b9c4ea64e1911c6213",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0510060200",
+      "title": "가족",
+      "last_checked_at": "2026-10-25T11:30:21.941764+00:00",
+      "html_sha256": "b6fba30d0e1ee75c19613968d79f5a44f045d65a265ee13c8421233be6526733",
+      "text_sha256": "182a62efb493720303418236c137f3718edc9c3fc5d33967c7251a49d435b8b8",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/job/contents.do?mId=0301070000",
+      "title": "자격증 등 응시료 지원",
+      "last_checked_at": "2026-10-25T11:28:36.702733+00:00",
+      "html_sha256": "287371e361693754451f6dc6831b93b344a3ef12dee1c41e354a8c75d451fb87",
+      "text_sha256": "17fcdcc796210ca0446ed4c4ea3f0b4bc553f8b5e7e996b06cfe47f32c7375b1",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
+      "title": "조상 땅 찾기",
+      "last_checked_at": "2026-10-25T11:29:40.866084+00:00",
+      "html_sha256": "2af927172e19a1d141a37ddaae290c1579d1120e54482eb33b6075e84aa13958",
+      "text_sha256": "76ebe1788834072bfb3aa7915b69162b292fed536115de6824f25f01d0b1b08b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405140000",
+      "title": "정화조 청소",
+      "last_checked_at": "2026-10-25T11:29:57.282889+00:00",
+      "html_sha256": "d47d43676d2d3c9999c14add9e73c3b061a6146f9dd4afe36aa3f2a677436fb1",
+      "text_sha256": "3c2b3e235713604c57d3966f0dfe10087db2aa18ab1f3225cdb5af20550db7c8",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
+      "title": "환경알리미",
+      "last_checked_at": "2026-10-25T11:29:53.133589+00:00",
+      "html_sha256": "63dec7ec2de2798af4b73148947d6f58e7fbb1ba2715546d846126e4bbefd999",
+      "text_sha256": "79ea8402f46e9520b8b6c4e2714541afa7fb8918fbf05ba160af7a9d99c398e1",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0410120000",
+      "title": "구민안전보험",
+      "last_checked_at": "2026-10-25T11:30:10.100528+00:00",
+      "html_sha256": "e4e9040936f862bf195f4374274e0500ae3635ec0f10052dcfe221c645a6a916",
+      "text_sha256": "f124fe6a13ce029c1d8bbf384f83850786a40f587d8edb76ca6de3d2fbb481db",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+      "title": "폐기물",
+      "last_checked_at": "2026-10-25T11:29:51.357073+00:00",
+      "html_sha256": "18bf13ab243bf190af15431e7a43e542834b9fcd8507c045196aa3b79ebd4bf1",
+      "text_sha256": "753eb37416b12ed465d3a23e960e6811c33d0304cce029da2168f85d2569b94f",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405060500",
+      "title": "환경알리미",
+      "last_checked_at": "2026-10-25T11:29:54.586796+00:00",
+      "html_sha256": "47ee05f1a105a63de2cfd4cb5da15ebcb65de3b1fdebc76f988d465a53d9b424",
+      "text_sha256": "2c9a6b77c24db73748ff77fc23132c8b8ddc329c427e32b03f0764dcba92961d",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
+      "title": "기초생활보장",
+      "last_checked_at": "2026-10-25T11:30:11.783827+00:00",
+      "html_sha256": "dce34f32fb354ccfd83093619e2a420df7874450f94345405a82efbbf9d1485b",
+      "text_sha256": "9240da1c16ba8216b98ddf69858697bcd74bfb66f102b1c6b743393462dd87cf",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0408000000",
+      "title": "평생학습 교육",
+      "last_checked_at": "2026-10-25T11:30:00.399261+00:00",
+      "html_sha256": "d2de686b83a467a2679ed8776944bce8fa6bddde2124e88b39f27493688e9fea",
+      "text_sha256": "34e7f4d0e57a9edbceca29b6977bb4591bf292974b2a27dbe9c802a736fd8417",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0503030400",
+      "title": "아동복지",
+      "last_checked_at": "2026-10-25T11:30:16.651533+00:00",
+      "html_sha256": "e85969e9a1183e2a3e696fec6e3239f9868aab050a6c77535ad783b0c1906ddd",
+      "text_sha256": "a5c3460395ebac1b5b5f8c751b1c87ed1735ca119d061dded10303876cbe7916",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+      "title": "유료 및 성인예방접종",
+      "last_checked_at": "2026-10-25T11:27:54.814576+00:00",
+      "html_sha256": "acacc1bb427938b89f63c6233c6eefc13e6e3dab28ac538acc625d4578792904",
+      "text_sha256": "03053df608c100bc1ddcfcaa53080f847a04ed472926afd45db7953c3c0dd95b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0201010000",
+      "title": "1 진료실",
+      "last_checked_at": "2026-10-25T11:27:41.725955+00:00",
+      "html_sha256": "952f1a7db6b8f8f61c84e0cbf85c7f0576ab98bce59bcd5e40f104da9519aef4",
+      "text_sha256": "9af776f3269469243057ebc4ffef4f3f9a46827a050ef89fc981be94d602d808",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050000",
+      "title": "폐기물",
+      "last_checked_at": "2026-10-25T11:29:45.407922+00:00",
+      "html_sha256": "d3a2c5a9543883419d1da08f1f96af890687dd2a5e570c2840de3feb10d3591a",
+      "text_sha256": "6f8ad22cf800be8699a4ae6d0f1f40e7d0d930cf632e1005bbde259ed5abacb9",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+      "title": "사업개요",
+      "last_checked_at": "2026-10-25T11:30:28.294644+00:00",
+      "html_sha256": "78d0f351e99e134fa375b79bc41ec97481506cb0d55e20b4091f3f19a4f21169",
+      "text_sha256": "60a5bc323c294c81e501b17d4f2e5430705b396d7dc3e76a98e2bcdbb1888e32",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+      "title": "전화번호안내",
+      "last_checked_at": "2026-10-25T11:30:31.247708+00:00",
+      "html_sha256": "4f1215493e96ef7da530a03bf3fff95e78c46537f38e86b8fe488e65d33fc426",
+      "text_sha256": "08de1f3797e76fe58dc3ca4234f596c80c5d51ee25f004cd8809863964930c88",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+      "title": "이용안내",
+      "last_checked_at": "2026-10-25T11:30:34.06708+00:00",
+      "html_sha256": "4c4ca9aa7b4b1c79c9a0fed2f2ced677fd02c37aa92fd4cd1b54850ac796837f",
+      "text_sha256": "340cfef45d944e50f86579e95018830abf83eb32de4046598b5a2e1a271722d5",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/welfare.do",
+      "title": "부산광역시 사하구",
+      "last_checked_at": "2026-10-25T11:30:36.415155+00:00",
+      "html_sha256": "ed6ca61e84e57b9e6c69676e64c9b4351dcc602c9cdfa19c81311ef6c9b55cfd",
+      "text_sha256": "3f6be8836a5f7c07464f2bc1192f2fbbf3ccdacf5b4d82014c0d61aeb07c7300",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0202020000",
+      "title": "국민건강보험공단 건강검진",
+      "last_checked_at": "2026-10-25T11:27:50.62812+00:00",
+      "html_sha256": "5b7fc81677032aab27dfe95676b3ac09337cd8af9f22c26a439348b51ac3174c",
+      "text_sha256": "53ea880f38795804a923b4d1cdecf2074df9202256a12ae4246212cc75ccff49",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0203010000",
+      "title": "어린이예방접종",
+      "last_checked_at": "2026-10-25T11:27:53.188485+00:00",
+      "html_sha256": "dfa0efdb7c8de3db3949ca4a64347b6be28db40258155815efde35544288d696",
+      "text_sha256": "46dbdb4b11882b4b8005c37410bde82cc43d9fab350a09073c4259d798ef3e57",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0402020000",
+      "title": "산모신생아 건강관리지원",
+      "last_checked_at": "2026-10-25T11:28:04.862687+00:00",
+      "html_sha256": "81c44f36c33b6f8cb1315cf095230a8888eec963156848d99f48ad80f40550ad",
+      "text_sha256": "13ffa2fcfc6068f5378848fb390e428c6655d705fe3749d5de4a3e70e40063f8",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0402090000",
+      "title": "영양플러스",
+      "last_checked_at": "2026-10-25T11:28:09.884456+00:00",
+      "html_sha256": "d2a9f0d58c10d827702baeec126bfa8e48be0916cac03c8e449fc43c206974a5",
+      "text_sha256": "61407110c29d07bac7c2e92a56ca1b879c36bdb2f0da5e84e4c398e3f86514a2",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0402100000",
+      "title": "고위험 임산부 의료비지원",
+      "last_checked_at": "2026-10-25T11:28:11.729375+00:00",
+      "html_sha256": "7bf7d7b47f60e5364a7791f3865c3f47a54d548cf0ccc07346667e99889b182c",
+      "text_sha256": "f54f17e357709dfd020756ecb54239a95a35e9fc9f1665343f996371209a7393",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0402130000",
+      "title": "영유아 건강검진",
+      "last_checked_at": "2026-10-25T11:28:13.674088+00:00",
+      "html_sha256": "4ceb1fffe499dda81876ffe96bb6503950fdce48b58a652cf85805321959a5d3",
+      "text_sha256": "cc002c805e9b93179af21d9faa15f8e66bdbe3efb9e2b89607db6c881dee5f92",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+      "title": "방문건강 관리",
+      "last_checked_at": "2026-10-25T11:28:15.422873+00:00",
+      "html_sha256": "45e2979356ef66537f25ac6fcb9ea5e2d98a0c60c5ba49715c669a2da4f1d1cc",
+      "text_sha256": "9b0a26d6f9c409d86a5fa7c9a327b3463ba2f702621e56100c4c1bf2e5146981",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0403020000",
+      "title": "정신건강 관리",
+      "last_checked_at": "2026-10-25T11:28:17.466033+00:00",
+      "html_sha256": "ef0b2535d173cc44afba68d83496c36e407e6d6f37cba14700761448a5ff2a94",
+      "text_sha256": "a8d459884287b412630c76f2c5c3bf4d143d5b1872980d78869e851cc6770443",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0404000000",
+      "title": "금연",
+      "last_checked_at": "2026-10-25T11:28:22.262421+00:00",
+      "html_sha256": "58ecfa88291877b0f014a778aa3d5f6ab555322556f9a7dec93670f6d4c99a5f",
+      "text_sha256": "6b94e99f2b46730f507eef76a1e0c6abe1ce05d52b3473e2dc4501fffcfbbc47",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0404030000",
+      "title": "대사증후군 관리",
+      "last_checked_at": "2026-10-25T11:28:25.029353+00:00",
+      "html_sha256": "3a3311f67aee6d32350a5c2b88b7706e75939f39af8ac7dac8e1cb0b069df6e6",
+      "text_sha256": "440b5a47b7096b8fb37963c9af61466c4aa09140ba5dd98742207680af42ec67",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0408010000",
+      "title": "국가암검진사업",
+      "last_checked_at": "2026-10-25T11:28:35.150192+00:00",
+      "html_sha256": "ae47d72958f030c049ffc82b2a5649d3bcc6797ec73f87307c3fc52813459a9d",
+      "text_sha256": "0b0aed52b2e5eb2243ae6fe8601efecc532bb1e4762bf19e1d898212c03d681c",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
+      "title": "민원실 이용안내",
+      "last_checked_at": "2026-10-25T11:28:48.786744+00:00",
+      "html_sha256": "85cd2e6e6061755068fbd3192d863091c8159f68a66a98703899196abea4003e",
+      "text_sha256": "20a00a3984f0a52a9e0b25b9239aadac1d70d49206cc3870c2fcc4fb83905976",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+      "title": "무인민원발급안내",
+      "last_checked_at": "2026-10-25T11:28:51.861815+00:00",
+      "html_sha256": "f945e8555b37716b9a8b5ea76cefb182a8c3dd3014af31f2267541f68606aa97",
+      "text_sha256": "cb56d655c844a27b0c9755b28ce547f5015baefa4da41f17410bf2408d7664bd",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+      "title": "공동주택 관리 안내",
+      "last_checked_at": "2026-10-25T11:29:39.42924+00:00",
+      "html_sha256": "16c9a8b70c98b3cf5a3abacd31662fd1e0c595e9c5a616437d4830f7853bca46",
+      "text_sha256": "40c974d67f3aa7e1cb76b6561fab612e35c748b3c4401d26f344adaa41fe469f",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405030000",
+      "title": "맑은공기",
+      "last_checked_at": "2026-10-25T11:29:43.654527+00:00",
+      "html_sha256": "df5e3ce3fc344bf5c2f66ba8137e4e3ac773ea388f61b2dea57a4cf20bdf0e43",
+      "text_sha256": "e307dbf74b8fa14ffbc9275c7d1b8f99b2b015ef54da3abc0a0cb8bfbe41658e",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+      "title": "폐기물",
+      "last_checked_at": "2026-10-25T11:29:46.90986+00:00",
+      "html_sha256": "bdf35a70bde97a8c748b7639d286c6b4e0260ae89af336c7cacd2cb2988c8e38",
+      "text_sha256": "6f8ad22cf800be8699a4ae6d0f1f40e7d0d930cf632e1005bbde259ed5abacb9",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050102",
+      "title": "폐기물",
+      "last_checked_at": "2026-10-25T11:29:48.4632+00:00",
+      "html_sha256": "c5c275ecc337a49e003b12366c4059f02e7364c4837259bf42331f2f0d2cf6ad",
+      "text_sha256": "2758a8ce0d9cc672f5553ddf1a75835556f17fc02414b92c62dfa5d927aa2e76",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+      "title": "폐기물",
+      "last_checked_at": "2026-10-25T11:29:49.894763+00:00",
+      "html_sha256": "392ca37cbb525f53535c3d32fd7ab79726365df6601aedfc4aa6d5005378d4e9",
+      "text_sha256": "ce6f1294ee42039d78f9cd4fd118ffd0ef57f6c528ad58b4084ed1293beabb51",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020600",
+      "title": "지방세종류 및 내용",
+      "last_checked_at": "2026-10-25T11:29:07.26411+00:00",
+      "html_sha256": "3c4a24a17748e40f2739cbab81ee349b2b551c9d2ffc8f66f838dd8eab841e36",
+      "text_sha256": "4a1cb50c879d3ad6810aeb5ef91f6394db47e8c0044b24d6afba5c0bcb82fd74",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0410060000",
+      "title": "폭염대비 국민행동요령",
+      "last_checked_at": "2026-10-25T11:30:06.782559+00:00",
+      "html_sha256": "65f1fd4e461fcf9aaf357a2d95c9fe86f4a5f8b06fbda99c07c81d1aca5b964a",
+      "text_sha256": "d812b04f7fb8314035b6a334edff6231108ca9c4adce6495c0bac768499536fe",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405020000",
+      "title": "탄소중립포인트제",
+      "last_checked_at": "2026-10-25T11:29:42.294916+00:00",
+      "html_sha256": "0af4d5b67ae8fd17a8dab58aa15bee38aec5f7b4877a14a47e1ad572e540bfb4",
+      "text_sha256": "8e09b529fd1a1d5b52d5d093752378ed3a877ae379fd16f53c6c400bdbec4ecc",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105030400",
+      "title": "지방세납부안내",
+      "last_checked_at": "2026-10-25T11:29:10.288085+00:00",
+      "html_sha256": "7f77415d482f31430807532e9fde376cbfae680c3fcfb4131aef03459904b4ff",
+      "text_sha256": "e1d6261b88a5ea487471d8a781c8ab471a4e515544b2f620eae08a3c11efb010",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0510070200",
+      "title": "출산장려정책",
+      "last_checked_at": "2026-10-25T11:30:26.519513+00:00",
+      "html_sha256": "b8454d191893a0bfcd8d2f36e628b06c8232196227a47334463b63b6c068fa26",
+      "text_sha256": "f82620bee0f6da6cd34ed0d27e41972f05cbb2e7ad59672f726dcea2a7df1af4",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0403010000",
+      "title": "대중교통안내",
+      "last_checked_at": "2026-10-25T11:29:24.905606+00:00",
+      "html_sha256": "17cda0a0b0d67183651b7bdd9949e14e0e7b5f29d9223d8605b5f1133686a4bc",
+      "text_sha256": "6fda56ccab7ba3665aeeffa2e8f57fd5713b9ce8b94deb41681a5b326f503c0f",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0403030000",
+      "title": "공영주차장안내",
+      "last_checked_at": "2026-10-25T11:29:28.206666+00:00",
+      "html_sha256": "d5f8746e8c20152260135d0fa51907caea8dc5ef20f41c594283eddf9f064154",
+      "text_sha256": "b16ec3aaeb3d1e5b632cd59c6b1d3d2463edf82d7f86cd6c0c8252b2eba1664b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0403080000",
+      "title": "불법주정차 단속 안내",
+      "last_checked_at": "2026-10-25T11:29:29.796163+00:00",
+      "html_sha256": "7738b201065675b24b3a71fb5e14b4668981be295f3d21b1c9e07a754af61484",
+      "text_sha256": "4711835c99d79a51ff6e0541148ae16c9c3eb9e85f17649f23295e74e48c813a",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404020000",
+      "title": "부동산중개보수",
+      "last_checked_at": "2026-10-25T11:29:34.825433+00:00",
+      "html_sha256": "ff57db2bc787b3d9f9632905a33d715711016d8acb520582f9053fb5f98702aa",
+      "text_sha256": "7d1169cb9d14298c07bd329e38cc7c3cc14b03f90b0e612479b8e8febb1b6125",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/reserve/main.do",
+      "title": "사하구 통합예약",
+      "last_checked_at": "2026-10-25T11:30:35.302488+00:00",
+      "html_sha256": "daf79b8bcafa9db8550eee63398c2abaeb72f329ecfdce4887329163beffa063",
+      "text_sha256": "d3a94593c727dbebf30c0b874ef33b114b2a3203c4bd81c83319e5b53b37911b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
+      "title": "사하 고향사랑기부제",
+      "last_checked_at": "2026-10-25T11:30:32.835238+00:00",
+      "html_sha256": "23fbc27dfd5a023eaa1c01b946720debff32cf0c4988bfe6189d5064e560243f",
+      "text_sha256": "32b1cc741d1d478a3b0d1f90dbf65873acc830bc41764f0d6c2f1a77d5f6e69c",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0409020000",
+      "title": "민방위 비상시설 안내",
+      "last_checked_at": "2026-10-25T11:30:04.94228+00:00",
+      "html_sha256": "17db2682c359238cac9c273aa161c89ad6eb860ac1d957e8eb1381dd12ec64ed",
+      "text_sha256": "79f257c2d8ed50df38fca2f01b8c76e0896a4c173d9da2f566351a349677b3c8",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0410100000",
+      "title": "지진·지진해일 대피장소",
+      "last_checked_at": "2026-10-25T11:30:08.477933+00:00",
+      "html_sha256": "6281202f935e8eeb76f9cfc3bb969a1d082da9d90975ddd3965c9e0bbcad9e15",
+      "text_sha256": "a7f3a923f8aba1a738a778c2da259c30e34d57181921508373780ba2d03085da",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0501010200",
+      "title": "기초생활보장",
+      "last_checked_at": "2026-10-25T11:30:13.579677+00:00",
+      "html_sha256": "26aa274089b51c81b0d462968bd3577ccd493479578f961ab676c793e3e7860a",
+      "text_sha256": "24f997ac68b618fcd494dfae8b3eee0d2ead27940ff5a04c91abfdfc68591839",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0501040800",
+      "title": "생활안정지원",
+      "last_checked_at": "2026-10-25T11:30:15.093592+00:00",
+      "html_sha256": "8a49f39b7558070bd3e442d81c38620faa61f6ea345a8e696a89fd46c0329744",
+      "text_sha256": "6f024e573858ee59dc55468f77f950ae42d0faec0f8dd224f4c4f7d1ac12ea9d",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0504020200",
+      "title": "제도시책",
+      "last_checked_at": "2026-10-25T11:30:18.285953+00:00",
+      "html_sha256": "0dbee421e67d5a02ef2706cfb3520593ef3786ff2dd2fc21dd31e90cae0407e0",
+      "text_sha256": "6b020965192857b633c7f0d0e93a7fdc6cd0ef9d26366bdbcff4d46de3c8714b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0509020000",
+      "title": "1인가구지원사업",
+      "last_checked_at": "2026-10-25T11:30:20.03144+00:00",
+      "html_sha256": "7b02eb306e84485ddc757e66a7cf17cb951544139a81a349ac5624a8a1825a89",
+      "text_sha256": "2922686e43a9f5160cdc95bc075fa61661f23fc70fa676ae2471fc468e7084c7",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0510070100",
+      "title": "출산장려정책",
+      "last_checked_at": "2026-10-25T11:30:24.228348+00:00",
+      "html_sha256": "122a76174b66c10655345a5e6be9cebc87c7f64edc757e7764c6cc94adc6bd5f",
+      "text_sha256": "e227c94f31a9d6bbe02647baf21016f87e0abd8870869e35dc1e80a3a04a72d6",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0403030000",
+      "title": "치매 관리",
+      "last_checked_at": "2026-10-25T11:28:19.03039+00:00",
+      "html_sha256": "baa0afd47552e8865e9cec042bab6542a86bf1ca0e960f1c52b0d9814f9ca665",
+      "text_sha256": "cb0cce939ac8425fddffff870c880ba0fc9bd632c003d39b7f30fe5783c2a137",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/civil/view.do?civilId=1626&mId=0103080100",
+      "title": "주민등록증 발급신청",
+      "last_checked_at": "2026-10-25T11:28:39.902805+00:00",
+      "html_sha256": "96399a2ab16667c19adc37d2a76fd7cb681950db93344abe9edc2ea8dc6df73a",
+      "text_sha256": "8ad474e0be7c2c9a82e79feeafc3b6c7a614fe18bf9b76af9031f51201d97317",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
+      "title": "e-조회 서비스",
+      "last_checked_at": "2026-10-25T11:29:16.720376+00:00",
+      "html_sha256": "83c4747ef33b8bf6ad692f44f9ced2a67bb3a144330206ea01e077f2e8a7c997",
+      "text_sha256": "62eb12e406ab823eb5c3b0d7c584bd7ca3d29e76e5fad16f5a70ea9ba7882af1",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+      "title": "구청오시는 길",
+      "last_checked_at": "2026-10-25T11:30:29.755079+00:00",
+      "html_sha256": "11999633adb7bced399e6232bbd2f95b9a4146e5ac788f56fe0c098d382ed460",
+      "text_sha256": "d0e39020286c1e71503f57a72e370bbec5e4a26712235c291aee71a670c29b3d",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+      "title": "여권발급안내",
+      "last_checked_at": "2026-10-25T11:28:58.396982+00:00",
+      "html_sha256": "02cb088dd154ee6d4f0b91982a95bb773b311954263ffb3f4d51dc7357df6e67",
+      "text_sha256": "f478abd3540129aef4c5e228873b9a7f5d9b173445a73923aa803b194a537e9b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105010000",
+      "title": "세금의분류",
+      "last_checked_at": "2026-10-25T11:29:01.726833+00:00",
+      "html_sha256": "99ac2a62b1c8abfbdadfb3b998b31ca26f4d9cd00ce1ccbc312f23b069d35308",
+      "text_sha256": "0f8b26dfdff7a5eebd6a78213d4b92c4900abfd4af939f21a49ab44489aa03a8",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0201020000",
+      "title": "물리치료실",
+      "last_checked_at": "2026-10-25T11:27:44.176775+00:00",
+      "html_sha256": "8088e4c233c58909a241fc50ee54a2dc276102cbf273f5796ff6ee6e1c609f06",
+      "text_sha256": "1948eb11b0b8e7603d2bc96b5289f74e4306b8696a629ea9dbd7d14fb49e9b9e",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105060000",
+      "title": "마을세무사",
+      "last_checked_at": "2026-10-25T11:29:13.479306+00:00",
+      "html_sha256": "8e768be8d7862dd2a8b815ebecd0ee928d4d46787c07c29936fbbf00575789a1",
+      "text_sha256": "1235ff2482668fe487ce094579ff39aa9c879b65b23930d553e23ebee0c4b040",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0202030000",
+      "title": "예비부모 건강검진",
+      "last_checked_at": "2026-10-25T11:27:51.960514+00:00",
+      "html_sha256": "3a3a5b1be7af356dbbe71a9cd0db234fa02d4cccfe3f34ca4b727566cb8a90e6",
+      "text_sha256": "627ffbb2e18a0b299204bea0c6f6a7c03fb8dc68f7320f436e35140d67a8b416",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
+      "title": "지역사회중심재활사업",
+      "last_checked_at": "2026-10-25T11:28:20.820275+00:00",
+      "html_sha256": "575405ae20081483d1cd1bc18b7f95827e53d299268b541656a43cd1c597a301",
+      "text_sha256": "7f8232e7bcc6f9690e94d11ed5df5d9d04e137ac711191b56787c4f085778603",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0404040000",
+      "title": "심뇌혈관질환 예방관리",
+      "last_checked_at": "2026-10-25T11:28:26.650727+00:00",
+      "html_sha256": "c151fcda6a58afc06b966c66f204cfac1466bfd9142df46c5057c33d3e864368",
+      "text_sha256": "76051dc7208285de98e1077a8df9cef09284dc632657155255ff0213f51d1903",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0404060000",
+      "title": "건강생활지원센터 운영",
+      "last_checked_at": "2026-10-25T11:28:29.254079+00:00",
+      "html_sha256": "d0074bd53bb740f96657c83a7ad161fbac461fe9aa322aae7cc3f1f878ac21c4",
+      "text_sha256": "d2f0cc79931739692b0e6d18a0110cfd34cf1260aee67442f2b81bd89d5c5132",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
+      "title": "감염병 안내",
+      "last_checked_at": "2026-10-25T11:28:30.677645+00:00",
+      "html_sha256": "f5ee506a9d0383d628c5970f4ccbe4dbcd46190bbd966201727a92b056d7992b",
+      "text_sha256": "c2815a7cb15f6a50f9aa020d261b3a4d5e4670f383de1091baebd4bfebbb5385",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0406020000",
+      "title": "암환자 의료비지원",
+      "last_checked_at": "2026-10-25T11:28:31.972051+00:00",
+      "html_sha256": "69b74cc738748da17b9195a35b84c863a37d235cb60e6f673ca318aea8da77c2",
+      "text_sha256": "869abf3e7794318f0cabebfc829267d8c7725d8d058d8f8a8c9acf212a9a2721",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/civil/view.do?civilId=1625&mId=0103080100",
+      "title": "주민등록증 재발급신청",
+      "last_checked_at": "2026-10-25T11:28:38.205269+00:00",
+      "html_sha256": "13a93203af1028bd5f4c222e49d356de828437fb1aca3a4b5fae62adc818b8b6",
+      "text_sha256": "c29c478be0c9b20b9926ce6a3b435d4349d1c3e78f61c4995ae34478a5804170",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+      "title": "전자민원창구",
+      "last_checked_at": "2026-10-25T11:28:44.992007+00:00",
+      "html_sha256": "ce50df9c4c9cbf1ab901f4e250c0624f05f7c823b4917a3cc59a24ddc1bbbe9b",
+      "text_sha256": "aa4ff3de70d899540e089e1457ae6b3f6c979ad08fab53183eb75dca554e745b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0309060000",
+      "title": "무료법률상담안내",
+      "last_checked_at": "2026-10-25T11:29:19.707634+00:00",
+      "html_sha256": "c642f9b80157c8d59a89658c39fc23a089d8eb6f5839c8b76467fe7e31e832a4",
+      "text_sha256": "2b0e9e0a92dbbe0d9092c090937f56d2e6e0c0baa1102034e67c004a8bdece40",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+      "title": "글로벌 중개사무소",
+      "last_checked_at": "2026-10-25T11:29:36.295672+00:00",
+      "html_sha256": "e4212846d6911a853d2d3587790080176a13cc40de4c6c35b4a895b3da5571ec",
+      "text_sha256": "0c81956686a93bb6ec4e0f6801d64f11505ee79db44c41b392ae8bb60f3349bd",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+      "title": "정부24",
+      "last_checked_at": "2026-10-25T11:28:46.633623+00:00",
+      "html_sha256": "e63f7ddf8feec8113b72d418cf8d255d19cafe6039e83a4667381cfdd9dffbac",
+      "text_sha256": "b7985581a5cc43ca224b0e5025a7f36bd58ef17c32b57b3ece3c75e0666d324c",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0103090000",
+      "title": "수수료 면제 대상",
+      "last_checked_at": "2026-10-25T11:28:55.275801+00:00",
+      "html_sha256": "699eb026dd7bf14ae3f8432f8d03810d7ddff64692626d97cff075e52a4494ef",
+      "text_sha256": "85e59178db0c42f384cc61da5e4234cd068c016a5e88d02b271699942d05f679",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+      "title": "찾아오시는길",
+      "last_checked_at": "2026-10-25T11:27:39.063742+00:00",
+      "html_sha256": "8994b6d1ccfece68d0cf8b538952a08719bf83b11af76c6fd14b325992806db4",
+      "text_sha256": "cc07fddf1e88f8c5ef1f799e17e99995a9154ed04b8d5fb0aa7418d969ee7444",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0201030000",
+      "title": "결핵진료실",
+      "last_checked_at": "2026-10-25T11:27:47.395967+00:00",
+      "html_sha256": "69d6964ade4540d2f5259289b5b41ffb5b428559bc62a84d96fa363a4c460227",
+      "text_sha256": "51c922c8c3554ee9f76dcf70a35649a2beb9870256f986b1b81a9ceb05af43a8",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
+      "title": "해외여행클리닉",
+      "last_checked_at": "2026-10-25T11:27:48.998536+00:00",
+      "html_sha256": "8d428cf3ab37e25e47e7bf9a69dd952ae341950e32d8d20568cb1d906eff2279",
+      "text_sha256": "9debd68f51c10ebfabca1b7dcb9f9b7ec10640a3374dafa1bfa091dee71774e9",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0404020000",
+      "title": "운동·영양프로그램",
+      "last_checked_at": "2026-10-25T11:28:23.775128+00:00",
+      "html_sha256": "42079ef7b19f165342c3eb5d1ac01ddf28ec0ddc9abd7b5cf8283830f44802a8",
+      "text_sha256": "a0840914b6a93f9e28474b08770269335a90d155577d8cec30133763c97caf6a",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
+      "title": "영문성명 표기법",
+      "last_checked_at": "2026-10-25T11:28:59.804582+00:00",
+      "html_sha256": "2953a9c9309cae000b8df4fe900570fb20448b6a584a0819207a4c6978560626",
+      "text_sha256": "e793a5fd4e8a1d3eb041de6879180679cdfc3865e778ba1ed8493036a55ca649",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0402010100",
+      "title": "임산부건강관리",
+      "last_checked_at": "2026-10-25T11:28:03.163488+00:00",
+      "html_sha256": "416e5d347f760ca73588d190b0061659901867c619c35454e80970552a793f2c",
+      "text_sha256": "ae26bf1d088ffa77c1c15406a9b539b7af0074347cf148441178beba4bd9b8a4",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0301010000",
+      "title": "제증명 발급안내",
+      "last_checked_at": "2026-10-25T11:27:56.573632+00:00",
+      "html_sha256": "3fb7ed944095edf5ee1b401c147e990ba5af2527a34eaa6304ea69371bc9f528",
+      "text_sha256": "a589403d8d696650fe5f9e0b75eb0e57c3e9a52376b8d7dbc088010f154c26d5",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+      "title": "납세자보호 안내",
+      "last_checked_at": "2026-10-25T11:29:11.806771+00:00",
+      "html_sha256": "0b21d0672115232f7a372faa9795007306caa3c341f10b408a80e4558a116b92",
+      "text_sha256": "9c93d0d3aa9345849d404eb15a8dbe24535dbee4760dfa02b95fb38ebbffbe04",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0402020000",
+      "title": "공공근로사업",
+      "last_checked_at": "2026-10-25T11:29:23.095538+00:00",
+      "html_sha256": "f2369f3b992a03dcf576cb39db85167d0a2211335e8bb7a9033c198735f476c8",
+      "text_sha256": "ed221f7fd831e910f04d3141b03a9f6f549e86025507db2ead0f7b3eda7cff54",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0301030000",
+      "title": "검사비용안내",
+      "last_checked_at": "2026-10-25T11:27:57.903786+00:00",
+      "html_sha256": "633943019fca72519fd808395efb3ab1dab98a27f604edb233f2d21ebbcb2018",
+      "text_sha256": "9f04275cf5165e2b33972dc17c4bcc19898ccc650511703debfb4a363e018d87",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0304010000",
+      "title": "제증명온라인발급",
+      "last_checked_at": "2026-10-25T11:27:59.112739+00:00",
+      "html_sha256": "d2877151bfb3a0f9fcc4fa3298af2f10a022628c8ab09fbb40636446ef87b74a",
+      "text_sha256": "ec447e2b89be01345e1c1e30baecd6745ab60df13c9b2d08ca31b12deef69e84",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
+      "title": "검사결과온라인조회",
+      "last_checked_at": "2026-10-25T11:28:00.386157+00:00",
+      "html_sha256": "2ebc778512911ba8dfa1aed75700da521c18377d51be8f4fcf7aab509a0e30b9",
+      "text_sha256": "c2d916e997e7e561ae4cfec8db1ceb360bafef2e72648b6ba2095541cedcb079",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0400000000",
+      "title": "구강보건",
+      "last_checked_at": "2026-10-25T11:28:01.778492+00:00",
+      "html_sha256": "81488c43a04171a57b8eb3cdcd50a994fa7f2b904bf956358a144a721007ae76",
+      "text_sha256": "37639f4680c432be7c5bfc327bf73bf1f43b19f605abcc2d9cb5f4e2725a0e93",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
+      "title": "영유아 의료비 지원",
+      "last_checked_at": "2026-10-25T11:28:07.530697+00:00",
+      "html_sha256": "ceecd7dd2f74e54c9cc2acfb45be0724dcb0bb4ec9fcf2b6b0158de3cda05fe1",
+      "text_sha256": "a6e60475d94d64b2537316a2dc46786a3e6998fcd72962e8604c76696f170e2e",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/civil/view.do?civilId=1785&mId=0103080100",
+      "title": "주민등록 전입신고",
+      "last_checked_at": "2026-10-25T11:28:41.576825+00:00",
+      "html_sha256": "44f8fa471709973001e315b3c39a9f87aa5023303343ebd96b285efd1f3a8dc8",
+      "text_sha256": "4669ca5355256254044efabfc8be31208b165cf4855a684895b65b2da8faf299",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
+      "title": "여권개요",
+      "last_checked_at": "2026-10-25T11:28:56.97669+00:00",
+      "html_sha256": "77f2c8302962ade786164a62f09f5cca16e28628a1334468c4966bf8a6963227",
+      "text_sha256": "824f4ffe84e65209477ce6315d4d52cd72b973390a28f081a9624783343c8324",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+      "title": "작은도서관",
+      "last_checked_at": "2026-10-25T11:30:03.4803+00:00",
+      "html_sha256": "ae266e6e49c4c9b04c07d8e05d6827319eb5a52cedc939feec3ba01b54a6b262",
+      "text_sha256": "de535d08fcbc615e61f1948ca46d163874cbf4d80a2a3d613e6fd76178ae5d11",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
+      "title": "민원실배치도",
+      "last_checked_at": "2026-10-25T11:28:50.268472+00:00",
+      "html_sha256": "586ef8df4120e4712d31b4fbfe815e0f7ced458f64deb6714de17c66042fde55",
+      "text_sha256": "af752efa1fda91587b08050199dbf66044eecf3acea59d602d59a250edd9f52c",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020100",
+      "title": "지방세종류 및 내용",
+      "last_checked_at": "2026-10-25T11:29:03.454858+00:00",
+      "html_sha256": "b18a1ba3e576a49b561f354d6737659350b26d3a983b2fa7d5ff4ae9d9f4445a",
+      "text_sha256": "634469fb86cc80d13c2adf3183fc66cf823e93483b5d744090e707473874d1a7",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
+      "title": "15분 도시, 하하 마을건강센터 운영",
+      "last_checked_at": "2026-10-25T11:28:28.013306+00:00",
+      "html_sha256": "575f8ff83b9936f7ad7f1361b6e7b128ac1f0fe598aa0fa81faa32a97113d24b",
+      "text_sha256": "4ad6d636fb6ca232e2e2068c7b62a3da84eaaa458be31f9943983754df0ed57a",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/health/contents.do?mId=0406030000",
+      "title": "소아암환자 의료비지원",
+      "last_checked_at": "2026-10-25T11:28:33.641084+00:00",
+      "html_sha256": "2968dd435b021807c44b74791d110549a64117d77b03a7cf638422abbe9c7436",
+      "text_sha256": "d929913e93829195a6a9326b63a924c02a669067ec73723d1ddd3c6f4cb1176e",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+      "title": "민원실 이용안내",
+      "last_checked_at": "2026-10-25T11:28:43.22453+00:00",
+      "html_sha256": "3dc4339ad6de9f6b3280dbd8b6738378f4b3728f2655a6dfbc721e2dfe02ede1",
+      "text_sha256": "20a00a3984f0a52a9e0b25b9239aadac1d70d49206cc3870c2fcc4fb83905976",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+      "title": "민원편의시책",
+      "last_checked_at": "2026-10-25T11:28:53.494188+00:00",
+      "html_sha256": "236e310b1e1eed1c015c94ae1a80720937344a4275036e112411bf989abfb0cf",
+      "text_sha256": "1dbbcadac7ae7ae9f910bb1284d2d1c1547da82297d213fc8a658b5dbf56d082",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+      "title": "개별공시지가",
+      "last_checked_at": "2026-10-25T11:29:31.475268+00:00",
+      "html_sha256": "34226b897de3183b16b2d1f774acbec444bedfe28507ddd66d96fadb522ca9ff",
+      "text_sha256": "ed77f8529aa58c69944e49c1ce733a5b3016c0d097f4af08b2bfa78225823842",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404010300",
+      "title": "개별공시지가",
+      "last_checked_at": "2026-10-25T11:29:33.125533+00:00",
+      "html_sha256": "f9990944cd1a2632cc94d0784003945877122c2e8ee957a69d7839283ec9550b",
+      "text_sha256": "83cf3059a87a9de0cd77bd7d328fc8102ad106d083a789c3d0fead055e78d6a9",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
+      "title": "사하구 구인‧구직",
+      "last_checked_at": "2026-10-25T11:29:21.409102+00:00",
+      "html_sha256": "ed15ea6c4b0cf4e0efaacf03cfd768b4bd4139273da1b9962c85e03895526ebc",
+      "text_sha256": "6082908544828813ae9fe8ff206e5686698eeb6bf2a9cd240972b8dba19dbe94",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+      "title": "지방세종류 및 내용",
+      "last_checked_at": "2026-10-25T11:29:05.478489+00:00",
+      "html_sha256": "8e5fcd7eab48c38e8fa969151b19f3bee9aedef16ef5541606fcb5545d91b8b7",
+      "text_sha256": "21d2952ada0950f6dc3bbcafe78bd0e4d791b9a3fd290dd2ab9dfcdc201402e2",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
+      "title": "지방세납부안내",
+      "last_checked_at": "2026-10-25T11:29:08.726657+00:00",
+      "html_sha256": "3da0b8d9f0f03391c2e488158d189b480a8fa23a7473ded44b83d9719df2140c",
+      "text_sha256": "c84b42e86dfd8d885240f0727712bf23eee6dfe32e02f4c5bc8bd718ab08896d",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0106010000",
+      "title": "개별(공동)주택가격안내",
+      "last_checked_at": "2026-10-25T11:29:15.056875+00:00",
+      "html_sha256": "08d4ee98cf7ff35fa8c73d72bd03ceb445fe247efc233ab52060f9882264ce3a",
+      "text_sha256": "66d32caefc128856f4c7a966c758a1a15534cb30efc3b23c34c0e90aeac09c9e",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
+      "title": "임대사업자 등록안내",
+      "last_checked_at": "2026-10-25T11:29:37.727145+00:00",
+      "html_sha256": "19c5c69bc34f5ba5aa62a2ea566052cb50bb9b6fc094bb6e9431afea1c480a15",
+      "text_sha256": "edffe587a67a0f9337b90f4fe56f455a615e45dee0df2fd598a33ed7d43d5c81",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405070000",
+      "title": "석면관리",
+      "last_checked_at": "2026-10-25T11:29:55.98298+00:00",
+      "html_sha256": "81ff7b5ebb3fc5f024a23e2e91db39a955dc0ac05547332c87ca751af35d9e05",
+      "text_sha256": "e3d956c7dd5ec0642d4be8580903769af5df053fe6b81aa6d6a0a1557555962c",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0302010300",
+      "title": "행정정보공개이용안내",
+      "last_checked_at": "2026-10-25T11:29:18.231936+00:00",
+      "html_sha256": "03c14058b18956a6d2b406b8f8fb4af69c21440ea1c6e28398ded3ec9c2e171f",
+      "text_sha256": "b6687b286274bacdd1513783bbd78d332e8f0cd283926004a2fb2b98957608b4",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
+      "title": "설치안내",
+      "last_checked_at": "2026-10-25T11:29:59.031402+00:00",
+      "html_sha256": "ec5e33e8efc51488e6071ef44a9a3ca6ae1bbd1b23493fd26a0077ed73808206",
+      "text_sha256": "173dd1507d449da3c60ed72b858fb60bb6d84fce61a039b3654fd2ca457bde2b",
+      "has_html": true
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
+      "title": "정보화교육",
+      "last_checked_at": "2026-10-25T11:30:01.886218+00:00",
+      "html_sha256": "5f6dca40896ae4b86bc953161ab0ff0db8343b8b8f3c21997ad29ba60bdeffc3",
+      "text_sha256": "db5cabd5734bf17f6b1911f7e7f62697d652e6fd78b5ce9e6085459bbc55c125",
+      "has_html": true
+    }
+  ],
+  "queue": {
+    "available": true,
+    "queued": 0,
+    "running": 58,
+    "succeeded": 73,
+    "failed": 213
+  }
+}

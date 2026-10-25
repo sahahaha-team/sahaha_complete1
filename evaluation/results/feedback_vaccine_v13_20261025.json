@@ -1,0 +1,337 @@
+{
+  "started_at": "2026-10-25T12:11:25.969162+00:00",
+  "commit": "d8d2d8cc3acb6407f325528e5dada16d992749d9",
+  "case_sha256": "c3e80ab59021b6dc785c3ed2488fced09e433bac7435753c21bb74392bf199e3",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "011f5444428cb09fe32bbfb81cd2074fd1459dbbebc247775ea64b74f404e710",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "701156eba70a2e38b39c4631255731b7f731fdf39832260636db5b7cd62c188b",
+    "chatbot\\concise_answers.py": "784f614f58b350d4e691344f4bf04bc5fcc8877103db7850351fac17ef92f65e",
+    "chatbot\\contact_directory.py": "eec7677a045fb16a6622675c325a96087a4692e44a5856ec9ca09710b373f1e6",
+    "chatbot\\conversation.py": "374bfc155a69e900c29d75c833debfac93ed8adf18af43b6002271b3114f7277",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "879bf6e6cfb02307e08279ee9c017e273bb1660429468ecc4907a17a61f6583e",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "35aa15831202a3cc60106b08f3efd145db541b457ed60bddb0d372cdfb76ff8d",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "c57afd762ef646e4f668fba01246be542b77dad4b9f35c160c4d23aad9fab412",
+    "chatbot\\faq_targets.py": "707b9b521da2f23b8112e239a9b90441549f96be73cf1a2e7685980066b8b7d9",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "1eb2ca06eeba46c2ac43c6e8781120951576aaa9a7bd599b54c816a752102f62",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "152640fb0e3b281117afbabcd9104b532bd38053825d24801a60b78430b490d7",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "5284bb391ec6f547092fa3129812625cf4b8c8a2d04b0d32db9d3b06b7b87ad5",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "67dc010124494e02e2062eb8106c2bad2c88d186f83ea74e555289be42c2be97",
+    "resources\\priority_services.json": "74e20028d35eac95d7b1c9346d7b3af81edb37fcdfd5f35c7b044d10a4241476",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    }
+  },
+  "records": [
+    {
+      "id": "D02",
+      "turn": 1,
+      "question": "보건소 예방접종 어디서 해?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.06,
+      "server_timing": "app;dur=28.3",
+      "status": 200,
+      "error": null,
+      "request_id": "4d85d4be19554eda83851c27ed195733",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.06
+        }
+      ],
+      "response": {
+        "answer": "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "독감 접종 장소 알려줘",
+          "폐렴구균 접종 장소 알려줘",
+          "B형간염 접종 장소 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "D02",
+      "turn": 2,
+      "question": "폐렴구균",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 4.664,
+      "server_timing": "search;dur=3684.6, verify;dur=903.9, review_gate;dur=5.6, grounding;dur=4.2, originals;dur=0.0, review;dur=3.0, prepare;dur=8.2, app;dur=4644.5",
+      "status": 200,
+      "error": null,
+      "request_id": "ab6af0a91b974f90a705e81b773ae16e",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.664
+        }
+      ],
+      "response": {
+        "answer": "**유료 및 성인예방접종**\n- 접종장소 : 보건소 접종 미운영, 전국 지정 위탁의료기관에서 주소지 무관 접종 가능\n- 대상 : 65세 이상인 자 (1961.12.31.이전 출생자)\n\n원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요.",
+        "answer_details": "유료 및 성인예방접종의 공식 안내 원문입니다.\n\n> ## 유료 및 성인예방접종\n> 65세 이상 어르신 폐렴구균 예방접종\n> 대상 : 65세 이상인 자 (1961.12.31.이전 출생자)\n> 관내 위탁의료기관 현황:\n> 접종장소 : 보건소 접종 미운영, 전국 지정 위탁의료기관에서 주소지 무관 접종 가능\n> 시행일자 : 연중\n> 시행백신 : 다당질 백신 프로디악스 23가(PPSV23)\n> 준 비 물 : 신분증\n> 접종횟수 : 만 65세 이상 평생 1회 접종\n> 과거 65세 이상 연령에서 폐렴구균 23가 다당질백신(PPSV23)을 접종(의료기관에서 유료로 접종했거나, 보건소에서 무료로 접종했을 때)한 경우 접종 불필요\n> 과거 65세 미만 연령에서 폐렴구균 23가 다당질백신(PPSV23)을 접종한 경우 5년경과 후 1회에 한하여 재접종\n> 폐렴구균 예방접종 전 담당 주치의와 상담이 필요한 기저질환자\n> 뇌척수액 누출자\n> 인공와우 이식 환자\n> 기능적 또는 해부학적 무비증 환자\n> 면역저하자: 종양질환, 백혈병, 림프종, 호치킨병, 다발성골수종, 방사선 치료, 면역억제제(스테로이드 포함) 투여, 조혈모세포 이식, 고형장기 이식, 만성 신부증, 신증후군, HIV감염, 선천성 면역저하 등",
+        "sources": [
+          {
+            "title": "유료 및 성인예방접종",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "다운로드",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000184787&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "D02",
+      "turn": 3,
+      "question": "아니 독감이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 2.35,
+      "server_timing": "search;dur=1735.6, verify;dur=489.4, review_gate;dur=4.0, grounding;dur=3.7, originals;dur=0.0, review;dur=2.5, prepare;dur=3.8, app;dur=2320.5",
+      "status": 200,
+      "error": null,
+      "request_id": "0b844d527b4846828cea15b9f73f97c7",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.35
+        }
+      ],
+      "response": {
+        "answer": "**유료 및 성인예방접종**\n- 접종장소 : 전국 지정 위탁의료기관 (지자체 대상자는 부산시 지정 위탁의료기관만 가능)\n- ※ 지정의료기관은 매년 독감접종 시작전 공고 예정\n\n원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요.",
+        "answer_details": "유료 및 성인예방접종의 공식 안내 원문입니다.\n\n> ## 유료 및 성인예방접종\n> 인플루엔자 예방접종\n> 시기 : 매년 10월 중 시작(절기 사업으로 사업 종료 시 접종 안됨)\n> 비용 : 무료 (※현재 보건소에서는 직접 주사 안됨)\n> 접종장소 : 전국 지정 위탁의료기관 (지자체 대상자는 부산시 지정 위탁의료기관만 가능)\n> ※ 지정의료기관은 매년 독감접종 시작전 공고 예정",
+        "sources": [
+          {
+            "title": "유료 및 성인예방접종",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "다운로드",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000184787&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-25T12:11:41.465050+00:00"
+}

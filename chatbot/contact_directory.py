@@ -278,7 +278,7 @@ class ContactDirectoryResponder:
             if contextual:
                 token_query = re.sub(r'수수료|요금|금액|비용|얼마(?:야|인가요|예요|인지)?','',token_query)
             for alias,target in SYNONYMS.items():
-                token_query = token_query.replace(alias,target)
+                token_query = re.sub(r'\s*'.join(map(re.escape, alias)), target, token_query)
             tokens = {canonical(t.form) for t in _init_kiwi().tokenize(token_query)
                       if t.tag.startswith('NN') or t.tag == 'SL'}
             fillers = WEAK_TERMS | {'상태','뚜껑','팀','때문','곳','어디','분','번호','전화번호','행정복지센터','건','과','준비물','서류','필요','비용','수수료','보건소','무엇'}

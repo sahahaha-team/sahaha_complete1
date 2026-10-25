@@ -1,0 +1,25 @@
+{
+  "started_at": "2026-10-25T13:42:55.250277+00:00",
+  "finished_at": "2026-10-25T13:44:26.220167+00:00",
+  "assessment": "developer_AI_review_not_independent_accuracy",
+  "turns": 14,
+  "scenarios": 8,
+  "unique_question_strings": 13,
+  "grades": {
+    "S": 7,
+    "P": 2,
+    "C": 5
+  },
+  "latency_seconds": {
+    "median": 0.7965,
+    "p95_nearest_rank": 11.92,
+    "max": 11.92
+  },
+  "http_status": {
+    "200": 14
+  },
+  "metrics_missing": [],
+  "model_call_count": 0,
+  "model_calls": [],
+  "code_unchanged": true
+}

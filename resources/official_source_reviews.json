@@ -90,5 +90,16 @@
     "reason": "과세 대상의 오래된 포괄 설명과 같은 페이지의 취득유형별 신고·납부기한 안내가 다름. 예외를 생략한 서론 문장만 제외하고 유형별 세부 기한을 보존한다.",
     "verification_reference": "https://law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1026499955",
     "user_warning": "원문의 포괄적인60일 설명은 제외했습니다. 취득유형별 신고·납부기한과 적용 조건을 확인해 주세요."
+  },
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+    "reviewed_at": "2026-10-25",
+    "status": "outdated",
+    "marker": "인플루엔자[\\s\\S]*12\\s*세\\s*이하\\s*어린이",
+    "unverified_fields": [],
+    "unverified_line_pattern": "대상\\s*[:：]\\s*12\\s*세\\s*이하\\s*어린이",
+    "reason": "구청 성인접종 페이지의 어린이12세 이하 대상은 질병관리청2026–2027절기6개월–14세 국가사업 안내와 불일치. 복합 대상행은 제외하고 장소·접종종류별 나머지 정보를 유지. 현행 국가사업을 부산시 추가지원 자격으로 대체하지 않음.",
+    "verification_reference": "https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1",
+    "user_warning": "원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요."
   }
 ]

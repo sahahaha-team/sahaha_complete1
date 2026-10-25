@@ -19,7 +19,7 @@ FOCUS_STOP.update({'주소','위치','장소','연락처','전화','번호','운
 FOCUS_STOP.update({'부탁','상한'})
 FOCUS_STOP.update({'지원금','보조금'})  # Funding fields, not a separate program name.
 FOCUS_STOP.update({'기한','퍼센트','비율','연락','요청','진행','고충','예약','수강료'})
-FOCUS_STOP.add('교육')  # A course's general activity, not an extra row condition.
+FOCUS_STOP.update({'교육', '강좌'})  # General course activity; named subjects stay as conditions.
 
 
 @lru_cache(maxsize=256)

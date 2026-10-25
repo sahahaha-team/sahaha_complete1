@@ -1,0 +1,33 @@
+[
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+    "checked_at": "2026-10-25T12:10:46.400060+00:00",
+    "http_status": 200,
+    "html_sha256": "42e37bf2d658904b9cd9fb549d0d3bbc107d906e7832a505169da89c2af4403d",
+    "parsed_sha256": "394309b644a3cd2885caf7873b0de70e8248e6c3142fa1bd4e8850df2659ed53",
+    "same_as_before": true
+  },
+  {
+    "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+    "checked_at": "2026-10-25T12:10:48.008155+00:00",
+    "http_status": 200,
+    "html_sha256": "67c174643f3cc0b22f7e0bb3e1b24f42419369d9a8c100c9c7f446f653dc98e2",
+    "parsed_sha256": "c76d79fb25468a677c0be4cd11c82533250e520120f072e3f9ae1cc4bac8d674",
+    "same_as_before": true
+  },
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+    "checked_at": "2026-10-25T12:10:49.660876+00:00",
+    "http_status": 200,
+    "html_sha256": "823759aae7bd4d3e74696164110591d9af0496e860ea0945281e9c3e64e90cca",
+    "parsed_sha256": "9f82a5a4606bbdd73e6f4b54e68b336ec86a210bc2d9a622f30b4f1f49d370e3",
+    "same_as_before": true
+  },
+  {
+    "url": "https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1",
+    "checked_at": "2026-10-25T12:10:49.748188+00:00",
+    "verification_channel": "web.open official primary source",
+    "verification": "2026-08-25 검토 / 2026–2027절기 생후6개월~14세, 국가사업과 부산시 추가지원 구분",
+    "direct_https_error": "Python SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED; insecure bypass not used"
+  }
+]
