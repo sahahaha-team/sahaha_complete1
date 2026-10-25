@@ -1,0 +1,270 @@
+{
+  "started_at": "2026-10-25T04:50:07.833056+00:00",
+  "commit": "60f77d87c4b87e0aa4a0bdcd5530abca9e869ad6",
+  "case_sha256": "c3e80ab59021b6dc785c3ed2488fced09e433bac7435753c21bb74392bf199e3",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "2099be3bb4c571c0a1b1eacf16117e82098d40811aa68733c393f505ebacf53f",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "eea65ac9f2d81e9304e4894990c98f34a9475c80a11494bf4085a4d8c71a7175",
+    "chatbot\\concise_answers.py": "bc32a172c5b6565a99397383a995b449a1c6f097791b53900a61d069f4f55c49",
+    "chatbot\\contact_directory.py": "e1d0242f6db9b303ef86e1e89240e4936035d16d56ae22b659433d8c13005f11",
+    "chatbot\\conversation.py": "a898ce93b7791b282754ace4e31a928d0527c30e65b78931958e25be90a8717c",
+    "chatbot\\crawled_pages.py": "340b400006c5a90aa621c5c84e450b3161b9d0aa6ae8c9478b16e30387ce908a",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "101c0f6f04fa1ee001248e7a90b530e6aef17c839d151f7cebfee6a4e9206cfd",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "dd8c92eaa896db46dd27a350c3f269e6c3703f147a618e42f56b3501c1a11487",
+    "chatbot\\evidence_decision.py": "37df3fe02c6112ce48c3d92aa341901b2440702e5d12ad3b5fb80a32bb021ca6",
+    "chatbot\\faq_targets.py": "8c2ecbaf597c38658c3e17bd3a0ef907485c5cea29d8cf2d15df623515f754e6",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "e410d38bb75dabe38cdd76ce4e4703e46fe324c0899ad68c74c23136325c03d5",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "42968c47ad2e21da7da2b571ebf678691f9cb349dfdf689c0ee5a351bb93513a",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "a66824141d6a08a0f01d1926db5ee80733bbb0de88bb6868ccdc7105307d39eb",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "491b1975e688a4de172947416e33d681766865cf9938f9754f7d30ce1b2d5c85",
+    "chatbot\\retriever.py": "c8760b53531095eda7b1593efb7397efd49c16c026dd42a2413e20d43ae01059",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "ec7ac4fa35eb1804dd91802758fe5dedd944189884547c6ab205115d5aca1069",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "1a360c71c9a923afeda3bbb9a8e708d4fee886bae0eaf58cdbb2854a3382fad1",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "af3f67a2aa4d509c1d1472ae6b7e0ce4bde811dc831885c81c514ca7f298e8b5",
+    "chatbot\\source_warnings.py": "d9274037944012bf96c8d906a6ddf2ddc3cedae64e8610874b829073ad9a51fa",
+    "chatbot\\structured_answers.py": "bda018f75c759ba8d69947d17e52f8c45369dc603c7b715ca12612cd97db5a1f",
+    "chatbot\\vaccination.py": "218884750bbd3fc486ed457422a54b71294e388c419e9771fc623afd52d7331f",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "3e6a301e6c1b91d4d7bcc999c96aedca67dcf741e020a272d23911f731874ecf",
+    "resources\\priority_services.json": "e61e39bc6d2082f8454cd72e165bc461b7608b184fb98d79c1027048c8e4092e",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    }
+  },
+  "records": [
+    {
+      "id": "P1001",
+      "turn": 1,
+      "question": "사하구 요일별 쓰레기 배출 방법은 어떻게 되나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1001,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.356,
+      "server_timing": "app;dur=342.7",
+      "status": 200,
+      "error": null,
+      "request_id": "096d881f991c4d60a7ec9fde3556a9c1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.356
+        }
+      ],
+      "response": {
+        "answer": "요일별 배출 품목은 다음과 같습니다.\n- **월요일**: 플라스틱류(유색페트병포함),비닐류,요구르트병,의류.\n- **수요일**: 투명페트병,골판지류(박스등),기타종이류,종이팩류,유리병류,스티로폼,캔‧고철류,폐형광등,폐건전지등,일반쓰레기(불연성),소형폐가전.\n- **화·목·일요일**: 일반쓰레기(가연성)·음식물쓰레기.\n- **금·토요일**: 배출 금지.",
+        "answer_details": "> Home\n> >\n> 분야별정보\n> >\n> 환경/청소\n> >\n> 폐기물\n> 열기\n> 블로그\n> 인스타그램\n> 페이스북\n> 카카오\n> 닫기\n> 인쇄하기\n> 폐기물\n> 생활폐기물처리안내\n> 생활쓰레기 배출요령\n> 쓰레기 종량제는\n> 쓰레기 없는 쾌적한 환경을 만들기 위하여 95년 1월부터 실시하고있는 제도로서 주택의 크기 또는 재산세액에 따라 차등적으로 수수료를 적용하던 종전의 제도와 달리, 배출자에게 본인이 배출있는 쓰레기의 양만큼 비용을 부담하도록 함으로써 스스로 쓰레기를 줄이고 재활용품도 최대한 분리 배출하도록 한 제도입니다.\n> 구민이 지켜야 할 사항\n> 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.\n> 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과),\n> 재활용품은 반드시 품목별로 분리하여 요일별로\n> 지정된 쓰레기만 배출하여야 합니다.\n> 쓰레기 배출요일은 다음과 같습니다.\n> 요일별 쓰레기 배출요령 다운로드\n> 쓰레기 배출요일과 쓰레기 종류 표입니다.\n> 배출요일\n> 월\n> 화\n> 수\n> 목\n> 금\n> 토\n> 일\n> 쓰레기\n> 종류\n> 재활용품\n> (플라스틱류(유색페트병\n> 포함),비닐류,\n> 요구르트병, 의류)\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 재활용품(투명페트병,골판지류\n> (박스 등), 기타종이류,\n> 종이팩류,유리병류, 스티로폼,\n> 캔‧고철류, 폐형광등,폐건전지등),\n> 일반쓰레기(불연성), 소형폐가전\n> 일반쓰레기 (가연성)\n> 음식물쓰레기\n> 배출\n> 금지\n> 배출\n> 금지\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 이럴때는 쓰레기를 수거하지 않습니다.\n> 일반쓰레기와 재활용품을 분리배출하지 않은 경우\n> 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우\n> 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우\n> 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우\n> 대형폐기물(냉장고, 장롱, 책상 등)\n> 기타사항\n> 종량제 규격봉투를 사용하지 않고 배출하거나, 무단투기 및 소각행위시에는 100만원 이하의 과태료가 부과됩니다.\n> 생활폐기물 수집·운반업체\n> 생활폐기물 수집 및 운반업체 표입니다.\n> 업체명\n> 담당구역\n> 전화번호\n> 세화산업\n> 괴정 1,2,3동, 하단 1,2동\n> 051-264-8301\n> 미진산업\n> 괴정4동, 당리동, 신평1동, 장림2동, 다대 1,2동\n> 051-264-0894\n> 동진산업\n> 신평2동, 장림1동, 구평동, 감천 1,2동\n> 051-207-2030\n> 쓰레기 규격봉투 가격표 (시행일 : 2012.9.14., 금액:원)\n> 쓰레기 규격봉투 가격표\n> 규격\n> 5ℓ\n> 10ℓ\n> 20ℓ\n> 30ℓ\n> 50ℓ\n> 75ℓ\n> 불연성쓰레기\n> 전용마대 (30ℓ)\n> 건설폐기물\n> 마대 (30ℓ)\n> 일반\n> 220\n> 430\n> 850\n> 1,280\n> 2,070\n> 3,080\n> 1,280\n> 3,000\n> ※ 쓰레기 규격봉투 100ℓ는 2020년 10월 중순부터 제작 중단. (단, 판매처 재고물량에 한해 구입 및 사용 가능)\n> 음식물쓰레기 전용용기 가격표 및 수수료\n> 음식물쓰레기 전용용기 가격표 및 수수료 표입니다.\n> 구분\n> 일반가정용\n> 업소용\n> 공동주택\n> 업소용\n> 용기규격\n> 3ℓ\n> 5ℓ\n> 20ℓ\n> 120ℓ\n> 120ℓ\n> 용기 판매액\n> 6,500원\n> 7,000원\n> 16,000원\n> 개별구매\n> 수거업체 문의\n> 용기 판매처\n> 새마을금고\n> 개별구매\n> 수거업체 문의\n> 납부필증(칩) 수수료\n> 240원/개\n> 400원/개\n> 2,000원/매\n> 8,400원/매\n> 12,000원/개\n> 납부필증(칩) 판매처\n> 종량제 봉투 판매소\n> 새마을금고\n> 수거업체\n> (동진, 미진, 세화)\n> ※용기판매 가격은 업체사정에 따라 변경될 수 있음.\n> 만족도조사\n> 이 페이지에서 제공하는 정보에 만족하십니까?\n> 매우만족(5점)\n> 만족(4점)\n> 보통(3점)\n> 불만족(2점)\n> 매우불만족(1점)\n> 의견\n> 담당자\n> 자원순환과\t\t\t\n> \t\t\t\n> \t\t\t\t\n> \t\t\t\t(051-220-4432)\n> 최근업데이트\n> 2026-01-13",
+        "sources": [
+          {
+            "title": "생활쓰레기 배출요령",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+            "category": "환경/청소",
+            "service_type": "환경",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1004",
+      "turn": 1,
+      "question": "사하구보건소 운영시간은 어떻게 되나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1004,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 1.46,
+      "server_timing": "search;dur=1065.2, verify;dur=347.9, review_gate;dur=3.0, grounding;dur=1.6, originals;dur=0.0, review;dur=1.1, prepare;dur=3.1, app;dur=1452.6",
+      "status": 200,
+      "error": null,
+      "request_id": "3d08ba31efa04d95991b4278e1dbba52",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.46
+        }
+      ],
+      "response": {
+        "answer": "**보건소 정보**\n- 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.",
+        "answer_details": "찾아오시는길의 공식 안내 원문입니다.\n\n> ## 찾아오시는길\n> ### 약도\n> 지도이미지영역 건너뛰기\n> ### 보건소 정보\n> 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n> 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)\n> 대표전화 : 051)220-5740, 5704, 5706(보건소 민원실) 051)220-5701(보건행정과 사무실) 051)220-5711(건강증진과 사무실)\n> FAX번호 : 051-220-5709(보건행정과) / 5719(건강증진과)",
+        "sources": [
+          {
+            "title": "찾아오시는길",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours"
+          ],
+          "matched_fields": [
+            "hours"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-25T04:50:15.963304+00:00"
+}

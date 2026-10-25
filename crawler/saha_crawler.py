@@ -273,21 +273,35 @@ class SahaCrawler:
                 lines.append(value)
 
         nodes = root.find_all(
-            ["h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "tr", "dt", "dd"],
+            ["h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "table", "dt", "dd"],
             recursive=True,
         )
+        rejected_table = False
         for node in nodes:
             name = (node.name or "").lower()
-            if name == "tr":
-                cells = [
-                    " ".join(cell.get_text(" ", strip=True).split())
-                    for cell in node.find_all(["th", "td"], recursive=False)
-                ]
-                cells = [cell for cell in cells if cell]
-                if cells:
-                    add("표 | " + " | ".join(cells))
-                continue
             if node.find_parent("table") is not None:
+                continue
+            if name == "table":
+                # The answer reader already restores column/row ownership.
+                # Reuse it for complex search tables so a spanning day, role
+                # or document label is not detached from its value.
+                complex_table = ('tableSt_view' in (node.get('class') or [])
+                    or node.select_one('[rowspan], [colspan]') is not None
+                    or any(len(row.find_all('th', recursive=False)) > 2
+                           for row in node.find_all('tr')))
+                if complex_table:
+                    from chatbot.official_content import table_units
+                    units = table_units(node)
+                    rejected_table = rejected_table or not units
+                    for unit in units:
+                        add(unit)
+                else:
+                    # Preserve the existing simple table representation.
+                    for row in node.find_all('tr'):
+                        cells = [" ".join(cell.get_text(" ", strip=True).split())
+                                 for cell in row.find_all(["th", "td"], recursive=False)]
+                        if any(cells):
+                            add("표 | " + " | ".join(cells))
                 continue
             text = node.get_text(" ", strip=True)
             if not text:
@@ -307,7 +321,7 @@ class SahaCrawler:
 
         # 본문에 문단 태그가 거의 없는 레거시 페이지는 전체 텍스트로 폴백한다.
         structured = "\n".join(lines).strip()
-        if len(structured) < 50:
+        if len(structured) < 50 and not rejected_table:
             structured = root.get_text(separator="\n", strip=True)
 
         # 예약·신청 등 실제 행동 링크는 링크명과 URL의 관계를 별도 행으로 보존한다.
