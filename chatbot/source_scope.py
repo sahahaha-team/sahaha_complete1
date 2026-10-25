@@ -81,6 +81,10 @@ def unanswered_details(query: str, selected: str, title: str, keywords: set[str]
         details -= {'법원','재판','진행'}
     if '여권' in compact(query) and re.search(r'\d+(?:세|살)',compact(query)):
         details -= {'대학','학생','대학생','고등학생','초등학생'}  # Explicit legal age is retained separately.
+    from chatbot.answer_goal import answer_goal
+    if ('정신건강' in keywords and answer_goal(query) in ('location','method')
+            and re.search(r'정신건강상담을(?:원하는|필요로하는).{0,15}(?:주민|구민)',value)):
+        details.discard('우울감')  # Access to resident-wide counselling, never a diagnosis or treatment claim.
     return frozenset(t for t in details if t not in compact(selected))
 
 

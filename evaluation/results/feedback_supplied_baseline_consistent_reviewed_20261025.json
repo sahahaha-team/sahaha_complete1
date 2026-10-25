@@ -1,0 +1,108 @@
+{
+  "started_at": "2026-10-25T09:13:06.142544+00:00",
+  "finished_at": "2026-10-25T09:35:55.214849+00:00",
+  "assessment": "developer_AI_review_not_independent_accuracy",
+  "turns": 100,
+  "scenarios": 100,
+  "unique_question_strings": 100,
+  "grades": {
+    "S": 67,
+    "P": 10,
+    "C": 6,
+    "W": 9,
+    "R": 6,
+    "E": 1,
+    "I": 1
+  },
+  "latency_seconds": {
+    "median": 2.599,
+    "p95_nearest_rank": 23.8,
+    "max": 43.966
+  },
+  "http_status": {
+    "200": 100
+  },
+  "metrics_missing": [],
+  "model_call_count": 6,
+  "model_calls": [
+    {
+      "seconds": 30.03794959996594,
+      "outcome": "error",
+      "submission_attempted": true,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "TimeoutError"
+    },
+    {
+      "seconds": 30.063477400050033,
+      "outcome": "error",
+      "submission_attempted": true,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "TimeoutError"
+    },
+    {
+      "seconds": 0.0206074999878183,
+      "outcome": "error",
+      "submission_attempted": false,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "ModelBusy"
+    },
+    {
+      "seconds": 25.79699130001245,
+      "outcome": "validated",
+      "submission_attempted": true,
+      "load_duration_seconds": 0.0389386,
+      "prompt_eval_duration_seconds": 24.486713,
+      "eval_duration_seconds": 1.173166,
+      "total_duration_seconds": 25.7660828,
+      "prompt_eval_count": 849,
+      "eval_count": 16,
+      "done_reason": "stop"
+    },
+    {
+      "seconds": 13.444202899991069,
+      "outcome": "rejected",
+      "submission_attempted": true,
+      "load_duration_seconds": 0.0391237,
+      "prompt_eval_duration_seconds": 10.881221,
+      "eval_duration_seconds": 1.89439,
+      "total_duration_seconds": 12.8623139,
+      "prompt_eval_count": 377,
+      "eval_count": 18,
+      "done_reason": "stop"
+    },
+    {
+      "seconds": 30.039064300013706,
+      "outcome": "error",
+      "submission_attempted": true,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "TimeoutError"
+    }
+  ],
+  "code_unchanged": true,
+  "review_amendment": "첫 S68 판정은 보존. F058 시험명 핵심 누락을 같은 충분성 기준으로 P로 정정해 S67/P10. 원시 실행 변경 없음.",
+  "original_review": "feedback_supplied_9b0ee24_reviewed_20261025.json"
+}

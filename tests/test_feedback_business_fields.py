@@ -12,6 +12,44 @@ from chatbot.source_warnings import reviewed_source
 
 
 class BusinessFieldTests(unittest.TestCase):
+    def test_counselling_keeps_its_own_audience_not_a_sibling_grants(self):
+        body=('## 구강보건\n### 틀니 지원\n대상: 65세 이상 수급자\n내용: 의치 비용 지원\n'
+              '### 아동 사업\n대상: 초등학생\n내용: 구강건강서비스 제공(검사, 진료)\n'
+              '### 구강보건실 운영\n대상: 사하구 지역주민\n내용: 생애주기별 구강보건상담 및 교육\n방법: 전화 예약 후 방문')
+        result=structured_brief('구강건강 상담을 받을 수 있나요?', {'metadata':{'title':'구강보건'}},body,{'구강'})
+        self.assertIn('지역주민',result['answer'])
+        self.assertIn('상담',result['answer'])
+        self.assertNotIn('수급자',result['answer'])
+        self.assertNotIn('초등학생',result['answer'])
+
+    def test_service_purpose_cannot_replace_requested_examination_and_counselling(self):
+        body=('## 대사증후군 관리\n### 관리센터 운영\n목적: 맞춤형 건강관리 서비스를 제공\n대상: 19세 이상 구민\n'
+              '일시: 월~금 09:00~18:00 사전 예약제로 검사 전날 밤10시부터 금식\n장소: 사하구보건소 2층 통합건강증진실\n'
+              '내용: 위험요인 검사 및 맞춤상담 서비스 제공\n### 찾아가는 프로그램\n대상: 사업장\n내용: 위험요인 검사 및 맞춤상담 서비스 제공')
+        result=structured_brief('대사증후군 검사를 받거나 건강상담을 받을 수 있나요?',{'metadata':{'title':'대사증후군 관리'}},body,{'대사증후군'})
+        self.assertIn('위험요인 검사',result['answer'])
+        self.assertIn('맞춤상담',result['answer'])
+        self.assertIn('금식',result['answer'])
+        self.assertNotIn('사업장',result['answer'])
+
+    def test_test_list_membership_keeps_all_shared_applicant_conditions(self):
+        body=('## 응시료 지원\n지원대상: 18~39세 중 아래 요건을 모두 충족하는 자\n- 거주기준: 1년 이상 거주\n'
+              '- 근로이력: 미취업자 및 사업자등록사실이 없는 자\n지원내용: 연1회 응시료 지원\n'
+              '구분: 지원 시험 종류\n어학: 토익, 토익스피킹, 텝스\n신청방법: 온라인 신청')
+        q='토익이나 토익스피킹 응시료 지원을 받을 수 있나요?'
+        result=structured_brief(q,{'metadata':{'title':'응시료 지원'}},body,{'응시료'})
+        self.assertIsNotNone(result)
+        for fact in ('토익스피킹','1년','미취업','사업자등록'):self.assertIn(fact,result['answer'])
+        self.assertIsNone(structured_brief(q.replace('토익스피킹','가상시험'),{'metadata':{'title':'응시료 지원'}},body,{'응시료'}))
+
+    def test_presenting_mood_can_access_explicit_resident_counselling_without_a_diagnosis(self):
+        from chatbot.source_scope import unanswered_details
+        q='우울감이나 정신건강 문제를 상담받을 곳이 있나요?'
+        body='대상: 정신건강 상담을 원하는 사하구 주민\n위치: 구청'
+        self.assertFalse(unanswered_details(q,body,'정신건강',{'정신건강'}))
+        self.assertIn('우울감',unanswered_details(q,'대상: 등록 환자만','정신건강',{'정신건강'}))
+        self.assertIn('우울감',unanswered_details('우울감 정신건강 약 복용량 알려줘',body,'정신건강',{'정신건강'}))
+
     def test_online_service_catalogue_retains_actual_online_routes_only(self):
         q='홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?'
         body=('## 민원실 이용안내\n온라인으로 민원 상담 및 접수를 하시려면 국민신문고를 이용해주시면 됩니다.\n'

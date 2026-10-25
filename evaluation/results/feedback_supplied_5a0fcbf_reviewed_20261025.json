@@ -1,0 +1,55 @@
+{
+  "started_at": "2026-10-25T14:00:31.729607+00:00",
+  "finished_at": "2026-10-25T14:11:45.262197+00:00",
+  "assessment": "developer_AI_review_not_independent_accuracy",
+  "turns": 100,
+  "scenarios": 100,
+  "unique_question_strings": 100,
+  "grades": {
+    "S": 81,
+    "C": 7,
+    "P": 9,
+    "W": 1,
+    "I": 1,
+    "R": 1
+  },
+  "latency_seconds": {
+    "median": 1.452,
+    "p95_nearest_rank": 2.735,
+    "max": 34.525
+  },
+  "http_status": {
+    "200": 100
+  },
+  "metrics_missing": [],
+  "model_call_count": 2,
+  "model_calls": [
+    {
+      "seconds": 30.88874929997837,
+      "outcome": "error",
+      "submission_attempted": true,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "TimeoutError"
+    },
+    {
+      "seconds": 0.024599500000476837,
+      "outcome": "error",
+      "submission_attempted": false,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "ModelBusy"
+    }
+  ],
+  "code_unchanged": true
+}

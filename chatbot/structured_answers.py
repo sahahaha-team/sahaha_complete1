@@ -162,6 +162,18 @@ def scoped_units(query: str, body: str, keywords: set[str] | None = None) -> lis
             bounds = owning
     if bounds is None:
         bounds = topic_section_bounds(units,query,keywords) if keywords else named_section_bounds(units,query)
+    if goals == ('services',):
+        activities = {a for a in ('상담', '검사', '검진') if a in query}
+        regions = {section_bounds(units, i) for i,u in enumerate(units)
+                   if activities and not u.startswith('#') and field_matches('services',u,query)
+                   and (bounds is None or bounds[0] <= i < bounds[1])
+                   and all(a in u for a in activities)}
+        if len(regions) > 1:
+            venues = {r for r in regions if any(has_location_unit(u) for u in units[r[0]:r[1]])}
+            if len(venues) == 1:
+                regions = venues
+        if len(regions) == 1:
+            bounds = next(iter(regions))  # Keep activity, audience and usage in the same program.
     if bounds and answer_goal(query) == 'conditions' and not any(
             field_matches('conditions',u,query) for u in units[bounds[0]:bounds[1]]):
         # An expanded subservice can inherit its provider's common exclusions
@@ -299,10 +311,15 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if (requested_goals(query) == ('services',)
             and re.search(r'받을\s*수|서비스가\s*있|제도가\s*있', query)
             and not re.search(r'어떤|무슨|무엇|종류|지원|급여|수급|보장|의료비|신청|장려금', query)):
+        activities = {a for a in ('상담', '검사', '검진') if a in query}
         overview = next((u for u in units if not u.startswith('#') and '서비스' in u and '제공' in u
+                         and not re.match(r'(?:목적|정의)\s*[:：]',u) and all(a in u for a in activities)
                          and source_unit_complete(u) and len(u) < 280), None)
         target = next((u for u in units if re.match(r'(?:대상|지원대상|신청자격)\s*[:：]', u)), None)
         facts = [u for u in (overview, target) if u]
+        if activities.intersection({'검사','검진'}):
+            facts.extend(u for u in units if source_unit_complete(u) and len(u) < 180
+                         and re.search(r'금식|사전\s*예약제|예약\s*필수',u) and u not in facts)
         from chatbot.evidence import topic_support
         owned = topic_support({'content':' '.join(facts), 'metadata':document.get('metadata') or {}}, keywords)[0]
         if overview and owned and len('\n'.join(facts)) < 380:
@@ -353,6 +370,12 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     title = str((document.get('metadata') or {}).get('title') or '공식 안내')
     anchors = keywords.intersection(SERVICE_NAMES)
     details = focus_terms(query)
+    support_items = requested_supported_items(query, units)
+    if (goal == 'services' and '응시료' in query and details
+            and any(re.search(r'지원\s*(?:시험\s*종류|대상\s*시험)',u) for u in units)):
+        from chatbot.source_scope import unanswered_details
+        if not support_items or unanswered_details(query, ' '.join(support_items), title, keywords):
+            return None  # One listed examination cannot establish another requested examination.
     # Income alone does not establish eligibility for crisis aid.
     reasons = [w for w in ('실직','질병','부상','폐업','휴업','화재','이혼') if w in query]
     if '위기사유' in body and '소득기준' in body and reasons and goal in ('eligibility','services','method'):
@@ -581,7 +604,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         audience_column = any(' — ' in u and len(compact(u.split(' — ',1)[1].split(':',1)[0])) >= 3
                               and compact(u.split(' — ',1)[1].split(':',1)[0]) in compact(query) for u in units)
         supported_items = requested_supported_items(query, units)
-        shared_support = field in ('cost','method') and bool(supported_items)
+        shared_support = field in ('cost','method','eligibility','services') and bool(supported_items)
         if (not global_fee and not shared_support and not (audience_column and field in ('method','documents')) and field_details and any(t in compact(' '.join(units)) for t in field_details)
                 and not any(t in compact(candidates[0][2]) or t in compact(
                     next((u for u in reversed(units[:candidates[0][1]+1]) if u.startswith('#')),''))
@@ -671,6 +694,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             and re.search(r'보건증|건강진단결과서|결과서',query)):
         selected.extend(u for u in units if re.search(r'검사일로부터.{0,30}발급',u)
                         and source_unit_complete(u) and u not in selected)
+    selected_support_items = requested_supported_items(query, units)
     indices = [units.index(u) for u in selected if u in units]
     for i in condition_indices(units, indices):
         if units[i] not in selected:
@@ -697,6 +721,12 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                     and len(unit) < 170 and (scope or page_scope or len(head_names) <= 2)):
                 if len(' '.join(selected)) + len(unit) < 350:
                     selected.append(unit)
+    if goal == 'services' and scope and re.search(r'검사|검진',query):
+        for unit in units:
+            if (unit not in selected and source_unit_complete(unit) and len(unit) < 180
+                    and re.search(r'금식|사전\s*예약제|예약\s*필수',unit)
+                    and len(' '.join(selected)) + len(unit) < MAX_BRIEF_LENGTH - 40):
+                selected.append(unit)
     if goal == 'method' and '기부' in query:
         for unit in units:
             if ('개인' in unit and '주소지' in unit and re.search(r'제외|불가', unit)
@@ -710,7 +740,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             for unit in proofs[:1]:
                 if len(' '.join(selected))+len(unit)<400:
                     selected.append(unit)
-        for unit in requested_supported_items(query,units):
+        for unit in selected_support_items:
             if len(' '.join(selected))+len(unit)<400:
                 selected.append(unit)
     heading = units[0].lstrip('# ') if scope and units[0].startswith('#') else title

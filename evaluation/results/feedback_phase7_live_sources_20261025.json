@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0400000000",
+    "checked_at": "2026-10-25T14:27:12.635766+00:00",
+    "http_status": 200,
+    "parsed_sha256": "8199ee88816234e1a5f2710122220dd2ae3dfc119f14d01b1a4d615ee623d4a9",
+    "same_as_snapshot": true
+  },
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403020000",
+    "checked_at": "2026-10-25T14:27:12.740153+00:00",
+    "http_status": 200,
+    "parsed_sha256": "a817b7f15932ee7071d18b452910848bbbda1d7ef006e6b261c775353671754d",
+    "same_as_snapshot": true
+  },
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404030000",
+    "checked_at": "2026-10-25T14:27:12.743593+00:00",
+    "http_status": 200,
+    "parsed_sha256": "44dd6c24bcb601821610633c1474ec405e33b3b42aefe33d1bc3e31f837be17b",
+    "same_as_snapshot": true
+  },
+  {
+    "url": "https://www.saha.go.kr/job/contents.do?mId=0301070000",
+    "checked_at": "2026-10-25T14:27:12.303149+00:00",
+    "http_status": 200,
+    "parsed_sha256": "228fbf5cacc24f0f76bdfc64d1f91dbbdd6f82652a604b0ab5b13999d2aa7882",
+    "same_as_snapshot": true
+  }
+]

@@ -1,0 +1,128 @@
+{
+  "families": [],
+  "scenarios": [
+    {
+      "id": "F042",
+      "turns": [
+        "사하구보건소에서 구강건강 상담도 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 42,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0400000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구강보건 상담 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F058",
+      "turns": [
+        "사하구에서 토익이나 토익스피킹 응시료 지원을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 58,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "응시료 지원 시험과 거주 취업 필수조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F085",
+      "turns": [
+        "출산 후 산모와 신생아를 돌봐주는 지원서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 85,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "산모신생아 돌봄 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F088",
+      "turns": [
+        "거동이 불편하거나 건강관리가 필요한 주민에게 방문건강서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 88,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "방문건강 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F089",
+      "turns": [
+        "우울감이나 정신건강 문제를 상담받을 곳이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 89,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "정신건강 상담 지원과 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F092",
+      "turns": [
+        "보건소에서 운동이나 영양관리 프로그램도 운영하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 92,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "운동 영양 실제 프로그램과 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F093",
+      "turns": [
+        "대사증후군 검사를 받거나 건강상담을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 93,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "대사증후군 검사와 상담 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F096",
+      "turns": [
+        "사하구 건강생활지원센터에서는 어떤 서비스를 이용할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 96,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "건강생활지원센터 서비스",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    }
+  ],
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    },
+    "review_basis": "요청 문항별 필수 검수 항목을 개발 담당 AI가 사전 작성. 수치 정답은 초안에서 복사하지 않고 실제 원문으로 검수."
+  }
+}
