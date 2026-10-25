@@ -1,0 +1,23 @@
+[
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+    "checked_at": "2026-10-25T15:16:04.316705+00:00",
+    "http_status": 200,
+    "parsed_sha256": "0ca624dfaa12f6b48c99717c74a0b05bd6817110daa03d3c886c7ad3c433f28d",
+    "same_body": true
+  },
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+    "checked_at": "2026-10-25T15:16:04.644924+00:00",
+    "http_status": 200,
+    "parsed_sha256": "394309b644a3cd2885caf7873b0de70e8248e6c3142fa1bd4e8850df2659ed53",
+    "same_body": true
+  },
+  {
+    "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+    "checked_at": "2026-10-25T15:16:03.572352+00:00",
+    "http_status": 200,
+    "parsed_sha256": "c76d79fb25468a677c0be4cd11c82533250e520120f072e3f9ae1cc4bac8d674",
+    "same_body": true
+  }
+]

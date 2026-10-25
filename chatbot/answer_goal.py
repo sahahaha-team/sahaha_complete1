@@ -55,6 +55,12 @@ def answer_goal(query: str) -> str | None:
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
     compact_query = query.replace(' ', '')
+    if (re.search(r'\d{1,2}(?:세|살)',compact_query) and '예약할수있' in compact_query
+            and not re.search(r'방법|절차|서류|수수료|언제|시간',compact_query)):
+        return 'eligibility'
+    if (re.search(r'(?:기관|사무소|센터|시설)(?:가|이)?(?:있나요|있습니까|있어요|있어)',compact_query)
+            and not asks_location(query) and not asks_opening_hours(query)):
+        return 'services'
     if re.search(r'(?:건강|질병)정보.*확인', compact_query):
         return 'reference'
     if (re.search(r'부당|위법', compact_query) and re.search(r'처분|권리침해', compact_query)

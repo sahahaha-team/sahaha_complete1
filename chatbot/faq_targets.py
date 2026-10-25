@@ -90,6 +90,12 @@ def confident_official_page(question: str) -> str | None:
         return next(iter(exact)) if len(exact) == 1 else None
     if len(normalized) < 12:
         return None
+    if '사하구' in normalized and '사하구청' not in normalized:
+        def local_key(value):
+            return re.sub(r'(?:부산광역시|부산)?사하구(?!청)(?:에서)?', '', value)
+        local = {url for candidate,url in _targets() if local_key(candidate) == local_key(normalized)}
+        if len(local) == 1:
+            return next(iter(local))  # Only an identical request after the same jurisdiction label moves.
     scores = [(SequenceMatcher(None, normalized, candidate).ratio(), url) for candidate, url in _targets()]
     best = max((score for score, _ in scores), default=0)
     urls = {url for score, url in scores if score >= max(.92, best - .01)}

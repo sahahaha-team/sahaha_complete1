@@ -104,10 +104,17 @@ def search_candidates(retriever, query: str, *, k: int = 15) -> dict:
         return {**outcome, 'retrieval': {'mode':'registered_original', 'vector_invoked':False,
                                        'target_url':declared}}
     started=time.perf_counter()
-    pages=retriever.search_crawled_pages(query,k=max(k,15))
-    from chatbot.faq_targets import match_official_page
+    from chatbot.faq_targets import match_official_page, priority_entities
     target=match_official_page(query)
     preferred=retriever.search_crawled_pages(query,k=k,url=target) if target else []
+    if preferred and priority_entities(query):
+        direct=complete_direct_candidates(query,preferred,keywords)
+        if direct:
+            return {'results':direct,'degraded':False,'reason':None,
+                    'retrieval':{'mode':'verified_original','vector_invoked':False,
+                                 'raw_count':len(preferred),'lexical_count':0,
+                                 'seconds':round(time.perf_counter()-started,4)}}
+    pages=retriever.search_crawled_pages(query,k=max(k,15))
     pages=list({source_key(doc):doc for doc in preferred+pages}.values())
     lexical=[]; failures=[]
     try:

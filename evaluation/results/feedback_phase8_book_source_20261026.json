@@ -1,0 +1,13 @@
+{
+  "url": "https://www.saha.go.kr/portal/contents.do?mId=0607110000",
+  "checked_at": "2026-10-25T15:31:21.067632+00:00",
+  "http_status": 200,
+  "parsed_sha256": "45dd9d02f6b98b81465ea58a300cd08f1dd62fa95926faae272c351c42073a55",
+  "facts_present": {
+    "홈페이지 로그인": true,
+    "미소장도서": true,
+    "상호대차": true,
+    "서명, 저자, 출판사": true
+  },
+  "population": "developer negative neighbor of priority1003; not supplied100 question71"
+}

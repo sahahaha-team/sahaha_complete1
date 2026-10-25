@@ -1,0 +1,420 @@
+{
+  "started_at": "2026-10-25T15:00:26.440372+00:00",
+  "commit": "ea3eb8007433d7d0879849de6105ce3dd2fa28a2",
+  "case_sha256": "7d08220bb0432d759c49afa23438d5da6f4ddcc0b88c3e0d64aadf4402499b15",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "43fe0b6efb47b34fb1693d323825a7c4e030872b405c50167ca7b62b89f9d618",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "701156eba70a2e38b39c4631255731b7f731fdf39832260636db5b7cd62c188b",
+    "chatbot\\concise_answers.py": "784f614f58b350d4e691344f4bf04bc5fcc8877103db7850351fac17ef92f65e",
+    "chatbot\\contact_directory.py": "eec7677a045fb16a6622675c325a96087a4692e44a5856ec9ca09710b373f1e6",
+    "chatbot\\conversation.py": "374bfc155a69e900c29d75c833debfac93ed8adf18af43b6002271b3114f7277",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "879bf6e6cfb02307e08279ee9c017e273bb1660429468ecc4907a17a61f6583e",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "35aa15831202a3cc60106b08f3efd145db541b457ed60bddb0d372cdfb76ff8d",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "c57afd762ef646e4f668fba01246be542b77dad4b9f35c160c4d23aad9fab412",
+    "chatbot\\faq_targets.py": "707b9b521da2f23b8112e239a9b90441549f96be73cf1a2e7685980066b8b7d9",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "1eb2ca06eeba46c2ac43c6e8781120951576aaa9a7bd599b54c816a752102f62",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "50157e19c1c98e6348121066ac551095d93291ce57617d8ac61f45ada8490dbc",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "80bea04c200e189980cb8d2bd9468dff5d3f5fd591799e80531d0c85f21bc6a9",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "67dc010124494e02e2062eb8106c2bad2c88d186f83ea74e555289be42c2be97",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    },
+    "review_basis": "요청 문항별 필수 검수 항목을 개발 담당 AI가 사전 작성. 수치 정답은 초안에서 복사하지 않고 실제 원문으로 검수."
+  },
+  "records": [
+    {
+      "id": "F004",
+      "turn": 1,
+      "question": "사하구 홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 4,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "전자민원 종류와 공식 이용 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 2.57,
+      "server_timing": "search;dur=1356.7, verify;dur=988.0, review_gate;dur=3.5, grounding;dur=14.8, originals;dur=0.0, review;dur=1.3, prepare;dur=18.8, app;dur=2543.5",
+      "status": 200,
+      "error": null,
+      "request_id": "4b7bed3e53144603a02609159507990a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.57
+        }
+      ],
+      "response": {
+        "answer": "**민원실 이용안내**\n- 온라인으로 민원 상담 및 접수를 하시려면 국민신문고 를 이용해주시면 됩니다.\n- 그 외 각종 주민등록등본 등의 서류 발급은 왼쪽 메뉴 첫 번째 정부24 로 온라인 발급하실수 있습니다.",
+        "answer_details": "민원실 이용안내의 공식 안내 원문입니다.\n\n> ## 민원실 이용안내\n> 사하구민의 편리를 위한 각종 민원실 이용안내입니다.\n> 온라인으로 민원 상담 및 접수를 하시려면 국민신문고 를 이용해주시면 됩니다.\n> 그 외 각종 주민등록등본 등의 서류 발급은 왼쪽 메뉴 첫 번째 정부24 로 온라인 발급하실수 있습니다.\n> ### 생활불편신고민원\n> 인터넷: 국민신문고 홈페이지 민원접수하기\n> 문의전화: 민원여권과(051-220-4265), 해당부서\n> ### 일반·고충 민원\n> 업무내용 : 각종 인허가 접수 및 허가증 교부, 진정서 접수\n> 창구번호 : 2-3번 창구\n> 문의전화 : 051-220-4265\n> ### 어디서나 민원(구 팩스민원) 신청\n> ※ \"어디서나 민원처리제\"는 민원인이 소관 행정기관을 가지 않고서도 어디서나 가까운 다른 행정기관(농협 포함)에서 민원서류를 신청하고 원하는 행정기관에서 교부받을 수 있는 제도\n> 구비서류 : 본인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자 신분증, 위임자의 서명 또는 도장 날인 된 위임장\n> 수 수 료 : 교부기관의 수수료에 따름\n> 신청방법 방 문 : 2-2번 창구 전 화 : 051-220-4821 인터넷 : 민원24 http://www.minwon.go.kr 대상민원 자세히보기\n> ### 증명민원 통합발급\n> 창구번호 : 2-1번창구\n> 문의전화 : 051-220-4822~4\n> #### 본인서명사실확인서발급\n> 구비서류 본 인 : 신분증\n> 수수료 : 600원\n> #### 인감증명발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증\n> 수수료 : 600원\n> #### 주민등록등·초본, 전입세대열람 발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증 이해관계인 : 신청인의 신분증, 이해관계 사실을 증명할 수 있는 서류 (2011.11.30. 부터 반송된 내용증명 첨부 필요)\n> 등·초본 발급 400원 (본인 발급시)\n> 수수료 : 등·초본 발급 500원 (이해관계인 발급시)\n> #### 가족관계증명서 등(5종) 발급\n> 구비서류 ① 본인 및 직계 혈족, 배우자가 신청시 : 신청인의 신분증 ② 본인 및 직계 혈족, 배우자의 위임시 : 신청인 신분증, 위임자의 신분증 사본 및 위임장\n> 수 수 료 : 가족관계증명서 1,000원, 제적등본 1,000원\n> #### 세무민원 증명서 발급\n> 업무내용 : 세목별과세증명(800원), 지방세 납세증명(무료), 주택가격확인서(800원)\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 서명 또는 도장 날인된 위임장, 위임자 신분증\n> #### 지적민원 증명서 발급\n> 업무내용 : 토지이용계획확인서, 지적도, 토지대장, 건축물대장, 공시지가확인서\n> 수 수 료 토지대장 : 500원 (추가장당 100원) 토지이용계획확인서:1,500원 (추가 장당 100원씩 추가, 1번 창구) 지적도, 임야도 : 장당 700원 건축물대장 : 500원 공시지가확인서 : 800원\n> #### 가족관계등록 신고\n> 업무내용 : 혼인, 출생, 이혼, 사망신고, 정정신청 등\n> 창구번호 : 2-4번 창구\n> 문의전화 : 051-220-4274\n> #### 편의시설\n> 사무기기 사용코너 : 컴퓨터2대(인터넷검색, 정부24 전용창구), FAX기, 프린터기\n> 교양도서 · 월간지 비치 : 대기민원 활용\n> 지방세 무인수납처리기(1대), 무인민원발급기(일반용 2대, 법인용 1대)\n> 은행(1개소)\n> 북카페, 생태정원, 인바디, 혈압측정기, 공기청정기, 자동제세동기AED, 수유실 등",
+        "sources": [
+          {
+            "title": "민원실 이용안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "대상민원 자세히보기",
+                "url": "https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F061",
+      "turn": 1,
+      "question": "외국인이 이용할 수 있는 사하구 부동산 중개사무소가 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 61,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "외국인 중개서비스 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.661,
+      "server_timing": "search;dur=943.5, verify;dur=628.1, review_gate;dur=3.8, grounding;dur=4.6, originals;dur=0.0, review;dur=1.1, prepare;dur=6.0, app;dur=1651.4",
+      "status": 200,
+      "error": null,
+      "request_id": "4c99523c7d7547b793549f65efc97886",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.661
+        }
+      ],
+      "response": {
+        "answer": "**부산광역시 글로벌 중개사무소 홈페이지 안내**\n- 부동산 거래시장 선진화 및 국제화를 위해 외국인을 위한 글로벌 중개사무소를 다음과 같이 안내하오니 많은 이용바랍니다.",
+        "answer_details": "글로벌 중개사무소의 공식 안내 원문입니다.\n\n> ## 글로벌 중개사무소\n> ### 부산광역시 글로벌 중개사무소 홈페이지 안내\n> 부동산 거래시장 선진화 및 국제화를 위해 외국인을 위한 글로벌 중개사무소를 다음과 같이 안내하오니 많은 이용바랍니다.\n> 사하구 글로벌 중개업소\n> 1 — 사무소명: 삼성공인중개사사무소 · 대표: 김주호 · 주소: 사하구 을숙도대로 741 상가 1-2호(구평동 영생아파트) · 전화번호: 051-262-2545 · 비고: 영어\n> 2 — 사무소명: W합동부동산중개사무소 · 대표: 김우리 · 주소: 사하구 사리로 45, 1층 (괴정동) · 전화번호: 051-271-0991 · 비고: 영어",
+        "sources": [
+          {
+            "title": "글로벌 중개사무소",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F063",
+      "turn": 1,
+      "question": "아파트 등 공동주택 관리에 필요한 정보는 어디에서 확인하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 63,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공동주택 관리 정보 공식 범위",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.569,
+      "server_timing": "search;dur=995.9, verify;dur=471.0, review_gate;dur=2.5, grounding;dur=12.0, originals;dur=0.0, review;dur=0.0, prepare;dur=13.0, app;dur=1536.8",
+      "status": 200,
+      "error": null,
+      "request_id": "79bb764d2a4a48feaed0c1169011f29d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.569
+        }
+      ],
+      "response": {
+        "answer": "사하구청 [공동주택 관리 안내](https://www.saha.go.kr/portal/contents.do?mId=0404110000)에서 확인할 수 있습니다.",
+        "answer_details": "공동주택 관리 안내의 공식 안내 원문입니다.\n\n> ## 공동주택 관리 안내\n> ### 어린이 놀이시설 안전관리\n> #### 안전검사 및 교육기관관련 사이트\n> 검사·교육기관 — 기관명: 한국건설생활환경시험연구원 · 소재지: 부산울산경남지원 (051-974-9675) · 연결사이트주소: http://www.kcl.re.kr\n> 검사·교육기관 — 기관명: 한국기계전기전자시험연구원 · 소재지: 부산지원 (051-336-1566) · 연결사이트주소: http://www.ktc.re.kr\n> 검사·교육기관 — 기관명: (사)대한민국 비상재난안전협회 · 소재지: 서울 강남구 (02-512-3780) · 연결사이트주소: http://www.kedss.kr\n> 교육기관 — 기관명: (사)한국생활안전연합 · 소재지: 서울 서초구 (02-3476-0119) · 연결사이트주소: http://www.safia.org\n> 교육기관 — 기관명: (재)한국재난안전기술원 · 소재지: 서울시 영등포구 (02-780-4624) · 연결사이트주소: http://www.safeleader.org\n> 교육기관 — 기관명: (사)대한민국 비상재난안전협회 · 소재지: 서울 강남구 (02-512-3780) · 연결사이트주소: http://www.kedss.kr\n> 교육인정기관 — 기관명: (사)대한주택관리사협회 · 소재지: 서울 금천구 (02-882-0050) · 연결사이트주소: http://www.khma.org\n> 검사기관 — 기관명: (사)한국생활안전연합 · 소재지: 부산지회 (051-804-5454) · 연결사이트주소: http://www.safety.or.kr\n> ※ 교육수강 신청은 각 기관사이트의 수강신청서 이용\n> ### 공동주택 자체 사이버 안전점검 실시\n> #### 관련법령\n> 주택법 제50조, 재난 및 안전관리기본법 제26조 및 영 제33조\n> #### 점검개요\n> 점검일시 : 상, 하반기 총 2회 이상\n> 대 상 특정관리대상시설 중 의무관리대상시설 ▹자체사이버 안전점검 대상시설 현황 ※ 준공이후 15년이 지난 공동주택 중 300세대 이상, 150대~300세대중 중앙난방방식 또는 E/V가 있는 시설\n> 점검결과 입력 국가재난정보센터 접속(safekorea.go.kr)→특정관리대상 클릭(하단 우측) → 기본정보(시설물관리번호 및 비밀번호) 입력→안전점검결과 입력\n> ### 관리주체 소방 및 방범교육\n> #### 관련법령\n> 주택법 제49조(안전관리계획 및 교육 등) 및 시행규칙 제28조(방범교육 및 안전교육)\n> #### 교육개요\n> 일 시 : 상반기 중 예정\n> 장 소 : 사하구청(예정)\n> 대 상 : 의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자\n> 강 사 : 사하경찰서, 사하소방서\n> 교육내용 방범교육 : 강도․절도 등의 예방 및 대응 소방에 관한 안전교육 : 소화․연소 및 화재예방\n> ### 입주자대표회의 운영 및 윤리교육\n> #### 관련법령\n> 주택법 제43조의2(입주자대표회의의 운영교육)\n> 주택법시행령 제50조의3(입주자대회의의 운영 및 윤리교육)\n> #### 교육개요\n> 일 시 : 미정\n> 장 소 : 사하구청 예정\n> 대 상 : 의무관리대상 공동주택 동별대표자\n> 강 사 : 대한주택관리사협회 부산시회 전문강사 등\n> 교육내용 공동주택관리규약 및 관리에 필요한 모든 규정의 내용 관리비‧사용료 및 장기수선충당금 등 산정방법 관리현황의 공개방법 및 관리업무의 전산화 등 입주자대표회의의 운영에 필요한 사항",
+        "sources": [
+          {
+            "title": "공동주택 관리 안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_reference",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "reference"
+          ],
+          "matched_fields": [
+            "reference"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P61",
+      "turn": 1,
+      "question": "부산 사하구에서 외국인이 이용할 수 있는 부동산 중개사무소가 있나요?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 61,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "외국인 중개서비스 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 14.539,
+      "server_timing": "search;dur=3260.5, verify;dur=1951.6, review_gate;dur=217.6, rerank;dur=5701.0, grounding;dur=3310.0, originals;dur=0.0, review;dur=1.1, prepare;dur=10.6, app;dur=14517.8",
+      "status": 200,
+      "error": null,
+      "request_id": "5e34d989dd7643269078c38a016426dd",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 14.539
+        }
+      ],
+      "response": {
+        "answer": "**부산광역시 글로벌 중개사무소 홈페이지 안내**\n- 부동산 거래시장 선진화 및 국제화를 위해 외국인을 위한 글로벌 중개사무소를 다음과 같이 안내하오니 많은 이용바랍니다.",
+        "answer_details": "글로벌 중개사무소의 공식 안내 원문입니다.\n\n> ## 글로벌 중개사무소\n> ### 부산광역시 글로벌 중개사무소 홈페이지 안내\n> 부동산 거래시장 선진화 및 국제화를 위해 외국인을 위한 글로벌 중개사무소를 다음과 같이 안내하오니 많은 이용바랍니다.\n> 사하구 글로벌 중개업소\n> 1 — 사무소명: 삼성공인중개사사무소 · 대표: 김주호 · 주소: 사하구 을숙도대로 741 상가 1-2호(구평동 영생아파트) · 전화번호: 051-262-2545 · 비고: 영어\n> 2 — 사무소명: W합동부동산중개사무소 · 대표: 김우리 · 주소: 사하구 사리로 45, 1층 (괴정동) · 전화번호: 051-271-0991 · 비고: 영어",
+        "sources": [
+          {
+            "title": "글로벌 중개사무소",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-25T15:01:00.618698+00:00"
+}

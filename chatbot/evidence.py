@@ -150,6 +150,8 @@ def topic_support(doc: dict, keywords: set[str]) -> tuple[bool, set[str]]:
     meta = doc.get("metadata") or {}
     haystack = compact(f"{meta.get('title', '')} {doc.get('content', '')}")
     matched = {word for word in topics if word in haystack}
+    if '강좌' in topics and all(word in haystack for word in ('프로그램','수강료','접수방법')):
+        matched.add('강좌')  # Explicit course admission/tuition, not a library's book-request guide.
     if '법정감염병' in topics and len(set(re.findall(r'제[1-4]급감염병', haystack))) >= 2:
         matched.add('법정감염병')  # Statutory classes establish the subject without that exact title.
     if '옥외대피' in topics and '외부공간' in haystack:

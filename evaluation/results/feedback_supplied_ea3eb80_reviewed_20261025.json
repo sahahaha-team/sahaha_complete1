@@ -1,0 +1,40 @@
+{
+  "started_at": "2026-10-25T14:37:31.433551+00:00",
+  "finished_at": "2026-10-25T14:48:44.115377+00:00",
+  "assessment": "developer_AI_review_not_independent_accuracy",
+  "turns": 100,
+  "scenarios": 100,
+  "unique_question_strings": 100,
+  "grades": {
+    "S": 85,
+    "C": 7,
+    "P": 7,
+    "I": 1
+  },
+  "latency_seconds": {
+    "median": 1.388,
+    "p95_nearest_rank": 2.648,
+    "max": 33.805
+  },
+  "http_status": {
+    "200": 100
+  },
+  "metrics_missing": [],
+  "model_call_count": 1,
+  "model_calls": [
+    {
+      "seconds": 30.20125379995443,
+      "outcome": "error",
+      "submission_attempted": true,
+      "load_duration_seconds": null,
+      "prompt_eval_duration_seconds": null,
+      "eval_duration_seconds": null,
+      "total_duration_seconds": null,
+      "prompt_eval_count": null,
+      "eval_count": null,
+      "done_reason": null,
+      "error_type": "TimeoutError"
+    }
+  ],
+  "code_unchanged": true
+}

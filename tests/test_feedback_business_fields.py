@@ -12,6 +12,50 @@ from chatbot.source_warnings import reviewed_source
 
 
 class BusinessFieldTests(unittest.TestCase):
+    def test_explicit_reservation_age_is_an_eligibility_question_not_a_scope_choice(self):
+        q='소방특화 들락날락 체험 3살도 예약할 수 있나요?'
+        self.assertEqual(answer_goal(q),'eligibility')
+        doc={'metadata':{'title':'소방특화 들락날락'}}
+        result=structured_brief(q,doc,'## 소방특화 들락날락\n▹ 이용대상: 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.',{'소방'})
+        self.assertIsNotNone(result)
+        self.assertFalse(result.get('is_clarification'))
+        self.assertIn('4세 이상',result['answer'])
+        self.assertIn('13세 이하',result['answer'])
+
+    def test_same_jurisdiction_can_move_without_changing_the_request(self):
+        q='부산 사하구에서 외국인이 이용할 수 있는 부동산 중개사무소가 있나요?'
+        url='https://www.saha.go.kr/portal/contents.do?mId=0404030000'
+        self.assertEqual(confident_official_page(q),url)
+        r=Mock();r._content_keywords.return_value={'중개사무소'}
+        r.search_official_url.return_value={'results':[],'degraded':False,'reason':None}
+        search_candidates(r,q)
+        r.search_official_url.assert_called_once_with(q,url,k=15)
+
+    def test_named_course_proof_can_precede_global_search_without_inventing_a_subject(self):
+        q='작은도서관 강좌 신청 어떻게 하나요?'
+        doc={'content':'## 작은도서관\n### 작은도서관 프로그램 운영 안내\n수강료: 무료\n대상: 사하구민\n접수방법: 통합예약 온라인접수',
+             'metadata':{'title':'작은도서관','url':'https://www.saha.go.kr/portal/contents.do?mId=0408030000','source_type':'crawled_page'}}
+        r=Mock();r._content_keywords.return_value={'작은도서관','강좌'}
+        r.search_crawled_pages.return_value=[doc]
+        result=search_candidates(r,q)
+        r.search_crawled_pages.assert_called_once_with(q,k=15,url=doc['metadata']['url'])
+        self.assertEqual(result['retrieval']['mode'],'verified_original')
+        self.assertFalse(result['retrieval']['vector_invoked'])
+        from chatbot.candidate_search import complete_direct_candidates
+        self.assertEqual(complete_direct_candidates('작은도서관 코딩 강좌 신청 방법',[doc],{'작은도서관','강좌','코딩'}),[])
+        self.assertEqual(complete_direct_candidates(q,[{**doc,'content':'## 작은도서관\n희망도서 신청방법: 온라인접수'}],{'작은도서관','강좌'}),[])
+
+    def test_explicit_provider_availability_needs_no_model_to_invent_a_description(self):
+        q='외국인이 이용할 수 있는 부동산 중개사무소가 있나요?'
+        self.assertEqual(answer_goal(q),'services')
+        self.assertEqual(answer_goal('정신건강센터는 어디에 있나요?'),'location')
+        body='## 글로벌 중개사무소\n부동산 거래시장 선진화 및 국제화를 위해 외국인을 위한 글로벌 중개사무소를 다음과 같이 안내하오니 많은 이용바랍니다.'
+        r=structured_brief(q,{'metadata':{'title':'글로벌 중개사무소'}},body,{'중개사무소','외국인'})
+        self.assertIsNotNone(r)
+        self.assertIn('외국인을 위한',r['answer'])
+        self.assertFalse(field_matches('services','시설이 폐쇄되어 이용하지 마시기 바랍니다.'))
+        self.assertIsNone(structured_brief(q,{'metadata':{'title':'글로벌 중개사무소'}},'## 시설 안내\n중개사무소는 폐쇄되어 이용이 불가합니다.',{'중개사무소','외국인'}))
+
     def test_counselling_keeps_its_own_audience_not_a_sibling_grants(self):
         body=('## 구강보건\n### 틀니 지원\n대상: 65세 이상 수급자\n내용: 의치 비용 지원\n'
               '### 아동 사업\n대상: 초등학생\n내용: 구강건강서비스 제공(검사, 진료)\n'
