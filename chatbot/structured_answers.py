@@ -472,6 +472,10 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             if QUALIFICATION.match(unit) and field == 'cost' and re.search(r'깎|감경|할인|감면',query):
                 relevant_exception = field_matches(field,unit,query)
             heading_context = next((u for u in reversed(units[:index+1]) if u.startswith('#')),'')
+            if (field == 'services' and re.search(r'무엇|어떤|무슨|종류', query)
+                    and re.search(r'전자민원|온라인|인터넷', query)
+                    and not re.search(r'온라인|인터넷|전자민원', unit + ' ' + heading_context)):
+                continue  # A web-service catalogue cannot borrow an offline counter's duties.
             if (not field_matches(field, unit, query, heading_context) and not relevant_exception) or (QUALIFICATION.match(unit) and not relevant_exception) or len(unit) > 330:
                 continue
             if general_targets and ' — ' in unit:
@@ -486,8 +490,9 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             vicinity = compact(program + ' ' + unit)
             matches = sum(k in vicinity for k in (anchors or keywords))
             # Once a program is scoped, field labels need not repeat its name.
-            if anchors and not scope and not row_matches and not page_scope and not all(
-                    k in compact(title) or k in vicinity for k in anchors):
+            if (anchors and not scope and not row_matches and not page_scope
+                    and not all(k in compact(title) or k in vicinity for k in anchors)
+                    and not topic_support({'content':program + ' ' + unit}, anchors)[0]):
                 continue
             # A resident-wide inquiry cannot silently become a children-only
             # outreach program merely because both pages mention consultation.

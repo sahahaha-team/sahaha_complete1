@@ -1,0 +1,97 @@
+{
+  "families": [],
+  "scenarios": [
+    {
+      "id": "F004",
+      "turns": [
+        "사하구 홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 4,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "전자민원 종류와 공식 이용 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F007",
+      "turns": [
+        "정부24를 이용하면 구청에 가지 않고도 민원서류를 발급받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 7,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 발급 가능 민원과 현재 인증 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F055",
+      "turns": [
+        "부당한 지방세 처분 때문에 어려움이 있을 때 도움을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 55,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "납세자보호관 상담과 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F074",
+      "turns": [
+        "사하구 통합돌봄은 어떤 사람을 위한 사업인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 74,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "통합돌봄 대상과 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F088",
+      "turns": [
+        "거동이 불편하거나 건강관리가 필요한 주민에게 방문건강서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 88,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "방문건강 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "B01",
+      "turns": [
+        "보건증을 보건소에 다시 가지 않고 온라인으로 발급받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 84,
+        "required_review": "정상 검사결과 조건, 공공보건포털,1년 발급 기한 보존"
+      }
+    }
+  ],
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    },
+    "review_basis": "요청 문항별 필수 검수 항목을 개발 담당 AI가 사전 작성. 수치 정답은 초안에서 복사하지 않고 실제 원문으로 검수."
+  }
+}

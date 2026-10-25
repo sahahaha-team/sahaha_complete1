@@ -12,6 +12,19 @@ from chatbot.source_warnings import reviewed_source
 
 
 class BusinessFieldTests(unittest.TestCase):
+    def test_online_service_catalogue_retains_actual_online_routes_only(self):
+        q='홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?'
+        body=('## 민원실 이용안내\n온라인으로 민원 상담 및 접수를 하시려면 국민신문고를 이용해주시면 됩니다.\n'
+              '주민등록등본 등의 서류 발급은 정부24로 온라인 발급하실수 있습니다.\n'
+              '### 일반민원\n업무내용 : 인허가 접수 및 허가증 교부\n창구번호: 2번\n수수료: 600원')
+        result=structured_brief(q, {'metadata':{'title':'민원실 이용안내'}}, body, {'전자민원'})
+        self.assertIsNotNone(result)
+        self.assertIn('국민신문고',result['answer'])
+        self.assertIn('정부24',result['answer'])
+        self.assertNotIn('허가증',result['answer'])
+        self.assertNotIn('600원',result['answer'])
+        self.assertIsNone(structured_brief(q, {'metadata':{'title':'전자민원'}}, '업무내용 : 인허가 접수 및 허가증 교부', {'전자민원'}))
+
     def test_elided_course_location_keeps_age_and_program_type(self):
         from chatbot.response_helpers import build_contextual_search_query
         from chatbot.dialogue_profile import child_course_conflict

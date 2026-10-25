@@ -1,0 +1,12 @@
+{
+  "url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+  "checked_at": "2026-10-25T13:51:35.045202+00:00",
+  "http_status": 200,
+  "parsed_sha256": "0ca67a45a3c5f784c24128c970b6ab4b297fef465387f02a6d8978e334a9fc0f",
+  "same_parsed_body": true,
+  "facts_reviewed": [
+    "온라인 상담/접수는 국민신문고",
+    "서류 온라인 발급은 정부24",
+    "오프라인 창구 업무 및 오래된 수수료와 구분"
+  ]
+}

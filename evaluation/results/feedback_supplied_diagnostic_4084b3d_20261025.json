@@ -1,0 +1,1494 @@
+{
+  "started_at": "2026-10-25T13:46:05.421856+00:00",
+  "commit": "4084b3da171b5f8af8e3bc0dda64af4b4830c938",
+  "case_sha256": "2996c26e0dc08f72162819821b8d149988e067c8a2974613f4cc10b548622652",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "011f5444428cb09fe32bbfb81cd2074fd1459dbbebc247775ea64b74f404e710",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "701156eba70a2e38b39c4631255731b7f731fdf39832260636db5b7cd62c188b",
+    "chatbot\\concise_answers.py": "784f614f58b350d4e691344f4bf04bc5fcc8877103db7850351fac17ef92f65e",
+    "chatbot\\contact_directory.py": "eec7677a045fb16a6622675c325a96087a4692e44a5856ec9ca09710b373f1e6",
+    "chatbot\\conversation.py": "374bfc155a69e900c29d75c833debfac93ed8adf18af43b6002271b3114f7277",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "879bf6e6cfb02307e08279ee9c017e273bb1660429468ecc4907a17a61f6583e",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "35aa15831202a3cc60106b08f3efd145db541b457ed60bddb0d372cdfb76ff8d",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "c57afd762ef646e4f668fba01246be542b77dad4b9f35c160c4d23aad9fab412",
+    "chatbot\\faq_targets.py": "707b9b521da2f23b8112e239a9b90441549f96be73cf1a2e7685980066b8b7d9",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "1eb2ca06eeba46c2ac43c6e8781120951576aaa9a7bd599b54c816a752102f62",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "440ab2fe89ab1372153d8f4c425fb53cdb9852bfd98bd437347b6f8c46218b27",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "5284bb391ec6f547092fa3129812625cf4b8c8a2d04b0d32db9d3b06b7b87ad5",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "67dc010124494e02e2062eb8106c2bad2c88d186f83ea74e555289be42c2be97",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    },
+    "review_basis": "요청 문항별 필수 검수 항목을 개발 담당 AI가 사전 작성. 수치 정답은 초안에서 복사하지 않고 실제 원문으로 검수."
+  },
+  "records": [
+    {
+      "id": "F001",
+      "turn": 1,
+      "question": "사하구청은 어디에 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 1,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구청 실제 주소",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.379,
+      "server_timing": "search;dur=779.1, verify;dur=543.6, review_gate;dur=1.7, grounding;dur=3.4, originals;dur=0.0, review;dur=0.9, prepare;dur=3.5, app;dur=1372.6",
+      "status": 200,
+      "error": null,
+      "request_id": "52c3ad37fec346bf867ed20a38fbff3f",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.379
+        }
+      ],
+      "response": {
+        "answer": "**구청오시는 길**\n- 주소 : 부산광역시 사하구 낙동대로398번길 12(당리동)",
+        "answer_details": "구청오시는 길의 공식 안내 원문입니다.\n\n> ## 구청오시는 길\n> 주소 및 전화 안내\n> 주소 : 부산광역시 사하구 낙동대로398번길 12(당리동)\n> 대표전화 : 051-220-4000 / Fax : 051-220-4444\n> 교통편 안내\n> 도시철도 이용시\n> 당리역에서 하차 후 5번 출구",
+        "sources": [
+          {
+            "title": "구청오시는 길",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+            "category": "사하소개",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F002",
+      "turn": 1,
+      "question": "사하구청 대표전화는 몇 번인가요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 2,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구청 대표번호 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.028,
+      "server_timing": "app;dur=20.9",
+      "status": 200,
+      "error": null,
+      "request_id": "a7ef1df73e0b49759de7d53634bae13b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.028
+        }
+      ],
+      "response": {
+        "answer": "**사하구청 대표전화: 051-220-4000**",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "사하구청 부서별 대표전화",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "사하구청",
+            "contact": "051-220-4000",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25T04:34:44.683197+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F003",
+      "turn": 1,
+      "question": "사하구청 민원실 창구가 어디에 있는지 확인할 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 3,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민원 창구별 위치 확인 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.174,
+      "server_timing": "search;dur=778.4, verify;dur=340.2, review_gate;dur=1.6, grounding;dur=3.6, originals;dur=0.0, review;dur=0.0, prepare;dur=3.9, app;dur=1166.2",
+      "status": 200,
+      "error": null,
+      "request_id": "99ee62baef0a48059faf20b0f36015c1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.174
+        }
+      ],
+      "response": {
+        "answer": "사하구청 [민원실배치도](https://www.saha.go.kr/portal/contents.do?mId=0103020000)에서 확인할 수 있습니다.",
+        "answer_details": "민원실배치도의 공식 안내 원문입니다.\n\n> ## 민원실배치도\n> #### 배치도 설명\n> 4-1 자동차 압류해제\n> 4-2 등록면허세\n> 5 취득세\n> 3 여권발급\n> 2-4 가족관계 등록\n> 2-3 민원서류접수, 인·허가증 교부\n> 2-2 외국인, 어디서나 민원\n> 2-1 증명민원 통합발급\n> 1-2 부동산 실거래가 신고·검인\n> 1-1 토지이용 계획 확인원\n> 민원실 입구\n> 세무1과 세무2과 토지정보과 민원여권과 1-1 창구번호",
+        "sources": [
+          {
+            "title": "민원실배치도",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_reference",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "reference"
+          ],
+          "matched_fields": [
+            "reference"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F004",
+      "turn": 1,
+      "question": "사하구 홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 4,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "전자민원 종류와 공식 이용 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 32.205,
+      "server_timing": "search;dur=1055.1, verify;dur=745.7, review_gate;dur=3.3, grounding;dur=10.3, originals;dur=0.0, review;dur=1.0, prepare;dur=16.4, model_gate;dur=1.3, model;dur=30143.9, app;dur=32196.5",
+      "status": 200,
+      "error": null,
+      "request_id": "b2004159c75b41a7bb1c067b814efc08",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 32.205
+        }
+      ],
+      "response": {
+        "answer": "관련 공식 자료는 찾았지만, 이용 가능한 서비스에 답할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.\n\n공식 자료를 검토하는 데 시간이 오래 걸려 답변을 마치지 못했습니다. 잠시 후 다시 질문해 주세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "민원실 이용안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "대상민원 자세히보기",
+                "url": "https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "processing_timeout",
+        "evidence": {
+          "answer_method": "source_fallback",
+          "status": "partial",
+          "label": "답변 검토를 마치지 못함",
+          "official_source_count": 1,
+          "decision": "unavailable",
+          "reasons": [
+            "processing_timeout"
+          ],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F005",
+      "turn": 1,
+      "question": "사하구청 민원실 이용 안내는 어디에서 확인하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 5,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민원실 이용 안내의 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.441,
+      "server_timing": "search;dur=1010.6, verify;dur=346.7, review_gate;dur=1.5, grounding;dur=12.1, originals;dur=0.0, review;dur=0.0, prepare;dur=11.7, app;dur=1430.7",
+      "status": 200,
+      "error": null,
+      "request_id": "fc98a1c63b4d402eb776728aa3afcfd4",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.441
+        }
+      ],
+      "response": {
+        "answer": "사하구청 [민원실 이용안내](https://www.saha.go.kr/portal/contents.do?mId=0103010000)에서 확인할 수 있습니다.\n\n[대상민원 자세히보기](https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp)를 열어 상세 자료를 보세요.\n파일명에 **2017**이 포함된 자료이므로 최신 변경 사항은 별도 확인이 필요합니다.",
+        "answer_details": "민원실 이용안내의 공식 안내 원문입니다.\n\n> ## 민원실 이용안내\n> 사하구민의 편리를 위한 각종 민원실 이용안내입니다.\n> 온라인으로 민원 상담 및 접수를 하시려면 국민신문고 를 이용해주시면 됩니다.\n> 그 외 각종 주민등록등본 등의 서류 발급은 왼쪽 메뉴 첫 번째 정부24 로 온라인 발급하실수 있습니다.\n> ### 생활불편신고민원\n> 인터넷: 국민신문고 홈페이지 민원접수하기\n> 문의전화: 민원여권과(051-220-4265), 해당부서\n> ### 일반·고충 민원\n> 업무내용 : 각종 인허가 접수 및 허가증 교부, 진정서 접수\n> 창구번호 : 2-3번 창구\n> 문의전화 : 051-220-4265\n> ### 어디서나 민원(구 팩스민원) 신청\n> ※ \"어디서나 민원처리제\"는 민원인이 소관 행정기관을 가지 않고서도 어디서나 가까운 다른 행정기관(농협 포함)에서 민원서류를 신청하고 원하는 행정기관에서 교부받을 수 있는 제도\n> 구비서류 : 본인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자 신분증, 위임자의 서명 또는 도장 날인 된 위임장\n> 수 수 료 : 교부기관의 수수료에 따름\n> 신청방법 방 문 : 2-2번 창구 전 화 : 051-220-4821 인터넷 : 민원24 http://www.minwon.go.kr 대상민원 자세히보기\n> ### 증명민원 통합발급\n> 창구번호 : 2-1번창구\n> 문의전화 : 051-220-4822~4\n> #### 본인서명사실확인서발급\n> 구비서류 본 인 : 신분증\n> 수수료 : 600원\n> #### 인감증명발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증\n> 수수료 : 600원\n> #### 주민등록등·초본, 전입세대열람 발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증 이해관계인 : 신청인의 신분증, 이해관계 사실을 증명할 수 있는 서류 (2011.11.30. 부터 반송된 내용증명 첨부 필요)\n> 등·초본 발급 400원 (본인 발급시)\n> 수수료 : 등·초본 발급 500원 (이해관계인 발급시)\n> #### 가족관계증명서 등(5종) 발급\n> 구비서류 ① 본인 및 직계 혈족, 배우자가 신청시 : 신청인의 신분증 ② 본인 및 직계 혈족, 배우자의 위임시 : 신청인 신분증, 위임자의 신분증 사본 및 위임장\n> 수 수 료 : 가족관계증명서 1,000원, 제적등본 1,000원\n> #### 세무민원 증명서 발급\n> 업무내용 : 세목별과세증명(800원), 지방세 납세증명(무료), 주택가격확인서(800원)\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 서명 또는 도장 날인된 위임장, 위임자 신분증\n> #### 지적민원 증명서 발급\n> 업무내용 : 토지이용계획확인서, 지적도, 토지대장, 건축물대장, 공시지가확인서\n> 수 수 료 토지대장 : 500원 (추가장당 100원) 토지이용계획확인서:1,500원 (추가 장당 100원씩 추가, 1번 창구) 지적도, 임야도 : 장당 700원 건축물대장 : 500원 공시지가확인서 : 800원\n> #### 가족관계등록 신고\n> 업무내용 : 혼인, 출생, 이혼, 사망신고, 정정신청 등\n> 창구번호 : 2-4번 창구\n> 문의전화 : 051-220-4274\n> #### 편의시설\n> 사무기기 사용코너 : 컴퓨터2대(인터넷검색, 정부24 전용창구), FAX기, 프린터기\n> 교양도서 · 월간지 비치 : 대기민원 활용\n> 지방세 무인수납처리기(1대), 무인민원발급기(일반용 2대, 법인용 1대)\n> 은행(1개소)\n> 북카페, 생태정원, 인바디, 혈압측정기, 공기청정기, 자동제세동기AED, 수유실 등",
+        "sources": [
+          {
+            "title": "민원실 이용안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "대상민원 자세히보기",
+                "url": "https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_reference",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "reference"
+          ],
+          "matched_fields": [
+            "reference"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F006",
+      "turn": 1,
+      "question": "사하구 무인민원발급기 수수료는 얼마인가요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 6,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "무인발급 수수료와 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.508,
+      "server_timing": "app;dur=491.5",
+      "status": 200,
+      "error": null,
+      "request_id": "7cdc7f5aafd7473397a0975bdd2bcfe4",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.508
+        }
+      ],
+      "response": {
+        "answer": "사하구 무인민원발급기 수수료는 **무료**(2026.1.1.부터)입니다. 다만 **부동산등기부등본은 1000원**이며, 현금만 가능합니다. 설치장소별 운영시간과 발급 가능한 서류는 공식 안내에서 확인하세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "무인민원발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F007",
+      "turn": 1,
+      "question": "정부24를 이용하면 구청에 가지 않고도 민원서류를 발급받을 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 7,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 발급 가능 민원과 현재 인증 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.606,
+      "server_timing": "search;dur=1006.0, verify;dur=491.9, review_gate;dur=6.9, grounding;dur=6.2, originals;dur=0.0, review;dur=3.7, prepare;dur=3.7, app;dur=1584.6",
+      "status": 200,
+      "error": null,
+      "request_id": "0937267a4da14dc8bc45c885a7469293",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.606
+        }
+      ],
+      "response": {
+        "answer": "**정부24**\n- 「정부24」는 1년 365일 24시간 집, 사무실 등 어디서나 필요한 민원을 인터넷을 이용 해 신청·열람·발급받을 수 있는 정부서비스입니다.\n\n이 페이지의 세부 이용방법은 오래된 안내이므로, 현재 인증·발급 방법은 정부24에서 확인해 주세요.",
+        "answer_details": "정부24의 공식 안내 원문입니다.\n\n> ## 정부24\n> ### 정부24\n> 「정부24」는 1년 365일 24시간 집, 사무실 등 어디서나 필요한 민원을 인터넷을 이용 해 신청·열람·발급받을 수 있는 정부서비스입니다. .\n> #### 정부24 민원서비스\n> 주민등록 등·초본, 자동차등록원부 등 수수료 무료 (62종)\n> 인·허가 등 민원사무 처리절차 안내 (5천여종)\n> #### 이용방법",
+        "sources": [
+          {
+            "title": "정부24",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F008",
+      "turn": 1,
+      "question": "행정기관이 이미 가지고 있는 서류도 민원 신청할 때 다시 제출해야 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 8,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "행정정보 공동이용과 미연계 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.795,
+      "server_timing": "search;dur=1216.2, verify;dur=472.8, review_gate;dur=4.3, grounding;dur=11.0, originals;dur=0.0, review;dur=0.9, prepare;dur=10.9, app;dur=1788.0",
+      "status": 200,
+      "error": null,
+      "request_id": "d079097eb7ce4821b18599ff3ecce5fc",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.795
+        }
+      ],
+      "response": {
+        "answer": "**행정정보 공동이용 안내**\n- 각 기관이 보유하고 있는 행정정보를 행정·공공·금융기관에서 공동으로 이용할 수 있는 제도이며, 공동으로 이용할 수 있는 정보에 대해서는 민원신청시 별도로 해당서류를 제출하실 필요가 없습니다.",
+        "answer_details": "민원편의시책의 공식 안내 원문입니다.\n\n> ## 민원편의시책\n> 민원 1회방문 처리제\n> 일과시간 외 민원실\n> 구술·전화민원 접수 처리서비스\n> 사전심사청구제\n> 민원서류 외국어 지원서비스\n> 민원후견인제\n> 거부처분에 대한 이의신청\n> 거동불편인 민원서류 무료배달\n> 민원상담 무료전화\n> 행정정보 공동이용 안내\n> 어디서나 민원처리제\n> 아름다운 배려창구 운영\n> ### 민원 1회방문 처리제\n> 2개 부서·기관 이상 관련된 복합민원을 대상으로 민원인이 여러 관련부서·기관을 직접 방문하여 접수, 개별 처리하던 것을 민원인이 민원 1회 방문창구에 서류를 접수하면 모든 절차를 민원 주관부서에서 부서협조 등을 통해 직접 처리함으로써 민원인의 시간적·경제적 부담을 줄이는 제도입니다.\n> 운영내용 ① 민원 1회방문 상담창구 운영 -민원인에게 민원1회 방문처리에 관한 안내와 상담의 편의를 제공하기 위해 민원실에 설치(민원여권과 2-3번 창구) ② 민원후견인 지정·운영 -민원사무의 처리에 경험이 많은 공무원을 후견인으로 지정하여 민원처리과정에서 민원인을 보좌·안내 ③ 실무심의회 운영 -복합민원의 처리를 위해 관련 실무자들이 법적 타당성·서류 등을 일괄 심의 문 의 : 민원여권과 담당자 (☎220-4265) ④ 민원조정위원회 운영 -이의신청, 복합·다수인 민원, 실무종합심의회 불가결정 사안 등 갈등을 유발할 수 있는 민원사항의 심의·조정 ⑤ 기관장 최종결정\n> ### 일과시간 외 민원실 운영\n> 일과시간 내 민원실 방문이 어려운 맞벌이 부부·직장인 등을 위해 여권 접수·교부업무를 일과시간 외에 운영하는 편리한 제도입니다.\n> 운영내용 운영시기 : 매주 수요일 18:30 ~ 20:00 장 소 : 사하구청 1층 민원여권과 취급업무 : 여권 접수·교부 문 의 : 사하구청 민원여권과 (☎ 여권업무 : 220-4811~4)\n> 발급민원 자세히보기\n> ### 구술·전화민원 접수 처리서비스\n> 구비서류 없이 구술 또는 전화로 민원을 접수·처리하는 제도로써 민원인의 의사표시를 문서(전자문서 포함)로 증명할 필요가 없는 민원사항은 구술 또는 전화로 간단하게 신청할 수 있습니다.\n> 신청방법 통합(증명)민원 평일(09:00 ~ 18:00) : 통합민원창구(☎220-4822~4824) 일반민원 평일(09:00 ~ 18:00) : 해당부서 직접 유선접수 및 민생 Call센터(☎220-4361~3,5500)\n> 대상민원 자세히보기\n> ### 사전심사청구제\n> 대규모 경제적 비용이 수반되는 아래의 민원에 대하여 정식민원 서류를 제출하기 전에 약식서류를 제출하면 구청에서 사전에 가·부를 심사하여 민원인에게 통보하여 불가처분 시 발생될 수 있는 시간적·경제적 손실을 사전에 방지할 수 있는 제도입니다.\n> 신청방법 :『민원 1회방문 상담창구』에 신청(민원여권과 2-3번 창구)\n> 처리절차 사전심사 청구서 접수(민원여권과) ☞ 청구서 이송(처리부서) ☞ 사전심사 결과회신(민원인) ☞ 정식민원 접수(민원여권과) ☞ 정식민원 이송(처리부서) ☞ 최종결과 회신(민원인)\n> 사전심사 청구대상 민원사무\n> 1 — 부서명: 경제진흥과\n> 1 — 민원사무명: 대규모점포 개설등록 (변경)신청\n> 1 — 처리기간 / 법정사항: 30일\n> 1 — 처리기간 / 사전심사: 15일\n> 1 — 처리기간 / 정식민원 신청시: 15일\n> 2 — 부서명: 〃\n> 2 — 민원사무명: 양곡가공업의 신고\n> 2 — 처리기간 / 법정사항: 14일\n> 2 — 처리기간 / 사전심사: 14일\n> 2 — 처리기간 / 정식민원 신청시: 14일\n> 3 — 부서명: 일자리정책과\n> 3 — 민원사무명: 공장설립 (변경)승인\n> 3 — 처리기간 / 법정사항: 7일\n> 3 — 처리기간 / 사전심사: 7일\n> 3 — 처리기간 / 정식민원 신청시: 7일\n> 4 — 부서명: 〃\n> 4 — 민원사무명: 고압가스 용기·냉동기 및 특정설비의 제조등록 (변경)신청\n> 4 — 처리기간 / 법정사항: 등록 5일 변경 4일\n> 4 — 처리기간 / 사전심사: 등록 5일 변경 4일\n> 4 — 처리기간 / 정식민원 신청시: 등록 5일 변경 4일\n> 5 — 부서명: 〃\n> 5 — 민원사무명: 창업사업계획 (변경)승인\n> 5 — 처리기간 / 법정사항: 20일\n> 5 — 처리기간 / 사전심사: 7일\n> 5 — 처리기간 / 정식민원 신청시: 20일\n> 6 — 부서명: 〃\n> 6 — 민원사무명: 석유판매업(주유소) 등록\n> 6 — 처리기간 / 법정사항: 7일\n> 6 — 처리기간 / 사전심사: 7일\n> 6 — 처리기간 / 정식민원 신청시: 7일\n> 7 — 부서명: 〃\n> 7 — 민원사무명: 액화석유가스의 충전사업(집단공급사업·판매사업·저장소설치) 허가\n> 7 — 처리기간 / 법정사항: 5일\n> 7 — 처리기간 / 사전심사: 5일\n> 7 — 처리기간 / 정식민원 신청시: 5일\n> 8 — 부서명: 〃\n> 8 — 민원사무명: 고압가스 제조·판매·저장소설치 (변경)허가\n> 8 — 처리기간 / 법정사항: 5일\n> 8 — 처리기간 / 사전심사: 5일\n> 8 — 처리기간 / 정식민원 신청시: 5일\n> 9 — 부서명: 가족행복과\n> 9 — 민원사무명: 어린이집 인가신청\n> 9 — 처리기간 / 법정사항: 14일\n> 9 — 처리기간 / 사전심사: 14일\n> 9 — 처리기간 / 정식민원 신청시: 14일\n> 10 — 부서명: 건 설 과\n> 10 — 민원사무명: 전문건설업 등록\n> 10 — 처리기간 / 법정사항: 20일\n> 10 — 처리기간 / 사전심사: 10일\n> 10 — 처리기간 / 정식민원 신청시: 10일\n> 11 — 부서명: 도시정비과\n> 11 — 민원사무명: 옥외광고물 등의 표시허가\n> 11 — 처리기간 / 법정사항: 10일\n> 11 — 처리기간 / 사전심사: 8일\n> 11 — 처리기간 / 정식민원 신청시: 7일\n> 12 — 부서명: 건 축 과\n> 12 — 민원사무명: 건축허가\n> 12 — 처리기간 / 법정사항: 7~15일\n> 12 — 처리기간 / 사전심사: 7~15일\n> 12 — 처리기간 / 정식민원 신청시: 6~14일\n> 제출서류 사전심사청구서 서식내려받기 대상민원별 구비서류 자세히보기\n> 수 수 료 : 없음(정식민원 신청 시 납부)\n> ### 민원서류 외국어 지원서비스\n> 외국인이 민원신청서 작성시 편의를 제공하기 위하여 주요 4개 언어로 민원신청서 작성 매뉴얼을 안내합니다. 신청서 작성 매뉴얼을 참고하여 신청서 작성 후, 신청서를 구청, 동 주민센터에 접수하여 발급받습니다.\n> 대상민원 : 출생신고서 등 34종\n> 외 국 어 : 4개 외국어(영어, 일어, 중국어, 베트남어)\n> 신청서식 내려받기 : 영어서식 일어서식 중국어서식 베트남어서식\n> ### 민원후견인제\n> 민원 1회방문 처리제의 원활한 운영을 위하여 다수부서와 관련되는 복합민원 및 처리기간 10일 이상 유기한민원 신청 시 후견인을 지정하여 처리 종결 시까지 처리절차와 방법 등에 자문과 도움을 주는 제도입니다.\n> 신청방법 : 민원서류 접수 시 후견인 지정요청\n> 대상민원 복합민원\n> 민원후견인 구성 : 32명(구청 6급 담당)\n> 민원후견인 역할 민원내용 및 처리절차 사전 숙지 민원인에게 본인 소개 및 활동내용 안내 민원인 불편사항, 문의내용 적극 해결 및 지원 외부기관 협의사항은 민원인을 대리하여 적극적으로 처리 실무심의회 및 민원조정위원회에서의 민원인 보좌 진행사항 중간회신 및 민원처리 결과 통보 불가, 반려인 경우 상세한 사유 설명 및 해결책 제시\n> 민원후견인 지정절차 지정권자 : 민원인 또는 민원심사관 민 원 인 : 접수창구에서 민원후견인대장 열람, 자유의사에 따라 선택 민원심사관 : 민원인이 민원후견인 지정을 요청할 경우\n> ### 거부처분에 대한 이의신청\n> 민원사항에 대한 행정기관의 거부처분에 대하여 불복이 있는 경우 행정기관에 문서로 이의신청을 할 수 있는 제도입니다.\n> 근 거 : 민원처리에 관한 법률 제35조(거부처분에 대한 이의신청)\n> 신청기간 : 거부처분을 받은 날부터 60일 이내\n> 제출서류 : 이의신청서 서식내려받기\n> ※ 이의신청 여부와 관계없이 '행정심판법'에 의한 행정심판 또는 '행정소송법'에 의한 행정소송을 제기 할 수 있습니다.\n> ### 거동불편인 민원서류 무료배달\n> 거동이 불편한 장애인(뇌병변, 지체, 시각장애 1,2급)에 대하여 구청·동 주민센터에서 발급하는 각종 제증명 민원서류를 전화로 신청받아 가정까지 직접 배달하여 여러분의 불편을 조금이나마 덜어드리고자 하는 제도입니다.\n> 신 청 : 민원여권과(☎220-4261 ~ 3), 각 동주민센터\n> 대상민원 (21종)\n> 1 — 민 원 명: 주민등록등·초본\n> 1 — 수수료: 400원\n> 1 — 연번: 12\n> 1 — 민 원 명: 의료급여대상자증명\n> 1 — 수수료: 무료\n> 2 — 민 원 명: 가족관계증명서\n> 2 — 수수료: 1,000원\n> 2 — 연번: 13\n> 2 — 민 원 명: 외국인등록 사실증명\n> 2 — 수수료: 1,000원\n> 3 — 민 원 명: 장애인증명\n> 3 — 수수료: 무료\n> 3 — 연번: 14\n> 3 — 민 원 명: 병적증명\n> 3 — 수수료: 무료\n> 4 — 민 원 명: 제적부 등본\n> 4 — 수수료: 1,000원\n> 4 — 연번: 15\n> 4 — 민 원 명: 건축물관리대장\n> 4 — 수수료: 500원\n> 5 — 민 원 명: 지방세납세증명서\n> 5 — 수수료: 무료\n> 5 — 연번: 12\n> 5 — 민 원 명: 토지대장\n> 5 — 수수료: 500원\n> 6 — 민 원 명: 세목별과세(납세)증명\n> 6 — 수수료: 800원\n> 6 — 연번: 17\n> 6 — 민 원 명: 임야대장\n> 6 — 수수료: 500원\n> 7 — 민 원 명: 취업보호 대상자증명\n> 7 — 수수료: 무료\n> 7 — 연번: 18\n> 7 — 민 원 명: 개별 공시지가\n> 7 — 수수료: 800원\n> 8 — 민 원 명: 출입국에 대한 사실증명\n> 8 — 수수료: 1,000원\n> 8 — 연번: 19\n> 8 — 민 원 명: 지적도\n> 8 — 수수료: 700원\n> 9 — 민 원 명: 일반수급자증명\n> 9 — 수수료: 무료\n> 9 — 연번: 20\n> 9 — 민 원 명: 임야도\n> 9 — 수수료: 700원\n> 10 — 민 원 명: 보장시설 수급자증명\n> 10 — 수수료: 무료\n> 10 — 연번: 21\n> 10 — 민 원 명: 자동차등록원부\n> 10 — 수수료: 300원\n> 11 — 민 원 명: 모자가정증명\n> 11 — 수수료: 무료\n> ### 민원상담 무료전화 운영\n> 각종 민원상담 전화를 무료화(수신자 부담)한 편리하고 경제적인 제도입니다.\n> 전화번호 : 080-220-4264\n> 운영내용 각종 생활불편 신고 기업체, 외국인근로자, 다문화가정 등의 고충상담 민원신청 및 발급 등에 관한 상담\n> ### 행정정보 공동이용 안내\n> 각 기관이 보유하고 있는 행정정보를 행정·공공·금융기관에서 공동으로 이용할 수 있는 제도이며, 공동으로 이용할 수 있는 정보에 대해서는 민원신청시 별도로 해당서류를 제출하실 필요가 없습니다.\n> 행정정보 공동이용 대상 정보 목록 자세히보기\n> ### 어디서나 민원처리제\n> 전국 어디서나 가까운 행정기관(농협, 새마을금고 포함)에서 민원서류를 신청하고 원하는 행정기관에서 처리결과를 받아볼 수 있도록 기존의 팩스민원 문제점을 보완·개선한 민원처리 제도입니다.\n> 신청기관 : 구청·동 주민센터, 농협·축협·인삼협, 새마을금고 등 ※ 농협·축협·인삼협은 17종 증명민원만 가능\n> 신청방법 : 민원인이 방문·전화·인터넷(www.minwon.go.kr)을 이용하여 신청한 후 지정한 행정기관에서 그 민원서류를 받아볼 수 있음 (인터넷으로 실시간 처리결과 확인 가능)\n> 처리시간 : 접수 후 3근무시간 이내\n> 처리비용 및 수수료 발급수수료 : 민원서류 교부기관의 수수료 적용(단, 대학민원은 300원) 업무처리비 : 없음(단, 사립대학 1,000원) 기타 국가유공자증명, 병적증명, 검정고시 과목합격증 및 성적증명, 세무서 발급서류는 무료입니다.\n> 취급민원 종류 자세히보기\n> ### 아름다운 배려창구 운영\n> 내용 : 어르신(70세 이상), 영아(1세 미만), 임산부, 장애인, 신청인의 ONE-STOP 민원처리를 위한 전용창구 운영\n> 위치 : 통합민원 및 여권발급 창구 (2개소)",
+        "sources": [
+          {
+            "title": "민원편의시책",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+            "category": "사하복지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "발급민원 자세히보기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=10"
+              },
+              {
+                "name": "자세히보기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=11"
+              },
+              {
+                "name": "서식내려받기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=8"
+              },
+              {
+                "name": "자세히보기",
+                "url": "https://saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000179482&fileSn=1"
+              },
+              {
+                "name": "영어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=6"
+              },
+              {
+                "name": "일어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=5"
+              },
+              {
+                "name": "중국어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=4"
+              },
+              {
+                "name": "베트남어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=3"
+              },
+              {
+                "name": "서식내려받기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=2"
+              },
+              {
+                "name": "자세히보기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=1"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "necessity"
+          ],
+          "matched_fields": [
+            "necessity"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F009",
+      "turn": 1,
+      "question": "사하구청에 온라인으로 민원을 신청하려면 어떻게 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 9,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 민원 접수 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.182,
+      "server_timing": "search;dur=650.1, verify;dur=470.8, review_gate;dur=3.7, grounding;dur=4.9, originals;dur=0.0, review;dur=1.0, prepare;dur=3.8, app;dur=1175.3",
+      "status": 200,
+      "error": null,
+      "request_id": "eeef979612a148e48cae19ad88a5d02a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.182
+        }
+      ],
+      "response": {
+        "answer": "**민원신청 안내**\n- 2024년 9월 25일부터 민원상담이 국민권익위원회에서 운영하는 '국민신문고'로 통합하여 운영하고 있습니다.\n- 별도 회원가입 또는 로그인이 필요합니다.",
+        "answer_details": "전자민원창구의 공식 안내 원문입니다.\n\n> ## 전자민원창구\n> ### 민원신청 안내\n> 2024년 9월 25일부터 민원상담이 국민권익위원회에서 운영하는 '국민신문고'로 통합하여 운영하고 있습니다.\n> 별도 회원가입 또는 로그인이 필요합니다.\n> 통합 전 올려주신 게시글은 '(구)상담민원' 메뉴에서 조회하실 수 있습니다.\n> ※ 민원신청 등록 오류 문의처 : 국민신문고 헬프데스크 1600-8172",
+        "sources": [
+          {
+            "title": "전자민원창구",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F010",
+      "turn": 1,
+      "question": "기초생활수급자나 한부모가족은 민원 수수료를 면제받을 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 10,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103090000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "서류별 면제 대상과 제외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.048,
+      "server_timing": "app;dur=21.8",
+      "status": 200,
+      "error": null,
+      "request_id": "ae88aef6500a4c9aaeccd24528b7c532",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.048
+        }
+      ],
+      "response": {
+        "answer": "어떤 민원이나 서류의 수수료인가요? **등·초본·인감증명서 등 종류**에 따라 면제 조건이 달라요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "기초생활수급자 주민등록등본 수수료 면제 조건",
+          "한부모가족 인감증명서 수수료 면제 조건"
+        ]
+      }
+    },
+    {
+      "id": "F011",
+      "turn": 1,
+      "question": "성인이 여권을 새로 만들 때 무엇을 준비해야 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 11,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "성인 신규 공통 준비물과 사진 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.583,
+      "server_timing": "app;dur=563.8",
+      "status": 200,
+      "error": null,
+      "request_id": "b61a6a58c20a411a819e62feb1596d37",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.583
+        }
+      ],
+      "response": {
+        "answer": "**사하구청 방문 신청 안내 기준**\n- 여권발급신청서 1부, 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n- 신청자 신분증",
+        "answer_details": "> ## 여권발급안내\n> ### 여권발급 주요 내용\n> 차세대 전자여권 발급\n> 본인이 직접 방문신청(미성년자 제외)\n> 만 18세 미만 미성년자 친권자(부 또는 모), 후견인 등 법정대리인이 신청 공동친권자인 법정대리인이 외국인인 경우, 가족관계등록부에 외국인등록번호 13자리가 등재되어 있고, 외국인등록증을 신분증으로 제출한 경우에만 법정대리인 동의서 대표서명(날인) 가능 미성년자의 사진 및 구여권(유효기간 만료 전 여권), 법정대리인 신분증 지참\n> 일반여권 유효기간이 10년으로 확대 만 18세 미만자 5년, 병역미필자 5년 여권 발급(현역 10년 여권)\n> 최근 5년 이내 3회 이상, 1년 이내 2회 여권 분실자 경찰서 경위 확인 결과에 따라 발급 가능 (유효기간 제한) ※ 여권 분실 횟수에 따른 재발급 시 유효기간 제한\n> 분실 횟수: 여권 유효기간\n> 최근 5년 이내에 여권 분실횟수가 2회인 사람: 5년\n> 최근 5년 이내에 여권 분실횟수가 3회 이상인 사람: 2년\n> 최근 1년 이내에 여권 분실횟수가 2회인 사람: 2년\n> 전자여행 허가제 안내 2016. 3. 15.부터 캐나다를 입국하는 우리 국민은 아래 사이트에서 전자여행허가(eTA)를 취득하여야 함 - 신청 주소 : https://www.Canada.ca/eTA - 승인서 출력 불요, 승인 후 5년간 유효 미국 및 호주 - 미국 ESTA 신청주소 : https://esta.cbp.dhs.gov/esta/ - 호주 ETA 신청주소 : Australian ETA앱에서 신청하기 권장 ※ 기타 비자 발급에 관한 사항은 해당 국 대사관에 직접 문의바랍니다.\n> 온라인 여권 민원 서비스(정부24) 대상민원 : 여권 재발급, 분실신고, 이력 조회, 각종 증명서 발급 신청 주소 : http://www.gov.kr/portal/main\n> ### 신규발급\n> ##### 일반여권\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 만18세 미만 미성년자의 여권 신청 친권자(혹은 법정대리인) 신청시 : 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서 미성년자 본인 신청서 : 친권자(혹은 법정대리인)의 신분증, 인감증명서 및 인감도장, 법정대리인 동의서, 미성년자 본인 신분증(학생증 혹은 청소년증 등) 미성년자의 2촌 이내 친족(만18세 이상) 신청 시 : 법정대리인 동의서, 친권자의 인감증명서 및 인감도장, 위임장 및 위임자(법정대리인) 신분증(사본가능), 방문한 대리인의 신분증\n> #### 긴급여권\n> ※부산시청 여권계, 강서구청 여권계, 김해국제공항 긴급여권 발급 창구에서만 신청 가능하므로 해당 창구로 반드시 개별 문의하신 후에 방문하시기 바랍니다.\n> ※ 해외에서 가족 및 친인척 등의 사건·사고로 긴급히 출국해야하는 경우, 기타 인도적 사유나 사업상 급히 출국할 필요가 있다고 인정되는 경우\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 긴급여권 발급신청사유서\n> 증빙서류 : 항공권 사본, 사망진단서, 초청장 및 계약서 등 사업상 긴급한 사유를 증명할 수 있는 서류 등 증빙서류 첨부\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> #### 관용여권\n> 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 공무원증 또는 재직증명서 1부\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 관계기관 공문(관용여권 발급의뢰 공문-수신처 : 외교부 여권과장)\n> 기존 일반여권(제출 후 관용여권 발급 가능)\n> #### 재발급\n> ‘재발급’ 의미 이미 여권을 발급받은 적이 있는 사람이 새로운 여권을 발급받는 경우로 아래 2가지 중 선택 가능 - 새로운 유효기간을 부여하는 재발급(신규발급에 준하는 수수료 부과) - 기존 여권의 남은 유효기간을 부여하는 재발급\n> ‘재발급’ 사유 여권 수록정보의 정정·변경(개명, 주민등록번호 정정, 사진 변경 등), 분실, 훼손, 사증란 부족 등\n> 구비서류 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재 신분증(주민등록증, 운전면허증 등) 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝) 유효기간 남은 여권은 지참 여권은 새 여권으로 교부(새 여권번호 부여) 구여권은 재발급 신청 시 무효조치 후 본인에게 반환\n> ### 여권발급 등에 관한 수수료\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 52,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 49,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 44,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 41,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 35,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 32,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 단수여권 — 유효기간: 1년\n> 단수여권 — 여권발급수수료: 26면\n> 단수여권 — 여권발급수수료: 17,000원\n> 단수여권 — 대상(생일기준): 6개월 이내 1회만 여행가능\n> 기재사항변경 — 여권발급수수료: 26면\n> 기재사항변경 — 여권발급수수료: 5,000원\n> 기재사항변경 — 대상(생일기준): 여권번호기재, 출생지 표기 (긴급여권 사무대행기관에서만 가능)\n> ### 여권발급 기록 증명서\n> 종류 : 여권발급기록증명서,여권사본증명서(실물여권지참),여권실효 확인서,여권발급신청서류증명서,여권정보증명서\n> #### 구비서류\n> 본인 : 신분증 - 대리인 신청 시 : 사실증명 신청서, 위임장 및 인감증명서, 대리인 신분증\n> 수수료 : 1건당 1,000원\n> ### 국제운전면허증 신청\n> 신청 대상 : 여권 신청자 중 국제운전면허증 발급 희망자\n> 구비서류 : 신청서, 사진1매, 수수료(8,500원), 배달등기료(2,500원)\n> 면허증 수령 : 희망 주소지로 등기 배송\n> ### 여권교부\n> 여권교부 : 여권 신청일로부터 8~10일 정도 소요(근무일 기준)\n> 본인 수령 : 신분증 및 접수증 지참\n> 대리 수령 : 대리인 신분증, 접수증, 위임장 및 위임자의 신분증(사본 가능)\n> 우편 수령 : 여권발급 신청 시 사전에 신청(등기료 5,500원) - 외교부 직송, 3일~4일 소요, 본인 또는 지정한 대리인 직접 수령\n> 여권 수령 후 서명란에 반드시 본인이 자필로 서명 후 사용 ※ 발급일로부터 6개월 이내에 찾아가지 않은 여권은 직권무효 처리되어 폐기됩니다.",
+        "sources": [
+          {
+            "title": "여권발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "passport_documents",
+          "status": "official",
+          "label": "공식 여권 신청 서류 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F012",
+      "turn": 1,
+      "question": "재산세는 어떤 날짜를 기준으로 누가 내나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 12,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020100",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "재산세 과세기준일과 납세의무자",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.417,
+      "server_timing": "search;dur=859.6, verify;dur=454.3, review_gate;dur=2.5, grounding;dur=7.1, originals;dur=0.0, review;dur=1.2, prepare;dur=14.1, app;dur=1399.1",
+      "status": 200,
+      "error": null,
+      "request_id": "6abdcfa77e414db4ba83fd974ebdf47b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.417
+        }
+      ],
+      "response": {
+        "answer": "**재산세**\n- 납세의무자 : 과세기준일(매년 6월 1일) 현재 사실상 재산을 소유하고 있는 자\n- 납세의무자 : 과세기준일(매년 6월 1일) 현재 토지소유자\n- 재산세는 매년 6월 1일 현재 토지,건축물,주택,선박,항공기를 보유한 자에 대하여 부과됩니다. 7월에는 주택세액의 2분의 1, 건축물, 선박, 항공기에 대하여 부과되며, 9월에는 주택세액 2분의 1과 토지에 대하여 부과됩니다. 지방교육세는 재산세액의 20%가 부과됩니다.",
+        "answer_details": "지방세종류 및 내용의 공식 안내 원문입니다.\n\n> ## 지방세종류 및 내용\n> ### 재산세\n> 재산세는 매년 6월 1일 현재 토지,건축물,주택,선박,항공기를 보유한 자에 대하여 부과됩니다. 7월에는 주택세액의 2분의 1, 건축물, 선박, 항공기에 대하여 부과되며, 9월에는 주택세액 2분의 1과 토지에 대하여 부과됩니다. 지방교육세는 재산세액의 20%가 부과됩니다.\n> #### 주택, 건축물\n> 납세의무자 : 과세기준일(매년 6월 1일) 현재 사실상 재산을 소유하고 있는 자\n> 과 세 대 상 : 주택,건축물,선박,항공기\n> 과 세 표 준 : 주 택 : 공시가격 × 공정시장가액비율(60%) 건축물 : 시가표준액 ×공정시장가격비율(70%) 선박, 항공기 : 시가표준액\n> 납부할 세액 : 과세표준 × 세율 = 세액\n> 납 기 주 택 : 매년 7월과 9월 (산출세액의 1/2씩) 일반건축물 : 매년 7. 16. ∼ 7.31.\n> #### 세 율\n> 주택\n> 6천만원 이하 — 세 율: 1,000분의 1\n> 6천만원초과~1억5천만원이하 — 세 율: 6만원+6천만초과금액의 1,000분의1.5\n> 1억5천만원초과~3억원이하 — 세 율: 19만5천원+1억5천만원초과금액의1,000분의 2.5\n> 3억원초과 — 세 율: 57만원+3억원초과금액의1,000분의4\n> ##### 1세대 1주택자가 보유한 공시가격 9억원 이하 주택 특례 세율 ( 2021년부터 2026년까지 한시 적용)\n> 6천만원 이하 — 세 율: 1,000분의 0.5\n> 6천만원초과~1억5천만원이하 — 세 율: 30,000원+6천만원 초과금액의 1,000분의 1\n> 1억5천만원초과~3억원이하 — 세 율: 120,000원+1억5천만원 초과금액의 1,000분의 2\n> 3억원초과 — 세 율: 420,000원+3억원 초과금액의 1,000분의 3.5\n> 건축물\n> 고급오락장 — 세 율: 1,000분의 40\n> 주거지내공장(연면적500㎡이상) — 세 율: 1,000분의 5\n> 기타 건축물 — 세 율: 1,000분의 2.5\n> 선박\n> 고급선박 — 세 율: 1,000분의 50\n> 고급선박 이외의 선박 — 세 율: 1,000분의 3\n> 납부할 세액 : 과세표준 × 세율 = 세액\n> 납 기 : 매년 7. 16. ∼ 7. 31.\n> #### 토 지\n> 납세의무자 : 과세기준일(매년 6월 1일) 현재 토지소유자\n> 과 세 대 상 : 모든 토지 종합합산 과세대상 나대지 분리과세대상 토지 중 기준초과 토지 등 별도합산과세대상 토지 중 기준초과 토지 등 별도합산과세대상 일반영업용 건축물의 부속토지 여객 · 화물자동차 터미널용 토지 등 분리과세대상 공장용지 전 · 답 · 과수원 · 목장용지 고급오락장 · 골프장용 토지 특수임야 등\n> 과 세 표 준 : 개별공시지가 × 면적 × 공정시장가액비율(70%)\n> 세 율\n> 토지세율의 종합합산\n> 과 세 표 준: 세 율\n> 5천만원이하: 1,000분의 2\n> 5천만원초과 1억원이하: 10만원+5천만원 초과금액 1,000분의 3\n> 1억원초과: 25만원+1억원 초과금액 1,000분의 5\n> 토지세율의 별도합산\n> 과세표준: 세 율\n> 2억원이하: 1,000분의 2\n> 2억원초과 10억원이하: 40만원+2억원 초과금액 1,000분의 3\n> 10억원초과: 280만원+10억원 초과금액 1,000분의 4\n> 토지세율의 분리과세\n> 구 분: 세 율\n> 전 · 답 · 과수원 · 목장용지 · 임야: 1,000분의 0.7\n> 골프장 고급오락장용 토지: 1,000분의 40\n> 기타토지: 1,000분의 2\n> 납부할 세액 : 과세표준 × 세율 = 세액\n> 납 기 : 매년 9. 16. ∼ 9. 30.",
+        "sources": [
+          {
+            "title": "지방세종류 및 내용",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020100",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility",
+            "schedule"
+          ],
+          "matched_fields": [
+            "eligibility",
+            "schedule"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F013",
+      "turn": 1,
+      "question": "부동산이나 차량을 취득하면 취득세는 언제까지 신고해야 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 13,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "취득세 신고기한과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.352,
+      "server_timing": "search;dur=796.2, verify;dur=460.6, review_gate;dur=6.2, grounding;dur=5.7, originals;dur=0.0, review;dur=3.6, prepare;dur=6.7, app;dur=1331.0",
+      "status": 200,
+      "error": null,
+      "request_id": "ade1299d047c4e25bd79c73f45b38f99",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.352
+        }
+      ],
+      "response": {
+        "answer": "**취득세**\n- 신고 및 납부기한 일반 : 취득일로부터 60일 이내 무상취득 : 취득일이 속하는 달의 말일부터 3개월 이내 상속 : 상속개시일이 속하는 달의 말일부터 6개월 이내 보통징수 : 미신고ㆍ미납부자에 대해 고지(무신고가산세 : 100분의 20, 납부지연가산세 : 지연일수 X 1십만분의 22)\n\n원문의 포괄적인60일 설명은 제외했습니다. 취득유형별 신고·납부기한과 적용 조건을 확인해 주세요.",
+        "answer_details": "지방세종류 및 내용의 공식 안내 원문입니다.\n\n> ## 지방세종류 및 내용\n> ### 취득세\n> 납세의무자 : 부동산, 차량, 선박 등의 과세대상 물건을 취득한 자는 취득세를 납부할 의무가 있습니다.\n> 과세대상 : 부동산, 차량, 기계장비, 항공기, 선박, 임목, 골프회원권, 콘도미니엄회원권, 종합체육시설이용회원권 등이 있습니다.\n> 과세표준 : 원칙 : 취득당시의 가액 무상취득 원칙 : 시가인정액 (상속 제외) 예외 : 시가표준액 유상취득 (부동산등 승계) : 사실상의 취득가격 원시취득 (신축, 증축 등) 원칙 : 사실상의 취득가격 예외 : 시가표준액\n> 세 율 : 상속 : 2.8％ 무상취득 : 3.5% 원시취득 : 2.8% 일반세율 : 4% 주택에 대한 취득세 6억원 이하 주택 : 1% 6억원 초과 9억원 이하 주택 : 다음 계산식에 따라 산출한 세율. 이 경우 소수점이하 다섯째자리에서 반올림하여 소수점 넷째자리까지 계산한다. 9억원 초과 주택 : 3% 중과세 고급주택·고급오락장·골프장 등 : 12% 법인 등 의 주택취득 : 12% 1세대 3주택 이상에 해당하는 주택으로서 조정대상지역에 있는 주택 취득 : 12% 1세대 2주택에 해당하는 주택으로서 조정대상지역에 있는 주택 취득 : 8% 1세대 3주택에 해당하는 주택으로서 조정대상지역 외의 지역에 있는 주택 취득 : 8% 1세대 4주택 이상에 해당하는 주택으로서 조정대상지역 외의 지역에 있는 주택 취득 : 12%\n> 신고 및 납부기한 일반 : 취득일로부터 60일 이내 무상취득 : 취득일이 속하는 달의 말일부터 3개월 이내 상속 : 상속개시일이 속하는 달의 말일부터 6개월 이내 보통징수 : 미신고ㆍ미납부자에 대해 고지(무신고가산세 : 100분의 20, 납부지연가산세 : 지연일수 X 1십만분의 22)",
+        "sources": [
+          {
+            "title": "지방세종류 및 내용",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F014",
+      "turn": 1,
+      "question": "자동차세는 누가 내나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 14,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020600",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "자동차세 납세의무자",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 2.537,
+      "server_timing": "search;dur=1941.8, verify;dur=462.5, review_gate;dur=2.5, grounding;dur=9.2, originals;dur=0.0, review;dur=1.3, prepare;dur=24.4, app;dur=2510.5",
+      "status": 200,
+      "error": null,
+      "request_id": "60f36d3f93234857b234c18f0c676208",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.537
+        }
+      ],
+      "response": {
+        "answer": "**자동차세**\n- 납세의무자 : 지방자차단체 관할구역에 등록되어있거나 신고되어있는 자동차를 소유하는 자\n- 과세대상 : 자동차등록원부에 등록된 자동차 및 건설기계관리법에 의하여 등록된 덤프트럭 및 콘크리트믹 서트럭이 과세대상입니다.",
+        "answer_details": "지방세종류 및 내용의 공식 안내 원문입니다.\n\n> ## 지방세종류 및 내용\n> ### 자동차세\n> 1. 자동차 소유에 대한 자동차세는 자동차의 소유자에 대하여 과세하는 재산세적 성격과 도로손상부담금적인 성격 및 소비세적 성격을 동시에 갖고 있는 세금이라 할 수 있습니다. 자가용 승용자동차에는 지방교육세가 30% 부가됩니다.\n> 납세의무자 : 지방자차단체 관할구역에 등록되어있거나 신고되어있는 자동차를 소유하는 자\n> 과세대상 : 자동차등록원부에 등록된 자동차 및 건설기계관리법에 의하여 등록된 덤프트럭 및 콘크리트믹 서트럭이 과세대상입니다.\n> 과세표준\n> 자동차의 배기량, 승차정원, 적재적량에 따라 구분\n> 승용자동차 : 배기량에 cc당 세액을 곱하여 산출한 세액을 자동차 1대당 년세액으로 합니다.\n> 1,000cc 이하 — 영 업 용 / cc당 세액: 18 원\n> 1,000cc 이하 — 비 영 업 용 / 배기량: 1,000cc 이하\n> 1,000cc 이하 — 비 영 업 용 / cc당 세액: 80 원\n> 1,600cc 이하 — 영 업 용 / cc당 세액: 18 원\n> 1,600cc 이하 — 비 영 업 용 / 배기량: 1,600cc 이하\n> 1,600cc 이하 — 비 영 업 용 / cc당 세액: 140 원\n> 2,000cc 이하 — 영 업 용 / cc당 세액: 19 원\n> 2,000cc 이하 — 비 영 업 용 / 배기량: 1,600cc 초과\n> 2,000cc 이하 — 비 영 업 용 / cc당 세액: 200 원\n> 2,500cc 이하 — 영 업 용 / cc당 세액: 19 원\n> 2,500cc 초과 — 영 업 용 / cc당 세액: 24 원\n> 기타 승용자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다.\n> 영업용 - 20,000원, 비영업용 - 100,000원\n> 고 속 버 스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 100,000원\n> 고 속 버 스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: -\n> 대형전세버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 70,000원\n> 대형전세버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: -\n> 소형전세버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 50,000원\n> 소형전세버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: -\n> 대형일반버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 42,000원\n> 대형일반버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 115,000원\n> 소형일반버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 25,000원\n> 소형일반버스 — 승합자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 65,000원\n> 1,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 6,600원\n> 1,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 28,500원\n> 2,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 9,600원\n> 2,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 34,500원\n> 3,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 13,500원\n> 3,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 48,000원\n> 4,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 18,000원\n> 4,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 63,000원\n> 5,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 22,500원\n> 5,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 79,500원\n> 8,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 36,000원\n> 8,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 130,500원\n> 10,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 영업용: 45,000원\n> 10,000㎏ 이하 — 화물자동차 : 다음의 세액을 자동차 1대당 년세액으로 합니다. / 비영업용: 157,500원\n> 적재적량 10,000㎏ 초과 자동차에 대하여는 적재적량 10,000㎏ 이하의 세액에 10,000㎏ 초과시마다 영업용의 경우에는 10,000원, 비영업용의 경우에는 30,000원을 가산한 금액을 1대당 년세액으로 합니다.\n> 납부하는 방법 정기분 납기(6월, 12월)달의 1일 현재 자동차소유자에게 자동차 소재지를 관할하는 구청에서 부과고지 1년 세액을 3, 6, 9, 12월에 4회 분납 할 수도 있습니다.\n> 자동차세 연세액(연납) 납부제도\n> 자동차세 연납이란 매년 6월, 12월에 납부하는 자동차세를 미리 납부하면서 시기에 따라 공제받는 제도로써 매년 1,3,6,9월에 신청 · 납부 가능합니다.\n> 지방세법개정 및 시행(관련법령:[지방세법]제128조제3항 및 영 제125조6항)에 따른 공제방법이 다음과 같이 축소되었습니다.\n> 지방세법 개정에 따른 공제이자율 축소 공제금액 : 연세액 x (2월~12월 일수/365일)의 5% 연납공제율 : 22년 10% → 23년 7% → 24년 이후 5%\n> 1월 — 연납세액신고 및 납부기간: 매년 1. 16. ~ 1. 31.\n> 1월 — 공제기간: 2월 ~ 12월\n> 1월 — 연세액대비공제율: 4.6%\n> 3월 — 연납세액신고 및 납부기간: 매년 3. 16. ~ 3. 31.\n> 3월 — 공제기간: 4월 ~ 12월\n> 3월 — 연세액대비공제율: 3.8%\n> 6월 — 연납세액신고 및 납부기간: 매년 6. 16. ~ 6. 30.\n> 6월 — 공제기간: 7월 ~ 12월\n> 6월 — 연세액대비공제율: 2.25%\n> 9월 — 연납세액신고 및 납부기간: 매년 9. 16. ~ 9. 30.\n> 9월 — 공제기간: 10월 ~ 12월\n> 9월 — 연세액대비공제율: 1.3%\n> 일할계산제도 신규등록이나 말소등록의 경우 6월이나 12월에 신규등록을 한 자동차에 대하여는 소유일수로 일할계산하여 7월과 다음연도 1월에 부과하고,말소등록한 경우에는 일할계산한 세금을 수시 부과합니다. 사용일수 계산 방법 신규등록차량 : 등록일 ∼ 기분말일 말소등록차량 : 기분초일 ∼ 말소등록일 양도·양수의 경우 자동차의 소유권 이전 등록일을 기준으로 양도인과 양수인에게 일할 계산한 금액을 양도인과 양수인에게 각각 부과·징수합니다. 이러한 경우에 양도자에 게는 수시로 부과되며, 양수자에게는 수시분 또는 정기분으로 선택하여 부과합니다. 일할계산이란 자동차의 연간세액에 자동차 사용일수(또는 과세대상기간의 일수)를 곱한 세액을 당해연도의 총일수로 나누어 산출한 세액을 말합니다.\n> 2. 자동차주행에 대한 자동차세는 지방자치단체의 취약한 세수구조를 개선하기 위하여 휘발유·경유 등의 소비에 대한 교통세액중 일부를 세원으로 하며, 비영업용 승용자동차에 대한 자동차세의 납세지를 관할하는 시·군에서휘발유·경유 및 이와 유사한 대체유류(과세물품)에 대한 교통세의 납세의무가 있는 자에게 부과합니다.\n> 납세의무자 교통·에너지·환경세의 납세의무가 있는 자(교통·에너지·환경세법 제3조의 납세의무자)\n> 과세대상 휘발유·경유 및 이와 유사한 대체 유류\n> 세 율 (연세액) 과세물품에 대한 교통·에너지·환경세액의 1000분의 360\n> 징수 방법 납세의무자는 교통,에너지,환경세 납부기한까지 교통·에너지·환경세의 납세지를 관할하는 지방자치단체의 장에게 신고납부",
+        "sources": [
+          {
+            "title": "지방세종류 및 내용",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020600",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility"
+          ],
+          "matched_fields": [
+            "eligibility"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F015",
+      "turn": 1,
+      "question": "주민세 사업소분이나 종업원분은 인터넷으로 신고할 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 15,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030400",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "사업소분과 종업원분 인터넷 신고",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.346,
+      "server_timing": "search;dur=764.3, verify;dur=481.0, review_gate;dur=3.4, grounding;dur=5.2, originals;dur=0.0, review;dur=1.2, prepare;dur=4.5, app;dur=1324.0",
+      "status": 200,
+      "error": null,
+      "request_id": "cfac08e571fb4af38e4331e0f8413375",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.346
+        }
+      ],
+      "response": {
+        "answer": "**주민세(종업원분), 주민세(사업소분) 신고**\n- ① 인터넷 신고·납부 위택스( http://www.wetax.go.kr )",
+        "answer_details": "지방세납부안내의 공식 안내 원문입니다.\n\n> ## 지방세납부안내\n> ### 지방세 민원서식\n> #### 개인지방소득세 신고 · 납부\n> ① 인터넷 신고·납부 위택스( http://www.wetax.go.kr )\n> ② 수기 신고 토지 등 매매차익에 대한 개인지방소득세 예정신고 및 납부계산서 종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 (단순경비율적용대상자용) 종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 (단일소득-분리과세 주택임대 소득자용) 종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 (단일소득-종교인소득자용) 퇴직소득에 대한 개인지방소득세 과세표준 확정신고 및 정산계산서 양도소득에 대한 개인지방소득세 과세표준 신고 및 납부계산서 비거주자 유가증권양도소득 정산신고서 비거주자 유가증권양도소득 신고서\n> ③ 수기 납부 아래의 납부서를 다운받아 작성하여 은행에 납부합니다. 개인지방소득세 납부서 개인지방소득세 환급청구서\n> ☎ 문의전화 : 051-220-4211 / FAX : 051-220-4219\n> #### 지방소득세 (특별징수) 신고 · 납부\n> ① 인터넷 신고·납부 위택스( http://www.wetax.go.kr )\n> ② 수기 신고·납부 아래의 납부서를 다운받아 작성하여 은행에 납부합니다.\n> ☎ 문의전화 : 051-220-4741 / FAX : 051-220-4219 지방소득세 특별징수분 납부서 지방소득세 특별징수분 계산서 및 명세서 지방소득세 환급청구서\n> #### 법인지방소득세 신고 · 납부\n> ① 인터넷 신고·납부(간편신고·납부) 「위택스」 주소 http://www.wetax.go.kr 에 접속해 회원가입 후 위택스 메뉴의 「신고하기」에서「지방소득세」-「법인소득분」클릭 ▫ 회계프로그램과 연계되어 첨부서류 업로드 가능 위택스에 직접 문의 가능\n> ② 서면 신고·납부 아래 신고서 양식을 다운받아 작성 후 제출 신고서와 증빙서류를 지참하여 직접 구청 방문해 전산고지서 발급받아 납부 우편이나 FAX로 신고 시 전산고지서 우편수령 또는 직접 방문 수령하여 납부 ※ 우편이나 FAX를 이용하실 경우에는 반드시 확인전화를 주시기 바랍니다. ※ 신고기간 경과 시 무신고가산세 20%, 납기경과시 납부지연가산세 1일 22/100000이 부과됩니다. 신고서류 : 법인지방소득세 과세표준 및 세액신고서, 법인지방소득세 과세표준 및 세액조정계산서 법인지방소득세 안분명세서(해당법인) - 미신고시 무신고 가산세 20% 증빙서류 : 재무상태표, 포괄손익계산서, 이익잉여금처분 계산서(결손금처리계산서), 세무조정계산서, 현금흐름표(외부감사 대상 법인만), 법인지방소득세 특별징수세액명세서 등 - 미제출시 무신고 가산세 20% ☎ 문의전화 : 051-220-4742 / FAX : 051-220-4219 주소 : 부산광역시 사하구 낙동대로398번길 12 사하구청 세무2과 지방소득세(법인세분) 담당자 우)49328 법인지방소득세 과세표준 및 세액신고서 법인지방소득세 과세표준 및 세액조정계산서 법인지방소득세_과세표준(조정계산) 및 세액신고서 법인지방소득세 안분 명세서 법인지방소득세 특별징수세액명세서, 연결법인의 법인지방소득세 특별징수세액명세서 법인지방소득세 가산세액계산서 소급공제 법인지방소득세액 환급신청서 지방세 과세표준 수정신고서 지방세 과세표준 및 세액 등의 결정 또는 경정 청구서\n> #### 주민세(종업원분), 주민세(사업소분) 신고\n> ① 인터넷 신고·납부 위택스( http://www.wetax.go.kr )\n> ② 구청 신고 납부 아래의 신고서 양식을 다운받아 작성하여 구청에 제출하고 납부서를 발급받아 납부합니다.\n> ☎ 문의전화 : 051-220-4201~2 / FAX 051-220-4189 주민세(사업소분) 신고서 주민세(종업원분) 신고서\n> #### 취득세, 등록면허세 신고\n> ① 소유권이전(매매, 상속, 증여), 보존 등기 시에는 취득세 신고서와 증빙서류를 지참하여 직접 구청을 방문해 주시면 전산고지서를 발급하여 드립니다.\n> ② 가등기, 가처분, 가압류 등은 첨부서식 중 등록면허세 신고서를 기재하여 증빙서류와 함께 제출하여 주시기 바랍니다.\n> ☎ 문의전화 : 051-220-4191∼4197 취득세신고서, 주택취득상세명세서 등록에 대한 등록면허세 신고서 지방세 감면 신청서 생애최초 주택 구입 취득세 감면신청서 지방세환급청구서 상속재산분할협의서(자유양식)",
+        "sources": [
+          {
+            "title": "지방세납부안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0105030400",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "토지 등 매매차익에 대한 개인지방소득세 예정신고 및 납부계산서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=1"
+              },
+              {
+                "name": "종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=2"
+              },
+              {
+                "name": "종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 (단순경비율적용대상자용)",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=3"
+              },
+              {
+                "name": "종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 (단일소득-분리과세 주택임대 소득자용)",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=4"
+              },
+              {
+                "name": "종합소득에 대한 개인지방소득세 과세표준 확정신고 및 납부계산서 (단일소득-종교인소득자용)",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=5"
+              },
+              {
+                "name": "퇴직소득에 대한 개인지방소득세 과세표준 확정신고 및 정산계산서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=6"
+              },
+              {
+                "name": "양도소득에 대한 개인지방소득세 과세표준 신고 및 납부계산서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=7"
+              },
+              {
+                "name": "비거주자 유가증권양도소득 정산신고서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=8"
+              },
+              {
+                "name": "비거주자 유가증권양도소득 신고서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=9"
+              },
+              {
+                "name": "개인지방소득세 납부서",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000138558&fileSn=11"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F016",
+      "turn": 1,
+      "question": "가구나 소파 같은 대형폐기물은 어떻게 버리나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 16,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "대형폐기물 접수 방법과 수거 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 2.965,
+      "server_timing": "search;dur=1410.3, verify;dur=741.7, review_gate;dur=2.5, grounding;dur=178.7, originals;dur=0.0, review;dur=1.0, prepare;dur=372.4, app;dur=2933.1",
+      "status": 200,
+      "error": null,
+      "request_id": "63ad9d9cd80848a6b65daabf046ea89b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.965
+        }
+      ],
+      "response": {
+        "answer": "대형폐기물은 **맑은사하환경(051-266-1170~1)**에 전화·문자로 접수하세요. 카카오톡 ‘맑은사하환경’ 1:1 접수도 가능합니다.",
+        "answer_details": "> #### 대형 폐기물 배출 · 처리안내\n> 적용대상 : 품명 식별이 가능하고 쓰레기 봉투로 처리할 수 없는 폐기물로 가구, 가전제품, 사무용기, 냉 · 방기기, 소화기 등\n> 관련근거 : 페기물관리법 제14조 및 사하구 폐기물 관리 및 수수료 등에 관한 조례 제10조\n> 처리(위탁)업체 : 맑은사하환경(☎ 266-1170~1)\n> 처리방법 처리업체에 직접 전화(☎ 266-1170~1) 또는 문자 접수(051-266-1170~1) 카카오톡 플러스친구(맑은사하환경) 1:1톡 접수 아래 물품중 냉장고, 텔레비젼, 세탁기, 에어컨 및 1m이상 가스오븐렌지, 공기청정기, 복사기, 런닝머신은 무상수거 (콜센터 1599-0903) 단, 원형훼손제품은 제외 (유상 처리)\n> 대형폐기물 수집·운반·처리 수수료(제10조제1항제2호 관련)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 규격: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 규 격: 돌침대 2인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 수 수 료 / 조 정 후 / 계: 30,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 20,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 수 수 료 / 조 정 후 / 처리비: 10,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 규격: 2\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 규 격: 돌침대 1인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 수 수 료 / 조 정 후 / 계: 20,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 13,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 규격: 3\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 규 격: 일반침대 2인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 수 수 료 / 조 정 후 / 계: 18,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 12,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 규격: 4\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 규 격: 일반침대 1인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 9,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 매트리스 / 일반 2인용 — 품명: 2\n> 가구 / 매트리스 / 일반 2인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 일반 2인용 — 규격: 5\n> 가구 / 매트리스 / 일반 2인용 — 규 격: 일반 2인용\n> 가구 / 매트리스 / 일반 2인용 — 수 수 료 / 조 정 후 / 계: 12,000\n> 가구 / 매트리스 / 일반 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 매트리스 / 일반 2인용 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 매트리스 / 일반 1인용 — 품명: 2\n> 가구 / 매트리스 / 일반 1인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 일반 1인용 — 규격: 6\n> 가구 / 매트리스 / 일반 1인용 — 규 격: 일반 1인용\n> 가구 / 매트리스 / 일반 1인용 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 매트리스 / 일반 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 매트리스 / 일반 1인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 매트리스 / 라텍스 2인용 — 품명: 2\n> 가구 / 매트리스 / 라텍스 2인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 라텍스 2인용 — 규격: 7\n> 가구 / 매트리스 / 라텍스 2인용 — 규 격: 라텍스 2인용\n> 가구 / 매트리스 / 라텍스 2인용 — 수 수 료 / 조 정 후 / 계: 15,000\n> 가구 / 매트리스 / 라텍스 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 가구 / 매트리스 / 라텍스 2인용 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 매트리스 / 라텍스 1인용 — 품명: 2\n> 가구 / 매트리스 / 라텍스 1인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 라텍스 1인용 — 규격: 8\n> 가구 / 매트리스 / 라텍스 1인용 — 규 격: 라텍스 1인용\n> 가구 / 매트리스 / 라텍스 1인용 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 매트리스 / 라텍스 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 매트리스 / 라텍스 1인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 규격: 9\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 규 격: 옥매트 3인용이상\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 수 수 료 / 조 정 후 / 계: 11,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 규격: 10\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 규 격: 옥매트 2인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 규격: 11\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 규 격: 옥매트 1인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 규격: 12\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 규 격: 일반장판 2인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 규격: 13\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 규 격: 일반장판 1인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 장 롱 / 120cm 1짝 — 품명: 4\n> 가구 / 장 롱 / 120cm 1짝 — 품 명: 장 롱\n> 가구 / 장 롱 / 120cm 1짝 — 규격: 14\n> 가구 / 장 롱 / 120cm 1짝 — 규 격: 120cm 1짝\n> 가구 / 장 롱 / 120cm 1짝 — 수 수 료 / 조 정 후 / 계: 20,000\n> 가구 / 장 롱 / 120cm 1짝 — 수 수 료 / 조 정 후 / 수집·운반비: 13,000\n> 가구 / 장 롱 / 120cm 1짝 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 가구 / 장 롱 / 90cm 1짝 — 품명: 4\n> 가구 / 장 롱 / 90cm 1짝 — 품 명: 장 롱\n> 가구 / 장 롱 / 90cm 1짝 — 규격: 15\n> 가구 / 장 롱 / 90cm 1짝 — 규 격: 90cm 1짝\n> 가구 / 장 롱 / 90cm 1짝 — 수 수 료 / 조 정 후 / 계: 15,000\n> 가구 / 장 롱 / 90cm 1짝 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 가구 / 장 롱 / 90cm 1짝 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 장 롱 / 90cm 미만 1짝 — 품명: 4\n> 가구 / 장 롱 / 90cm 미만 1짝 — 품 명: 장 롱\n> 가구 / 장 롱 / 90cm 미만 1짝 — 규격: 16\n> 가구 / 장 롱 / 90cm 미만 1짝 — 규 격: 90cm 미만 1짝\n> 가구 / 장 롱 / 90cm 미만 1짝 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 장 롱 / 90cm 미만 1짝 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 장 롱 / 90cm 미만 1짝 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 소 파 / 3인용 — 품명: 5\n> 가구 / 소 파 / 3인용 — 품 명: 소 파\n> 가구 / 소 파 / 3인용 — 규격: 17\n> 가구 / 소 파 / 3인용 — 규 격: 3인용\n> 가구 / 소 파 / 3인용 — 수 수 료 / 조 정 후 / 계: 13,000\n> 가구 / 소 파 / 3인용 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 소 파 / 3인용 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 소 파 / 2인용 — 품명: 5\n> 가구 / 소 파 / 2인용 — 품 명: 소 파\n> 가구 / 소 파 / 2인용 — 규격: 18\n> 가구 / 소 파 / 2인용 — 규 격: 2인용\n> 가구 / 소 파 / 2인용 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 소 파 / 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 소 파 / 2인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 소 파 / 1인용 — 품명: 5\n> 가구 / 소 파 / 1인용 — 품 명: 소 파\n> 가구 / 소 파 / 1인용 — 규격: 19\n> 가구 / 소 파 / 1인용 — 규 격: 1인용\n> 가구 / 소 파 / 1인용 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 소 파 / 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 소 파 / 1인용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 소 파 / 보조의자 — 품명: 5\n> 가구 / 소 파 / 보조의자 — 품 명: 소 파\n> 가구 / 소 파 / 보조의자 — 규격: 20\n> 가구 / 소 파 / 보조의자 — 규 격: 보조의자\n> 가구 / 소 파 / 보조의자 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 소 파 / 보조의자 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 소 파 / 보조의자 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 책 상 / 1m*1m 이상 — 품명: 6\n> 가구 / 책 상 / 1m*1m 이상 — 품 명: 책 상\n> 가구 / 책 상 / 1m*1m 이상 — 규격: 21\n> 가구 / 책 상 / 1m*1m 이상 — 규 격: 1m*1m 이상\n> 가구 / 책 상 / 1m*1m 이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 책 상 / 1m*1m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 책 상 / 1m*1m 이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 책 상 / 1m*1m 미만 — 품명: 6\n> 가구 / 책 상 / 1m*1m 미만 — 품 명: 책 상\n> 가구 / 책 상 / 1m*1m 미만 — 규격: 22\n> 가구 / 책 상 / 1m*1m 미만 — 규 격: 1m*1m 미만\n> 가구 / 책 상 / 1m*1m 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 책 상 / 1m*1m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 책 상 / 1m*1m 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 책 상 / 책상+책장 세트 — 품명: 6\n> 가구 / 책 상 / 책상+책장 세트 — 품 명: 책 상\n> 가구 / 책 상 / 책상+책장 세트 — 규격: 23\n> 가구 / 책 상 / 책상+책장 세트 — 규 격: 책상+책장 세트\n> 가구 / 책 상 / 책상+책장 세트 — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 책 상 / 책상+책장 세트 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 책 상 / 책상+책장 세트 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 품명: 7\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 품 명: 거실장식장 (TV받침, 문갑포함)\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 규격: 24\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 규 격: 길이 120cm 이상\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 품명: 7\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 품 명: 거실장식장 (TV받침, 문갑포함)\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 규격: 25\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 규 격: 길이 120cm 미만\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 수 수 료 / 조 정 후 / 계: 12,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 7,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 품명: 7\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 품 명: 거실장식장 (TV받침, 문갑포함)\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 규격: 26\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 규 격: 길이 90cm 미만\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 품명: 8\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 품 명: 장식장 (책장, 찬장)\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 규격: 27\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 규 격: 가로 120cm 이상\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 수 수 료 / 조 정 후 / 계: 13,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 품명: 8\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 품 명: 장식장 (책장, 찬장)\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 규격: 28\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 규 격: 가로 120cm 미만\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 품명: 8\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 품 명: 장식장 (책장, 찬장)\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 규격: 29\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 규 격: 가로 90cm 미만\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 옷걸이 / 모든 규격 — 품명: 9\n> 가구 / 옷걸이 / 모든 규격 — 품 명: 옷걸이\n> 가구 / 옷걸이 / 모든 규격 — 규격: 30\n> 가구 / 옷걸이 / 모든 규격 — 규 격: 모든 규격\n> 가구 / 옷걸이 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가구 / 옷걸이 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 옷걸이 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 책꽂이 / 50cm*50cm이하 — 품명: 10\n> 가구 / 책꽂이 / 50cm*50cm이하 — 품 명: 책꽂이\n> 가구 / 책꽂이 / 50cm*50cm이하 — 규격: 31\n> 가구 / 책꽂이 / 50cm*50cm이하 — 규 격: 50cm*50cm이하\n> 가구 / 책꽂이 / 50cm*50cm이하 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가구 / 책꽂이 / 50cm*50cm이하 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 책꽂이 / 50cm*50cm이하 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 품명: 11\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 품 명: 식 탁\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 규격: 32\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 규 격: 대리석. 아일랜드(6인 이상)\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 수 수 료 / 조 정 후 / 계: 18,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 수 수 료 / 조 정 후 / 수집·운반비: 12,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 품명: 11\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 품 명: 식 탁\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 규격: 33\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 규 격: 대리석. 아일랜드(6인 미만)\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 수 수 료 / 조 정 후 / 수집·운반비: 9,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 품명: 11\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 품 명: 식 탁\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 규격: 34\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 규 격: 일반식탁 6인용 이상\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 품명: 11\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 품 명: 식 탁\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 규격: 35\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 규 격: 일반식탁 6인용 미만\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 서랍장 / 5단 이상 — 품명: 12\n> 가구 / 서랍장 / 5단 이상 — 품 명: 서랍장\n> 가구 / 서랍장 / 5단 이상 — 규격: 36\n> 가구 / 서랍장 / 5단 이상 — 규 격: 5단 이상\n> 가구 / 서랍장 / 5단 이상 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 서랍장 / 5단 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 7,000\n> 가구 / 서랍장 / 5단 이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 서랍장 / 5단 미만 — 품명: 12\n> 가구 / 서랍장 / 5단 미만 — 품 명: 서랍장\n> 가구 / 서랍장 / 5단 미만 — 규격: 37\n> 가구 / 서랍장 / 5단 미만 — 규 격: 5단 미만\n> 가구 / 서랍장 / 5단 미만 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 서랍장 / 5단 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 서랍장 / 5단 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 품명: 13\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 품 명: 화장대\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 규격: 38\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 규 격: 상판가로 90㎝ 이상\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 품명: 13\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 품 명: 화장대\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 규격: 39\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 규 격: 상판가로 90㎝ 미만\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 의자 / 목제 — 품명: 14\n> 가구 / 의자 / 목제 — 품 명: 의자\n> 가구 / 의자 / 목제 — 규격: 40\n> 가구 / 의자 / 목제 — 규 격: 목제\n> 가구 / 의자 / 목제 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가구 / 의자 / 목제 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 의자 / 목제 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 의자 / 철제 — 품명: 14\n> 가구 / 의자 / 철제 — 품 명: 의자\n> 가구 / 의자 / 철제 — 규격: 41\n> 가구 / 의자 / 철제 — 규 격: 철제\n> 가구 / 의자 / 철제 — 수 수 료 / 조 정 후 / 계: 1,500\n> 가구 / 의자 / 철제 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 의자 / 철제 — 수 수 료 / 조 정 후 / 처리비: 500\n> 가구 / 의자 / PP재질의자 — 품명: 14\n> 가구 / 의자 / PP재질의자 — 품 명: 의자\n> 가구 / 의자 / PP재질의자 — 규격: 42\n> 가구 / 의자 / PP재질의자 — 규 격: PP재질의자\n> 가구 / 의자 / PP재질의자 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 의자 / PP재질의자 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가구 / 의자 / PP재질의자 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 품명: 15\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 품 명: 철제 캐비넷\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 규격: 43\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 품명: 15\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 품 명: 철제 캐비넷\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 규격: 44\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 신발장 / 높이 1m이상 — 품명: 16\n> 가구 / 신발장 / 높이 1m이상 — 품 명: 신발장\n> 가구 / 신발장 / 높이 1m이상 — 규격: 45\n> 가구 / 신발장 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가구 / 신발장 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 신발장 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 신발장 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 신발장 / 높이 1m미만 — 품명: 16\n> 가구 / 신발장 / 높이 1m미만 — 품 명: 신발장\n> 가구 / 신발장 / 높이 1m미만 — 규격: 46\n> 가구 / 신발장 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가구 / 신발장 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 신발장 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 신발장 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 싱크대 찬장 / 2칸 — 품명: 17\n> 가구 / 싱크대 찬장 / 2칸 — 품 명: 싱크대 찬장\n> 가구 / 싱크대 찬장 / 2칸 — 규격: 47\n> 가구 / 싱크대 찬장 / 2칸 — 규 격: 2칸\n> 가구 / 싱크대 찬장 / 2칸 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가구 / 싱크대 찬장 / 2칸 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 싱크대 찬장 / 2칸 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 싱크대 찬장 / 1칸 — 품명: 17\n> 가구 / 싱크대 찬장 / 1칸 — 품 명: 싱크대 찬장\n> 가구 / 싱크대 찬장 / 1칸 — 규격: 48\n> 가구 / 싱크대 찬장 / 1칸 — 규 격: 1칸\n> 가구 / 싱크대 찬장 / 1칸 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 싱크대 찬장 / 1칸 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가구 / 싱크대 찬장 / 1칸 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가구 / 싱크대 / 大 1짝당 — 품명: 18\n> 가구 / 싱크대 / 大 1짝당 — 품 명: 싱크대\n> 가구 / 싱크대 / 大 1짝당 — 규격: 49\n> 가구 / 싱크대 / 大 1짝당 — 규 격: 大 1짝당\n> 가구 / 싱크대 / 大 1짝당 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 싱크대 / 大 1짝당 — 수 수 료 / 조 정 후 / 수집·운반비: 7,000\n> 가구 / 싱크대 / 大 1짝당 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 싱크대 / 小 1짝당 — 품명: 18\n> 가구 / 싱크대 / 小 1짝당 — 품 명: 싱크대\n> 가구 / 싱크대 / 小 1짝당 — 규격: 50\n> 가구 / 싱크대 / 小 1짝당 — 규 격: 小 1짝당\n> 가구 / 싱크대 / 小 1짝당 — 수 수 료 / 조 정 후 / 계: 8,000\n> 가구 / 싱크대 / 小 1짝당 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 싱크대 / 小 1짝당 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 냉장고 / 500ℓ이상 — 품명: 19\n> 가전제품 / 냉장고 / 500ℓ이상 — 품 명: 냉장고\n> 가전제품 / 냉장고 / 500ℓ이상 — 규격: 51\n> 가전제품 / 냉장고 / 500ℓ이상 — 규 격: 500ℓ이상\n> 가전제품 / 냉장고 / 500ℓ이상 — 수 수 료 / 조 정 후 / 계: 20,000\n> 가전제품 / 냉장고 / 500ℓ이상 — 수 수 료 / 조 정 후 / 수집·운반비: 13,000\n> 가전제품 / 냉장고 / 500ℓ이상 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 가전제품 / 냉장고 / 300ℓ이상 — 품명: 19\n> 가전제품 / 냉장고 / 300ℓ이상 — 품 명: 냉장고\n> 가전제품 / 냉장고 / 300ℓ이상 — 규격: 52\n> 가전제품 / 냉장고 / 300ℓ이상 — 규 격: 300ℓ이상\n> 가전제품 / 냉장고 / 300ℓ이상 — 수 수 료 / 조 정 후 / 계: 15,000\n> 가전제품 / 냉장고 / 300ℓ이상 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 가전제품 / 냉장고 / 300ℓ이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가전제품 / 냉장고 / 300ℓ미만 — 품명: 19\n> 가전제품 / 냉장고 / 300ℓ미만 — 품 명: 냉장고\n> 가전제품 / 냉장고 / 300ℓ미만 — 규격: 53\n> 가전제품 / 냉장고 / 300ℓ미만 — 규 격: 300ℓ미만\n> 가전제품 / 냉장고 / 300ℓ미만 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 냉장고 / 300ℓ미만 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가전제품 / 냉장고 / 300ℓ미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가전제품 / 텔레비전 / 42″이상 — 품명: 20\n> 가전제품 / 텔레비전 / 42″이상 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 42″이상 — 규격: 54\n> 가전제품 / 텔레비전 / 42″이상 — 규 격: 42″이상\n> 가전제품 / 텔레비전 / 42″이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가전제품 / 텔레비전 / 42″이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가전제품 / 텔레비전 / 42″이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가전제품 / 텔레비전 / 29″이상 — 품명: 20\n> 가전제품 / 텔레비전 / 29″이상 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 29″이상 — 규격: 55\n> 가전제품 / 텔레비전 / 29″이상 — 규 격: 29″이상\n> 가전제품 / 텔레비전 / 29″이상 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 텔레비전 / 29″이상 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 텔레비전 / 29″이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 텔레비전 / 14″이상 — 품명: 20\n> 가전제품 / 텔레비전 / 14″이상 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 14″이상 — 규격: 56\n> 가전제품 / 텔레비전 / 14″이상 — 규 격: 14″이상\n> 가전제품 / 텔레비전 / 14″이상 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 텔레비전 / 14″이상 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 텔레비전 / 14″이상 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 텔레비전 / 14″미만 — 품명: 20\n> 가전제품 / 텔레비전 / 14″미만 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 14″미만 — 규격: 57\n> 가전제품 / 텔레비전 / 14″미만 — 규 격: 14″미만\n> 가전제품 / 텔레비전 / 14″미만 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 텔레비전 / 14″미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 텔레비전 / 14″미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 세탁기 / 용량8kg이상 — 품명: 21\n> 가전제품 / 세탁기 / 용량8kg이상 — 품 명: 세탁기\n> 가전제품 / 세탁기 / 용량8kg이상 — 규격: 58\n> 가전제품 / 세탁기 / 용량8kg이상 — 규 격: 용량8kg이상\n> 가전제품 / 세탁기 / 용량8kg이상 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가전제품 / 세탁기 / 용량8kg이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가전제품 / 세탁기 / 용량8kg이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 세탁기 / 용량8kg미만 — 품명: 21\n> 가전제품 / 세탁기 / 용량8kg미만 — 품 명: 세탁기\n> 가전제품 / 세탁기 / 용량8kg미만 — 규격: 59\n> 가전제품 / 세탁기 / 용량8kg미만 — 규 격: 용량8kg미만\n> 가전제품 / 세탁기 / 용량8kg미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가전제품 / 세탁기 / 용량8kg미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 세탁기 / 용량8kg미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 세탁기 / 드럼세탁기 — 품명: 21\n> 가전제품 / 세탁기 / 드럼세탁기 — 품 명: 세탁기\n> 가전제품 / 세탁기 / 드럼세탁기 — 규격: 60\n> 가전제품 / 세탁기 / 드럼세탁기 — 규 격: 드럼세탁기\n> 가전제품 / 세탁기 / 드럼세탁기 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 세탁기 / 드럼세탁기 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가전제품 / 세탁기 / 드럼세탁기 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 품명: 22\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 품 명: 에어컨 (실외기 또는 실내기), 온풍기\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 규격: 61\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 규 격: 264㎡형이상\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 수 수 료 / 조 정 후 / 계: 12,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 수 수 료 / 조 정 후 / 수집·운반비: 9,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 품명: 22\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 품 명: 에어컨 (실외기 또는 실내기), 온풍기\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 규격: 62\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 규 격: 66㎡이상\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 수 수 료 / 조 정 후 / 계: 8,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 품명: 22\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 품 명: 에어컨 (실외기 또는 실내기), 온풍기\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 규격: 63\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 규 격: 66㎡미만\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 품명: 23\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 품 명: 오븐레인지\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 규격: 64\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 품명: 23\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 품 명: 오븐레인지\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 규격: 65\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 품명: 24\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 품 명: 가스레인지\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 규격: 66\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 규 격: 화구 3개 이상\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 품명: 24\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 품 명: 가스레인지\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 규격: 67\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 규 격: 화구 2개 이하\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 공기청정기 / 높이 1m이상 — 품명: 25\n> 가전제품 / 공기청정기 / 높이 1m이상 — 품 명: 공기청정기\n> 가전제품 / 공기청정기 / 높이 1m이상 — 규격: 68\n> 가전제품 / 공기청정기 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가전제품 / 공기청정기 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가전제품 / 공기청정기 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가전제품 / 공기청정기 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가전제품 / 공기청정기 / 높이 1m미만 — 품명: 25\n> 가전제품 / 공기청정기 / 높이 1m미만 — 품 명: 공기청정기\n> 가전제품 / 공기청정기 / 높이 1m미만 — 규격: 69\n> 가전제품 / 공기청정기 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가전제품 / 공기청정기 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 공기청정기 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 공기청정기 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 시계 / PP재질 — 품명: 26\n> 가전제품 / 시계 / PP재질 — 품 명: 시계\n> 가전제품 / 시계 / PP재질 — 규격: 70\n> 가전제품 / 시계 / PP재질 — 규 격: PP재질\n> 가전제품 / 시계 / PP재질 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 시계 / PP재질 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 시계 / PP재질 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 시계 / 목재 재질 — 품명: 26\n> 가전제품 / 시계 / 목재 재질 — 품 명: 시계\n> 가전제품 / 시계 / 목재 재질 — 규격: 71\n> 가전제품 / 시계 / 목재 재질 — 규 격: 목재 재질\n> 가전제품 / 시계 / 목재 재질 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 시계 / 목재 재질 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 시계 / 목재 재질 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 전축 / 길이 1m 이상 — 품명: 27\n> 가전제품 / 전축 / 길이 1m 이상 — 품 명: 전축\n> 가전제품 / 전축 / 길이 1m 이상 — 규격: 72\n> 가전제품 / 전축 / 길이 1m 이상 — 규 격: 길이 1m 이상\n> 가전제품 / 전축 / 길이 1m 이상 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 전축 / 길이 1m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가전제품 / 전축 / 길이 1m 이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가전제품 / 전축 / 길이 1m 미만 — 품명: 27\n> 가전제품 / 전축 / 길이 1m 미만 — 품 명: 전축\n> 가전제품 / 전축 / 길이 1m 미만 — 규격: 73\n> 가전제품 / 전축 / 길이 1m 미만 — 규 격: 길이 1m 미만\n> 가전제품 / 전축 / 길이 1m 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 전축 / 길이 1m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 가전제품 / 전축 / 길이 1m 미만 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 가전제품 / 탈수기 / 모든규격 — 품명: 28\n> 가전제품 / 탈수기 / 모든규격 — 품 명: 탈수기\n> 가전제품 / 탈수기 / 모든규격 — 규격: 74\n> 가전제품 / 탈수기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 탈수기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 탈수기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 탈수기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 정수기 / 모든규격 — 품명: 29\n> 가전제품 / 정수기 / 모든규격 — 품 명: 정수기\n> 가전제품 / 정수기 / 모든규격 — 규격: 75\n> 가전제품 / 정수기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 정수기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가전제품 / 정수기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가전제품 / 정수기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 선풍기 / 모든규격 — 품명: 30\n> 가전제품 / 선풍기 / 모든규격 — 품 명: 선풍기\n> 가전제품 / 선풍기 / 모든규격 — 규격: 76\n> 가전제품 / 선풍기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 선풍기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 선풍기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 선풍기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / PC 모니터 / 모든규격 — 품명: 31\n> 가전제품 / PC 모니터 / 모든규격 — 품 명: PC 모니터\n> 가전제품 / PC 모니터 / 모든규격 — 규격: 77\n> 가전제품 / PC 모니터 / 모든규격 — 규 격: 모든규격\n> 가전제품 / PC 모니터 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / PC 모니터 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / PC 모니터 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / PC 본체 / 모든규격 — 품명: 32\n> 가전제품 / PC 본체 / 모든규격 — 품 명: PC 본체\n> 가전제품 / PC 본체 / 모든규격 — 규격: 78\n> 가전제품 / PC 본체 / 모든규격 — 규 격: 모든규격\n> 가전제품 / PC 본체 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / PC 본체 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / PC 본체 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 복사기 / 50x50cm 이상 — 품명: 33\n> 가전제품 / 복사기 / 50x50cm 이상 — 품 명: 복사기\n> 가전제품 / 복사기 / 50x50cm 이상 — 규격: 79\n> 가전제품 / 복사기 / 50x50cm 이상 — 규 격: 50x50cm 이상\n> 가전제품 / 복사기 / 50x50cm 이상 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 복사기 / 50x50cm 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가전제품 / 복사기 / 50x50cm 이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가전제품 / 복사기 / 50x50cm 미만 — 품명: 33\n> 가전제품 / 복사기 / 50x50cm 미만 — 품 명: 복사기\n> 가전제품 / 복사기 / 50x50cm 미만 — 규격: 80\n> 가전제품 / 복사기 / 50x50cm 미만 — 규 격: 50x50cm 미만\n> 가전제품 / 복사기 / 50x50cm 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 복사기 / 50x50cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 가전제품 / 복사기 / 50x50cm 미만 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 가전제품 / 팩시밀리 / 모든규격 — 품명: 34\n> 가전제품 / 팩시밀리 / 모든규격 — 품 명: 팩시밀리\n> 가전제품 / 팩시밀리 / 모든규격 — 규격: 81\n> 가전제품 / 팩시밀리 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 팩시밀리 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 팩시밀리 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 팩시밀리 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 식기세척기 / 모든규격 — 품명: 35\n> 가전제품 / 식기세척기 / 모든규격 — 품 명: 식기세척기\n> 가전제품 / 식기세척기 / 모든규격 — 규격: 82\n> 가전제품 / 식기세척기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 식기세척기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 식기세척기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 가전제품 / 식기세척기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 가전제품 / 비디오 / 모든규격 — 품명: 36\n> 가전제품 / 비디오 / 모든규격 — 품 명: 비디오\n> 가전제품 / 비디오 / 모든규격 — 규격: 83\n> 가전제품 / 비디오 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 비디오 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 비디오 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 비디오 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 청소기 / 모든규격 — 품명: 37\n> 가전제품 / 청소기 / 모든규격 — 품 명: 청소기\n> 가전제품 / 청소기 / 모든규격 — 규격: 84\n> 가전제품 / 청소기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 청소기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 청소기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 청소기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 밥통 / 모든규격 — 품명: 38\n> 가전제품 / 밥통 / 모든규격 — 품 명: 밥통\n> 가전제품 / 밥통 / 모든규격 — 규격: 85\n> 가전제품 / 밥통 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 밥통 / 모든규격 — 수 수 료 / 조 정 후 / 계: 1,000\n> 가전제품 / 밥통 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 가전제품 / 밥통 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 500\n> 가전제품 / 식기건조기 / 모든규격 — 품명: 39\n> 가전제품 / 식기건조기 / 모든규격 — 품 명: 식기건조기\n> 가전제품 / 식기건조기 / 모든규격 — 규격: 86\n> 가전제품 / 식기건조기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 식기건조기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 식기건조기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 식기건조기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 스탠드 / 모든규격 — 품명: 40\n> 가전제품 / 스탠드 / 모든규격 — 품 명: 스탠드\n> 가전제품 / 스탠드 / 모든규격 — 규격: 87\n> 가전제품 / 스탠드 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 스탠드 / 모든규격 — 수 수 료 / 조 정 후 / 계: 1,000\n> 가전제품 / 스탠드 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 가전제품 / 스탠드 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 500\n> 기타 / 피아노 / 그랜드 — 품명: 41\n> 기타 / 피아노 / 그랜드 — 품 명: 피아노\n> 기타 / 피아노 / 그랜드 — 규격: 88\n> 기타 / 피아노 / 그랜드 — 규 격: 그랜드\n> 기타 / 피아노 / 그랜드 — 수 수 료 / 조 정 후 / 계: 30,000\n> 기타 / 피아노 / 그랜드 — 수 수 료 / 조 정 후 / 수집·운반비: 18,000\n> 기타 / 피아노 / 그랜드 — 수 수 료 / 조 정 후 / 처리비: 12,000\n> 기타 / 피아노 / 업라이트 — 품명: 41\n> 기타 / 피아노 / 업라이트 — 품 명: 피아노\n> 기타 / 피아노 / 업라이트 — 규격: 89\n> 기타 / 피아노 / 업라이트 — 규 격: 업라이트\n> 기타 / 피아노 / 업라이트 — 수 수 료 / 조 정 후 / 계: 20,000\n> 기타 / 피아노 / 업라이트 — 수 수 료 / 조 정 후 / 수집·운반비: 12,000\n> 기타 / 피아노 / 업라이트 — 수 수 료 / 조 정 후 / 처리비: 8,000\n> 기타 / 피아노 / 디지털 — 품명: 41\n> 기타 / 피아노 / 디지털 — 품 명: 피아노\n> 기타 / 피아노 / 디지털 — 규격: 90\n> 기타 / 피아노 / 디지털 — 규 격: 디지털\n> 기타 / 피아노 / 디지털 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 피아노 / 디지털 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 피아노 / 디지털 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 재봉틀 / 모든규격 — 품명: 42\n> 기타 / 재봉틀 / 모든규격 — 품 명: 재봉틀\n> 기타 / 재봉틀 / 모든규격 — 규격: 91\n> 기타 / 재봉틀 / 모든규격 — 규 격: 모든규격\n> 기타 / 재봉틀 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 재봉틀 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 재봉틀 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 쌀통 / 목재1*1m이상 — 품명: 43\n> 기타 / 쌀통 / 목재1*1m이상 — 품 명: 쌀통\n> 기타 / 쌀통 / 목재1*1m이상 — 규격: 92\n> 기타 / 쌀통 / 목재1*1m이상 — 규 격: 목재1*1m이상\n> 기타 / 쌀통 / 목재1*1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 쌀통 / 목재1*1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 쌀통 / 목재1*1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 쌀통 / 목재1*1m이하 — 품명: 43\n> 기타 / 쌀통 / 목재1*1m이하 — 품 명: 쌀통\n> 기타 / 쌀통 / 목재1*1m이하 — 규격: 93\n> 기타 / 쌀통 / 목재1*1m이하 — 규 격: 목재1*1m이하\n> 기타 / 쌀통 / 목재1*1m이하 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 쌀통 / 목재1*1m이하 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 쌀통 / 목재1*1m이하 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 가방류 / 골프가방 — 품명: 44\n> 기타 / 가방류 / 골프가방 — 품 명: 가방류\n> 기타 / 가방류 / 골프가방 — 규격: 94\n> 기타 / 가방류 / 골프가방 — 규 격: 골프가방\n> 기타 / 가방류 / 골프가방 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 가방류 / 골프가방 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 가방류 / 골프가방 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 가방류 / 화물용 — 품명: 44\n> 기타 / 가방류 / 화물용 — 품 명: 가방류\n> 기타 / 가방류 / 화물용 — 규격: 95\n> 기타 / 가방류 / 화물용 — 규 격: 화물용\n> 기타 / 가방류 / 화물용 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 가방류 / 화물용 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 가방류 / 화물용 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 가방류 / 그 밖의 가방류 — 품명: 44\n> 기타 / 가방류 / 그 밖의 가방류 — 품 명: 가방류\n> 기타 / 가방류 / 그 밖의 가방류 — 규격: 96\n> 기타 / 가방류 / 그 밖의 가방류 — 규 격: 그 밖의 가방류\n> 기타 / 가방류 / 그 밖의 가방류 — 수 수 료 / 조 정 후 / 계: 1,000\n> 기타 / 가방류 / 그 밖의 가방류 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 기타 / 가방류 / 그 밖의 가방류 — 수 수 료 / 조 정 후 / 처리비: 500\n> 기타 / 문짝 / 목재 — 품명: 45\n> 기타 / 문짝 / 목재 — 품 명: 문짝\n> 기타 / 문짝 / 목재 — 규격: 97\n> 기타 / 문짝 / 목재 — 규 격: 목재\n> 기타 / 문짝 / 목재 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 문짝 / 목재 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 문짝 / 목재 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 문짝 / 목재,유리포함 — 품명: 45\n> 기타 / 문짝 / 목재,유리포함 — 품 명: 문짝\n> 기타 / 문짝 / 목재,유리포함 — 규격: 98\n> 기타 / 문짝 / 목재,유리포함 — 규 격: 목재,유리포함\n> 기타 / 문짝 / 목재,유리포함 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 문짝 / 목재,유리포함 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 문짝 / 목재,유리포함 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 보일러 / 모든 규격 — 품명: 46\n> 기타 / 보일러 / 모든 규격 — 품 명: 보일러\n> 기타 / 보일러 / 모든 규격 — 규격: 99\n> 기타 / 보일러 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 보일러 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 보일러 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 보일러 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 기름 탱크 / 2드럼이상 — 품명: 47\n> 기타 / 기름 탱크 / 2드럼이상 — 품 명: 기름 탱크\n> 기타 / 기름 탱크 / 2드럼이상 — 규격: 100\n> 기타 / 기름 탱크 / 2드럼이상 — 규 격: 2드럼이상\n> 기타 / 기름 탱크 / 2드럼이상 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 기름 탱크 / 2드럼이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 기름 탱크 / 2드럼이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 기름 탱크 / 2드럼미만 — 품명: 47\n> 기타 / 기름 탱크 / 2드럼미만 — 품 명: 기름 탱크\n> 기타 / 기름 탱크 / 2드럼미만 — 규격: 101\n> 기타 / 기름 탱크 / 2드럼미만 — 규 격: 2드럼미만\n> 기타 / 기름 탱크 / 2드럼미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 기름 탱크 / 2드럼미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 기름 탱크 / 2드럼미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 물탱크(FRP) / 5드럼이상 — 품명: 48\n> 기타 / 물탱크(FRP) / 5드럼이상 — 품 명: 물탱크(FRP)\n> 기타 / 물탱크(FRP) / 5드럼이상 — 규격: 102\n> 기타 / 물탱크(FRP) / 5드럼이상 — 규 격: 5드럼이상\n> 기타 / 물탱크(FRP) / 5드럼이상 — 수 수 료 / 조 정 후 / 계: 20,000\n> 기타 / 물탱크(FRP) / 5드럼이상 — 수 수 료 / 조 정 후 / 수집·운반비: 15,000\n> 기타 / 물탱크(FRP) / 5드럼이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 물탱크(FRP) / 5드럼미만 — 품명: 48\n> 기타 / 물탱크(FRP) / 5드럼미만 — 품 명: 물탱크(FRP)\n> 기타 / 물탱크(FRP) / 5드럼미만 — 규격: 103\n> 기타 / 물탱크(FRP) / 5드럼미만 — 규 격: 5드럼미만\n> 기타 / 물탱크(FRP) / 5드럼미만 — 수 수 료 / 조 정 후 / 계: 15,000\n> 기타 / 물탱크(FRP) / 5드럼미만 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 기타 / 물탱크(FRP) / 5드럼미만 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 조명기구 / 장식용 — 품명: 49\n> 기타 / 조명기구 / 장식용 — 품 명: 조명기구\n> 기타 / 조명기구 / 장식용 — 규격: 104\n> 기타 / 조명기구 / 장식용 — 규 격: 장식용\n> 기타 / 조명기구 / 장식용 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 조명기구 / 장식용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 조명기구 / 장식용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 조명기구 / 일반용 — 품명: 49\n> 기타 / 조명기구 / 일반용 — 품 명: 조명기구\n> 기타 / 조명기구 / 일반용 — 규격: 105\n> 기타 / 조명기구 / 일반용 — 규 격: 일반용\n> 기타 / 조명기구 / 일반용 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 조명기구 / 일반용 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 조명기구 / 일반용 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 품명: 50\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 품 명: 거울·액자\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 규격: 106\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 규 격: 50㎝×50㎝ 미만\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 품명: 50\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 품 명: 거울·액자\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 규격: 107\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 규 격: 50㎝×50㎝ 이상\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 운동기구 / 러닝머신 — 품명: 51\n> 기타 / 운동기구 / 러닝머신 — 품 명: 운동기구\n> 기타 / 운동기구 / 러닝머신 — 규격: 108\n> 기타 / 운동기구 / 러닝머신 — 규 격: 러닝머신\n> 기타 / 운동기구 / 러닝머신 — 수 수 료 / 조 정 후 / 계: 10,000\n> 기타 / 운동기구 / 러닝머신 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 기타 / 운동기구 / 러닝머신 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 운동기구 / 싸이클 — 품명: 51\n> 기타 / 운동기구 / 싸이클 — 품 명: 운동기구\n> 기타 / 운동기구 / 싸이클 — 규격: 109\n> 기타 / 운동기구 / 싸이클 — 규 격: 싸이클\n> 기타 / 운동기구 / 싸이클 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 운동기구 / 싸이클 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 운동기구 / 싸이클 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 운동기구 / 그 밖의 운동기구 — 품명: 51\n> 기타 / 운동기구 / 그 밖의 운동기구 — 품 명: 운동기구\n> 기타 / 운동기구 / 그 밖의 운동기구 — 규격: 110\n> 기타 / 운동기구 / 그 밖의 운동기구 — 규 격: 그 밖의 운동기구\n> 기타 / 운동기구 / 그 밖의 운동기구 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 운동기구 / 그 밖의 운동기구 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 운동기구 / 그 밖의 운동기구 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 우산 / 모든규격 — 품명: 52\n> 기타 / 우산 / 모든규격 — 품 명: 우산\n> 기타 / 우산 / 모든규격 — 규격: 111\n> 기타 / 우산 / 모든규격 — 규 격: 모든규격\n> 기타 / 우산 / 모든규격 — 수 수 료 / 조 정 후 / 계: 1,000\n> 기타 / 우산 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 기타 / 우산 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 500\n> 기타 / 자전거 / 성인용 — 품명: 53\n> 기타 / 자전거 / 성인용 — 품 명: 자전거\n> 기타 / 자전거 / 성인용 — 규격: 112\n> 기타 / 자전거 / 성인용 — 규 격: 성인용\n> 기타 / 자전거 / 성인용 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 자전거 / 성인용 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 자전거 / 성인용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 자전거 / 아동용 — 품명: 53\n> 기타 / 자전거 / 아동용 — 품 명: 자전거\n> 기타 / 자전거 / 아동용 — 규격: 113\n> 기타 / 자전거 / 아동용 — 규 격: 아동용\n> 기타 / 자전거 / 아동용 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 자전거 / 아동용 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 자전거 / 아동용 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 돗자리 / 모든 규격 — 품명: 54\n> 기타 / 돗자리 / 모든 규격 — 품 명: 돗자리\n> 기타 / 돗자리 / 모든 규격 — 규격: 114\n> 기타 / 돗자리 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 돗자리 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 돗자리 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 돗자리 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 수족관(어항) / 길이 2m 이상 — 품명: 55\n> 기타 / 수족관(어항) / 길이 2m 이상 — 품 명: 수족관(어항)\n> 기타 / 수족관(어항) / 길이 2m 이상 — 규격: 115\n> 기타 / 수족관(어항) / 길이 2m 이상 — 규 격: 길이 2m 이상\n> 기타 / 수족관(어항) / 길이 2m 이상 — 수 수 료 / 조 정 후 / 계: 15,000\n> 기타 / 수족관(어항) / 길이 2m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 기타 / 수족관(어항) / 길이 2m 이상 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 품명: 55\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 품 명: 수족관(어항)\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 규격: 116\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 규 격: 길이 1m～2m미만\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 수 수 료 / 조 정 후 / 계: 9,000\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 수족관(어항) / 길이 1m미만 — 품명: 55\n> 기타 / 수족관(어항) / 길이 1m미만 — 품 명: 수족관(어항)\n> 기타 / 수족관(어항) / 길이 1m미만 — 규격: 117\n> 기타 / 수족관(어항) / 길이 1m미만 — 규 격: 길이 1m미만\n> 기타 / 수족관(어항) / 길이 1m미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 수족관(어항) / 길이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 수족관(어항) / 길이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 유모차 / 모든 규격 — 품명: 56\n> 기타 / 유모차 / 모든 규격 — 품 명: 유모차\n> 기타 / 유모차 / 모든 규격 — 규격: 118\n> 기타 / 유모차 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 유모차 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 유모차 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 유모차 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 보행기 / 모든규격 — 품명: 57\n> 기타 / 보행기 / 모든규격 — 품 명: 보행기\n> 기타 / 보행기 / 모든규격 — 규격: 119\n> 기타 / 보행기 / 모든규격 — 규 격: 모든규격\n> 기타 / 보행기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 보행기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 보행기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 카펫 / 3.3㎡당 — 품명: 58\n> 기타 / 카펫 / 3.3㎡당 — 품 명: 카펫\n> 기타 / 카펫 / 3.3㎡당 — 규격: 120\n> 기타 / 카펫 / 3.3㎡당 — 규 격: 3.3㎡당\n> 기타 / 카펫 / 3.3㎡당 — 수 수 료 / 조 정 후 / 계: 8,000\n> 기타 / 카펫 / 3.3㎡당 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 카펫 / 3.3㎡당 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 개집(FRP) / 모든규격 — 품명: 59\n> 기타 / 개집(FRP) / 모든규격 — 품 명: 개집(FRP)\n> 기타 / 개집(FRP) / 모든규격 — 규격: 121\n> 기타 / 개집(FRP) / 모든규격 — 규 격: 모든규격\n> 기타 / 개집(FRP) / 모든규격 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 개집(FRP) / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 개집(FRP) / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 정화조 / 10인용 이상 — 품명: 60\n> 기타 / 정화조 / 10인용 이상 — 품 명: 정화조\n> 기타 / 정화조 / 10인용 이상 — 규격: 122\n> 기타 / 정화조 / 10인용 이상 — 규 격: 10인용 이상\n> 기타 / 정화조 / 10인용 이상 — 수 수 료 / 조 정 후 / 계: 35,000\n> 기타 / 정화조 / 10인용 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 18,000\n> 기타 / 정화조 / 10인용 이상 — 수 수 료 / 조 정 후 / 처리비: 17,000\n> 기타 / 정화조 / 10인용 미만 — 품명: 60\n> 기타 / 정화조 / 10인용 미만 — 품 명: 정화조\n> 기타 / 정화조 / 10인용 미만 — 규격: 123\n> 기타 / 정화조 / 10인용 미만 — 규 격: 10인용 미만\n> 기타 / 정화조 / 10인용 미만 — 수 수 료 / 조 정 후 / 계: 21,000\n> 기타 / 정화조 / 10인용 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 11,000\n> 기타 / 정화조 / 10인용 미만 — 수 수 료 / 조 정 후 / 처리비: 10,000\n> 기타 / 욕조 / 길이 2m 이상 — 품명: 61\n> 기타 / 욕조 / 길이 2m 이상 — 품 명: 욕조\n> 기타 / 욕조 / 길이 2m 이상 — 규격: 124\n> 기타 / 욕조 / 길이 2m 이상 — 규 격: 길이 2m 이상\n> 기타 / 욕조 / 길이 2m 이상 — 수 수 료 / 조 정 후 / 계: 20,000\n> 기타 / 욕조 / 길이 2m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 기타 / 욕조 / 길이 2m 이상 — 수 수 료 / 조 정 후 / 처리비: 10,000\n> 기타 / 욕조 / 길이1m~2m 미만 — 품명: 61\n> 기타 / 욕조 / 길이1m~2m 미만 — 품 명: 욕조\n> 기타 / 욕조 / 길이1m~2m 미만 — 규격: 125\n> 기타 / 욕조 / 길이1m~2m 미만 — 규 격: 길이1m~2m 미만\n> 기타 / 욕조 / 길이1m~2m 미만 — 수 수 료 / 조 정 후 / 계: 10,000\n> 기타 / 욕조 / 길이1m~2m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 욕조 / 길이1m~2m 미만 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 욕조 / 길이1m 미만 — 품명: 61\n> 기타 / 욕조 / 길이1m 미만 — 품 명: 욕조\n> 기타 / 욕조 / 길이1m 미만 — 규격: 126\n> 기타 / 욕조 / 길이1m 미만 — 규 격: 길이1m 미만\n> 기타 / 욕조 / 길이1m 미만 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 욕조 / 길이1m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 욕조 / 길이1m 미만 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 변기 / 모든규격 — 품명: 62\n> 기타 / 변기 / 모든규격 — 품 명: 변기\n> 기타 / 변기 / 모든규격 — 규격: 127\n> 기타 / 변기 / 모든규격 — 규 격: 모든규격\n> 기타 / 변기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 9,000\n> 기타 / 변기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 변기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 세면대 / 모든규격 — 품명: 63\n> 기타 / 세면대 / 모든규격 — 품 명: 세면대\n> 기타 / 세면대 / 모든규격 — 규격: 128\n> 기타 / 세면대 / 모든규격 — 규 격: 모든규격\n> 기타 / 세면대 / 모든규격 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 세면대 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 세면대 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 난로 / 석 유 — 품명: 64\n> 기타 / 난로 / 석 유 — 품 명: 난로\n> 기타 / 난로 / 석 유 — 규격: 129\n> 기타 / 난로 / 석 유 — 규 격: 석 유\n> 기타 / 난로 / 석 유 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 난로 / 석 유 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 난로 / 석 유 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 난로 / 전 기 — 품명: 64\n> 기타 / 난로 / 전 기 — 품 명: 난로\n> 기타 / 난로 / 전 기 — 규격: 130\n> 기타 / 난로 / 전 기 — 규 격: 전 기\n> 기타 / 난로 / 전 기 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 난로 / 전 기 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 난로 / 전 기 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 드럼통 / 모든 규격 — 품명: 65\n> 기타 / 드럼통 / 모든 규격 — 품 명: 드럼통\n> 기타 / 드럼통 / 모든 규격 — 규격: 131\n> 기타 / 드럼통 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 드럼통 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 드럼통 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 드럼통 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 병풍 / 가로1m이상 — 품명: 66\n> 기타 / 병풍 / 가로1m이상 — 품 명: 병풍\n> 기타 / 병풍 / 가로1m이상 — 규격: 132\n> 기타 / 병풍 / 가로1m이상 — 규 격: 가로1m이상\n> 기타 / 병풍 / 가로1m이상 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 병풍 / 가로1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 병풍 / 가로1m이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 병풍 / 가로1m미만 — 품명: 66\n> 기타 / 병풍 / 가로1m미만 — 품 명: 병풍\n> 기타 / 병풍 / 가로1m미만 — 규격: 133\n> 기타 / 병풍 / 가로1m미만 — 규 격: 가로1m미만\n> 기타 / 병풍 / 가로1m미만 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 병풍 / 가로1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 병풍 / 가로1m미만 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 이불, 요 / 100L 봉투 기준 — 품명: 67\n> 기타 / 이불, 요 / 100L 봉투 기준 — 품 명: 이불, 요\n> 기타 / 이불, 요 / 100L 봉투 기준 — 규격: 134\n> 기타 / 이불, 요 / 100L 봉투 기준 — 규 격: 100L 봉투 기준\n> 기타 / 이불, 요 / 100L 봉투 기준 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 이불, 요 / 100L 봉투 기준 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 이불, 요 / 100L 봉투 기준 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 이불, 요 / 50L 봉투 기준 — 품명: 67\n> 기타 / 이불, 요 / 50L 봉투 기준 — 품 명: 이불, 요\n> 기타 / 이불, 요 / 50L 봉투 기준 — 규격: 135\n> 기타 / 이불, 요 / 50L 봉투 기준 — 규 격: 50L 봉투 기준\n> 기타 / 이불, 요 / 50L 봉투 기준 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 이불, 요 / 50L 봉투 기준 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 이불, 요 / 50L 봉투 기준 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 타이어 / 화물차량 등 — 품명: 68\n> 기타 / 타이어 / 화물차량 등 — 품 명: 타이어\n> 기타 / 타이어 / 화물차량 등 — 규격: 136\n> 기타 / 타이어 / 화물차량 등 — 규 격: 화물차량 등\n> 기타 / 타이어 / 화물차량 등 — 수 수 료 / 조 정 후 / 계: 12,000\n> 기타 / 타이어 / 화물차량 등 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 타이어 / 화물차량 등 — 수 수 료 / 조 정 후 / 처리비: 8,000\n> 기타 / 타이어 / 승용차 — 품명: 68\n> 기타 / 타이어 / 승용차 — 품 명: 타이어\n> 기타 / 타이어 / 승용차 — 규격: 137\n> 기타 / 타이어 / 승용차 — 규 격: 승용차\n> 기타 / 타이어 / 승용차 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 타이어 / 승용차 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 타이어 / 승용차 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 항아리 / 20ℓ이상 — 품명: 69\n> 기타 / 항아리 / 20ℓ이상 — 품 명: 항아리\n> 기타 / 항아리 / 20ℓ이상 — 규격: 138\n> 기타 / 항아리 / 20ℓ이상 — 규 격: 20ℓ이상\n> 기타 / 항아리 / 20ℓ이상 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 항아리 / 20ℓ이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 항아리 / 20ℓ이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 항아리 / 20ℓ미만 — 품명: 69\n> 기타 / 항아리 / 20ℓ미만 — 품 명: 항아리\n> 기타 / 항아리 / 20ℓ미만 — 규격: 139\n> 기타 / 항아리 / 20ℓ미만 — 규 격: 20ℓ미만\n> 기타 / 항아리 / 20ℓ미만 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 항아리 / 20ℓ미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 항아리 / 20ℓ미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 비데 / 모든 규격 — 품명: 70\n> 기타 / 비데 / 모든 규격 — 품 명: 비데\n> 기타 / 비데 / 모든 규격 — 규격: 140\n> 기타 / 비데 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 비데 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 비데 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 비데 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 화분 / 20ℓ 이상 — 품명: 71\n> 기타 / 화분 / 20ℓ 이상 — 품 명: 화분\n> 기타 / 화분 / 20ℓ 이상 — 규격: 141\n> 기타 / 화분 / 20ℓ 이상 — 규 격: 20ℓ 이상\n> 기타 / 화분 / 20ℓ 이상 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 화분 / 20ℓ 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 기타 / 화분 / 20ℓ 이상 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 기타 / 화분 / 20ℓ 미만 — 품명: 71\n> 기타 / 화분 / 20ℓ 미만 — 품 명: 화분\n> 기타 / 화분 / 20ℓ 미만 — 규격: 142\n> 기타 / 화분 / 20ℓ 미만 — 규 격: 20ℓ 미만\n> 기타 / 화분 / 20ℓ 미만 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 화분 / 20ℓ 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 화분 / 20ℓ 미만 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 비닐 / 100ℓ마대당 — 품명: 72\n> 기타 / 비닐 / 100ℓ마대당 — 품 명: 비닐\n> 기타 / 비닐 / 100ℓ마대당 — 규격: 143\n> 기타 / 비닐 / 100ℓ마대당 — 규 격: 100ℓ마대당\n> 기타 / 비닐 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 비닐 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 비닐 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 금고 / 대 (1m이상) — 품명: 73\n> 기타 / 금고 / 대 (1m이상) — 품 명: 금고\n> 기타 / 금고 / 대 (1m이상) — 규격: 144\n> 기타 / 금고 / 대 (1m이상) — 규 격: 대 (1m이상)\n> 기타 / 금고 / 대 (1m이상) — 수 수 료 / 조 정 후 / 계: 10,000\n> 기타 / 금고 / 대 (1m이상) — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 금고 / 대 (1m이상) — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 금고 / 소 (1m미만) — 품명: 73\n> 기타 / 금고 / 소 (1m미만) — 품 명: 금고\n> 기타 / 금고 / 소 (1m미만) — 규격: 145\n> 기타 / 금고 / 소 (1m미만) — 규 격: 소 (1m미만)\n> 기타 / 금고 / 소 (1m미만) — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 금고 / 소 (1m미만) — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 기타 / 금고 / 소 (1m미만) — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 기타 / 합판 / 장당 — 품명: 74\n> 기타 / 합판 / 장당 — 품 명: 합판\n> 기타 / 합판 / 장당 — 규격: 146\n> 기타 / 합판 / 장당 — 규 격: 장당\n> 기타 / 합판 / 장당 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 합판 / 장당 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 합판 / 장당 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 방충망 / 모든 규격 — 품명: 75\n> 기타 / 방충망 / 모든 규격 — 품 명: 방충망\n> 기타 / 방충망 / 모든 규격 — 규격: 147\n> 기타 / 방충망 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 방충망 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 방충망 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 방충망 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 블라인드 / 모든 규격 — 품명: 76\n> 기타 / 블라인드 / 모든 규격 — 품 명: 블라인드\n> 기타 / 블라인드 / 모든 규격 — 규격: 148\n> 기타 / 블라인드 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 블라인드 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 블라인드 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 블라인드 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 품명: 77\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 품 명: 목재류\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 규격: 149\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 규 격: 폐목재류(1톤차량기준)\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 수 수 료 / 조 정 후 / 계: 100,000\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 수 수 료 / 조 정 후 / 수집·운반비: 50,000\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 수 수 료 / 조 정 후 / 처리비: 50,000\n> 기타 / 폐합성수지 / 100ℓ마대당 — 품명: 78\n> 기타 / 폐합성수지 / 100ℓ마대당 — 품 명: 폐합성수지\n> 기타 / 폐합성수지 / 100ℓ마대당 — 규격: 150\n> 기타 / 폐합성수지 / 100ℓ마대당 — 규 격: 100ℓ마대당\n> 기타 / 폐합성수지 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 폐합성수지 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 폐합성수지 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> ※ 품명에 명시되지 않은 대형폐기물은 종류 및 규격을 감안하여 유사한 품목의 수수료를 준용 ※ 차량진입가능한 곳까지 배출하여야 수거 가능",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "대형 폐기물 배출 방법 알려줘",
+          "재활용품 분리배출 방법 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F017",
+      "turn": 1,
+      "question": "냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 17,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "무상 방문수거 품목과 훼손 제외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.528,
+      "server_timing": "search;dur=968.2, verify;dur=463.6, review_gate;dur=2.7, grounding;dur=5.6, originals;dur=0.0, review;dur=1.1, prepare;dur=9.6, app;dur=1496.9",
+      "status": 200,
+      "error": null,
+      "request_id": "672e5c9e7d7d42b592897a131abf399d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.528
+        }
+      ],
+      "response": {
+        "answer": "냉장고 — 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n- 분 류: 온도교환 기기\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 페가전 무상처리 안내\n> #### 대형폐가전\n> 대형폐가전 : 무상수거\n> 대 상 : 아래 품목\n> 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 분 류: 온도교환 기기\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 품 명: 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n> 단일수거 가능제품 / TV — 분 류: 디스플레이기기\n> 단일수거 가능제품 / TV — 품 명: TV\n> 단일수거 가능제품 / 복사기 — 분 류: 통신사무기기\n> 단일수거 가능제품 / 복사기 — 품 명: 복사기\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 분 류: 일반 전기 전자제품\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 품 명: 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 분 류: 세트 제품\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 품 명: 오디오세트(구형 전축), PC세트(본체, 모니터)*\n> 다량수거 가능품목 — 분 류: 5개이상 동시배출시 수거가능 제품\n> 다량수거 가능품목 — 품 명: 컴퓨터, 모니터, 오디오, 프린터, 팩시밀리, 음식물처리기, 전기비데, 전기히터, 연수기, 가습기, 전기다리미, 선풍기, 믹서기, 청소기, 비디오플레이어, 휴대폰, 스캐너, 빔프로젝터, 유무선공유기, 전기밥솥, 토스트기, 전기주전자, 전기온수기, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 전기안마기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기\n> ※ 다량수거가능품목 中 전기안마기의 경우, 안마의자는 제외\n> ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n> ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n> #### 소형폐가전\n> 소형폐가전 : 무상수거\n> 대 상 : 아래 품목(40여종)\n> 배출방법 : 단독주택 : 매주 수요일 비닐봉투 등에 담아 문전 배출 공동주택 : 전용수거함이 있는 경우 ▷ 상시 배출 전용수거함이 없는 경우 ▷ 재활용품 배출일자에 배출 레이저프린터, 비레이저프린터, 복사기, 팩시밀리, 컴퓨터자판, 컴퓨터본체, 스캐너, 빔프로젝트, 유무선공유기, 포터블, 오디오본체, 오디오스피커, 오디오차량용, 전기오븐, 전자레인지, 음식물처리기, 식기건조기, 전기비데, 공기청정기, 전기히터, 전기밥솥, 가습기, 다리미, 선풍기, 믹서기, 청소기, 비디오, 토스트기, 전기주전자, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기, 탈수기 ※ 옥매트, 전기장판, 조명기기류, 전기장목재재질의 전자제품(디지털피아노 등)은 제외 - 대형폐기물로 배출(처리 수수료 있음)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F018",
+      "turn": 1,
+      "question": "음식물쓰레기는 물기를 빼고 버려야 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 18,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050102",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "음식물 수분 제거와 용기",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.703,
+      "server_timing": "search;dur=1115.4, verify;dur=451.4, review_gate;dur=4.2, grounding;dur=12.1, originals;dur=0.0, review;dur=1.0, prepare;dur=15.8, app;dur=1677.0",
+      "status": 200,
+      "error": null,
+      "request_id": "759d1842ca05410ea37f20ad3d4b4468",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.703
+        }
+      ],
+      "response": {
+        "answer": "**폐기물**\n- 음식물 쓰레기 — 배출요령: + 물기를 최대한 제거한 후 배출하여야 한다. + 소금성분이 많은 김치 및 젓갈류 등은 물에 헹구고 물기를 짠 후 배출하여야 한다. + 부피가 큰 식품(통배추, 통무, 통과일, 옥수수 등)은 잘게 썰어 배출하여야 한다. + 채소 등의 뿌리·껍질은 흙을 제거하여 배출하여야 한다. + 이쑤시개, 젓가락, 비닐봉지 등 음식물이 아닌 이물질이 들어 가지 않도록 하여 배출하여야 한다.",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 음식물쓰레기 배출요령\n> #### 음식물 쓰레기에는\n> 농·수·축산물류 폐기물 및 과일, 채소 등의 버려진 쓰레기, 음식물 찌꺼기등이 있습니다.\n> #### 음식물쓰레기 배출요령\n> 음식물 쓰레기 — 배출요령: + 물기를 최대한 제거한 후 배출하여야 한다. + 소금성분이 많은 김치 및 젓갈류 등은 물에 헹구고 물기를 짠 후 배출하여야 한다. + 부피가 큰 식품(통배추, 통무, 통과일, 옥수수 등)은 잘게 썰어 배출하여야 한다. + 채소 등의 뿌리·껍질은 흙을 제거하여 배출하여야 한다. + 이쑤시개, 젓가락, 비닐봉지 등 음식물이 아닌 이물질이 들어 가지 않도록 하여 배출하여야 한다.\n> 음식물 쓰레기 — 음식물 전용용기에 넣어서는 안되는 물질: + 채소류 : 예) 마늘대 및 껍질 + 과일류 : 씨 + 견과류 : 껍질 + 곡류 : 예) 옥수수대 + 육류 : 예) 동물의 뼈 + 어패류 : 예) 조개류의 껍질\n> #### 배출일시\n> 일반 주택 및 소규모음식점 등에서 배출일시 : 매주 일, 화, 목요일 저녁 7시부터 10시까지\n> 아파트는 각 아파트별 지정시간\n> #### 다량배출사업장이란?\n> 정의: 1일평균 연급식 인원이 100인이상인 집단급식소\n> 정의: 영업장면적 600㎡이상인 일반음식점 및 휴게음식점\n> 정의: 대규모 점포 및 호텔, 콘도 등\n> #### 다량배출사업장의 음식물류 폐기물 배출 및 처리방법\n> 다량배출사업장의 음식물류 폐기물 배출 및 처리방법: 음식물류 폐기물의 물기를 제거하여 전용수거용기에 배출하여야 한다.\n> 다량배출사업장의 음식물류 폐기물 배출 및 처리방법: 다량배출사업장은 아래와 같이 음식물류 폐기물을 재활용하거나 처리하여야 한다. 1. 재활용하고자 하는 경우 음식물류 폐기물을 재활용하는 폐기물처리업자, 폐기물 재활용신고자 또는 폐기물처리시설의 설치·운영자에게 위탁하여 재활용하거나, 스스로 사료·퇴비 등으로 재활용하여야 한다. 음식물류 폐기물을 무상으로 수거하여 가축의 먹이 또는 퇴비로 적정 재활용하는 경우를 포함한다. 2. 다량배출사업자가 스스로 수분을 건조하고자 하는 경우 단독 또는 공동으로 가열에 의한 건조에 의하여 부산물의 수분함량을 25퍼센트 미만으로 감량하거나 발효 또는 발효건조에 의하여 퇴비화·사료화 또는 소멸화하여 부산물의 수분 함량을 40퍼센트 미만으로 하여야 한다. 발생된 수분이 건조된 부산물은 재활용하거나 구청장이 정한 배출방법에 따라 지정된 장소 또는 용기에 배출하여야 한다.\n> #### 다량배출사업장 준수사항\n> 음식물류폐기물발생억제및처리계획 신고서 제출\n> 음식물류 폐기물 위탁처리시 종량제 시행 - 위탁계약서에 반드시 배출량에 비례하여 수수료를 부과하는 내용 명시해야 함(정액제 불가) - 위탁일로부터 30일이내, 위탁계약서 등 관련서류의 사본을 구청에 제출\n> 음식물류폐기물발생억제및처리계획서에 명시한 내용 이행\n> 관리대장 및 실적보고 - 관리대장 : 2년간 보존 - 실적보고 : 다음해 1월말까지 구청에 제출\n> 변경사항이 있을시 변경신고서 구청에 제출 - 변경사유가 발생한 날로부터 30일이내 변경신고서 제출 - 변경사항 : 상호, 사업장소재지, 발생억제방안, 처리방법, 위탁업소, 계약내용 - 첨부서류 : 변경을 증명할 수 있는 서류, 위탁계약서 , 음식물류폐기물발생억제및처리계획 신고증명서\n> 음식물류 폐기물 전용용기 사용 및 업소명 표시 - 배출용량(20ℓ, 120ℓ)을 알 수 있는 전용용기 사용 및 용기에 업소명 표시\n> #### 위반시 조치사항\n> 음식물류폐기물발생억제및처리계획신고,처리실적보고 미제출,음식물류폐기물관리대장 기록,보존하지 않은 자\n> ☞ 과태료부과 50만원(1차) 70만원(2차), 100만원(3차)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050102",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "대형 폐기물 배출 방법 알려줘",
+          "재활용품 분리배출 방법 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F019",
+      "turn": 1,
+      "question": "일반 생활쓰레기는 어떤 봉투에 버려야 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 19,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "종량제 봉투와 혼합배출 금지",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.359,
+      "server_timing": "search;dur=733.0, verify;dur=464.9, review_gate;dur=3.4, grounding;dur=15.7, originals;dur=0.0, review;dur=1.4, prepare;dur=27.7, app;dur=1328.2",
+      "status": 200,
+      "error": null,
+      "request_id": "fea3a9ba73fb4af1b01c6145ae19b05a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.359
+        }
+      ],
+      "response": {
+        "answer": "**생활폐기물처리안내**\n- 생활쓰레기 배출요령: 구민이 지켜야 할 사항 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다. 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과), 재활용품은 반드시 품목별로 분리하여 요일별로 지정된 쓰레기만 배출하여야 합니다.\n- 생활쓰레기 배출요령: 이럴때는 쓰레기를 수거하지 않습니다. 일반쓰레기와 재활용품을 분리배출하지 않은 경우 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우 대형폐기물(냉장고, 장롱, 책상 등)",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 생활폐기물처리안내\n> #### 생활쓰레기 배출요령\n> 생활쓰레기 배출요령: 쓰레기 종량제는 쓰레기 없는 쾌적한 환경을 만들기 위하여 95년 1월부터 실시하고있는 제도로서 주택의 크기 또는 재산세액에 따라 차등적으로 수수료를 적용하던 종전의 제도와 달리, 배출자에게 본인이 배출있는 쓰레기의 양만큼 비용을 부담하도록 함으로써 스스로 쓰레기를 줄이고 재활용품도 최대한 분리 배출하도록 한 제도입니다.\n> 생활쓰레기 배출요령: 구민이 지켜야 할 사항 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다. 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과), 재활용품은 반드시 품목별로 분리하여 요일별로 지정된 쓰레기만 배출하여야 합니다.\n> 생활쓰레기 배출요령: 쓰레기 배출요일은 다음과 같습니다.\n> 쓰레기 종류 — 월: 재활용품 (플라스틱류(유색페트병 포함),비닐류, 요구르트병, 의류)\n> 쓰레기 종류 — 화: 일반쓰레기 (가연성) 음식물쓰레기\n> 쓰레기 종류 — 수: 재활용품(투명페트병,골판지류 (박스 등), 기타종이류, 종이팩류,유리병류, 스티로폼, 캔‧고철류, 폐형광등,폐건전지등), 일반쓰레기(불연성), 소형폐가전\n> 쓰레기 종류 — 목: 일반쓰레기 (가연성) 음식물쓰레기\n> 쓰레기 종류 — 금: 배출 금지\n> 쓰레기 종류 — 토: 배출 금지\n> 쓰레기 종류 — 일: 일반쓰레기 (가연성) 음식물쓰레기\n> 생활쓰레기 배출요령: 이럴때는 쓰레기를 수거하지 않습니다. 일반쓰레기와 재활용품을 분리배출하지 않은 경우 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우 대형폐기물(냉장고, 장롱, 책상 등)\n> 생활쓰레기 배출요령: 기타사항 종량제 규격봉투를 사용하지 않고 배출하거나, 무단투기 및 소각행위시에는 100만원 이하의 과태료가 부과됩니다.\n> 생활쓰레기 배출요령: 생활폐기물 수집·운반업체\n> 세화산업 — 담당구역: 괴정 1,2,3동, 하단 1,2동\n> 세화산업 — 전화번호: 051-264-8301\n> 미진산업 — 담당구역: 괴정4동, 당리동, 신평1동, 장림2동, 다대 1,2동\n> 미진산업 — 전화번호: 051-264-0894\n> 동진산업 — 담당구역: 신평2동, 장림1동, 구평동, 감천 1,2동\n> 동진산업 — 전화번호: 051-207-2030\n> 쓰레기 규격봉투 가격표 (시행일 : 2012.9.14., 금액:원)\n> 일반 — 5ℓ: 220\n> 일반 — 10ℓ: 430\n> 일반 — 20ℓ: 850\n> 일반 — 30ℓ: 1,280\n> 일반 — 50ℓ: 2,070\n> 일반 — 75ℓ: 3,080\n> 일반 — 불연성쓰레기 전용마대 (30ℓ): 1,280\n> 일반 — 건설폐기물 마대 (30ℓ): 3,000\n> ※ 쓰레기 규격봉투 100ℓ는 2020년 10월 중순부터 제작 중단. (단, 판매처 재고물량에 한해 구입 및 사용 가능)\n> 생활쓰레기 배출요령: 음식물쓰레기 전용용기 가격표 및 수수료\n> 용기규격 — 일반가정용: 3ℓ\n> 용기규격 — 일반가정용: 5ℓ\n> 용기규격 — 업소용: 20ℓ\n> 용기규격 — 공동주택: 120ℓ\n> 용기규격 — 업소용: 120ℓ\n> 용기 판매액 — 일반가정용: 6,500원\n> 용기 판매액 — 일반가정용: 7,000원\n> 용기 판매액 — 업소용: 16,000원\n> 용기 판매액 — 공동주택: 개별구매\n> 용기 판매액 — 업소용: 수거업체 문의\n> 용기 판매처 — 일반가정용: 새마을금고\n> 용기 판매처 — 일반가정용: 새마을금고\n> 용기 판매처 — 업소용: 새마을금고\n> 용기 판매처 — 공동주택: 개별구매\n> 용기 판매처 — 업소용: 수거업체 문의\n> 납부필증(칩) 수수료 — 일반가정용: 240원/개\n> 납부필증(칩) 수수료 — 일반가정용: 400원/개\n> 납부필증(칩) 수수료 — 업소용: 2,000원/매\n> 납부필증(칩) 수수료 — 공동주택: 8,400원/매\n> 납부필증(칩) 수수료 — 업소용: 12,000원/개\n> 납부필증(칩) 판매처 — 일반가정용: 종량제 봉투 판매소\n> 납부필증(칩) 판매처 — 일반가정용: 종량제 봉투 판매소\n> 납부필증(칩) 판매처 — 업소용: 종량제 봉투 판매소\n> 납부필증(칩) 판매처 — 공동주택: 새마을금고\n> 납부필증(칩) 판매처 — 업소용: 수거업체 (동진, 미진, 세화)\n> ※용기판매 가격은 업체사정에 따라 변경될 수 있음.",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "요일별 쓰레기 배출요령 다운로드",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000182158&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "대형 폐기물 배출 방법 알려줘",
+          "재활용품 분리배출 방법 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "diagnostic_note": "F004 explicit service catalogue regressed to model timeout. Interrupted before final; kept first failure, not combined with subsequent full evaluation."
+}
