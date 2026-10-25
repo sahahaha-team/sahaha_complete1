@@ -97,6 +97,10 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
             return _scoped_query(pending['query'], context, field)
         if re.fullmatch(r'(?:잘|그게)?(?:맞는지|해당하는지)?모르(?:겠어|겠어요|겠습니다|겠는데요)', current.rstrip('.!?')):
             return pending['query']
+    elif _scope_confirmation(message)[0] is not None:
+        # Yes/no does not answer an age/type question. Retain its topic;
+        # a later explicit age/type can still complete this clarification.
+        return pending['query']
     if ('여권' in pending.get('query','') and '세' in pending.get('reply_terms',[]) and
             len(current) <= 40 and re.match(r'^(?:만)?\d{1,2}(?:세|살)', current)):
         return merge_applicant_followup(pending['query'], message)
@@ -169,6 +173,10 @@ def build_clarification(user_message: str) -> dict | None:
     from chatbot.query_subject import interpret_query
     user_message = interpret_query(user_message)
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
+    if ('간판' in compact and re.search(r'허가|신고', compact) and '필요' in compact
+            and not re.search(r'서류|벽면|돌출|지주|창문|네온|전광|디지털|\d+\s*(?:㎡|제곱|m)', compact, re.I)):
+        return clarification_question('설치할 **간판의 종류**를 알려주세요. 벽면·돌출·지주 간판 등에 따라 허가·신고 기준이 달라집니다.',
+            [], ['벽면','돌출','지주','창문','네온','전광','디지털'])
     from chatbot.dialogue_profile import explicit_age
     from chatbot.faq_targets import priority_entities
     if ('소방' in service_names(user_message) and re.search(r'교육|훈련|체험', compact)

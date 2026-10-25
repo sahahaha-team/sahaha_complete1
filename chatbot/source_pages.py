@@ -7,19 +7,19 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 
-def parsed_original(row: dict) -> str:
+def parsed_original(row: dict, include_navigation: bool = False) -> str:
     """Reuse parsing within a fetched row, bound to both actual source fields.
 
     No freshness is cached: the caller must fetch and check last_checked_at.
     A replaced/edited HTML or fallback text invalidates this derived value.
     """
     html, content = row.get('raw_html') or '', row.get('content') or ''
-    digest = hashlib.sha256((html + '\0' + content).encode('utf-8')).digest()
+    digest = hashlib.sha256((html + '\0' + content + '\0' + str(include_navigation)).encode('utf-8')).digest()
     cached = row.get('_parsed_original')
     if cached and cached[0] == digest:
         return cached[1]
     from chatbot.official_content import official_html_text
-    body = official_html_text(html) or content
+    body = official_html_text(html, include_navigation=include_navigation) or content
     row['_parsed_original'] = (digest, body)
     return body
 
@@ -59,5 +59,5 @@ def source_document(document: dict, client) -> tuple[str, dict]:
     if 'attachments' in row:
         document = {**document, 'metadata': {**meta, 'attachments': row.get('attachments') or []}}
     from chatbot.source_warnings import reviewed_source
-    body, reviewed_meta = reviewed_source(parsed_original(row), document.get('metadata') or {})
+    body, reviewed_meta = reviewed_source(parsed_original(row, bool(document.get('_include_navigation'))), document.get('metadata') or {})
     return body, {**document,'metadata':reviewed_meta}

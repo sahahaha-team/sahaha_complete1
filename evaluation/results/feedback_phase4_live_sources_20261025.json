@@ -1,0 +1,202 @@
+[
+  {
+    "id": "F013",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+    "checked_at": "2026-10-25T11:43:14.894833+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+    "html_sha256": "2cb93a0d3495aff335b0f390f75f7b82c3e8cd0740f7cf90afd7fe187cb10bd5",
+    "body_sha256": "605a906102970673f56b227692a67db9e675b6e6442498c43ec6ae24a386a19b",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F043",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
+    "checked_at": "2026-10-25T11:43:14.896846+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
+    "html_sha256": "842b1eba68b3f362f6f43acf84e529852ed4af05ca48340a396ef4ed37983255",
+    "body_sha256": "27d409c87431fb70347ee902798a78c320c9560842273e25544b7b960af91577",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F044",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+    "checked_at": "2026-10-25T11:43:14.899703+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+    "html_sha256": "a228a7a054b220a012608d8739c1ce4ec8ff14d0f4bdd2a28574d7459ea8f937",
+    "body_sha256": "d3be9e48ddfe6ebb03b83a547e0ee5a7511d3d1fddac540acc7a4abf28e424c2",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F048",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
+    "checked_at": "2026-10-25T11:43:18.756380+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
+    "html_sha256": "2863850306d25e8546bb7c44edc44bf7e84f14a76f805affe541cf715de3bea5",
+    "body_sha256": "3d0ea2690bec63cf04aa9b97298aa16de6bd4f082bbc30608ee668da47dd6bce",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F052",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
+    "checked_at": "2026-10-25T11:43:18.914000+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
+    "html_sha256": "1fb069257d72f82a970f81205004c8fa43099120cc4e60f07d0dff44490e52bc",
+    "body_sha256": "7d8b1a3ff2270f97e62e3056a8a19077341299ac78b203c5456520ee973b38d4",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F053",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
+    "checked_at": "2026-10-25T11:43:18.999369+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
+    "html_sha256": "25384d6dbe8c791280dc7c79c85250c8df572a857ff7405bd85a2193bac2ad2c",
+    "body_sha256": "08add5be602855baa960ddcee76a8252e509f3ba5071a27fc3cb5a46e153a294",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F054",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
+    "checked_at": "2026-10-25T11:43:22.148224+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
+    "html_sha256": "c3db11bb6d90e374c50de53649834f6069552deb35c841691a0ac744b724cdb2",
+    "body_sha256": "5f4c49d40f3415401803bd02940bb697baab9e7176f73fca85911f6e2d162299",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F055",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+    "checked_at": "2026-10-25T11:43:22.527979+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+    "html_sha256": "d54cf28e5f09edd9ca205797ce107d3f17fe9edd8f72594147f63d736a0aca8e",
+    "body_sha256": "1e996b2c466c1037b8d51ea46176b16b16ca3733a96aa2e6b30c8c2ddd5d2736",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F057",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
+    "checked_at": "2026-10-25T11:43:22.602607+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
+    "html_sha256": "817348c827838f75a146fb9b7f932ed5410bc43a69fbeb71a9e5a1f257dd4584",
+    "body_sha256": "fae07e3cb19b3733c6a5e2065df828f0acb31b2fb531543735e3ae270ae5813a",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F062",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
+    "checked_at": "2026-10-25T11:43:26.128471+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
+    "html_sha256": "15465ba85fcb5b8d2d6b025c3d81293b16bf9102ef2560783896510d6f998fe9",
+    "body_sha256": "b63477033b0f273ffcef759d05a3cec2b1832451434d87b1ef971ec9a645c0b6",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F063",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+    "checked_at": "2026-10-25T11:43:26.300483+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+    "html_sha256": "3b752a8b064829c20e62437bf10d68fce179feca45299bd68e1d6f0d3e9bed9c",
+    "body_sha256": "536c707806a219ba9f91213fd31db839f7b88c145991db411e876aeef8204e1d",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F067",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
+    "checked_at": "2026-10-25T11:43:26.365907+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
+    "html_sha256": "9a0374a482c70e6c294c877c7910cace66fa8658c1de34891b958c2fb3d1fd2e",
+    "body_sha256": "c9875865f82d2e0b011dea0b3ef8b7a906c9dc22f5d3f32bdcd20b19fb0a79bc",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F069",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
+    "checked_at": "2026-10-25T11:43:29.280822+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
+    "html_sha256": "6f0e09c74adfa04ab16cc6bc142885dc1afcb8a7a7d4520b34499219f6bde14c",
+    "body_sha256": "2e1c208b91334ac276b8ad2801348cc139bbe8482748061a13ec5d58aaf34b3a",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F074",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+    "checked_at": "2026-10-25T11:43:29.939197+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+    "html_sha256": "b13b765359b937ff72030daeac64cacceced2de14928ed11faa6c05566f514af",
+    "body_sha256": "c56251621cf2efa9cdeeb6c858d2e5d71a5c85b73653b4ad42653be0fedae6da",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F075",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
+    "checked_at": "2026-10-25T11:43:30.020564+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
+    "html_sha256": "92ca7b22c4d151630bb36a27939a3ca6dc439efda4b2a20396c04538db4b6a30",
+    "body_sha256": "ae5570b862195e0f78969a0a1034e500803941f27d74e70570847599494d84db",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F079",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
+    "checked_at": "2026-10-25T11:43:31.380194+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
+    "html_sha256": "0926be6575fb9567bccf8f3ffc44d8d389ee3139361b80849c8bf992936dfd40",
+    "body_sha256": "483102f8cc8d57b5ec509a587d35c6af3adb44db362c71fc486bbc2d8ccd8155",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F084",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
+    "checked_at": "2026-10-25T11:43:32.412648+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
+    "html_sha256": "d85a8a8a353054ff5c3c348257de76be653b3714e037093fc2a8c1cfa55c52eb",
+    "body_sha256": "e054dad00bc097ce3094b5d0ba2daa1ee8a4fea43e231b562dd0817c426bd9f4",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F088",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+    "checked_at": "2026-10-25T11:43:32.919848+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+    "html_sha256": "65cd6b1387599b4b3e9c4595d39d34551d940ec7784c16da3980f98419ea2e34",
+    "body_sha256": "8fd12a27faf9a719ec138fc217eed6a131c9d8e336b85582d7256bf1a6f24798",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F091",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
+    "checked_at": "2026-10-25T11:43:33.002672+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
+    "html_sha256": "df526abd9618849973f6d07e74485308485f0abb282215ec5eb66a78cba59d7c",
+    "body_sha256": "6c235573a61950ad555d27b339de28ad4232b2c230d55f188c519db57726dcf0",
+    "same_parsed_body_as_snapshot": true
+  },
+  {
+    "id": "F097",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
+    "checked_at": "2026-10-25T11:43:33.953977+00:00",
+    "status": 200,
+    "final_url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
+    "html_sha256": "f9eafd43c4fa2dd2c86aa9e9fa46b24f94a69d49986da3922ed7284e7abf08bd",
+    "body_sha256": "f1690b863fd904f7a1257f89c942acddf50cbc9dc3af44c48db0ea32f9d36286",
+    "same_parsed_body_as_snapshot": true
+  }
+]

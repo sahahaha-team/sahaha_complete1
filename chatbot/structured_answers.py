@@ -18,7 +18,7 @@ FIELD = {
     'medical_details': r'(?:약품명|약명|복용량|용량|복용법)\s*[:：]|(?:복용|투여).{0,50}\d+\s*(?:mg|㎎|ml|㎖|정|회)',
     'conditions': r'제외|불가|안되는|안 되는|불필요|금지|제한|금식|자동가입|보장내용|용도\s*[:：]|지원대상|선정기준|소득인정액|지급금액|신청기간|예약|허\s*가\s*대\s*상|신\s*고\s*대\s*상|등록.*지원|단[,， ]|다만',
     'specifications': r'규격|크기|(?<![가-힣])(?:가로|세로)(?![가-힣])|\d+\s*(?:cm|㎝|매)',
-    'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진|부과|과세)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
+    'eligibility': r'(?:^|—\s*)(?:(?:사업|지원|진료|이용|신청|참여|접종|검진|부과|과세)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
     'method': r'방법\s*[:：]|절차\s*[:：]|흐름도\s*[:：]|제출처\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
     'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|면제|본인\s*부담\s*없|(?:수\s*수\s*료|사용료|요금|금액|가격|처리비용)[^:：\n]{0,40}[:：].*\d',
@@ -34,6 +34,19 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
     if not source_unit_complete(unit):
         return False
     request = compact(query)
+    if goal == 'method' and re.search(r'성명|이름', request) and re.search(r'표기|작성', request):
+        return bool(re.search(r'성명|이름', unit) and re.search(r'로마자|영문|대문자|표기|기재', unit))
+    if goal == 'conditions' and re.search(r'주소지.*(?:관계없이|무관)', request):
+        return bool(re.search(r'주소지.*(?:관계없이|무관)', compact(unit)))
+    if goal == 'conditions' and re.search(r'불이익|체납.*(?:불리|제재)', request):
+        return bool(re.search(r'압류|공매|가산|영치|출입국제한|신용|제재', unit))
+    if goal == 'conditions' and re.search(r'허가|신고', request) and '필요' in request and '서류' not in request:
+        return bool(re.search(r'허가|신고', unit) and re.search(r'받|없이|대상|후|준수', unit))
+    if goal == 'services' and re.search(r'진료내용', context) and ' — ' in unit and not re.search(r'수수료|비용', unit.split(':',1)[0]):
+        return bool(re.search(r'진료|처방|접종', unit))
+    if goal == 'schedule' and '공시' in request and re.search(r'언제|공시일|공시되', request):
+        if unit.startswith('정의:') or '적용개시일' in unit or '공시' not in unit + context:
+            return False
     scoped = context + ' ' + unit
     damaged = bool(re.search(r'훼손|파손|분해|부품.{0,5}(?:빼|없|탈취)',request))
     if damaged and goal in ('cost','eligibility','conditions'):
@@ -283,6 +296,20 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal == 'reference':
         return None
     units = scoped_units(query, body, keywords)
+    if (requested_goals(query) == ('services',)
+            and re.search(r'받을\s*수|서비스가\s*있|제도가\s*있', query)
+            and not re.search(r'어떤|무슨|무엇|종류|지원|급여|수급|보장|의료비|신청|장려금', query)):
+        overview = next((u for u in units if not u.startswith('#') and '서비스' in u and '제공' in u
+                         and source_unit_complete(u) and len(u) < 280), None)
+        target = next((u for u in units if re.match(r'(?:대상|지원대상|신청자격)\s*[:：]', u)), None)
+        facts = [u for u in (overview, target) if u]
+        from chatbot.evidence import topic_support
+        owned = topic_support({'content':' '.join(facts), 'metadata':document.get('metadata') or {}}, keywords)[0]
+        if overview and owned and len('\n'.join(facts)) < 380:
+            title = (document.get('metadata') or {}).get('title') or '공식 서비스 안내'
+            return {'answer':'**'+title+'**\n'+'\n'.join('- '+u for u in facts), 'documents':[document],
+                    'is_clarification':False,'suggested_questions':[], 'answer_method':'structured_source',
+                    'answer_details':title+'의 공식 안내 원문입니다.\n\n'+'\n'.join('> '+u for u in body.splitlines())}
     if (goal == 'method' and keywords == {'대형폐기물'}
             and not re.search(r'없이|훼손|파손|무상|무료|유상|비용|수수료', query)):
         from chatbot.concise_answers import _waste
@@ -521,6 +548,8 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                     continue
                 if re.search(r'납기|정기',section_heading + ' ' + unit):
                     score += 12
+                if re.search(r'납부기한|신고기한|신고.*납부.*기한', section_heading + ' ' + unit):
+                    score += 15
             if field == 'schedule' and '공시' in query and not re.search(r'의견|이의',query):
                 if re.search(r'의견|이의신청',section_heading + ' ' + unit):
                     continue
@@ -554,7 +583,8 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                             for t in field_details)):
             return None
         best_score = candidates[0][0]
-        take = 6 if field == 'services' else 4 if field in ('eligibility', 'documents') else 3 if field in ('precautions','method') else 1 if field == 'definition' else 2
+        deadline_rows = field == 'schedule' and any(' — ' in item[2] and '기한' in item[2] for item in candidates)
+        take = 6 if field == 'services' or deadline_rows else 4 if field in ('eligibility', 'documents') or (field == 'conditions' and '불이익' in query) else 3 if field in ('precautions','method') else 1 if field == 'definition' else 2
         for score, index, unit in candidates[:take]:
             if score < best_score - 4:
                 continue
@@ -662,6 +692,12 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                     and len(unit) < 170 and (scope or page_scope or len(head_names) <= 2)):
                 if len(' '.join(selected)) + len(unit) < 350:
                     selected.append(unit)
+    if goal == 'method' and '기부' in query:
+        for unit in units:
+            if ('개인' in unit and '주소지' in unit and re.search(r'제외|불가', unit)
+                    and source_unit_complete(unit) and unit not in selected
+                    and len(' '.join(selected)) + len(unit) < 380):
+                selected.append(unit)
     if goal == 'services':
         if '무료' in query:
             proofs=[u for u in units if '무료' in u and field_matches('cost',u)
@@ -675,6 +711,8 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     heading = units[0].lstrip('# ') if scope and units[0].startswith('#') else title
     from chatbot.source_scope import is_field_heading
     if heading.endswith(('?','？')) or heading.startswith('※') or is_field_heading(heading) or compact(heading) in {'목적','지원사업소개'}:
+        heading = title
+    if re.search(r'법률|조례', heading) and not re.search(r'법률|조례|법적근거', query):
         heading = title
     if goal == 'location':
         # Facility dimensions/capacity and UI link labels are not requested

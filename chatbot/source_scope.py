@@ -29,6 +29,15 @@ def focus_terms(query: str) -> frozenset[str]:
     from chatbot.dialogue_profile import request_without_profile
     text = AREA_PATTERN.sub(' ', strip_general_question_tail(normalize_query(request_without_profile(query))))
     text = text.replace('대신','대리')
+    text = re.sub(r'통합\s*돌봄', ' ', text)
+    if '취득세' in query:
+        from chatbot.answer_goal import answer_goal
+        if answer_goal(query) == 'schedule':
+            text = re.sub(r'부동산|차량|자동차', ' ', text)
+    if re.search(r'구직\s*(?:등록|신청)', query):
+        text = re.sub(r'일자리\s*지원\s*센터', ' ', text)
+    if re.search(r'교육|강좌', query) and re.search(r'디지털|정보화|컴퓨터', query):
+        text = text.replace('컴퓨터', ' ')
     # Registered facility names belong to the subject, not an extra requested
     # condition (e.g. the 특화 fragment in 소방특화 들락날락).
     from chatbot.faq_targets import priority_entities
@@ -78,18 +87,31 @@ def unanswered_details(query: str, selected: str, title: str, keywords: set[str]
 def normalize_plain_source(body: str, title: str) -> str:
     """Label headings present in older text-only rows, without supplying facts."""
     if re.search(r'^#{2,6} ', body, re.M):
-        output=[]; field=None
+        output=[]; field=None; channel=None
         for line in body.splitlines():
             heading=re.match(r'^#{2,6}\s+(.+)',line)
             if heading:
+                if channel:
+                    output.append(channel)
+                    channel=None
                 name=heading.group(1).strip().rstrip(':：')
-                field=name if is_field_heading(name) or name in {'부과대상','과세대상'} else None
+                field=('정의' if re.search(r'란[?？]?$', name) else
+                       name if is_field_heading(name) or name in {'부과대상','과세대상'} else None)
                 output.append(line)
+            elif re.fullmatch(r'\((?:온라인|오프라인)\)', line.strip()):
+                channel=line.strip()
+            elif channel and line.strip():
+                output.append('이용방법: '+channel+' '+line)
+                channel=None
+            elif re.match(r'^\((?:온라인|오프라인)\)\s*\S',line):
+                output.append('이용방법: '+line)
             elif field in {'부과대상','과세대상'} and line.strip() and not line.lstrip().startswith((field+':',field+' :','※','다만','단,')):
                 output.append(field+': '+line)
             elif field and line.strip() and not re.search(r'[:：]| — ',re.sub(r'\d{1,2}:\d{2}', '', line)) and not line.lstrip().startswith(('※','❖','다만','단,','단 ')):
                 output.append(field+': '+line)
             else:output.append(line)
+        if channel:
+            output.append(channel)
         return '\n'.join(output)
     if ' — ' in body:
         return '## ' + title + '\n' + body
@@ -123,10 +145,10 @@ def normalize_plain_source(body: str, title: str) -> str:
 
 def is_field_heading(name: str) -> bool:
     value=compact(name).rstrip(':：?？')
-    if value in {'부과대상','과세대상'}:
+    if value in {'부과대상','과세대상','사업대상','진료대상','교육대상'}:
         return True
     return bool(FIELD_LABEL.fullmatch(value) or re.search(
-        r'(?:방법|절차|기간|시간|서류|준비물|자격|조건|요건|기준|위치|주소|연락처|수수료|이용료|지원내용|사업내용|배출요령|제외품목|제외항목)$',value))
+        r'(?:방법|절차|기간|기한|시간|서류|준비물|자격|조건|요건|기준|위치|주소|연락처|수수료|이용료|지원내용|사업내용|배출요령|제외품목|제외항목)$',value))
 
 
 def focus_units(query: str, units: list[str]) -> list[str]:

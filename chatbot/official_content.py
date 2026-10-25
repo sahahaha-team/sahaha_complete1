@@ -106,7 +106,7 @@ def table_units(table: Tag) -> list[str]:
 
 
 @lru_cache(maxsize=32)
-def official_html_text(html: str) -> str | None:
+def official_html_text(html: str, include_navigation: bool = False) -> str | None:
     if not html:
         return None
     soup = BeautifulSoup(html, 'lxml')
@@ -124,7 +124,7 @@ def official_html_text(html: str) -> str | None:
     # Link/button labels are navigation, not the ending of the preceding fact
     # or another item in a policy's exclusion list. URLs remain in metadata.
     for link in root.select('a'):
-        if re.search(r'(?:다운로드|바로가기)\s*$', _text(link)) and len(_text(link)) < 60:
+        if not include_navigation and re.search(r'(?:다운로드|바로가기)\s*$', _text(link)) and len(_text(link)) < 60:
             link.decompose()
     # Some pages put a labelled exclusion list inside the final positive li.
     # Preserve that ownership instead of flattening all cases into one line.

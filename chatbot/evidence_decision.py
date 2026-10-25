@@ -44,7 +44,7 @@ def source_body(document: dict) -> str:
     row = document.get('_raw_page')
     if row is not None:
         from chatbot.source_pages import parsed_original
-        return parsed_original(row)
+        return parsed_original(row, bool(document.get('_include_navigation')))
     return str(document.get('content') or '')
 
 

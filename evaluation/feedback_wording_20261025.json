@@ -1,0 +1,95 @@
+{
+  "protocol": {
+    "population": "developer_derived_wording_regression",
+    "note": "표현 변화 검사용 개발 질문이며 구청 원본100문항이나 독립 검수 표본이 아니다."
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "V01",
+      "turns": [
+        "요일별 쓰레기 어떻게 내놓으면 돼요?"
+      ],
+      "criterion": {
+        "parent_id": 1001,
+        "required_review": "배출 요일·품목·금토 금지와 시간 조건"
+      }
+    },
+    {
+      "id": "V02",
+      "turns": [
+        "소방특화들락날락 체험 신청은 어떻게 해요?"
+      ],
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "같은 어린이 시설 안내, 관리자 교육 차용 금지, 예약 시점과 실행 절차 구분"
+      }
+    },
+    {
+      "id": "V03",
+      "turns": [
+        "작은 도서관 강좌 신청 어떻게 하나요?"
+      ],
+      "criterion": {
+        "parent_id": 1003,
+        "required_review": "작은도서관 교육의 통합예약 접수, 희망도서 신청과 구분"
+      }
+    },
+    {
+      "id": "V04",
+      "turns": [
+        "보건소 문 여는 시간이랑 위치 좀 알려주세요"
+      ],
+      "criterion": {
+        "parent_id": 36,
+        "required_review": "보건소 시간·점심·검사 마감주의 및 주소"
+      }
+    },
+    {
+      "id": "V05",
+      "turns": [
+        "폐렴구균 예방 주사 어디서 맞아요?"
+      ],
+      "criterion": {
+        "parent_id": 39,
+        "required_review": "보건소 미운영·위탁기관 장소·65세 대상, 일반 운영시간 차용 금지"
+      }
+    },
+    {
+      "id": "V06",
+      "turns": [
+        "대형 쓰레기 담당자 전화만 알려주세요"
+      ],
+      "criterion": {
+        "parent_id": 16,
+        "required_review": "공식 담당 부서와 업무 직통번호, 대표·팩스 혼동 금지"
+      }
+    },
+    {
+      "id": "V07",
+      "turns": [
+        "소방 교육 하는방법 알려줘",
+        "어 맞아",
+        "아이는 8살",
+        "신청 말고 장소 알려줘"
+      ],
+      "criterion": {
+        "parent_id": 1002,
+        "required_review": "대상 질문의 모호한 긍정은 업무를 유지하며 재확인하고 나이 후속과 장소 변경을 연결. 모호한 긍정으로 대상을 임의 선택하지 않음"
+      }
+    },
+    {
+      "id": "V08",
+      "turns": [
+        "여권 준비물 알려줘",
+        "응",
+        "아이는 8살",
+        "엄마가 가요"
+      ],
+      "criterion": {
+        "parent_id": 11,
+        "required_review": "모호한 긍정 뒤 여권 주제 유지, 나이·부모 역할을 받고 서류 안내. 3회 내 미완결도 그대로 집계"
+      }
+    }
+  ]
+}

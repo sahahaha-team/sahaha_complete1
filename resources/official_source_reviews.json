@@ -79,5 +79,16 @@
     "verification_reference": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
     "user_warning": "공식 원문에 서로 다른 부양의무자 소득·재산 금액이 있어 해당 금액은 제외했습니다. 적용 기준은 담당 부서 확인이 필요합니다.",
     "mask_conflicting_amounts": true
+  },
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+    "reviewed_at": "2026-10-25",
+    "status": "review_required",
+    "marker": "(?s)(?=.*취득세는)(?=.*상속)(?=.*60일)(?=.*무상취득)(?=.*3개월)(?=.*6개월)",
+    "unverified_fields": [],
+    "unverified_line_pattern": "^(?!.*(?:3개월|6개월)).*취득세는.*상속.*60일",
+    "reason": "과세 대상의 오래된 포괄 설명과 같은 페이지의 취득유형별 신고·납부기한 안내가 다름. 예외를 생략한 서론 문장만 제외하고 유형별 세부 기한을 보존한다.",
+    "verification_reference": "https://law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1026499955",
+    "user_warning": "원문의 포괄적인60일 설명은 제외했습니다. 취득유형별 신고·납부기한과 적용 조건을 확인해 주세요."
   }
 ]

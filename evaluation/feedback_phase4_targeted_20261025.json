@@ -1,0 +1,289 @@
+{
+  "protocol": {
+    "population": "supplied_development_subset",
+    "purpose": "business and field fidelity regression"
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "F013",
+      "turns": [
+        "부동산이나 차량을 취득하면 취득세는 언제까지 신고해야 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 13,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "취득세 신고기한과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F043",
+      "turns": [
+        "돌아가신 부모님이나 조상의 땅을 찾을 수 있는 서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 43,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "조상땅 찾기 신청 가능 여부와 확인 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F044",
+      "turns": [
+        "개별공시지가는 무엇이고 언제 공시되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 44,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공시지가 정의와 현재 공시일 확인 여부",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F048",
+      "turns": [
+        "사하구 일자리지원센터에서 구직 등록은 어떻게 하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 48,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구직 등록 신청방법",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F052",
+      "turns": [
+        "여권은 주소지와 관계없이 사하구청에서 신청할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 52,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "여권 주소지 무관 신청 여부",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F053",
+      "turns": [
+        "여권 영문성명은 어떻게 표기하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 53,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "여권 영문성명 표기 원칙",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F054",
+      "turns": [
+        "지방세를 기한 내에 내지 않으면 어떤 불이익이 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 54,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "지방세 체납 불이익",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F055",
+      "turns": [
+        "부당한 지방세 처분 때문에 어려움이 있을 때 도움을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 55,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "납세자보호관 상담과 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F057",
+      "turns": [
+        "지방세나 공시지가, 주정차 과태료 같은 정보를 온라인에서 찾아볼 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 57,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "지방세 공시지가 주정차 온라인 조회 범위",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F062",
+      "turns": [
+        "민간임대주택 임대사업자 등록제도는 무엇인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 62,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민간임대주택 등록제도 의미",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F063",
+      "turns": [
+        "아파트 등 공동주택 관리에 필요한 정보는 어디에서 확인하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 63,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공동주택 관리 정보 공식 범위",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F067",
+      "turns": [
+        "가게 간판을 설치하기 전에 허가나 신고가 필요한가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 67,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "간판 허가 신고 대상과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F069",
+      "turns": [
+        "사하구에서 디지털·컴퓨터 교육을 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 69,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "정보화교육 신청 가능 안내와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F074",
+      "turns": [
+        "사하구 통합돌봄은 어떤 사람을 위한 사업인가요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 74,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "통합돌봄 대상과 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F075",
+      "turns": [
+        "사하구 고향사랑기부제는 어떻게 이용하나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 75,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "고향사랑기부 방법과 거주 제외 한도",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F079",
+      "turns": [
+        "해외여행 전에 필요한 예방접종이나 건강정보를 보건소에서 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 79,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "해외여행 건강정보와 예방접종 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F084",
+      "turns": [
+        "보건소에서 받은 검사 결과를 온라인으로 확인할 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 84,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "검사결과 온라인 확인 경로와 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F088",
+      "turns": [
+        "거동이 불편하거나 건강관리가 필요한 주민에게 방문건강서비스가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 88,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "방문건강 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F091",
+      "turns": [
+        "장애인이 보건소 재활서비스를 받을 수 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 91,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "장애인 재활서비스 대상과 내용",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F097",
+      "turns": [
+        "법정감염병에는 어떤 종류가 있나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 97,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "법정감염병의 법정 분류",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    }
+  ]
+}

@@ -82,6 +82,20 @@ def _targets() -> list[tuple[str, str]]:
     return output
 
 
+def confident_official_page(question: str) -> str | None:
+    """A registered question identifies a business, never its factual answer."""
+    normalized = _normalize(question)
+    exact = {url for candidate, url in _targets() if candidate == normalized}
+    if exact:
+        return next(iter(exact)) if len(exact) == 1 else None
+    if len(normalized) < 12:
+        return None
+    scores = [(SequenceMatcher(None, normalized, candidate).ratio(), url) for candidate, url in _targets()]
+    best = max((score for score, _ in scores), default=0)
+    urls = {url for score, url in scores if score >= max(.92, best - .01)}
+    return next(iter(urls)) if len(urls) == 1 else None
+
+
 def match_official_page(question: str) -> str | None:
     normalized = _normalize(question)
     vaccine_url = vaccine_place_page(question)

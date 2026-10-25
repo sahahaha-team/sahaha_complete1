@@ -181,6 +181,11 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
+    if answer_goal(query) == 'reference':
+        from chatbot.faq_targets import confident_official_page
+        registered = confident_official_page(query)
+        if registered and registered == (doc.get('metadata') or {}).get('url') and topic_support(doc, keywords)[0]:
+            return True  # The verified guide answers navigation, not factual eligibility.
     if ('지방세' in compact(query) and re.search(r'종류|세목|전체목록', compact(query))
             and re.search(r'자동차세|재산세|취득세|주민세', title)):
         return False  # One child tax's payment guide is not the tax catalogue.
@@ -271,7 +276,13 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     if not headings:
         headings = [compact(line) for line in body_text.splitlines() if re.fullmatch(
             r'[^:：,·]{2,35}(?:안내|사업|제도|지원|관리|신청|헌장|방법)(?:\[[^\]]+\])?',line.strip())]
-    if anchors and not any(a in title or any(a in h for h in headings) for a in anchors):
+    semantic_owners = set()
+    if ('민간임대주택' in anchors and any('민간임대등록제도' in h for h in headings) and '주택' in body_text):
+        semantic_owners.add('민간임대주택')
+    if ('법정감염병' in anchors and len(set(re.findall(r'종류\s*—\s*(제[1-4]급감염병)', body_text))) >= 2):
+        semantic_owners.add('법정감염병')
+    unowned = anchors - semantic_owners
+    if unowned and not any(a in title or any(a in h for h in headings) for a in unowned):
         # Some dedicated pages have generic titles such as 설치안내. Their
         # opening complete fact must name the subject and requested field;
         # a passing mention elsewhere in a benefit page is still insufficient.
@@ -288,7 +299,7 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
                     for unit in space.group(1).splitlines())
             and not any(any(n in h for n in SERVICE_NAMES if n not in anchors and n not in {'보건소','구청'})
                         for h in headings))
-        if not dedicated_space and (not fields or not any(all(a in compact(unit) for a in anchors) and
+        if not dedicated_space and (not fields or not any(all(a in compact(unit) for a in unowned) and
                 any(field_matches(field, unit, query) for field in fields) for unit in opening)):
             return False
     if '자전거' in compact(query) and re.search(r'대여|빌리|빌릴|렌탈', query):

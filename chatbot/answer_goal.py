@@ -55,6 +55,23 @@ def answer_goal(query: str) -> str | None:
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
     compact_query = query.replace(' ', '')
+    if re.search(r'(?:건강|질병)정보.*확인', compact_query):
+        return 'reference'
+    if (re.search(r'부당|위법', compact_query) and re.search(r'처분|권리침해', compact_query)
+            and re.search(r'도움|구제|고충|불복', compact_query)):
+        return 'method'
+    if re.search(r'불이익|체납.*(?:불리|제재)', compact_query):
+        return 'conditions'
+    if re.search(r'어떤(?:사람|주민|구민|가구)', compact_query):
+        return 'eligibility'
+    if re.search(r'(?:서비스|제도)(?:가|도|는)?있(?:나요|어|습니까)', compact_query):
+        return 'services'
+    if (re.search(r'온라인|인터넷', compact_query) and re.search(r'정보.*(?:찾아볼|확인|조회)|결과.*확인', compact_query)
+            and not re.search(r'신청|접수|발급|서류', compact_query)):
+        return 'reference'
+    if (re.search(r'허가|신고', compact_query) and re.search(r'필요|해야', compact_query)
+            and not re.search(r'서류|방법|절차|어떻게|언제|기한|기간', compact_query)):
+        return 'conditions'
     from chatbot.contact_directory import asks_communication_method
     if asks_communication_method(query):
         return 'method'
@@ -266,6 +283,7 @@ def requested_goals(query: str) -> tuple[str, ...]:
                     and not (goal == 'documents' and re.search(r'수거|가져가.*서비스|와서.*가져가',query))
                     and not (primary in ('precautions','hours','location','specifications') and goal == 'method')
                     and not (primary == 'conditions' and goal == 'method' and not re.search(r'어떻게|방법|어디',query))
+                    and not (primary == 'conditions' and goal == 'schedule' and '불이익' in query and not re.search(r'언제|날짜|며칠|몇일',query))
                     and not (primary == 'method' and goal == 'cost' and re.search(r'계산|거래금액|환산',query) and not '얼마' in query)
                     and not (primary == 'conditions' and goal == 'cost' and not re.search(r'얼마|비용은|수수료는',query))
                     and not (primary == 'cost' and goal == 'method' and not re.search(r'방법|절차|어떻게|어디',query))):

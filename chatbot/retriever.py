@@ -406,7 +406,7 @@ class HybridRetriever:
                         # an older snapshot with a recent check timestamp.
                         from chatbot.source_answers import strip_page_chrome
                         from chatbot.source_pages import parsed_original
-                        doc['content'] = strip_page_chrome(parsed_original(original))
+                        doc['content'] = strip_page_chrome(parsed_original(original, bool(doc.get('_include_navigation'))))
                         doc['metadata']['attachments'] = original.get('attachments') or []
                 kept.append(doc)
         return kept

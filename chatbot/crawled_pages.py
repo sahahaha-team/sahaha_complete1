@@ -124,7 +124,7 @@ class CrawledPageIndex:
             except (TypeError, ValueError):
                 continue
             from chatbot.official_content import official_html_text
-            body = official_html_text(page.get('raw_html') or '') or page.get('content') or ''
+            body = official_html_text(page.get('raw_html') or '', include_navigation=goal == 'reference') or page.get('content') or ''
             doc = {"id": "raw:" + str(page.get("url")),
                 "content": strip_page_chrome(body),
                 "metadata": {"url": page.get("url"), "title": page.get("title") or "",
@@ -133,6 +133,7 @@ class CrawledPageIndex:
                 "similarity": 0.0, "vector_similarity": 0.0, "bm25_score": 0.0}
             if 'raw_html' in page:
                 doc['_raw_page'] = page
+            doc['_include_navigation'] = goal == 'reference'
             # Validate the actual body, never let a stale or misleading title
             # turn an unrelated original into evidence.
             body_doc = {"content": doc["content"], "metadata": {"url": page.get("url")}}

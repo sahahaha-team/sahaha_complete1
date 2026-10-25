@@ -97,6 +97,12 @@ def search_candidates(retriever, query: str, *, k: int = 15) -> dict:
         staff=retriever._staff_results_to_documents(query,limit=k)
         return {'results':staff,'degraded':not bool(staff),'reason':None if staff else 'staff_not_found',
                 'retrieval':{'mode':'staff','vector_invoked':False}}
+    from chatbot.faq_targets import confident_official_page
+    declared = confident_official_page(query)
+    if declared and hasattr(retriever, 'search_official_url'):
+        outcome = retriever.search_official_url(query, declared, k=k)
+        return {**outcome, 'retrieval': {'mode':'registered_original', 'vector_invoked':False,
+                                       'target_url':declared}}
     started=time.perf_counter()
     pages=retriever.search_crawled_pages(query,k=max(k,15))
     from chatbot.faq_targets import match_official_page
