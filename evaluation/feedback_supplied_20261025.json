@@ -10,7 +10,9 @@
         "population": "supplied",
         "parent_id": 1,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구청 실제 주소",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -22,7 +24,9 @@
         "population": "supplied",
         "parent_id": 2,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구청 대표번호 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -34,7 +38,9 @@
         "population": "supplied",
         "parent_id": 3,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민원 창구별 위치 확인 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -46,7 +52,9 @@
         "population": "supplied",
         "parent_id": 4,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "전자민원 종류와 공식 이용 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -58,7 +66,9 @@
         "population": "supplied",
         "parent_id": 5,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민원실 이용 안내의 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -70,7 +80,9 @@
         "population": "supplied",
         "parent_id": 6,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "무인발급 수수료와 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -82,7 +94,9 @@
         "population": "supplied",
         "parent_id": 7,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 발급 가능 민원과 현재 인증 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -94,7 +108,9 @@
         "population": "supplied",
         "parent_id": 8,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "행정정보 공동이용과 미연계 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -106,7 +122,9 @@
         "population": "supplied",
         "parent_id": 9,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 민원 접수 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -118,7 +136,9 @@
         "population": "supplied",
         "parent_id": 10,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103090000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "서류별 면제 대상과 제외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -130,7 +150,9 @@
         "population": "supplied",
         "parent_id": 11,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "성인 신규 공통 준비물과 사진 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -142,7 +164,9 @@
         "population": "supplied",
         "parent_id": 12,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020100",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "재산세 과세기준일과 납세의무자",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -154,7 +178,9 @@
         "population": "supplied",
         "parent_id": 13,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020400",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "취득세 신고기한과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -166,7 +192,9 @@
         "population": "supplied",
         "parent_id": 14,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105020600",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "자동차세 납세의무자",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -178,7 +206,9 @@
         "population": "supplied",
         "parent_id": 15,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030400",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "사업소분과 종업원분 인터넷 신고",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -190,7 +220,9 @@
         "population": "supplied",
         "parent_id": 16,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "대형폐기물 접수 방법과 수거 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -202,7 +234,9 @@
         "population": "supplied",
         "parent_id": 17,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "무상 방문수거 품목과 훼손 제외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -214,7 +248,9 @@
         "population": "supplied",
         "parent_id": 18,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050102",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "음식물 수분 제거와 용기",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -226,7 +262,9 @@
         "population": "supplied",
         "parent_id": 19,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "종량제 봉투와 혼합배출 금지",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -238,7 +276,9 @@
         "population": "supplied",
         "parent_id": 20,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405140000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "정화조 청소 주기와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -250,7 +290,9 @@
         "population": "supplied",
         "parent_id": 21,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "환경개선부담금 대상 차량과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -262,7 +304,9 @@
         "population": "supplied",
         "parent_id": 22,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405060500",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "멧돼지 발견 시 공식 행동요령",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -274,7 +318,9 @@
         "population": "supplied",
         "parent_id": 23,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403080000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "자진납부 감경률과 기간",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -286,7 +332,9 @@
         "population": "supplied",
         "parent_id": 24,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공영주차장 위치 공식 현황",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -298,7 +346,9 @@
         "population": "supplied",
         "parent_id": 25,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "자전거도로 현황 지도와 기준연도",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -310,7 +360,9 @@
         "population": "supplied",
         "parent_id": 26,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "수급자 선정의 소득과 재산 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -322,7 +374,9 @@
         "population": "supplied",
         "parent_id": 27,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501010200",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "기초생활 급여 종류",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -334,7 +388,9 @@
         "population": "supplied",
         "parent_id": 28,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501040800",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "긴급복지 위기사유와 신청 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -346,7 +402,9 @@
         "population": "supplied",
         "parent_id": 29,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0504020200",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "장애인연금 연령 중증 소득 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -358,7 +416,9 @@
         "population": "supplied",
         "parent_id": 30,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0503030400",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "아이돌봄 이용 연령과 서비스별 차이",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -370,7 +430,9 @@
         "population": "supplied",
         "parent_id": 31,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0510060200",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "청소년부모 지원 내용과 연령 소득 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -382,7 +444,9 @@
         "population": "supplied",
         "parent_id": 32,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0510070100",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "첫만남 이용권 금액 지급형태 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -394,7 +458,9 @@
         "population": "supplied",
         "parent_id": 33,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0510070200",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "출산지원 사업 구분 금액 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -406,7 +472,9 @@
         "population": "supplied",
         "parent_id": 34,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0301010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "보건증 비용과 처리기간 모두",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -418,7 +486,9 @@
         "population": "supplied",
         "parent_id": 35,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0304010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "보건증 온라인 발급 조건과 기간",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -430,7 +500,9 @@
         "population": "supplied",
         "parent_id": 36,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "보건소 시간 점심 마감주의 주소 모두",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -442,7 +514,9 @@
         "population": "supplied",
         "parent_id": 37,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402010100",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "임산부 등록 대상과 공통 서류",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -454,7 +528,9 @@
         "population": "supplied",
         "parent_id": 38,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "금연클리닉 대상과 청소년 예약",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -466,7 +542,9 @@
         "population": "supplied",
         "parent_id": 39,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "백신 종류별 접종 시기 확인",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -478,7 +556,9 @@
         "population": "supplied",
         "parent_id": 40,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402090000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "영양플러스 연령 소득 영양 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -490,7 +570,9 @@
         "population": "supplied",
         "parent_id": 41,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402100000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "고위험임산부 비율 상한 제외비용",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -502,7 +584,9 @@
         "population": "supplied",
         "parent_id": 42,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0400000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구강보건 상담 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -514,7 +598,9 @@
         "population": "supplied",
         "parent_id": 43,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404180000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "조상땅 찾기 신청 가능 여부와 확인 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -526,7 +612,9 @@
         "population": "supplied",
         "parent_id": 44,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404010100",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공시지가 정의와 현재 공시일 확인 여부",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -538,7 +626,9 @@
         "population": "supplied",
         "parent_id": 45,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404010300",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공시지가 의견제출 기한",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -550,7 +640,9 @@
         "population": "supplied",
         "parent_id": 46,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0106010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "주택가격 공시일과 기준일별 차이",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -562,7 +654,9 @@
         "population": "supplied",
         "parent_id": 47,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "중개보수 초과 신고처",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -574,7 +668,9 @@
         "population": "supplied",
         "parent_id": 48,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구직 등록 신청방법",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -586,7 +682,9 @@
         "population": "supplied",
         "parent_id": 49,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "평생학습관 수강료와 재료비 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -598,7 +696,9 @@
         "population": "supplied",
         "parent_id": 50,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0309060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "법률상담 무료 여부 대상 예약",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -610,7 +710,9 @@
         "population": "supplied",
         "parent_id": 51,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0410120000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구민안전보험 자동가입 여부",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -622,7 +724,9 @@
         "population": "supplied",
         "parent_id": 52,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "여권 주소지 무관 신청 여부",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -634,7 +738,9 @@
         "population": "supplied",
         "parent_id": 53,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0104030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "여권 영문성명 표기 원칙",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -646,7 +752,9 @@
         "population": "supplied",
         "parent_id": 54,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105030200",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "지방세 체납 불이익",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -658,7 +766,9 @@
         "population": "supplied",
         "parent_id": 55,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105050000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "납세자보호관 상담과 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -670,7 +780,9 @@
         "population": "supplied",
         "parent_id": 56,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "마을세무사 무료 상담과 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -682,7 +794,9 @@
         "population": "supplied",
         "parent_id": 57,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0108010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "지방세 공시지가 주정차 온라인 조회 범위",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -694,7 +808,9 @@
         "population": "supplied",
         "parent_id": 58,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "응시료 지원 시험과 거주 취업 필수조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -706,7 +822,9 @@
         "population": "supplied",
         "parent_id": 59,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0402020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공공근로 정의와 모집연도 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -718,7 +836,9 @@
         "population": "supplied",
         "parent_id": 60,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0403010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "버스 도시철도 공식 노선 안내",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -730,7 +850,9 @@
         "population": "supplied",
         "parent_id": 61,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "외국인 중개서비스 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -742,7 +864,9 @@
         "population": "supplied",
         "parent_id": 62,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404100000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민간임대주택 등록제도 의미",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -754,7 +878,9 @@
         "population": "supplied",
         "parent_id": 63,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "공동주택 관리 정보 공식 범위",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -766,7 +892,9 @@
         "population": "supplied",
         "parent_id": 64,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "탄소중립포인트 참여조건과 혜택",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -778,7 +906,9 @@
         "population": "supplied",
         "parent_id": 65,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "오존경보 행동요령",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -790,7 +920,9 @@
         "population": "supplied",
         "parent_id": 66,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405070000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "석면 정의와 관리 필요성",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -802,7 +934,9 @@
         "population": "supplied",
         "parent_id": 67,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0406010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "간판 허가 신고 대상과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -814,7 +948,9 @@
         "population": "supplied",
         "parent_id": 68,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0407020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "현재 무료 자전거 대여 운영 근거",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -826,7 +962,9 @@
         "population": "supplied",
         "parent_id": 69,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "정보화교육 신청 가능 안내와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -838,7 +976,9 @@
         "population": "supplied",
         "parent_id": 70,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0409020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "대피시설과 급수시설 구분 및 지역확인",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -850,7 +990,9 @@
         "population": "supplied",
         "parent_id": 71,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0410100000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "지진 옥외대피장소 공식 목록",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -862,7 +1004,9 @@
         "population": "supplied",
         "parent_id": 72,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0410060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "폭염특보 행동요령",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -874,7 +1018,9 @@
         "population": "supplied",
         "parent_id": 73,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0509020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "1인가구 지원의 공식 정보 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -886,7 +1032,9 @@
         "population": "supplied",
         "parent_id": 74,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0511010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "통합돌봄 대상과 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -898,7 +1046,9 @@
         "population": "supplied",
         "parent_id": 75,
         "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0608000000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "고향사랑기부 방법과 거주 제외 한도",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -910,7 +1060,9 @@
         "population": "supplied",
         "parent_id": 76,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "1진료실의 실제 진료업무",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -922,7 +1074,9 @@
         "population": "supplied",
         "parent_id": 77,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "물리치료 대상과 충돌 위치 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -934,7 +1088,9 @@
         "population": "supplied",
         "parent_id": 78,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "결핵 검사 상담 서비스",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -946,7 +1102,9 @@
         "population": "supplied",
         "parent_id": 79,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0201040000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "해외여행 건강정보와 예방접종 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -958,7 +1116,9 @@
         "population": "supplied",
         "parent_id": 80,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0202020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "국가검진 대상과 검진방법",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -970,7 +1130,9 @@
         "population": "supplied",
         "parent_id": 81,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0202030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "혼전 신혼 검진 대상과 내용",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -982,7 +1144,9 @@
         "population": "supplied",
         "parent_id": 82,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0203010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "어린이 예방접종 장소와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -994,7 +1158,9 @@
         "population": "supplied",
         "parent_id": 83,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0301030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "검사 종류별 비용 확인 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1006,7 +1172,9 @@
         "population": "supplied",
         "parent_id": 84,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0304020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "검사결과 온라인 확인 경로와 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1018,7 +1186,9 @@
         "population": "supplied",
         "parent_id": 85,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "산모신생아 돌봄 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1030,7 +1200,9 @@
         "population": "supplied",
         "parent_id": 86,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "미숙아 선천성이상아 지원 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1042,7 +1214,9 @@
         "population": "supplied",
         "parent_id": 87,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0402130000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "영유아 검진 시기와 방법",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1054,7 +1228,9 @@
         "population": "supplied",
         "parent_id": 88,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "방문건강 서비스와 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1066,7 +1242,9 @@
         "population": "supplied",
         "parent_id": 89,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "정신건강 상담 지원과 대상",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1078,7 +1256,9 @@
         "population": "supplied",
         "parent_id": 90,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "치매 검사 지원 장소",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1090,7 +1270,9 @@
         "population": "supplied",
         "parent_id": 91,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0403040000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "장애인 재활서비스 대상과 내용",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1102,7 +1284,9 @@
         "population": "supplied",
         "parent_id": 92,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "운동 영양 실제 프로그램과 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1114,7 +1298,9 @@
         "population": "supplied",
         "parent_id": 93,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "대사증후군 검사와 상담 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1126,7 +1312,9 @@
         "population": "supplied",
         "parent_id": 94,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404040000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "심뇌혈관 예방관리 이용 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1138,7 +1326,9 @@
         "population": "supplied",
         "parent_id": 95,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "마을건강센터 실제 위치와 업무",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1150,7 +1340,9 @@
         "population": "supplied",
         "parent_id": 96,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0404060000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "건강생활지원센터 서비스",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1162,7 +1354,9 @@
         "population": "supplied",
         "parent_id": 97,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0405010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "법정감염병의 법정 분류",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1174,7 +1368,9 @@
         "population": "supplied",
         "parent_id": 98,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0406020000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "암환자 지원 대상과 신청 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1186,7 +1382,9 @@
         "population": "supplied",
         "parent_id": 99,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0406030000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "소아암 지원 대상과 신청 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     },
     {
@@ -1198,7 +1396,9 @@
         "population": "supplied",
         "parent_id": 100,
         "source_url": "https://www.saha.go.kr/health/contents.do?mId=0408010000",
-        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조"
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "국가암검진 대상 확인 방법",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
       }
     }
   ],
@@ -1210,6 +1410,7 @@
       "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
       "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
       "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
-    }
+    },
+    "review_basis": "요청 문항별 필수 검수 항목을 개발 담당 AI가 사전 작성. 수치 정답은 초안에서 복사하지 않고 실제 원문으로 검수."
   }
 }

@@ -151,8 +151,8 @@ def matches_field(query: str, goal: str | None, unit: str) -> bool:
         from chatbot.structured_answers import field_matches
         return field_matches(goal, unit, query)
     if goal == 'location':
-        from chatbot.question_intent import has_location_unit
-        return has_location_unit(unit)
+        from chatbot.structured_answers import field_matches
+        return field_matches(goal, unit, query)
     if goal == 'hours':
         from chatbot.structured_answers import field_matches
         return field_matches(goal,unit,query)

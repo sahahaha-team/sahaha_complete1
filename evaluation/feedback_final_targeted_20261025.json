@@ -1,0 +1,70 @@
+{
+  "protocol": {
+    "type": "development_regression",
+    "description": "latest fixes before final 100",
+    "parents": [
+      21,
+      26,
+      1002
+    ]
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "D03",
+      "turns": [
+        "소방 교육 하는방법 알려줘",
+        "아니 일반 주민이야",
+        "아이는 8살",
+        "신청 말고 장소 알려줘"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D04",
+      "turns": [
+        "소방특화 들락날락 예약 방법 알려줘",
+        "아이는 8살",
+        "아니 12살이야",
+        "그럼 전화번호는?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "F021",
+      "turns": [
+        "환경개선부담금은 어떤 차량에 부과되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 21,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "환경개선부담금 대상 차량과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    },
+    {
+      "id": "F026",
+      "turns": [
+        "기초생활보장 수급자는 어떤 기준으로 선정되나요?"
+      ],
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 26,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "수급자 선정의 소득과 재산 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      }
+    }
+  ]
+}

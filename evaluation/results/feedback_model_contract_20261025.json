@@ -1,0 +1,33 @@
+{
+  "started_at": "2026-10-25T05:31:47.959682+00:00",
+  "kind": "synthetic_selector_contract",
+  "not_resident_accuracy": true,
+  "query": "소방 체험 이용 장소 알려줘",
+  "units": [
+    "주소: 부산광역시 사하구 장평로 270(신평동)",
+    "신청 주소: https://www.saha.go.kr/reserve/contents.do?mId=1207000000"
+  ],
+  "model": "gemma4:e4b",
+  "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+  "eligible_by_actual_validator": [
+    0
+  ],
+  "plan": {
+    "mode": "answer",
+    "source": 0,
+    "units": [
+      0
+    ]
+  },
+  "metadata": {
+    "done_reason": "stop",
+    "total_duration": 10933021300,
+    "load_duration": 60519100,
+    "prompt_eval_count": 114,
+    "prompt_eval_duration": 5214099000,
+    "eval_count": 33,
+    "eval_duration": 5460647000
+  },
+  "accepted": true,
+  "seconds": 13.984
+}

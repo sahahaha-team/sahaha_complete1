@@ -37,6 +37,18 @@ def is_vaccination_query(query: str) -> bool:
         vaccine_kind(query) and re.search(r'맞', query or ''))
 
 
+def corrected_vaccine_query(previous: str, current: str) -> str | None:
+    """Replace a bare corrected vaccine, preserving the preceding request."""
+    old, new = vaccine_kind(previous), vaccine_kind(current)
+    if not old or not new or not is_vaccination_query(previous):
+        return None
+    reply = re.sub(r'\s+', '', current)
+    pattern = r'(?:아니(?:요)?|정정|그게아니라)?(?:' + _KINDS[new] + r')(?:이야|야|이에요|예요|입니다|이요|요)?'
+    if not re.fullmatch(pattern, reply, re.I):
+        return None
+    return re.sub(_KINDS[old], new, previous, flags=re.I)
+
+
 def needs_vaccine_kind(query: str) -> bool:
     return (asks_location(query) and is_vaccination_query(query) and not vaccine_kind(query)
             and '예방접종실' not in re.sub(r'\s+', '', query))

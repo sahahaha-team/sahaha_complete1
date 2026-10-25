@@ -139,6 +139,8 @@ def answer_goal(query: str) -> str | None:
         return 'location'
     if re.search(r'어떤기업|뭔지|어떤제도|어떤사업',compact_query):
         return 'definition'
+    if re.search(r'어떤기준.{0,8}선정|어떤(?:차량|자동차|가구|사람).{0,8}(?:부과|선정|대상)',compact_query):
+        return 'eligibility'
     if re.search(r'어떤일|무슨일|하는일|어떤업무|무슨업무',compact_query):
         return 'services'
     if '신분증' in compact_query and re.search(r'있으면|필요|청소년|만으로|만있',compact_query):

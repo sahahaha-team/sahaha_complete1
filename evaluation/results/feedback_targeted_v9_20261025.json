@@ -1,0 +1,737 @@
+{
+  "started_at": "2026-10-25T09:09:34.629633+00:00",
+  "commit": "3bdd707ffa7ffbe3d3fd20769f3f34d4513ad318",
+  "case_sha256": "bb4c71675c49420c59c92f83464b1566412d96164f8737582f0aa7ef97597ef0",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "4af04a6a80c836156eaf5fba80b65a0fda22bc40c2192934bb3cf2dc4c3646fb",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "1ca238f34fd9a28483d9e0d4e244ddfba171473cc9e51f2c7cdbab2f15483579",
+    "chatbot\\concise_answers.py": "784f614f58b350d4e691344f4bf04bc5fcc8877103db7850351fac17ef92f65e",
+    "chatbot\\contact_directory.py": "e02bb5ecb16858438e9fdc961436e776d9d5fbe179159bdab5ee425197c969ff",
+    "chatbot\\conversation.py": "374bfc155a69e900c29d75c833debfac93ed8adf18af43b6002271b3114f7277",
+    "chatbot\\crawled_pages.py": "340b400006c5a90aa621c5c84e450b3161b9d0aa6ae8c9478b16e30387ce908a",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "879bf6e6cfb02307e08279ee9c017e273bb1660429468ecc4907a17a61f6583e",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "677ed328b5c8983a39e24a8753b83505fa9ff72915d218ed06ea3079b21ef4ab",
+    "chatbot\\evidence_decision.py": "37df3fe02c6112ce48c3d92aa341901b2440702e5d12ad3b5fb80a32bb021ca6",
+    "chatbot\\facility_contact.py": "c57afd762ef646e4f668fba01246be542b77dad4b9f35c160c4d23aad9fab412",
+    "chatbot\\faq_targets.py": "8dbf456b3ce88bbbfbd9d402c3d2a5477dd103f43fddda1ad92d6e764fffdcde",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "42968c47ad2e21da7da2b571ebf678691f9cb349dfdf689c0ee5a351bb93513a",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "7d0bff7e0e88894b3f4066989b315cbea27ac46caeefee77b36e9d419e9a6ea8",
+    "chatbot\\retriever.py": "c8760b53531095eda7b1593efb7397efd49c16c026dd42a2413e20d43ae01059",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "1a360c71c9a923afeda3bbb9a8e708d4fee886bae0eaf58cdbb2854a3382fad1",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "4a77be7c7c2bd1e44f7e8750c2046c56789531751a55f82ca74652a3fd98d3a0",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "e6babb357396e5fb6eb8ec28a397631881ddfa6cfcec9f66a87bedf52d8d5c66",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "5541c916e0252810a4109799db7db5bb835839dc1fc3f505af887269941253fa",
+    "resources\\priority_services.json": "16d1a1fab14665ed43ccc0774d8fbfb0361ba54dbe7bf137bd839721e611fe8e",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "type": "development_regression",
+    "description": "latest fixes before final 100",
+    "parents": [
+      21,
+      26,
+      1002
+    ]
+  },
+  "records": [
+    {
+      "id": "D03",
+      "turn": 1,
+      "question": "소방 교육 하는방법 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.072,
+      "server_timing": "app;dur=56.6",
+      "status": 200,
+      "error": null,
+      "request_id": "75a127a9f1154429ad8f0ec302b096f8",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.072
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 2,
+      "question": "아니 일반 주민이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.023,
+      "server_timing": "app;dur=14.6",
+      "status": 200,
+      "error": null,
+      "request_id": "758ada52ca1849cf9e7d3e6b61a2046d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.023
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 나이를 알려주셔도 됩니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 3,
+      "question": "아이는 8살",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 6.177,
+      "server_timing": "search;dur=4136.1, verify;dur=1377.7, review_gate;dur=3.2, rerank;dur=565.9, grounding;dur=10.5, originals;dur=0.0, review;dur=1.0, prepare;dur=9.6, app;dur=6168.4",
+      "status": 200,
+      "error": null,
+      "request_id": "23d4e8885f0f4b3e90598125fb099282",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 6.177
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락**\n- ▹ 이용대상 : 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 4,
+      "question": "신청 말고 장소 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 3.576,
+      "server_timing": "search;dur=1621.9, verify;dur=1316.2, review_gate;dur=2.2, rerank;dur=588.9, grounding;dur=5.5, originals;dur=0.0, review;dur=0.9, prepare;dur=5.6, app;dur=3568.2",
+      "status": 200,
+      "error": null,
+      "request_id": "2278419936844b11858203106b147fe0",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.576
+        }
+      ],
+      "response": {
+        "answer": "**이용정보**\n- ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 1,
+      "question": "소방특화 들락날락 예약 방법 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.112,
+      "server_timing": "search;dur=744.8, verify;dur=321.4, review_gate;dur=2.3, grounding;dur=3.0, originals;dur=0.0, review;dur=0.7, prepare;dur=5.6, app;dur=1102.9",
+      "status": 200,
+      "error": null,
+      "request_id": "5b3a163d5a5749babf8a83b2a50b6f1b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.112
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락**\n- ▹ 이용대상 : 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 2,
+      "question": "아이는 8살",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.025,
+      "server_timing": "search;dur=664.9, verify;dur=317.1, review_gate;dur=2.3, grounding;dur=3.5, originals;dur=0.0, review;dur=1.0, prepare;dur=5.3, app;dur=1016.8",
+      "status": 200,
+      "error": null,
+      "request_id": "c226781523a24e93a884824b01c934bf",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.025
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락**\n- ▹ 이용대상 : 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 3,
+      "question": "아니 12살이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.355,
+      "server_timing": "search;dur=989.6, verify;dur=317.1, review_gate;dur=2.7, grounding;dur=3.8, originals;dur=0.0, review;dur=1.3, prepare;dur=7.8, app;dur=1347.2",
+      "status": 200,
+      "error": null,
+      "request_id": "8db2bc7093814c0dbdb285ffc1543ef1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.355
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락**\n- ▹ 이용대상 : 4세 이상 13세 이하 어린이 ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.",
+        "answer_details": "이용안내의 공식 안내 원문입니다.\n\n> ## 이용안내\n> ### 이용안내\n> #### 이용정보\n> ▹ 주소 : 부산광역시 사하구 장평로 270(신평동)\n> ▹ 전화번호 : 051-271-6835\n> ▹ 운영시간 : 화요일~금요일 09:00~18:00, 토요일 09:00~17:00 ※ 운영일(화~토요일)을 제외한 월요일, 공휴일 및 법정대체공휴일, 근로자의 날은 휴관\n> ▹ 체험시간 단체예약 – 화~금 1회차(09:30~10:30), 2회차(10:30~11:30), 3회차(13:30~14:30) 개인예약 – 화~금 4회차(15:30~16:30), 토요일 ※ 교육 중일 때는 전화상담, 방문 및 견학이 어려울 수도 있습니다. 양해바랍니다\n> #### 이용안내\n> ▹ 이용료 : 무료\n> ▹ 이용대상 : 4세 이상 13세 이하 어린이\n> ▹ 체험관을 이용하고자 하는 경우 3개월 전 매월 1일 9시부터 예약 신청 가능합니다.\n> ▹ 원활한 체험운영을 위해 개인 10인, 단체 12인까지 예약 가능합니다. ※ 화~금 2회차(10:30~11:30)는 총 24명(12명씩 2개 조), 토요일은 10명까지 예약 가능 ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)\n> ▹ 안전사고 예방을 위해 성인 인솔자가 항시 동행하여 주시기 바랍니다.\n> ▹ 어린이 6명까지 성인 인솔자 1명 동반, 어린이 6명 이상인 경우 성인 인솔자 1명 추가\n> ▹ 본 시설에는 사고 발생 및 범죄 예방을 위해 CCTV가 설치되어 있습니다.\n> ▹ 체험관 이용 시 학생들은 짧은 바지보다는 긴 바지를 입고 오는 것을 권해드립니다.\n> ▹ 예약 후 미방문(노쇼)을 삼가주시고, 부득이하게 못 오시는 경우 취소, 또는 연락 부탁드립니다.\n> ▹ 1인당 1회차만 예약해 주시고, 동일인의 여러 회차 중복을 삼가주시기 바랍니다.\n> ▹ 갑작스럽게 못 오시는 분들은 다른 이용자들을 위해 취소, 또는 연락 부탁드립니다.\n> ▹ 체험관 건물 주차장이 협소(3면)하므로 인근 공영주차장 이용을 부탁드립니다.\n> #### 이용 시 주의사항\n> ▹ 체험관 내 음료, 음식물 반입금지\n> ▹ 체험관 내에서는 정숙하여 주시기 바라며 강사의 지시에 따라 질서 있게 체험합니다.\n> ▹ 체험관 내 버튼 및 지정된 체험 장비 이외에는 함부로 조작하거나 만지지 맙시다.\n> ▹ 체험관 내에서 뛰거나 밀거나 장난치는 행위를 일체 금지하며 안전하게 체험하여 주시기 바랍니다.\n> ▹ 체험 순서가 돌아올 때까지 자리에서 이탈하지 맙시다.\n> #### 공간안내\n> ▹ 1F 실감형 가상재난 체험관, 소방안전 어린이 작은도서관\n> ▹ 2F 소방안전교육센터(심폐소생술 체험관)\n> ▹ 3F 소방차 출동 시뮬레이터, 화재진압 체험관\n> ▹ 4F 비상대피 체험관, 화재 건물대피 체험관",
+        "sources": [
+          {
+            "title": "소방특화 들락날락 이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 4,
+      "question": "그럼 전화번호는?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.46,
+      "server_timing": "app;dur=443.2",
+      "status": 200,
+      "error": null,
+      "request_id": "d34c937e376c49b7858765f3dd18e15e",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.46
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 안내의 **전화번호는 051-271-6835**입니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_contact",
+          "status": "official",
+          "label": "공식 시설 연락처 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F021",
+      "turn": 1,
+      "question": "환경개선부담금은 어떤 차량에 부과되나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 21,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "환경개선부담금 대상 차량과 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.5,
+      "server_timing": "search;dur=982.9, verify;dur=454.6, review_gate;dur=2.3, grounding;dur=2.9, originals;dur=0.0, review;dur=0.9, prepare;dur=4.9, app;dur=1493.9",
+      "status": 200,
+      "error": null,
+      "request_id": "62077ff5bae5494fba3e7248068c162f",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.5
+        }
+      ],
+      "response": {
+        "answer": "**환경알리미**\n- 부과대상: 자동차 : 자동차 관리법 규정에 의하여 등록된 경유사용 차량",
+        "answer_details": "환경알리미의 공식 안내 원문입니다.\n\n> ## 환경알리미\n> ### 환경개선부담금\n> #### 환경개선부담금은?\n> 환경개선을 위한 투자재원의 합리적 조달을 위해 경유사용자동차에 대하여 환경개선비용부담법 규정에 의하여 연2회 부과. - 시설물 환경개선부담금 부과 폐지(15.7.1.) - 단, 체납액은 종전 규정대로 부과\n> #### 부과대상\n> 부과대상: 자동차 : 자동차 관리법 규정에 의하여 등록된 경유사용 차량\n> 부과대상: 납부의무자 부과기준일 현재 해당 자동차를 소유하고 있는 자(단 자동차는 부과기간중 소유자가 변경되는 경우에는 소유기간별로 구분하여 부과함) 부과기간 중 자동차의 사용폐지 등으로 부과기준일 현재 부과 대상자가 없을 경우에는 당해 부과기간 중 최종 소유자가 납부의무자가 됨\n> 부과대상: 산정방법 자동차분 : 기준부과금액×부담금산정지수×오염유발계수×차령계수×지역계수\n> #### 산정방법\n> 1기분 — 부과기준일: 매년 12월 31일\n> 1기분 — 부과기간: 7월 1일 ~ 12월 31일까지\n> 1기분 — 납기: 다음연도 3월 16일 ~ 3월 31일 까지\n> 2기분 — 부과기준일: 매년 6월 30일\n> 2기분 — 부과기간: 1월 1일~ 6월 30일까지\n> 2기분 — 납기: 9월 16일~ 9월 30일까지",
+        "sources": [
+          {
+            "title": "환경알리미",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405060000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility"
+          ],
+          "matched_fields": [
+            "eligibility"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F026",
+      "turn": 1,
+      "question": "기초생활보장 수급자는 어떤 기준으로 선정되나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 26,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "수급자 선정의 소득과 재산 조건",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 5.173,
+      "server_timing": "search;dur=2362.1, verify;dur=1429.0, review_gate;dur=5.4, rerank;dur=1282.5, grounding;dur=8.5, originals;dur=0.0, review;dur=4.2, prepare;dur=31.5, app;dur=5167.8",
+      "status": 200,
+      "error": null,
+      "request_id": "4aff2740136c44fd88164a0fcd78f902",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 5.173
+        }
+      ],
+      "response": {
+        "answer": "**2026년 국민기초생활보장사업 안내**\n- 선정기준 : 부양의무자가 없거나, 부양의무자가 있어도 부양능력이 없거나 또는 부양을 받을 수 없는 자로서 소득인정액이 급여종류별 선정기준 이하인 사람 → 수급자로 선정되기 위해서는 소득인정액 기준, 부양의무자 기준 동시 충족 필요 → 생계급여, 주거급여, 교육급여는 부양의무자 부양능력 판정기준 적용하지 않으나 단, 생계급여는 부양의무자의 소득 [금액 기준 확인 필요]·일반재산 [금액 기준 확인 필요]을 초과하는 경우 대상 제외\n- 지원대상 : 근로능력여부·연령 등에 관계없이 국가의 보장을 필요로 하는 급여 종류별 최저보장수준 이하의 모든 가구 ※(원칙) 가구단위 보장, 특례기준 적합한 경우 개인단위 보장\n\n공식 원문에 서로 다른 부양의무자 소득·재산 금액이 있어 해당 금액은 제외했습니다. 적용 기준은 담당 부서 확인이 필요합니다.",
+        "answer_details": "기초생활보장의 공식 안내 원문입니다.\n\n> ## 기초생활보장\n> ### 수급자 선정기준\n> #### 2026년 국민기초생활보장사업 안내\n> 지원대상 : 근로능력여부·연령 등에 관계없이 국가의 보장을 필요로 하는 급여 종류별 최저보장수준 이하의 모든 가구 ※(원칙) 가구단위 보장, 특례기준 적합한 경우 개인단위 보장\n> 선정기준 : 부양의무자가 없거나, 부양의무자가 있어도 부양능력이 없거나 또는 부양을 받을 수 없는 자로서 소득인정액이 급여종류별 선정기준 이하인 사람 → 수급자로 선정되기 위해서는 소득인정액 기준, 부양의무자 기준 동시 충족 필요 → 생계급여, 주거급여, 교육급여는 부양의무자 부양능력 판정기준 적용하지 않으나 단, 생계급여는 부양의무자의 소득 [금액 기준 확인 필요]·일반재산 [금액 기준 확인 필요]을 초과하는 경우 대상 제외\n> 부양의무자 관련 개정사항 : 수급(권)자 가구에 노인·한부모 가구, 장애의 정도가 심한 장애인이 있는 경우 생계급여 부양의무자 기준 적용 제외 ※ 다만, 고소득([금액 기준 확인 필요]) ·고재산([금액 기준 확인 필요]) 부양의무자가 있는 경우에는 부양의무자 기준 지속 적용 <2026년 기준중위소득 및 가구규모별·급여종류별 수급자 선정기준> (단위 : 원/월)\n> ※ 다만, 고소득([금액 기준 확인 필요]) ·고재산([금액 기준 확인 필요]) 부양의무자가 있는 경우에는 부양의무자 기준 지속 적용\n> <2026년 기준중위소득 및 가구규모별·급여종류별 수급자 선정기준>\n> (단위 : 원/월)\n> 기준 중위소득 — 1인: 2,564,238\n> 기준 중위소득 — 2인: 4,199,292\n> 기준 중위소득 — 3인: 5,359,036\n> 기준 중위소득 — 4인: 6,494,738\n> 기준 중위소득 — 5인: 7,556,719\n> 기준 중위소득 — 6인: 8,555,952\n> 생계급여 (중위 32%) — 1인: 820,556\n> 생계급여 (중위 32%) — 2인: 1,343,773\n> 생계급여 (중위 32%) — 3인: 1,714,892\n> 생계급여 (중위 32%) — 4인: 2,078,316\n> 생계급여 (중위 32%) — 5인: 2,418,150\n> 생계급여 (중위 32%) — 6인: 2,737,905\n> 의료급여 (중위 40%) — 1인: 1,025,695\n> 의료급여 (중위 40%) — 2인: 1,679,717\n> 의료급여 (중위 40%) — 3인: 2,143,614\n> 의료급여 (중위 40%) — 4인: 2,597,895\n> 의료급여 (중위 40%) — 5인: 3,022,688\n> 의료급여 (중위 40%) — 6인: 3,422,381\n> 주거급여 (중위 48%) — 1인: 1,230834\n> 주거급여 (중위 48%) — 2인: 2,015,660\n> 주거급여 (중위 48%) — 3인: 2,572,337\n> 주거급여 (중위 48%) — 4인: 3,117,474\n> 주거급여 (중위 48%) — 5인: 3,627,225\n> 주거급여 (중위 48%) — 6인: 4,106,857\n> 교육급여 (중위 50%) — 1인: 1,282,119\n> 교육급여 (중위 50%) — 2인: 2,099,646\n> 교육급여 (중위 50%) — 3인: 2,679,518\n> 교육급여 (중위 50%) — 4인: 3,247,369\n> 교육급여 (중위 50%) — 5인: 3,778,360\n> 교육급여 (중위 50%) — 6인: 4,277,976\n> 신청절차 : 주민등록상 주소지 관할 동에서 연중 신청 - 신청구비서류 :사회보장급여 제공(변경)신청서, 소득·재산신고서, 금융정보 제공동의서(부양의무자 포함), 임대차계약서·사용대차 확인서 등 ※ 조사과정에서 구비서류 외 고용임금 확인서 등 추가 자료 제출을 요구할 수 있음. - 민원처리기한 :30일(특별한 사유가 있는 경우 60일 이내 연장 가능)",
+        "sources": [
+          {
+            "title": "기초생활보장",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0501000000",
+            "category": "사하복지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility"
+          ],
+          "matched_fields": [
+            "eligibility"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-25T09:10:38.431189+00:00"
+}

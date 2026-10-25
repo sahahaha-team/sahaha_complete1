@@ -193,6 +193,14 @@ def course_scope_result(query: str, audience: str | None) -> dict | None:
     if not audience or not any(word in query for word in ('교육', '훈련', '강좌')):
         return None
     value = re.split(r'[:：]', audience, maxsplit=1)[-1].strip()
+    from chatbot.dialogue_profile import explicit_age
+    age = explicit_age(query)
+    bounds = re.search(r'(\d{1,2})세이상(\d{1,2})세이하', compact(value))
+    if age is not None and bounds:
+        if int(bounds[1]) <= age <= int(bounds[2]):
+            return None  # An explicit age already resolves this audience choice.
+        return {'answer': f'확인된 교육 대상은 **{value}**입니다. 입력하신 연령의 이용 가능 여부는 이 대상 안내에서 확인되지 않습니다.',
+                'is_clarification': False, 'suggested_questions': []}
     if re.fullmatch(r'(?:(?:사하)?구민|(?:사하구)?주민|시민|누구나)(?:누구나)?(?:가능)?', compact(value)):
         # A general resident program has no missing age/role choice. Retain
         # its audience in the answer instead of asking a redundant question.
@@ -261,9 +269,11 @@ def _waste(query: str, body: str) -> str | None:
     required = ("처리업체에 직접 전화", "문자 접수", "051-266-1170~1", "맑은사하환경", "1:1톡 접수", "무상수거")
     if not all(word in body for word in required):
         return None
-    return ("대형폐기물은 **맑은사하환경(051-266-1170~1)**에 전화·문자로 접수하세요. "
-            "카카오톡 ‘맑은사하환경’ 1:1 접수도 가능합니다.\n\n"
-            "일부 가전제품은 무상수거 대상입니다. **어떤 물품을 버리시는지** 알려주시면 해당 안내를 확인할게요.")
+    answer = ("대형폐기물은 **맑은사하환경(051-266-1170~1)**에 전화·문자로 접수하세요. "
+              "카카오톡 ‘맑은사하환경’ 1:1 접수도 가능합니다.")
+    if not re.search(r'소파|침대|매트리스|책상|의자|장롱|가구', query):
+        answer += "\n\n일부 가전제품은 무상수거 대상입니다. **어떤 물품을 버리시는지** 알려주시면 해당 안내를 확인할게요."
+    return answer
 
 
 def _source_units(lines: list[str]) -> list[str]:

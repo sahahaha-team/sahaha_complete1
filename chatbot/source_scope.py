@@ -19,14 +19,21 @@ FOCUS_STOP.update({'주소','위치','장소','연락처','전화','번호','운
 FOCUS_STOP.update({'부탁','상한'})
 FOCUS_STOP.update({'지원금','보조금'})  # Funding fields, not a separate program name.
 FOCUS_STOP.update({'기한','퍼센트','비율','연락','요청','진행','고충','예약','수강료'})
+FOCUS_STOP.add('교육')  # A course's general activity, not an extra row condition.
 
 
 @lru_cache(maxsize=256)
 def focus_terms(query: str) -> frozenset[str]:
     """Keep detail words for selecting rows; never require them in every chunk."""
     from chatbot.query_subject import normalize_query, strip_general_question_tail
-    text = AREA_PATTERN.sub(' ', strip_general_question_tail(normalize_query(query)))
+    from chatbot.dialogue_profile import request_without_profile
+    text = AREA_PATTERN.sub(' ', strip_general_question_tail(normalize_query(request_without_profile(query))))
     text = text.replace('대신','대리')
+    # Registered facility names belong to the subject, not an extra requested
+    # condition (e.g. the 특화 fragment in 소방특화 들락날락).
+    from chatbot.faq_targets import priority_entities
+    for entity in priority_entities(query):
+        text = re.sub(r'\s*'.join(map(re.escape, entity)), ' ', text, flags=re.I)
     from chatbot.query_subject import WORDING_ALIASES
     for alias, target in WORDING_ALIASES.items():
         text = text.replace(alias, target)
@@ -76,8 +83,10 @@ def normalize_plain_source(body: str, title: str) -> str:
             heading=re.match(r'^#{2,6}\s+(.+)',line)
             if heading:
                 name=heading.group(1).strip().rstrip(':：')
-                field=name if is_field_heading(name) else None
+                field=name if is_field_heading(name) or name in {'부과대상','과세대상'} else None
                 output.append(line)
+            elif field in {'부과대상','과세대상'} and line.strip() and not line.lstrip().startswith((field+':',field+' :','※','다만','단,')):
+                output.append(field+': '+line)
             elif field and line.strip() and not re.search(r'[:：]| — ',re.sub(r'\d{1,2}:\d{2}', '', line)) and not line.lstrip().startswith(('※','❖','다만','단,','단 ')):
                 output.append(field+': '+line)
             else:output.append(line)
@@ -114,6 +123,8 @@ def normalize_plain_source(body: str, title: str) -> str:
 
 def is_field_heading(name: str) -> bool:
     value=compact(name).rstrip(':：?？')
+    if value in {'부과대상','과세대상'}:
+        return True
     return bool(FIELD_LABEL.fullmatch(value) or re.search(
         r'(?:방법|절차|기간|시간|서류|준비물|자격|조건|요건|기준|위치|주소|연락처|수수료|이용료|지원내용|사업내용|배출요령|제외품목|제외항목)$',value))
 

@@ -192,6 +192,10 @@ class ContactDirectoryResponder:
         if re.search(r'(?:전화|팩스|이메일)(?:로|으로)(?:만|도)?',text) and not re.search(r'번호|연락처|담당부서|문의처',text):
             return None  # Communication method, not an employee's number.
         wants_contact = bool(INTENT.search(text)) or bool(re.search(r"담당.*번호|번호.*담당|번호(?:는|몇|좀|$)", text))
+        from chatbot.faq_targets import priority_entities
+        if (wants_contact and priority_entities(query)
+                and not re.search(r'담당자|담당부서|문의부서|팩스|fax', text)):
+            return None  # A named facility's published phone is not a staff duty.
         # A bare department name is also a valid answer to a choice prompt.
         bare_department = bool(re.fullmatch(r"[가-힣0-9]+(?:과|실|동|보건소)", text))
         if not wants_contact and not bare_department:

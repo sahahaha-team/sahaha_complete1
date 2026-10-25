@@ -194,6 +194,12 @@ def _build_one_source_answer(documents: list[dict], client, *, query: str = "", 
         from chatbot.reference_answers import reference_answer
         if not reference_answer(query, lead, passage, topic_keywords or set()):
             return "", []
+    if answer_goal(query) == 'location':
+        from chatbot.question_intent import rejects_online_location, location_source_units, has_location_unit
+        candidates = location_source_units(passage.splitlines())
+        if (any(rejects_online_location(query, unit) for unit in candidates)
+                and not any(has_location_unit(unit) and not rejects_online_location(query, unit) for unit in candidates)):
+            return '', []
     if (section is not None and asks_location(query)
             and any(mid in str(url) for mid in ('mId=0203020000', 'mId=0203020100'))
             and not vaccination_place_brief(query, str(url), passage.splitlines())):

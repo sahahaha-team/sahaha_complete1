@@ -29,9 +29,16 @@ def reviewed_source(body: str, metadata: dict) -> tuple[str, dict]:
         if review['url'] == metadata.get('url') and re.search(review['marker'],body):
             blocked = review['unverified_fields']
             from chatbot.structured_answers import field_matches
-            safe = '\n'.join(line for line in body.splitlines()
-                             if not any(field_matches(field,line) for field in blocked)
-                             and not re.search(review.get('unverified_line_pattern') or r'(?!)',line))
+            safe_lines = []
+            for line in body.splitlines():
+                if any(field_matches(field, line) for field in blocked):
+                    continue
+                if re.search(review.get('unverified_line_pattern') or r'(?!)', line):
+                    if not review.get('mask_conflicting_amounts'):
+                        continue
+                    line = re.sub(r'(?:연\s*)?\d+(?:[.]\d+)?억(?:원)?', '[금액 기준 확인 필요]', line)
+                safe_lines.append(line)
+            safe = '\n'.join(safe_lines)
             return safe, {**metadata,'unverified_fields':blocked,
                           'source_review_status':review.get('status', 'review_required'),
                           'source_warning':review.get('user_warning') or '공식 원문의 해당 항목은 최신 안내 확인이 필요합니다.'}

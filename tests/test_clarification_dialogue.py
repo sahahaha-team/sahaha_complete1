@@ -132,6 +132,35 @@ class ClarificationDialogueTests(unittest.TestCase):
         # An explicit new topic must still be able to select its own audience.
         self.assertTrue(is_service_source('어린이 소방교육 일정', child, {'소방'}))
 
+    def test_uncertainty_ends_pending_confirmation_and_preserves_service_for_later(self):
+        bot = ChatBot.__new__(ChatBot)
+        bot.db = None
+        bot._history_lock = threading.RLock()
+        bot._memory_history = {}
+        bot._pending_clarifications = OrderedDict()
+        bot._clarification_result('a', QUERY, QUERY, self.pending)
+        self.assertIsNone(bot._uncertain_clarification_response('b', '잘 모르겠어'))
+        result = bot._uncertain_clarification_response('a', '잘 모르겠어')
+        self.assertFalse(result['is_clarification'])
+        self.assertTrue(result['degraded'])
+        self.assertIn(AUDIENCE, result['answer'])
+        self.assertNotIn('?', result['answer'])
+        self.assertNotIn('a', bot._pending_clarifications)
+        self.assertIn('소방', bot.contextual_message('a', '일정은요?'))
+
+    def test_explicit_child_age_rejects_professional_course_but_keeps_child_course(self):
+        from chatbot.evidence import is_service_source
+        query = '소방교육 신청 방법 아이는 8살 (확인대상: 일반 주민)'
+        self.assertFalse(is_service_source(query, DOC, {'소방'}))
+        self.assertIsNone(course_scope_result(query, '이용대상: 4세 이상 13세 이하 어린이'))
+        result = course_scope_result('소방교육 15살', '이용대상: 4세 이상 13세 이하 어린이')
+        self.assertFalse(result['is_clarification'])
+        self.assertIn('확인되지', result['answer'])
+
+    def test_family_age_does_not_erase_an_explicit_professional_role(self):
+        from chatbot.dialogue_profile import child_course_conflict
+        self.assertFalse(child_course_conflict('아이는 8살이고 저는 관리자 교육을 받으려 해요', BODY))
+
 
 if __name__ == '__main__':
     unittest.main()

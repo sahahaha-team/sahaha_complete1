@@ -50,6 +50,14 @@ def has_location_unit(text: str) -> bool:
     ))
 
 
+def rejects_online_location(query: str, unit: str) -> bool:
+    """A web address cannot answer an explicit physical-place request."""
+    physical = re.search(r'장소|위치|방문|찾아가|도로명', query or '')
+    online = re.search(r'온라인|인터넷|홈페이지|웹사이트|사이트|url', query or '', re.I)
+    physical_value = re.search(r'[가-힣]+(?:로|길)\s*\d+|\d+\s*층|민원실|접종실|상담실', unit)
+    return bool(physical and not online and re.search(r'https?://|온라인|인터넷|홈페이지', unit) and not physical_value)
+
+
 def location_source_units(lines: list[str]) -> list[str]:
     """Pair only explicit place row headers with a recognizable place value."""
     units = complete_source_units(lines)

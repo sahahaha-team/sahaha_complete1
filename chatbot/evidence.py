@@ -181,8 +181,18 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
+    if ('지방세' in compact(query) and re.search(r'종류|세목|전체목록', compact(query))
+            and re.search(r'자동차세|재산세|취득세|주민세', title)):
+        return False  # One child tax's payment guide is not the tax catalogue.
     anchors = set(keywords).intersection(SERVICE_NAMES) - {'보건소','디지털','컴퓨터','냉장고','세탁기','구직','구인','전자민원'}
     body_text = str(doc.get('content') or '')
+    if ('기초생활보장' in compact(query) and re.search(r'선정|수급자격', compact(query))
+            and '기초생활보장' not in title
+            and not re.search(r'^#{2,6} .*수급자\s*선정기준', body_text, re.M)):
+        return False  # A beneficiary's separate disability benefit is not general eligibility.
+    from chatbot.dialogue_profile import child_course_conflict
+    if child_course_conflict(query, body_text):
+        return False
     # A scope confirmed from one program is a source constraint, not merely
     # extra search words. Shared topics (e.g. fire education for children and
     # apartment managers) cannot exchange schedules after a field follow-up.

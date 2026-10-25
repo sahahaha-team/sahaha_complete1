@@ -15,13 +15,25 @@ def _broad_support_request(message: str) -> bool:
     text = re.sub(r"\d+세(?:이상|이하|미만)?", "", text)
     text = re.sub(r"지원금|복지|지원|혜택|서비스|제도|사업|신청|방법|조건|대상|자격|도움|필요", "", text)
     text = re.sub(r"알려(?:주세요|줘)?|받고싶(?:어요|어)?|받을수|받으려면|있(?:나요|어요|어)|"
-        r"어떤(?:거|것)?|무슨|뭐가|어떻게|하고싶(?:어요|어)?|이용|찾고|싶(?:어요|어)?", "", text)
+        r"어떤(?:거|것)?|무엇|무슨|뭐가|어떻게|하고싶(?:어요|어)?|이용|찾고|싶(?:어요|어)?", "", text)
     text = re.sub(r"에서|에게|으로|에는|에|은|는|이|가|을|를|의|요", "", text)
     return not text
 
 
 def clarification_question(answer: str, questions: list[str], reply_terms: list[str]) -> dict:
     return {"answer": answer, "suggested_questions": questions[:3], "reply_terms": reply_terms}
+
+
+def uncertain_reply(message: str) -> bool:
+    text = re.sub(r'[\s,.!?。？]', '', message or '')
+    return bool(re.fullmatch(r'(?:잘|그게)?(?:맞는지|해당하는지)?모르(?:겠어|겠어요|겠습니다|겠는데요|겠네)', text))
+
+
+def replacement_field(message: str) -> str | None:
+    """A rejected field is not a second requested field or a new subject."""
+    fields = r'신청(?:방법)?|예약(?:방법)?|접수|방법|준비물|서류|비용|수수료|시간|일정|장소|위치|주소|대상|조건'
+    match = re.fullmatch(r'\s*(?:그럼\s*|아니\s*)?(?:' + fields + r')\s*(?:말고|대신)\s*(.+)', message)
+    return match[1] if match and is_field_only_question(match[1]) else None
 
 
 def _scope_confirmation(message: str) -> tuple[str | None, str]:
@@ -74,6 +86,10 @@ def resolve_clarification_reply(message: str, pending: dict | None) -> str:
     choices = pending.get('choice_contexts', {})
     if message in choices:
         return _scoped_query(pending['query'], choices[message])
+    if pending.get('audience_question'):
+        audience = re.fullmatch(r'(?:아니(?:요)?|저는)?(일반(?:주민|구민)|어린이|성인|어른)(?:이야|이에요|예요|입니다|이요|요)?', current)
+        if audience:
+            return _scoped_query(pending['query'], audience[1])
     if pending.get('affirmative_context'):
         decision, field = _scope_confirmation(message)
         context = pending.get(f'{decision}_context') if decision else None
@@ -153,6 +169,25 @@ def build_clarification(user_message: str) -> dict | None:
     from chatbot.query_subject import interpret_query
     user_message = interpret_query(user_message)
     compact = re.sub(r"[\s?!.,]", "", user_message or "")
+    from chatbot.dialogue_profile import explicit_age
+    from chatbot.faq_targets import priority_entities
+    if ('소방' in service_names(user_message) and re.search(r'교육|훈련|체험', compact)
+            and not priority_entities(user_message) and explicit_age(user_message) is None
+            and not re.search(r'일반주민|일반구민|어린이|아동|초등학생|성인|어른|관리자|책임자|확인대상', compact)):
+        return {**clarification_question('교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.',
+            [], ['어린이','아이','초등학생','성인','어른','관리자','책임자','일반','세','살']),
+            'audience_question': True}
+    if ('소방' in service_names(user_message) and '교육' in compact
+            and re.search(r'일반(?:주민|구민)', compact) and explicit_age(user_message) is None
+            and not re.search(r'어린이|초등학생|성인|어른|관리자|책임자', compact)):
+        return clarification_question('교육을 받으실 분은 **어린이인가요, 성인인가요?** 나이를 알려주셔도 됩니다.',
+            [], ['어린이','아이','초등학생','성인','어른','세','살'])
+    if (re.search(r'보건소.*(?:어떤|무슨).*업무|보건소.*업무.*(?:무엇|뭐)', compact)
+            and not service_names(user_message)):
+        return clarification_question('보건소의 **진료·검사·예방접종 중 어떤 업무**가 필요하신가요?',
+            [], ['진료','검사','접종','보건증','금연'])
+    if re.fullmatch(r'(?:사하구(?:청)?|구청|사하구의)?(?:의)?(?:주요)?민원(?:서비스|업무)(?:에는|는|에|가)?(?:무엇이|어떤것이|뭐가)?(?:있나요|있어|있습니까|있어요)?', compact):
+        return clarification_question('**어떤 민원이나 서류**가 필요하신가요?', [], ['등본','초본','여권','보건증','주민등록증'])
     if is_field_only_question(user_message):
         return clarification_question('**어떤 시설이나 업무**에 관한 안내가 필요하신가요?',
             [], ['시설','업무','자전거','주차','보건소','주민등록','소방'])
@@ -201,7 +236,11 @@ def build_clarification(user_message: str) -> dict | None:
             ['작은도서관 프로그램 예약 방법 알려줘', '소방특화 들락날락 체험 예약 방법 알려줘'],
             ['도서관', '들락날락', '소방', '시설', '교육', '체험'])
 
-    if needs_vaccine_kind(user_message):
+    from chatbot.vaccination import is_vaccination_query
+    vaccine_details = (is_vaccination_query(user_message) and not vaccine_kind(user_message)
+        and bool(re.search(r'신청|예약|접수|언제|시간|비용|수수료|준비|서류', compact))
+        and not re.search(r'증명서|접종내역|접종기록', compact))
+    if needs_vaccine_kind(user_message) or vaccine_details:
         return clarification_question(
             "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
             ['독감 접종 장소 알려줘', '폐렴구균 접종 장소 알려줘', 'B형간염 접종 장소 알려줘'],
@@ -344,10 +383,15 @@ def build_suggested_questions(user_message: str, sources: list[dict]) -> list[st
 def build_contextual_search_query(user_message: str, history: list[dict]) -> str:
     """생략된 후속 질문에만 직전 주제를 보충한다."""
     current = (user_message or "").strip()
+    current = replacement_field(current) or current
     compact = re.sub(r"\s+", "", current)
     recent = [(m.get('search_query') or m.get('content') or '').strip()
               for m in history or [] if m.get('role') == 'user']
     previous_query = recent[-1] if recent else ''
+    from chatbot.vaccination import corrected_vaccine_query
+    corrected = corrected_vaccine_query(previous_query, current)
+    if corrected:
+        return corrected
     from chatbot.dialogue_profile import confirmed_profile
     decision, field = _scope_confirmation(current)
     if decision == 'affirmative':
@@ -364,6 +408,15 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     new_subject = any(not any(n in old or old in n for old in old_names) for n in names)
     if new_subject:
         return current
+    # Age-only replies are profile updates, including outside passport flows.
+    # A complete new service was already excluded above.
+    age_reply = bool(re.fullmatch(r'(?:아니(?:요)?|정정)?(?:(?:아이|자녀|신청자|나이)(?:는|가|은|이)?)?(?:만)?\d{1,2}(?:세|살)(?:이야|야|이에요|예요|입니다|이요|요)?', compact))
+    if previous_query and old_names and age_reply:
+        from chatbot.passport_documents import merge_applicant_followup
+        if '여권' in previous_query:
+            return merge_applicant_followup(previous_query, current)
+        base = re.sub(r'(?:만\s*)?\d{1,2}\s*(?:세|살)(?!\s*(?:이상|이하|미만))', '', previous_query)
+        return (base + ' ' + current).strip()
     # Bare fields can follow generic families too. The full-match language
     # check ensures "비상급수시설 지도" is a new topic, not a bicycle follow-up.
     field_follow_up = bool(previous_query and is_field_only_question(current))
@@ -409,11 +462,14 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     if answer_goal(current) and old_names and not profile_reply:
         # Carry the service and explicit profile, not the previous requested
         # field (e.g. automatic enrolment must not replace a benefit question).
-        profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}세|성인|미성년자|부모|친족|신규|재발급',previous)
+        profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}(?:세|살)|성인|미성년자?|부모|친족|신규|재발급',previous)
         scope = confirmed_profile(previous)
         if scope:
             profile.append(scope)
         subjects = sorted(old_names,key=len,reverse=True)
+        from chatbot.faq_targets import priority_entities
+        subjects.extend(entity for entity in priority_entities(previous)
+                        if not any(entity in subject for subject in subjects))
         if scope and re.search(r'교육|훈련|강좌', previous) and not any(re.search(r'교육|훈련|강좌', s) for s in subjects):
             subjects.append(re.search(r'교육|훈련|강좌', previous).group())
         if '인플루엔자' in subjects and '독감' in previous:

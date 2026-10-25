@@ -1,0 +1,850 @@
+{
+  "started_at": "2026-10-25T09:02:48.782582+00:00",
+  "commit": "3bdd707ffa7ffbe3d3fd20769f3f34d4513ad318",
+  "case_sha256": "2996c26e0dc08f72162819821b8d149988e067c8a2974613f4cc10b548622652",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "4af04a6a80c836156eaf5fba80b65a0fda22bc40c2192934bb3cf2dc4c3646fb",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "1ca238f34fd9a28483d9e0d4e244ddfba171473cc9e51f2c7cdbab2f15483579",
+    "chatbot\\concise_answers.py": "784f614f58b350d4e691344f4bf04bc5fcc8877103db7850351fac17ef92f65e",
+    "chatbot\\contact_directory.py": "e02bb5ecb16858438e9fdc961436e776d9d5fbe179159bdab5ee425197c969ff",
+    "chatbot\\conversation.py": "374bfc155a69e900c29d75c833debfac93ed8adf18af43b6002271b3114f7277",
+    "chatbot\\crawled_pages.py": "340b400006c5a90aa621c5c84e450b3161b9d0aa6ae8c9478b16e30387ce908a",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "879bf6e6cfb02307e08279ee9c017e273bb1660429468ecc4907a17a61f6583e",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "58ed1d215f0846c5c20a4980a0c54a67bcad251c47941bf9c3b7ae8863706d47",
+    "chatbot\\evidence_decision.py": "37df3fe02c6112ce48c3d92aa341901b2440702e5d12ad3b5fb80a32bb021ca6",
+    "chatbot\\facility_contact.py": "c57afd762ef646e4f668fba01246be542b77dad4b9f35c160c4d23aad9fab412",
+    "chatbot\\faq_targets.py": "8dbf456b3ce88bbbfbd9d402c3d2a5477dd103f43fddda1ad92d6e764fffdcde",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "42968c47ad2e21da7da2b571ebf678691f9cb349dfdf689c0ee5a351bb93513a",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "7d0bff7e0e88894b3f4066989b315cbea27ac46caeefee77b36e9d419e9a6ea8",
+    "chatbot\\retriever.py": "c8760b53531095eda7b1593efb7397efd49c16c026dd42a2413e20d43ae01059",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "1a360c71c9a923afeda3bbb9a8e708d4fee886bae0eaf58cdbb2854a3382fad1",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "5278ec8a836ea912218eddd688958d69d2113364806c39f8e5c7fad2d7e590bc",
+    "chatbot\\source_warnings.py": "d9274037944012bf96c8d906a6ddf2ddc3cedae64e8610874b829073ad9a51fa",
+    "chatbot\\structured_answers.py": "e6babb357396e5fb6eb8ec28a397631881ddfa6cfcec9f66a87bedf52d8d5c66",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "37a9d51d59b6303dfa710bc87480b8c9c3e694102d90f86a61e8b91b8592f30c",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "006836348faeb7e964ce35b5f5343516e57bcb20172457e6d803050969b97f7a",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "9ef4a3693758ce5bee80c4e21cccfb2aa13aebeb6ac87e66fad85808d9bf407c",
+    "resources\\priority_services.json": "16d1a1fab14665ed43ccc0774d8fbfb0361ba54dbe7bf137bd839721e611fe8e",
+    "data\\department_contacts.json": "1574a5ea6429824d0e570d9cb846aeaacf1221777dacce5db3f275aff76bb911"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    },
+    "review_basis": "요청 문항별 필수 검수 항목을 개발 담당 AI가 사전 작성. 수치 정답은 초안에서 복사하지 않고 실제 원문으로 검수."
+  },
+  "records": [
+    {
+      "id": "F001",
+      "turn": 1,
+      "question": "사하구청은 어디에 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 1,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구청 실제 주소",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.396,
+      "server_timing": "search;dur=877.6, verify;dur=466.1, review_gate;dur=2.1, grounding;dur=3.6, originals;dur=0.0, review;dur=0.9, prepare;dur=2.8, app;dur=1390.4",
+      "status": 200,
+      "error": null,
+      "request_id": "6ecb134ced6d4432a1ae5da554a5b8ab",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.396
+        }
+      ],
+      "response": {
+        "answer": "**구청오시는 길**\n- 주소 : 부산광역시 사하구 낙동대로398번길 12(당리동)",
+        "answer_details": "구청오시는 길의 공식 안내 원문입니다.\n\n> ## 구청오시는 길\n> 주소 및 전화 안내\n> 주소 : 부산광역시 사하구 낙동대로398번길 12(당리동)\n> 대표전화 : 051-220-4000 / Fax : 051-220-4444\n> 교통편 안내\n> 도시철도 이용시\n> 당리역에서 하차 후 5번 출구",
+        "sources": [
+          {
+            "title": "구청오시는 길",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0604050000",
+            "category": "사하소개",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F002",
+      "turn": 1,
+      "question": "사하구청 대표전화는 몇 번인가요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 2,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "구청 대표번호 구분",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.161,
+      "server_timing": "app;dur=144.0",
+      "status": 200,
+      "error": null,
+      "request_id": "19148e636f1f4a6b95532b77ca292c4d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.161
+        }
+      ],
+      "response": {
+        "answer": "**사하구청 대표전화: 051-220-4000**",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "사하구청 부서별 대표전화",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0604060000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "사하구청",
+            "contact": "051-220-4000",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25T04:34:44.683197+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F003",
+      "turn": 1,
+      "question": "사하구청 민원실 창구가 어디에 있는지 확인할 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 3,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103020000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민원 창구별 위치 확인 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 10.091,
+      "server_timing": "search;dur=4566.6, verify;dur=2848.9, review_gate;dur=1.2, rerank;dur=2560.5, grounding;dur=13.3, originals;dur=0.0, review;dur=0.0, prepare;dur=48.4, app;dur=10085.4",
+      "status": 200,
+      "error": null,
+      "request_id": "1aa90c2cc305452bba8403394308d301",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 10.091
+        }
+      ],
+      "response": {
+        "answer": "사하구청 [민원실 이용안내](https://www.saha.go.kr/portal/contents.do?mId=0100000000)에서 확인할 수 있습니다.\n\n[대상민원 자세히보기](https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp)를 열어 상세 자료를 보세요.\n파일명에 **2017**이 포함된 자료이므로 최신 변경 사항은 별도 확인이 필요합니다.",
+        "answer_details": "민원실 이용안내의 공식 안내 원문입니다.\n\n> ## 민원실 이용안내\n> 사하구민의 편리를 위한 각종 민원실 이용안내입니다.\n> 온라인으로 민원 상담 및 접수를 하시려면 국민신문고 를 이용해주시면 됩니다.\n> 그 외 각종 주민등록등본 등의 서류 발급은 왼쪽 메뉴 첫 번째 정부24 로 온라인 발급하실수 있습니다.\n> ### 생활불편신고민원\n> 인터넷: 국민신문고 홈페이지 민원접수하기\n> 문의전화: 민원여권과(051-220-4265), 해당부서\n> ### 일반·고충 민원\n> 업무내용 : 각종 인허가 접수 및 허가증 교부, 진정서 접수\n> 창구번호 : 2-3번 창구\n> 문의전화 : 051-220-4265\n> ### 어디서나 민원(구 팩스민원) 신청\n> ※ \"어디서나 민원처리제\"는 민원인이 소관 행정기관을 가지 않고서도 어디서나 가까운 다른 행정기관(농협 포함)에서 민원서류를 신청하고 원하는 행정기관에서 교부받을 수 있는 제도\n> 구비서류 : 본인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자 신분증, 위임자의 서명 또는 도장 날인 된 위임장\n> 수 수 료 : 교부기관의 수수료에 따름\n> 신청방법 방 문 : 2-2번 창구 전 화 : 051-220-4821 인터넷 : 민원24 http://www.minwon.go.kr 대상민원 자세히보기\n> ### 증명민원 통합발급\n> 창구번호 : 2-1번창구\n> 문의전화 : 051-220-4822~4\n> #### 본인서명사실확인서발급\n> 구비서류 본 인 : 신분증\n> 수수료 : 600원\n> #### 인감증명발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증\n> 수수료 : 600원\n> #### 주민등록등·초본, 전입세대열람 발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증 이해관계인 : 신청인의 신분증, 이해관계 사실을 증명할 수 있는 서류 (2011.11.30. 부터 반송된 내용증명 첨부 필요)\n> 등·초본 발급 400원 (본인 발급시)\n> 수수료 : 등·초본 발급 500원 (이해관계인 발급시)\n> #### 가족관계증명서 등(5종) 발급\n> 구비서류 ① 본인 및 직계 혈족, 배우자가 신청시 : 신청인의 신분증 ② 본인 및 직계 혈족, 배우자의 위임시 : 신청인 신분증, 위임자의 신분증 사본 및 위임장\n> 수 수 료 : 가족관계증명서 1,000원, 제적등본 1,000원\n> #### 세무민원 증명서 발급\n> 업무내용 : 세목별과세증명(800원), 지방세 납세증명(무료), 주택가격확인서(800원)\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 서명 또는 도장 날인된 위임장, 위임자 신분증\n> #### 지적민원 증명서 발급\n> 업무내용 : 토지이용계획확인서, 지적도, 토지대장, 건축물대장, 공시지가확인서\n> 수 수 료 토지대장 : 500원 (추가장당 100원) 토지이용계획확인서:1,500원 (추가 장당 100원씩 추가, 1번 창구) 지적도, 임야도 : 장당 700원 건축물대장 : 500원 공시지가확인서 : 800원\n> #### 가족관계등록 신고\n> 업무내용 : 혼인, 출생, 이혼, 사망신고, 정정신청 등\n> 창구번호 : 2-4번 창구\n> 문의전화 : 051-220-4274\n> #### 편의시설\n> 사무기기 사용코너 : 컴퓨터2대(인터넷검색, 정부24 전용창구), FAX기, 프린터기\n> 교양도서 · 월간지 비치 : 대기민원 활용\n> 지방세 무인수납처리기(1대), 무인민원발급기(일반용 2대, 법인용 1대)\n> 은행(1개소)\n> 북카페, 생태정원, 인바디, 혈압측정기, 공기청정기, 자동제세동기AED, 수유실 등",
+        "sources": [
+          {
+            "title": "민원실 이용안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "대상민원 자세히보기",
+                "url": "https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_reference",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "reference"
+          ],
+          "matched_fields": [
+            "reference"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F004",
+      "turn": 1,
+      "question": "사하구 홈페이지에서 이용할 수 있는 전자민원 서비스에는 무엇이 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 4,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "전자민원 종류와 공식 이용 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.669,
+      "server_timing": "search;dur=947.6, verify;dur=645.3, review_gate;dur=2.8, grounding;dur=3.3, originals;dur=0.0, review;dur=1.0, prepare;dur=3.0, app;dur=1652.0",
+      "status": 200,
+      "error": null,
+      "request_id": "b75a900eaf6e477c8f7069151dd89b38",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.669
+        }
+      ],
+      "response": {
+        "answer": "**민원신청 안내**\n- 2024년 9월 25일부터 민원상담이 국민권익위원회에서 운영하는 '국민신문고'로 통합하여 운영하고 있습니다.",
+        "answer_details": "전자민원창구의 공식 안내 원문입니다.\n\n> ## 전자민원창구\n> ### 민원신청 안내\n> 2024년 9월 25일부터 민원상담이 국민권익위원회에서 운영하는 '국민신문고'로 통합하여 운영하고 있습니다.\n> 별도 회원가입 또는 로그인이 필요합니다.\n> 통합 전 올려주신 게시글은 '(구)상담민원' 메뉴에서 조회하실 수 있습니다.\n> ※ 민원신청 등록 오류 문의처 : 국민신문고 헬프데스크 1600-8172",
+        "sources": [
+          {
+            "title": "전자민원창구",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F005",
+      "turn": 1,
+      "question": "사하구청 민원실 이용 안내는 어디에서 확인하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 5,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "민원실 이용 안내의 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 6.592,
+      "server_timing": "search;dur=2308.6, verify;dur=1624.3, review_gate;dur=1.3, rerank;dur=2545.2, grounding;dur=13.9, originals;dur=0.0, review;dur=0.0, prepare;dur=45.2, app;dur=6586.3",
+      "status": 200,
+      "error": null,
+      "request_id": "cdac3a475e6e480280ae834764b3e7f5",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 6.592
+        }
+      ],
+      "response": {
+        "answer": "사하구청 [민원실 이용안내](https://www.saha.go.kr/portal/contents.do?mId=0103000000)에서 확인할 수 있습니다.\n\n[대상민원 자세히보기](https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp)를 열어 상세 자료를 보세요.\n파일명에 **2017**이 포함된 자료이므로 최신 변경 사항은 별도 확인이 필요합니다.",
+        "answer_details": "민원실 이용안내의 공식 안내 원문입니다.\n\n> ## 민원실 이용안내\n> 사하구민의 편리를 위한 각종 민원실 이용안내입니다.\n> 온라인으로 민원 상담 및 접수를 하시려면 국민신문고 를 이용해주시면 됩니다.\n> 그 외 각종 주민등록등본 등의 서류 발급은 왼쪽 메뉴 첫 번째 정부24 로 온라인 발급하실수 있습니다.\n> ### 생활불편신고민원\n> 인터넷: 국민신문고 홈페이지 민원접수하기\n> 문의전화: 민원여권과(051-220-4265), 해당부서\n> ### 일반·고충 민원\n> 업무내용 : 각종 인허가 접수 및 허가증 교부, 진정서 접수\n> 창구번호 : 2-3번 창구\n> 문의전화 : 051-220-4265\n> ### 어디서나 민원(구 팩스민원) 신청\n> ※ \"어디서나 민원처리제\"는 민원인이 소관 행정기관을 가지 않고서도 어디서나 가까운 다른 행정기관(농협 포함)에서 민원서류를 신청하고 원하는 행정기관에서 교부받을 수 있는 제도\n> 구비서류 : 본인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자 신분증, 위임자의 서명 또는 도장 날인 된 위임장\n> 수 수 료 : 교부기관의 수수료에 따름\n> 신청방법 방 문 : 2-2번 창구 전 화 : 051-220-4821 인터넷 : 민원24 http://www.minwon.go.kr 대상민원 자세히보기\n> ### 증명민원 통합발급\n> 창구번호 : 2-1번창구\n> 문의전화 : 051-220-4822~4\n> #### 본인서명사실확인서발급\n> 구비서류 본 인 : 신분증\n> 수수료 : 600원\n> #### 인감증명발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증\n> 수수료 : 600원\n> #### 주민등록등·초본, 전입세대열람 발급\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 위임자의 서명 또는 도장 날인이 된 위임장, 위임자 신분증 이해관계인 : 신청인의 신분증, 이해관계 사실을 증명할 수 있는 서류 (2011.11.30. 부터 반송된 내용증명 첨부 필요)\n> 등·초본 발급 400원 (본인 발급시)\n> 수수료 : 등·초본 발급 500원 (이해관계인 발급시)\n> #### 가족관계증명서 등(5종) 발급\n> 구비서류 ① 본인 및 직계 혈족, 배우자가 신청시 : 신청인의 신분증 ② 본인 및 직계 혈족, 배우자의 위임시 : 신청인 신분증, 위임자의 신분증 사본 및 위임장\n> 수 수 료 : 가족관계증명서 1,000원, 제적등본 1,000원\n> #### 세무민원 증명서 발급\n> 업무내용 : 세목별과세증명(800원), 지방세 납세증명(무료), 주택가격확인서(800원)\n> 구비서류 본 인 : 신분증 위임을 받은 자 : 위임을 받은 자의 신분증, 서명 또는 도장 날인된 위임장, 위임자 신분증\n> #### 지적민원 증명서 발급\n> 업무내용 : 토지이용계획확인서, 지적도, 토지대장, 건축물대장, 공시지가확인서\n> 수 수 료 토지대장 : 500원 (추가장당 100원) 토지이용계획확인서:1,500원 (추가 장당 100원씩 추가, 1번 창구) 지적도, 임야도 : 장당 700원 건축물대장 : 500원 공시지가확인서 : 800원\n> #### 가족관계등록 신고\n> 업무내용 : 혼인, 출생, 이혼, 사망신고, 정정신청 등\n> 창구번호 : 2-4번 창구\n> 문의전화 : 051-220-4274\n> #### 편의시설\n> 사무기기 사용코너 : 컴퓨터2대(인터넷검색, 정부24 전용창구), FAX기, 프린터기\n> 교양도서 · 월간지 비치 : 대기민원 활용\n> 지방세 무인수납처리기(1대), 무인민원발급기(일반용 2대, 법인용 1대)\n> 은행(1개소)\n> 북카페, 생태정원, 인바디, 혈압측정기, 공기청정기, 자동제세동기AED, 수유실 등",
+        "sources": [
+          {
+            "title": "민원실 이용안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103000000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "대상민원 자세히보기",
+                "url": "https://www.saha.go.kr/portal/Downfiles/minwon01_01_2017.hwp"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_reference",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "reference"
+          ],
+          "matched_fields": [
+            "reference"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F006",
+      "turn": 1,
+      "question": "사하구 무인민원발급기 수수료는 얼마인가요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 6,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "무인발급 수수료와 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.209,
+      "server_timing": "app;dur=202.7",
+      "status": 200,
+      "error": null,
+      "request_id": "b18947c37c30454ea7d63c3cacc0451e",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.209
+        }
+      ],
+      "response": {
+        "answer": "사하구 무인민원발급기 수수료는 **무료**(2026.1.1.부터)입니다. 다만 **부동산등기부등본은 1000원**이며, 현금만 가능합니다. 설치장소별 운영시간과 발급 가능한 서류는 공식 안내에서 확인하세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "무인민원발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103040000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F007",
+      "turn": 1,
+      "question": "정부24를 이용하면 구청에 가지 않고도 민원서류를 발급받을 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 7,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 발급 가능 민원과 현재 인증 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 2.326,
+      "server_timing": "search;dur=1804.8, verify;dur=460.8, review_gate;dur=5.2, grounding;dur=3.2, originals;dur=0.0, review;dur=2.9, prepare;dur=3.4, app;dur=2320.0",
+      "status": 200,
+      "error": null,
+      "request_id": "a11e309098a04098b051e8ba8fff82e7",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.326
+        }
+      ],
+      "response": {
+        "answer": "**정부24**\n- 「정부24」는 1년 365일 24시간 집, 사무실 등 어디서나 필요한 민원을 인터넷을 이용 해 신청·열람·발급받을 수 있는 정부서비스입니다.\n\n이 페이지의 세부 이용방법은 오래된 안내이므로, 현재 인증·발급 방법은 정부24에서 확인해 주세요.",
+        "answer_details": "정부24의 공식 안내 원문입니다.\n\n> ## 정부24\n> ### 정부24\n> 「정부24」는 1년 365일 24시간 집, 사무실 등 어디서나 필요한 민원을 인터넷을 이용 해 신청·열람·발급받을 수 있는 정부서비스입니다. .\n> #### 정부24 민원서비스\n> 주민등록 등·초본, 자동차등록원부 등 수수료 무료 (62종)\n> 인·허가 등 민원사무 처리절차 안내 (5천여종)\n> #### 이용방법",
+        "sources": [
+          {
+            "title": "정부24",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0102010000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F008",
+      "turn": 1,
+      "question": "행정기관이 이미 가지고 있는 서류도 민원 신청할 때 다시 제출해야 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 8,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "행정정보 공동이용과 미연계 예외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.01,
+      "server_timing": "search;dur=727.0, verify;dur=201.4, review_gate;dur=2.3, grounding;dur=6.4, originals;dur=0.0, review;dur=0.8, prepare;dur=9.3, app;dur=1003.2",
+      "status": 200,
+      "error": null,
+      "request_id": "895b7e65409e4813b93ff6c72d8446f1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.01
+        }
+      ],
+      "response": {
+        "answer": "**행정정보 공동이용 안내**\n- 각 기관이 보유하고 있는 행정정보를 행정·공공·금융기관에서 공동으로 이용할 수 있는 제도이며, 공동으로 이용할 수 있는 정보에 대해서는 민원신청시 별도로 해당서류를 제출하실 필요가 없습니다.",
+        "answer_details": "민원편의시책의 공식 안내 원문입니다.\n\n> ## 민원편의시책\n> 민원 1회방문 처리제\n> 일과시간 외 민원실\n> 구술·전화민원 접수 처리서비스\n> 사전심사청구제\n> 민원서류 외국어 지원서비스\n> 민원후견인제\n> 거부처분에 대한 이의신청\n> 거동불편인 민원서류 무료배달\n> 민원상담 무료전화\n> 행정정보 공동이용 안내\n> 어디서나 민원처리제\n> 아름다운 배려창구 운영\n> ### 민원 1회방문 처리제\n> 2개 부서·기관 이상 관련된 복합민원을 대상으로 민원인이 여러 관련부서·기관을 직접 방문하여 접수, 개별 처리하던 것을 민원인이 민원 1회 방문창구에 서류를 접수하면 모든 절차를 민원 주관부서에서 부서협조 등을 통해 직접 처리함으로써 민원인의 시간적·경제적 부담을 줄이는 제도입니다.\n> 운영내용 ① 민원 1회방문 상담창구 운영 -민원인에게 민원1회 방문처리에 관한 안내와 상담의 편의를 제공하기 위해 민원실에 설치(민원여권과 2-3번 창구) ② 민원후견인 지정·운영 -민원사무의 처리에 경험이 많은 공무원을 후견인으로 지정하여 민원처리과정에서 민원인을 보좌·안내 ③ 실무심의회 운영 -복합민원의 처리를 위해 관련 실무자들이 법적 타당성·서류 등을 일괄 심의 문 의 : 민원여권과 담당자 (☎220-4265) ④ 민원조정위원회 운영 -이의신청, 복합·다수인 민원, 실무종합심의회 불가결정 사안 등 갈등을 유발할 수 있는 민원사항의 심의·조정 ⑤ 기관장 최종결정\n> ### 일과시간 외 민원실 운영\n> 일과시간 내 민원실 방문이 어려운 맞벌이 부부·직장인 등을 위해 여권 접수·교부업무를 일과시간 외에 운영하는 편리한 제도입니다.\n> 운영내용 운영시기 : 매주 수요일 18:30 ~ 20:00 장 소 : 사하구청 1층 민원여권과 취급업무 : 여권 접수·교부 문 의 : 사하구청 민원여권과 (☎ 여권업무 : 220-4811~4)\n> 발급민원 자세히보기\n> ### 구술·전화민원 접수 처리서비스\n> 구비서류 없이 구술 또는 전화로 민원을 접수·처리하는 제도로써 민원인의 의사표시를 문서(전자문서 포함)로 증명할 필요가 없는 민원사항은 구술 또는 전화로 간단하게 신청할 수 있습니다.\n> 신청방법 통합(증명)민원 평일(09:00 ~ 18:00) : 통합민원창구(☎220-4822~4824) 일반민원 평일(09:00 ~ 18:00) : 해당부서 직접 유선접수 및 민생 Call센터(☎220-4361~3,5500)\n> 대상민원 자세히보기\n> ### 사전심사청구제\n> 대규모 경제적 비용이 수반되는 아래의 민원에 대하여 정식민원 서류를 제출하기 전에 약식서류를 제출하면 구청에서 사전에 가·부를 심사하여 민원인에게 통보하여 불가처분 시 발생될 수 있는 시간적·경제적 손실을 사전에 방지할 수 있는 제도입니다.\n> 신청방법 :『민원 1회방문 상담창구』에 신청(민원여권과 2-3번 창구)\n> 처리절차 사전심사 청구서 접수(민원여권과) ☞ 청구서 이송(처리부서) ☞ 사전심사 결과회신(민원인) ☞ 정식민원 접수(민원여권과) ☞ 정식민원 이송(처리부서) ☞ 최종결과 회신(민원인)\n> 사전심사 청구대상 민원사무\n> 1 — 부서명: 경제진흥과\n> 1 — 민원사무명: 대규모점포 개설등록 (변경)신청\n> 1 — 처리기간 / 법정사항: 30일\n> 1 — 처리기간 / 사전심사: 15일\n> 1 — 처리기간 / 정식민원 신청시: 15일\n> 2 — 부서명: 〃\n> 2 — 민원사무명: 양곡가공업의 신고\n> 2 — 처리기간 / 법정사항: 14일\n> 2 — 처리기간 / 사전심사: 14일\n> 2 — 처리기간 / 정식민원 신청시: 14일\n> 3 — 부서명: 일자리정책과\n> 3 — 민원사무명: 공장설립 (변경)승인\n> 3 — 처리기간 / 법정사항: 7일\n> 3 — 처리기간 / 사전심사: 7일\n> 3 — 처리기간 / 정식민원 신청시: 7일\n> 4 — 부서명: 〃\n> 4 — 민원사무명: 고압가스 용기·냉동기 및 특정설비의 제조등록 (변경)신청\n> 4 — 처리기간 / 법정사항: 등록 5일 변경 4일\n> 4 — 처리기간 / 사전심사: 등록 5일 변경 4일\n> 4 — 처리기간 / 정식민원 신청시: 등록 5일 변경 4일\n> 5 — 부서명: 〃\n> 5 — 민원사무명: 창업사업계획 (변경)승인\n> 5 — 처리기간 / 법정사항: 20일\n> 5 — 처리기간 / 사전심사: 7일\n> 5 — 처리기간 / 정식민원 신청시: 20일\n> 6 — 부서명: 〃\n> 6 — 민원사무명: 석유판매업(주유소) 등록\n> 6 — 처리기간 / 법정사항: 7일\n> 6 — 처리기간 / 사전심사: 7일\n> 6 — 처리기간 / 정식민원 신청시: 7일\n> 7 — 부서명: 〃\n> 7 — 민원사무명: 액화석유가스의 충전사업(집단공급사업·판매사업·저장소설치) 허가\n> 7 — 처리기간 / 법정사항: 5일\n> 7 — 처리기간 / 사전심사: 5일\n> 7 — 처리기간 / 정식민원 신청시: 5일\n> 8 — 부서명: 〃\n> 8 — 민원사무명: 고압가스 제조·판매·저장소설치 (변경)허가\n> 8 — 처리기간 / 법정사항: 5일\n> 8 — 처리기간 / 사전심사: 5일\n> 8 — 처리기간 / 정식민원 신청시: 5일\n> 9 — 부서명: 가족행복과\n> 9 — 민원사무명: 어린이집 인가신청\n> 9 — 처리기간 / 법정사항: 14일\n> 9 — 처리기간 / 사전심사: 14일\n> 9 — 처리기간 / 정식민원 신청시: 14일\n> 10 — 부서명: 건 설 과\n> 10 — 민원사무명: 전문건설업 등록\n> 10 — 처리기간 / 법정사항: 20일\n> 10 — 처리기간 / 사전심사: 10일\n> 10 — 처리기간 / 정식민원 신청시: 10일\n> 11 — 부서명: 도시정비과\n> 11 — 민원사무명: 옥외광고물 등의 표시허가\n> 11 — 처리기간 / 법정사항: 10일\n> 11 — 처리기간 / 사전심사: 8일\n> 11 — 처리기간 / 정식민원 신청시: 7일\n> 12 — 부서명: 건 축 과\n> 12 — 민원사무명: 건축허가\n> 12 — 처리기간 / 법정사항: 7~15일\n> 12 — 처리기간 / 사전심사: 7~15일\n> 12 — 처리기간 / 정식민원 신청시: 6~14일\n> 제출서류 사전심사청구서 서식내려받기 대상민원별 구비서류 자세히보기\n> 수 수 료 : 없음(정식민원 신청 시 납부)\n> ### 민원서류 외국어 지원서비스\n> 외국인이 민원신청서 작성시 편의를 제공하기 위하여 주요 4개 언어로 민원신청서 작성 매뉴얼을 안내합니다. 신청서 작성 매뉴얼을 참고하여 신청서 작성 후, 신청서를 구청, 동 주민센터에 접수하여 발급받습니다.\n> 대상민원 : 출생신고서 등 34종\n> 외 국 어 : 4개 외국어(영어, 일어, 중국어, 베트남어)\n> 신청서식 내려받기 : 영어서식 일어서식 중국어서식 베트남어서식\n> ### 민원후견인제\n> 민원 1회방문 처리제의 원활한 운영을 위하여 다수부서와 관련되는 복합민원 및 처리기간 10일 이상 유기한민원 신청 시 후견인을 지정하여 처리 종결 시까지 처리절차와 방법 등에 자문과 도움을 주는 제도입니다.\n> 신청방법 : 민원서류 접수 시 후견인 지정요청\n> 대상민원 복합민원\n> 민원후견인 구성 : 32명(구청 6급 담당)\n> 민원후견인 역할 민원내용 및 처리절차 사전 숙지 민원인에게 본인 소개 및 활동내용 안내 민원인 불편사항, 문의내용 적극 해결 및 지원 외부기관 협의사항은 민원인을 대리하여 적극적으로 처리 실무심의회 및 민원조정위원회에서의 민원인 보좌 진행사항 중간회신 및 민원처리 결과 통보 불가, 반려인 경우 상세한 사유 설명 및 해결책 제시\n> 민원후견인 지정절차 지정권자 : 민원인 또는 민원심사관 민 원 인 : 접수창구에서 민원후견인대장 열람, 자유의사에 따라 선택 민원심사관 : 민원인이 민원후견인 지정을 요청할 경우\n> ### 거부처분에 대한 이의신청\n> 민원사항에 대한 행정기관의 거부처분에 대하여 불복이 있는 경우 행정기관에 문서로 이의신청을 할 수 있는 제도입니다.\n> 근 거 : 민원처리에 관한 법률 제35조(거부처분에 대한 이의신청)\n> 신청기간 : 거부처분을 받은 날부터 60일 이내\n> 제출서류 : 이의신청서 서식내려받기\n> ※ 이의신청 여부와 관계없이 '행정심판법'에 의한 행정심판 또는 '행정소송법'에 의한 행정소송을 제기 할 수 있습니다.\n> ### 거동불편인 민원서류 무료배달\n> 거동이 불편한 장애인(뇌병변, 지체, 시각장애 1,2급)에 대하여 구청·동 주민센터에서 발급하는 각종 제증명 민원서류를 전화로 신청받아 가정까지 직접 배달하여 여러분의 불편을 조금이나마 덜어드리고자 하는 제도입니다.\n> 신 청 : 민원여권과(☎220-4261 ~ 3), 각 동주민센터\n> 대상민원 (21종)\n> 1 — 민 원 명: 주민등록등·초본\n> 1 — 수수료: 400원\n> 1 — 연번: 12\n> 1 — 민 원 명: 의료급여대상자증명\n> 1 — 수수료: 무료\n> 2 — 민 원 명: 가족관계증명서\n> 2 — 수수료: 1,000원\n> 2 — 연번: 13\n> 2 — 민 원 명: 외국인등록 사실증명\n> 2 — 수수료: 1,000원\n> 3 — 민 원 명: 장애인증명\n> 3 — 수수료: 무료\n> 3 — 연번: 14\n> 3 — 민 원 명: 병적증명\n> 3 — 수수료: 무료\n> 4 — 민 원 명: 제적부 등본\n> 4 — 수수료: 1,000원\n> 4 — 연번: 15\n> 4 — 민 원 명: 건축물관리대장\n> 4 — 수수료: 500원\n> 5 — 민 원 명: 지방세납세증명서\n> 5 — 수수료: 무료\n> 5 — 연번: 12\n> 5 — 민 원 명: 토지대장\n> 5 — 수수료: 500원\n> 6 — 민 원 명: 세목별과세(납세)증명\n> 6 — 수수료: 800원\n> 6 — 연번: 17\n> 6 — 민 원 명: 임야대장\n> 6 — 수수료: 500원\n> 7 — 민 원 명: 취업보호 대상자증명\n> 7 — 수수료: 무료\n> 7 — 연번: 18\n> 7 — 민 원 명: 개별 공시지가\n> 7 — 수수료: 800원\n> 8 — 민 원 명: 출입국에 대한 사실증명\n> 8 — 수수료: 1,000원\n> 8 — 연번: 19\n> 8 — 민 원 명: 지적도\n> 8 — 수수료: 700원\n> 9 — 민 원 명: 일반수급자증명\n> 9 — 수수료: 무료\n> 9 — 연번: 20\n> 9 — 민 원 명: 임야도\n> 9 — 수수료: 700원\n> 10 — 민 원 명: 보장시설 수급자증명\n> 10 — 수수료: 무료\n> 10 — 연번: 21\n> 10 — 민 원 명: 자동차등록원부\n> 10 — 수수료: 300원\n> 11 — 민 원 명: 모자가정증명\n> 11 — 수수료: 무료\n> ### 민원상담 무료전화 운영\n> 각종 민원상담 전화를 무료화(수신자 부담)한 편리하고 경제적인 제도입니다.\n> 전화번호 : 080-220-4264\n> 운영내용 각종 생활불편 신고 기업체, 외국인근로자, 다문화가정 등의 고충상담 민원신청 및 발급 등에 관한 상담\n> ### 행정정보 공동이용 안내\n> 각 기관이 보유하고 있는 행정정보를 행정·공공·금융기관에서 공동으로 이용할 수 있는 제도이며, 공동으로 이용할 수 있는 정보에 대해서는 민원신청시 별도로 해당서류를 제출하실 필요가 없습니다.\n> 행정정보 공동이용 대상 정보 목록 자세히보기\n> ### 어디서나 민원처리제\n> 전국 어디서나 가까운 행정기관(농협, 새마을금고 포함)에서 민원서류를 신청하고 원하는 행정기관에서 처리결과를 받아볼 수 있도록 기존의 팩스민원 문제점을 보완·개선한 민원처리 제도입니다.\n> 신청기관 : 구청·동 주민센터, 농협·축협·인삼협, 새마을금고 등 ※ 농협·축협·인삼협은 17종 증명민원만 가능\n> 신청방법 : 민원인이 방문·전화·인터넷(www.minwon.go.kr)을 이용하여 신청한 후 지정한 행정기관에서 그 민원서류를 받아볼 수 있음 (인터넷으로 실시간 처리결과 확인 가능)\n> 처리시간 : 접수 후 3근무시간 이내\n> 처리비용 및 수수료 발급수수료 : 민원서류 교부기관의 수수료 적용(단, 대학민원은 300원) 업무처리비 : 없음(단, 사립대학 1,000원) 기타 국가유공자증명, 병적증명, 검정고시 과목합격증 및 성적증명, 세무서 발급서류는 무료입니다.\n> 취급민원 종류 자세히보기\n> ### 아름다운 배려창구 운영\n> 내용 : 어르신(70세 이상), 영아(1세 미만), 임산부, 장애인, 신청인의 ONE-STOP 민원처리를 위한 전용창구 운영\n> 위치 : 통합민원 및 여권발급 창구 (2개소)",
+        "sources": [
+          {
+            "title": "민원편의시책",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0103050000",
+            "category": "사하복지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "발급민원 자세히보기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=10"
+              },
+              {
+                "name": "자세히보기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=11"
+              },
+              {
+                "name": "서식내려받기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=8"
+              },
+              {
+                "name": "자세히보기",
+                "url": "https://saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000179482&fileSn=1"
+              },
+              {
+                "name": "영어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=6"
+              },
+              {
+                "name": "일어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=5"
+              },
+              {
+                "name": "중국어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=4"
+              },
+              {
+                "name": "베트남어서식",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=3"
+              },
+              {
+                "name": "서식내려받기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=2"
+              },
+              {
+                "name": "자세히보기",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000087958&fileSn=1"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "necessity"
+          ],
+          "matched_fields": [
+            "necessity"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "F009",
+      "turn": 1,
+      "question": "사하구청에 온라인으로 민원을 신청하려면 어떻게 하나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 9,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "온라인 민원 접수 공식 경로",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 1.094,
+      "server_timing": "search;dur=823.3, verify;dur=204.8, review_gate;dur=2.5, grounding;dur=2.6, originals;dur=0.0, review;dur=0.8, prepare;dur=2.4, app;dur=1070.1",
+      "status": 200,
+      "error": null,
+      "request_id": "5ed027164d1b4821bdb279f8f98f1d10",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.094
+        }
+      ],
+      "response": {
+        "answer": "**민원신청 안내**\n- 2024년 9월 25일부터 민원상담이 국민권익위원회에서 운영하는 '국민신문고'로 통합하여 운영하고 있습니다.\n- 별도 회원가입 또는 로그인이 필요합니다.",
+        "answer_details": "전자민원창구의 공식 안내 원문입니다.\n\n> ## 전자민원창구\n> ### 민원신청 안내\n> 2024년 9월 25일부터 민원상담이 국민권익위원회에서 운영하는 '국민신문고'로 통합하여 운영하고 있습니다.\n> 별도 회원가입 또는 로그인이 필요합니다.\n> 통합 전 올려주신 게시글은 '(구)상담민원' 메뉴에서 조회하실 수 있습니다.\n> ※ 민원신청 등록 오류 문의처 : 국민신문고 헬프데스크 1600-8172",
+        "sources": [
+          {
+            "title": "전자민원창구",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0101000000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-25"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "온라인 민원 발급 방법 알려줘",
+          "무인민원발급기 위치 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "F010",
+      "turn": 1,
+      "question": "기초생활수급자나 한부모가족은 민원 수수료를 면제받을 수 있나요?",
+      "criterion": {
+        "population": "supplied",
+        "parent_id": 10,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0103090000",
+        "review": "현재 공식 원문의 요청 항목/조건/예외/숫자/출처를 대조",
+        "required_review": "서류별 면제 대상과 제외",
+        "safety_review": "사업·대상·숫자·부정/예외·적용기간·실제 출처를 현재 공식 원문과 대조. 원문 미확보/충돌/조회장애는 별도 판정."
+      },
+      "seconds": 0.017,
+      "server_timing": "app;dur=11.4",
+      "status": 200,
+      "error": null,
+      "request_id": "c4992590ac69459db1d072fc6c1d663d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.017
+        }
+      ],
+      "response": {
+        "answer": "어떤 민원이나 서류의 수수료인가요? **등·초본·인감증명서 등 종류**에 따라 면제 조건이 달라요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "기초생활수급자 주민등록등본 수수료 면제 조건",
+          "한부모가족 인감증명서 수수료 면제 조건"
+        ]
+      }
+    }
+  ],
+  "code_unchanged": true
+}

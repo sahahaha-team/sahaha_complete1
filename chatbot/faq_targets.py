@@ -30,6 +30,29 @@ def _question_indexes() -> tuple[OfficialFAQIndex, OfficialFAQIndex]:
     return OfficialFAQIndex(), OfficialFAQIndex(PRIORITY_SERVICE_PATH)
 
 
+def priority_entities(question: str) -> list[str]:
+    """Distinctive registered names are URL hints, never answer facts."""
+    items = _question_indexes()[1].items
+    entities = {str(term) for item in items for term in item.get('navigation_terms', [])
+                if len(_normalize(str(term))) >= 3}
+    normalized = _normalize(question)
+    return sorted((name for name in entities if _normalize(name) in normalized), key=lambda name: (-len(name), name))
+
+
+def _priority_entity_url(question: str) -> str | None:
+    names = priority_entities(question)
+    from chatbot.query_subject import service_names
+    urls = {current_official_url(item['url']) for item in _question_indexes()[1].items
+            if any(name in item.get('navigation_terms', []) for name in names)
+            and service_names(question) <= service_names(item['question'])}
+    return next(iter(urls)) if len(urls) == 1 else None
+
+
+def priority_source_name(url: str) -> str:
+    return next((str(item.get('source_name') or '') for item in _question_indexes()[1].items
+                 if current_official_url(item['url']) == url), '')
+
+
 def find_official_question(question: str) -> dict | None:
     """FAQ similarity is a navigation hint, never proof of a draft answer."""
     matches = [index.find_best(question, min_score=0.88) for index in _question_indexes()]
@@ -64,6 +87,9 @@ def match_official_page(question: str) -> str | None:
     vaccine_url = vaccine_place_page(question)
     if vaccine_url:
         return vaccine_url
+    named_url = _priority_entity_url(question)
+    if named_url:
+        return named_url
     from chatbot.official_faq import required_faq_ids
     if required_faq_ids(question) == {1, 2}:
         return 'https://www.saha.go.kr/portal/contents.do?mId=0604050000'

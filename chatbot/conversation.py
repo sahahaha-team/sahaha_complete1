@@ -204,6 +204,26 @@ class ChatBot:
                              "answer_method": clarification.get("answer_method", "clarification")},
                 "suggested_questions": clarification["suggested_questions"]}
 
+    def _uncertain_clarification_response(self, session_id: str, user_message: str) -> dict | None:
+        from chatbot.response_helpers import uncertain_reply
+        if not uncertain_reply(user_message):
+            return None
+        with self._history_lock:
+            pending = getattr(self, '_pending_clarifications', {}).get(session_id)
+            if not pending or time.monotonic() - pending['created_at'] > 1800:
+                return None
+            self._pending_clarifications.pop(session_id, None)
+        audience = pending.get('affirmative_context')
+        answer = (f'확인한 교육의 대상은 **{audience}**입니다. 해당 대상인지 확인하기 어려워 신청 가능 여부를 확정할 수 없습니다.'
+                  if audience else '안내에 필요한 조건을 확인하기 어려워 현재 정보만으로는 답변을 확정할 수 없습니다. 조건을 확인한 뒤 알려주시면 이어서 안내하겠습니다.')
+        sources = pending.get('_scope_sources', [])
+        self._save_conversation_safe(session_id, 'user', user_message, search_query=pending['query'])
+        self._save_conversation_safe(session_id, 'assistant', answer)
+        return {'answer': answer, 'sources': sources, 'is_clarification': False, 'degraded': True,
+                'degraded_reason': 'unresolved_condition', 'suggested_questions': [],
+                'evidence': {'status': 'insufficient', 'label': '조건 확인 필요',
+                             'official_source_count': len(sources), 'answer_method': 'unresolved_clarification'}}
+
     def chat(self, session_id: str, user_message: str) -> dict:
         """
         사용자 메시지 처리 → 답변 생성
@@ -260,6 +280,9 @@ class ChatBot:
             }
 
         resolved_message = interpret_query(self.contextual_message(session_id, interpret_query(user_message)))
+        unresolved = self._uncertain_clarification_response(session_id, user_message)
+        if unresolved:
+            return unresolved
         self._clear_pending_clarification(session_id)
         from chatbot.response_helpers import unavailable_capability
         capability = unavailable_capability(resolved_message)
@@ -270,6 +293,16 @@ class ChatBot:
         if contact_result is not None:
             self.remember_contact_exchange(session_id, user_message, contact_result, resolved_message)
             return contact_result
+        from chatbot.facility_contact import facility_contact
+        facility_result = facility_contact(resolved_message, self.retriever.db.client)
+        if facility_result:
+            self.remember_contact_exchange(session_id, user_message, facility_result, resolved_message)
+            return facility_result
+        from chatbot.official_overview import official_overview
+        overview = official_overview(resolved_message, self.retriever.db.client)
+        if overview:
+            self.remember_contact_exchange(session_id, user_message, overview, resolved_message)
+            return overview
 
         from chatbot.official_reports import answer_official_report, is_report_query
         if is_report_query(resolved_message):
@@ -365,6 +398,8 @@ class ChatBot:
             search_query, grounded_results, self.retriever.db.client,
             self.retriever._content_keywords(search_query), self.llm))
         if planned and planned["is_clarification"]:
+            if planned.get('affirmative_context'):
+                planned['_scope_sources'] = self.retriever.format_context(search_query, planned.get('documents') or grounded_results[:1])[1]
             return self._clarification_result(session_id, user_message, search_query, planned)
         if planned:
             concise = planned
@@ -389,6 +424,8 @@ class ChatBot:
             concise = concise_source_answer(search_query, original, used_results,
                 semantic_keywords(search_query, used_results[0], self.retriever._content_keywords(search_query)))
             if concise["is_clarification"]:
+                if concise.get('affirmative_context'):
+                    concise['_scope_sources'] = self.retriever.format_context(search_query, used_results)[1]
                 return self._clarification_result(session_id, user_message, search_query, concise)
             method = concise.get('answer_method') or ("source_extract" if SOURCE_ONLY_ANSWERS else "source_fallback")
             from chatbot.request_metrics import model_failure_reason
@@ -403,6 +440,12 @@ class ChatBot:
                     'evidence_label': '답변 검토를 마치지 못함', 'evidence_reasons': [failure]}
         from chatbot.privacy import mask_answer
         answer, _ = mask_answer(concise["answer"])
+        from chatbot.faq_targets import priority_source_name
+        for document in used_results:
+            meta = document.get('metadata') or {}
+            name = priority_source_name(meta.get('url', ''))
+            if name and meta.get('title') in {'이용안내', '시설이용안내', '체험관이용안내'}:
+                answer = answer.replace('**' + meta['title'] + '**', '**' + name + '**', 1)
         details, _ = mask_answer(concise.get("answer_details", ""))
         from chatbot.source_warnings import dated_invitation_warning
         warning = dated_invitation_warning(details)
@@ -419,6 +462,9 @@ class ChatBot:
                 answer = '현재 일정은 확인이 필요합니다. 아래 공식 원문에서 안내 내용과 기준연도를 함께 확인해 주세요.'
         _context, sources = self.retriever.format_context(search_query, used_results)
         for source in sources:
+            source_name = priority_source_name(source.get('url', ''))
+            if source_name and source.get('title') in {'이용안내', '시설이용안내', '체험관이용안내'}:
+                source['title'] = source_name + ' 이용안내'
             if source.get("category") != "staff_directory":
                 source["department"] = ""
                 source["contact"] = ""

@@ -18,7 +18,7 @@ FIELD = {
     'medical_details': r'(?:약품명|약명|복용량|용량|복용법)\s*[:：]|(?:복용|투여).{0,50}\d+\s*(?:mg|㎎|ml|㎖|정|회)',
     'conditions': r'제외|불가|안되는|안 되는|불필요|금지|제한|금식|자동가입|보장내용|용도\s*[:：]|지원대상|선정기준|소득인정액|지급금액|신청기간|예약|허\s*가\s*대\s*상|신\s*고\s*대\s*상|등록.*지원|단[,， ]|다만',
     'specifications': r'규격|크기|(?<![가-힣])(?:가로|세로)(?![가-힣])|\d+\s*(?:cm|㎝|매)',
-    'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
+    'eligibility': r'(?:^|—\s*)(?:(?:지원|진료|이용|신청|참여|접종|검진|부과|과세)?\s*대\s*상(?:자)?|청구주체|신청제외대상|지원제외|선정제외기준|납세의무자|피보험자|신청자격|연령기준|소득기준|거주기준|근로이력|취업기준|영양기준|영양위험요인|재산기준|자격|조건|참여조건|선정기준)\s*[:：]',
     'documents': r'준비물|구비\s*서류|지참물|신청서|신분증|확인증|산모수첩',
     'method': r'방법\s*[:：]|절차\s*[:：]|흐름도\s*[:：]|제출처\s*[:：]|인터넷.*신고|온라인.*발급|접수처|신청처|기부방법|신고처|배출요령|신청.*가능합니다|신청서.*제출|안내문.*우편.*발송|성명.*(?:기재|표기)|대문자|일반쓰레기는.*봉투|거래금액.*(?:보증금|월차임)|납부.*(?:카드|위택스)|(?:카드|위택스).*납부',
     'cost': r'\d[\d,.]*\s*(?:원|만원|%|퍼센트)|무료|무상|면제|본인\s*부담\s*없|(?:수\s*수\s*료|사용료|요금|금액|가격|처리비용)[^:：\n]{0,40}[:：].*\d',
@@ -123,6 +123,9 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
             return False
         return has_opening_hours(unit)
     if goal == 'location':
+        from chatbot.question_intent import rejects_online_location
+        if rejects_online_location(query, unit):
+            return False
         return has_location_unit(unit) or bool(re.search(r'(?:신고처|접수처|기관명|소재지|시설명|주\s*소|위\s*치)\s*[:：]', unit))
     if goal == 'eligibility' and re.match(r'(?:지원대상|선정기준|이용대상|신청자격)\s*—',unit):
         return True
@@ -280,6 +283,14 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal == 'reference':
         return None
     units = scoped_units(query, body, keywords)
+    if (goal == 'method' and keywords == {'대형폐기물'}
+            and not re.search(r'없이|훼손|파손|무상|무료|유상|비용|수수료', query)):
+        from chatbot.concise_answers import _waste
+        waste = _waste(query, body)
+        if waste:
+            return {'answer': waste, 'answer_details': '\n'.join('> ' + u for u in units),
+                    'documents': [document], 'is_clarification': False,
+                    'suggested_questions': [], 'answer_method': 'structured_source', 'degraded': False}
     if (goal == 'conditions' and '예약' in query and '학생' in query
             and not re.search(r'청소년|중학생|고등학생|성인|\d+\s*(?:세|살)',query)
             and any(re.search(r'청소년.*예약',u) for u in units)):

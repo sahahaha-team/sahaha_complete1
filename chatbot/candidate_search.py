@@ -71,7 +71,11 @@ def complete_direct_candidates(query: str, documents: list[dict], keywords: set[
             direction = re.search(r'찾아오|오시는길|민원실이용|청사안내', heading)
             if not institution or not direction or not set(requested_goals(query)).issubset({'hours','location'}):
                 continue
-        elif not all(name in heading for name in owners): continue
+        elif not all(name in heading for name in owners):
+            from chatbot.faq_targets import priority_entities, match_official_page
+            entity_owner = bool(priority_entities(query) and match_official_page(query) == meta.get('url'))
+            if not entity_owner:
+                continue
         from chatbot.source_scope import focus_terms
         from chatbot.evidence_decision import source_body
         details = focus_terms(query)

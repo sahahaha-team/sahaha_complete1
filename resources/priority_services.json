@@ -18,6 +18,8 @@
   },
   {
     "id": 1002,
+    "source_name": "소방특화 들락날락",
+    "navigation_terms": ["소방특화", "소방들락날락"],
     "question": "소방특화 들락날락 체험은 어떻게 예약하나요?",
     "aliases": [
       "소방 체험 예약 방법 알려줘",
@@ -33,6 +35,7 @@
   },
   {
     "id": 1003,
+    "navigation_terms": ["작은도서관"],
     "question": "작은도서관 교육 프로그램은 어떻게 예약하나요?",
     "aliases": [
       "도서관 교육 예약 방법 알려줘",
@@ -95,6 +98,7 @@
   },
   {
     "id": 1007,
+    "overview": {"kind": "classification", "subject": "지방세"},
     "question": "사하구 지방세에는 어떤 종류가 있나요?",
     "aliases": [
       "세금 안내해줘",
@@ -127,6 +131,7 @@
   },
   {
     "id": 1009,
+    "overview": {"kind": "navigation", "root": "#gnb", "menu_ids": ["menu10", "menu11", "menu12", "menu13"]},
     "question": "사하구 통합예약에서는 무엇을 예약할 수 있나요?",
     "aliases": [
       "예약하고 싶어요",
