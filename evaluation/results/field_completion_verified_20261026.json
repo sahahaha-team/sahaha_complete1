@@ -1,0 +1,753 @@
+{
+  "started_at": "2026-10-26T08:21:48.381598+00:00",
+  "commit": "864a0e0394dbcecba59e52b8030d862ff3a25d11",
+  "case_sha256": "483c1b5154fc7b5316e02f2d4a327a1e032df7ea9cb16b8df8ac9930449bee94",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "204a2b157581fc380cc684733a45c136c83f8085e0e7195aa3796329c3d3c68c",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "50537ee15c1bf267a9a85bdcb158a7eebea694d0c41176825d7b6708e0de2227",
+    "chatbot\\concise_answers.py": "a930033ee5e5daf11ec4442864d0ffca65ce63be26b61a06212d6cb62568b7a9",
+    "chatbot\\contact_directory.py": "eec7677a045fb16a6622675c325a96087a4692e44a5856ec9ca09710b373f1e6",
+    "chatbot\\conversation.py": "30bc3d4ac7cf4308cdfbe80fe8a4c3a5edec47c21ca9589e3c13da46d7713d46",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "3c33e500e724d0a521c9fad389596da33800c70996eb4fd8e1579836ff98c951",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "16865ba43e11185126e0f46fd5a0e84d7f9cdfb8948e42fe6fba3bead1991f18",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "be6f1abd111bff0e9939acd1151c06e2cd2dc568f6accb5fd1a3dcf7991023c9",
+    "chatbot\\faq_targets.py": "924501e32a0352c4a2862feb7891a083a5bdc2e6a9dcd9ee625ce5ec1f9057bc",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "08a78e362f700af7a00a6cfc33f6ae7644e4c38ba8d915aa37dd01b5ec667f51",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "708f34a7932d3b5da949fa5bd1dd61a484f17e0dc3a222319bdd43096d16fc10",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "50157e19c1c98e6348121066ac551095d93291ce57617d8ac61f45ada8490dbc",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "6951a50bb3106d4beb92edbcd9dd1046e69fbfbe90a7df3caadf22f2eda90d04",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "4c0dd73ae965a6ba628399ab195cce17d58936d2c21b97d6f6ce03b7befcf7ab",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "67dc010124494e02e2062eb8106c2bad2c88d186f83ea74e555289be42c2be97",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "developer_derived_and_supplied_rechecks",
+    "grading": "개발 AI의 공식 원문 대조. C/P/I를S로 합산하지 않음"
+  },
+  "records": [
+    {
+      "id": "ITEM1",
+      "turn": 1,
+      "question": "냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?",
+      "criterion": {
+        "parent_id": 17
+      },
+      "seconds": 3.135,
+      "server_timing": "search;dur=2037.8, verify;dur=925.8, review_gate;dur=3.4, grounding;dur=12.0, originals;dur=0.0, review;dur=1.3, prepare;dur=12.3, app;dur=3105.2",
+      "status": 200,
+      "error": null,
+      "request_id": "fcec130dd98b4c3e871701f82d87cfb3",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.135
+        }
+      ],
+      "response": {
+        "answer": "- 냉장고 — 단일수거 가능제품 / 분 류: 온도교환 기기\n- 세탁기 — 단일수거 가능제품 / 분 류: 일반 전기 전자제품\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 페가전 무상처리 안내\n> #### 대형폐가전\n> 대형폐가전 : 무상수거\n> 대 상 : 아래 품목\n> 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 분 류: 온도교환 기기\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 품 명: 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n> 단일수거 가능제품 / TV — 분 류: 디스플레이기기\n> 단일수거 가능제품 / TV — 품 명: TV\n> 단일수거 가능제품 / 복사기 — 분 류: 통신사무기기\n> 단일수거 가능제품 / 복사기 — 품 명: 복사기\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 분 류: 일반 전기 전자제품\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 품 명: 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 분 류: 세트 제품\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 품 명: 오디오세트(구형 전축), PC세트(본체, 모니터)*\n> 다량수거 가능품목 — 분 류: 5개이상 동시배출시 수거가능 제품\n> 다량수거 가능품목 — 품 명: 컴퓨터, 모니터, 오디오, 프린터, 팩시밀리, 음식물처리기, 전기비데, 전기히터, 연수기, 가습기, 전기다리미, 선풍기, 믹서기, 청소기, 비디오플레이어, 휴대폰, 스캐너, 빔프로젝터, 유무선공유기, 전기밥솥, 토스트기, 전기주전자, 전기온수기, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 전기안마기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기\n> ※ 다량수거가능품목 中 전기안마기의 경우, 안마의자는 제외\n> ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n> ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n> #### 소형폐가전\n> 소형폐가전 : 무상수거\n> 대 상 : 아래 품목(40여종)\n> 배출방법 : 단독주택 : 매주 수요일 비닐봉투 등에 담아 문전 배출 공동주택 : 전용수거함이 있는 경우 ▷ 상시 배출 전용수거함이 없는 경우 ▷ 재활용품 배출일자에 배출 레이저프린터, 비레이저프린터, 복사기, 팩시밀리, 컴퓨터자판, 컴퓨터본체, 스캐너, 빔프로젝트, 유무선공유기, 포터블, 오디오본체, 오디오스피커, 오디오차량용, 전기오븐, 전자레인지, 음식물처리기, 식기건조기, 전기비데, 공기청정기, 전기히터, 전기밥솥, 가습기, 다리미, 선풍기, 믹서기, 청소기, 비디오, 토스트기, 전기주전자, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기, 탈수기 ※ 옥매트, 전기장판, 조명기기류, 전기장목재재질의 전자제품(디지털피아노 등)은 제외 - 대형폐기물로 배출(처리 수수료 있음)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "ITEM2",
+      "turn": 1,
+      "question": "냉장고랑 세탁기 무료 수거 되나요?",
+      "criterion": {
+        "parent_id": 17
+      },
+      "seconds": 12.53,
+      "server_timing": "search;dur=3678.5, verify;dur=2770.2, review_gate;dur=3.4, rerank;dur=5632.8, grounding;dur=89.5, originals;dur=0.0, review;dur=1.0, prepare;dur=249.5, app;dur=12521.6",
+      "status": 200,
+      "error": null,
+      "request_id": "8ed0e69c70c84d0fb50b9f6abcb76043",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 12.53
+        }
+      ],
+      "response": {
+        "answer": "- 냉장고 — 단일수거 가능제품 / 분 류: 온도교환 기기\n- 세탁기 — 단일수거 가능제품 / 분 류: 일반 전기 전자제품\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 페가전 무상처리 안내\n> #### 대형폐가전\n> 대형폐가전 : 무상수거\n> 대 상 : 아래 품목\n> 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 분 류: 온도교환 기기\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 품 명: 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n> 단일수거 가능제품 / TV — 분 류: 디스플레이기기\n> 단일수거 가능제품 / TV — 품 명: TV\n> 단일수거 가능제품 / 복사기 — 분 류: 통신사무기기\n> 단일수거 가능제품 / 복사기 — 품 명: 복사기\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 분 류: 일반 전기 전자제품\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 품 명: 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 분 류: 세트 제품\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 품 명: 오디오세트(구형 전축), PC세트(본체, 모니터)*\n> 다량수거 가능품목 — 분 류: 5개이상 동시배출시 수거가능 제품\n> 다량수거 가능품목 — 품 명: 컴퓨터, 모니터, 오디오, 프린터, 팩시밀리, 음식물처리기, 전기비데, 전기히터, 연수기, 가습기, 전기다리미, 선풍기, 믹서기, 청소기, 비디오플레이어, 휴대폰, 스캐너, 빔프로젝터, 유무선공유기, 전기밥솥, 토스트기, 전기주전자, 전기온수기, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 전기안마기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기\n> ※ 다량수거가능품목 中 전기안마기의 경우, 안마의자는 제외\n> ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n> ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n> #### 소형폐가전\n> 소형폐가전 : 무상수거\n> 대 상 : 아래 품목(40여종)\n> 배출방법 : 단독주택 : 매주 수요일 비닐봉투 등에 담아 문전 배출 공동주택 : 전용수거함이 있는 경우 ▷ 상시 배출 전용수거함이 없는 경우 ▷ 재활용품 배출일자에 배출 레이저프린터, 비레이저프린터, 복사기, 팩시밀리, 컴퓨터자판, 컴퓨터본체, 스캐너, 빔프로젝트, 유무선공유기, 포터블, 오디오본체, 오디오스피커, 오디오차량용, 전기오븐, 전자레인지, 음식물처리기, 식기건조기, 전기비데, 공기청정기, 전기히터, 전기밥솥, 가습기, 다리미, 선풍기, 믹서기, 청소기, 비디오, 토스트기, 전기주전자, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기, 탈수기 ※ 옥매트, 전기장판, 조명기기류, 전기장목재재질의 전자제품(디지털피아노 등)은 제외 - 대형폐기물로 배출(처리 수수료 있음)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "DAMAGE",
+      "turn": 1,
+      "question": "모터를 뺀 세탁기도 무료로 가져가요?",
+      "criterion": {
+        "parent_id": 17
+      },
+      "seconds": 8.984,
+      "server_timing": "search;dur=1831.3, verify;dur=1828.2, review_gate;dur=131.2, rerank;dur=5078.0, grounding;dur=30.8, originals;dur=0.0, review;dur=1.0, prepare;dur=9.3, app;dur=8976.1",
+      "status": 200,
+      "error": null,
+      "request_id": "3a33cdd21c2b447185b0e10086ee321b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 8.984
+        }
+      ],
+      "response": {
+        "answer": "**대형폐가전**\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n- ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n구비서류 정보는 이 자료에서 명확히 확인되지 않았습니다.",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 페가전 무상처리 안내\n> #### 대형폐가전\n> 대형폐가전 : 무상수거\n> 대 상 : 아래 품목\n> 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 분 류: 온도교환 기기\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 품 명: 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n> 단일수거 가능제품 / TV — 분 류: 디스플레이기기\n> 단일수거 가능제품 / TV — 품 명: TV\n> 단일수거 가능제품 / 복사기 — 분 류: 통신사무기기\n> 단일수거 가능제품 / 복사기 — 품 명: 복사기\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 분 류: 일반 전기 전자제품\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 품 명: 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 분 류: 세트 제품\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 품 명: 오디오세트(구형 전축), PC세트(본체, 모니터)*\n> 다량수거 가능품목 — 분 류: 5개이상 동시배출시 수거가능 제품\n> 다량수거 가능품목 — 품 명: 컴퓨터, 모니터, 오디오, 프린터, 팩시밀리, 음식물처리기, 전기비데, 전기히터, 연수기, 가습기, 전기다리미, 선풍기, 믹서기, 청소기, 비디오플레이어, 휴대폰, 스캐너, 빔프로젝터, 유무선공유기, 전기밥솥, 토스트기, 전기주전자, 전기온수기, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 전기안마기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기\n> ※ 다량수거가능품목 中 전기안마기의 경우, 안마의자는 제외\n> ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n> ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n> #### 소형폐가전\n> 소형폐가전 : 무상수거\n> 대 상 : 아래 품목(40여종)\n> 배출방법 : 단독주택 : 매주 수요일 비닐봉투 등에 담아 문전 배출 공동주택 : 전용수거함이 있는 경우 ▷ 상시 배출 전용수거함이 없는 경우 ▷ 재활용품 배출일자에 배출 레이저프린터, 비레이저프린터, 복사기, 팩시밀리, 컴퓨터자판, 컴퓨터본체, 스캐너, 빔프로젝트, 유무선공유기, 포터블, 오디오본체, 오디오스피커, 오디오차량용, 전기오븐, 전자레인지, 음식물처리기, 식기건조기, 전기비데, 공기청정기, 전기히터, 전기밥솥, 가습기, 다리미, 선풍기, 믹서기, 청소기, 비디오, 토스트기, 전기주전자, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기, 탈수기 ※ 옥매트, 전기장판, 조명기기류, 전기장목재재질의 전자제품(디지털피아노 등)은 제외 - 대형폐기물로 배출(처리 수수료 있음)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "missing_requested_field",
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "partial",
+          "label": "요청 항목 확인 필요",
+          "official_source_count": 1,
+          "decision": "partial",
+          "reasons": [
+            "missing_requested_fields"
+          ],
+          "requested_fields": [
+            "documents",
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "WEEK1",
+      "turn": 1,
+      "question": "사하구 요일별 쓰레기 배출 방법은 어떻게 되나요?",
+      "criterion": {
+        "parent_id": 1001
+      },
+      "seconds": 0.353,
+      "server_timing": "app;dur=346.0",
+      "status": 200,
+      "error": null,
+      "request_id": "40d50e8977274f498b665d3108120bd1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.353
+        }
+      ],
+      "response": {
+        "answer": "요일별 배출 품목은 다음과 같습니다.\n- **월요일**: 플라스틱류(유색페트병포함),비닐류,요구르트병,의류.\n- **수요일**: 투명페트병,골판지류(박스등),기타종이류,종이팩류,유리병류,스티로폼,캔‧고철류,폐형광등,폐건전지등,일반쓰레기(불연성),소형폐가전.\n- **화·목·일요일**: 일반쓰레기(가연성)·음식물쓰레기.\n- **금·토요일**: 배출 금지.\n- 일반·음식물 배출 안내: 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.",
+        "answer_details": "> Home\n> >\n> 분야별정보\n> >\n> 환경/청소\n> >\n> 폐기물\n> 열기\n> 블로그\n> 인스타그램\n> 페이스북\n> 카카오\n> 닫기\n> 인쇄하기\n> 폐기물\n> 생활폐기물처리안내\n> 생활쓰레기 배출요령\n> 쓰레기 종량제는\n> 쓰레기 없는 쾌적한 환경을 만들기 위하여 95년 1월부터 실시하고있는 제도로서 주택의 크기 또는 재산세액에 따라 차등적으로 수수료를 적용하던 종전의 제도와 달리, 배출자에게 본인이 배출있는 쓰레기의 양만큼 비용을 부담하도록 함으로써 스스로 쓰레기를 줄이고 재활용품도 최대한 분리 배출하도록 한 제도입니다.\n> 구민이 지켜야 할 사항\n> 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.\n> 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과),\n> 재활용품은 반드시 품목별로 분리하여 요일별로\n> 지정된 쓰레기만 배출하여야 합니다.\n> 쓰레기 배출요일은 다음과 같습니다.\n> 요일별 쓰레기 배출요령 다운로드\n> 쓰레기 배출요일과 쓰레기 종류 표입니다.\n> 배출요일\n> 월\n> 화\n> 수\n> 목\n> 금\n> 토\n> 일\n> 쓰레기\n> 종류\n> 재활용품\n> (플라스틱류(유색페트병\n> 포함),비닐류,\n> 요구르트병, 의류)\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 재활용품(투명페트병,골판지류\n> (박스 등), 기타종이류,\n> 종이팩류,유리병류, 스티로폼,\n> 캔‧고철류, 폐형광등,폐건전지등),\n> 일반쓰레기(불연성), 소형폐가전\n> 일반쓰레기 (가연성)\n> 음식물쓰레기\n> 배출\n> 금지\n> 배출\n> 금지\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 이럴때는 쓰레기를 수거하지 않습니다.\n> 일반쓰레기와 재활용품을 분리배출하지 않은 경우\n> 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우\n> 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우\n> 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우\n> 대형폐기물(냉장고, 장롱, 책상 등)\n> 기타사항\n> 종량제 규격봉투를 사용하지 않고 배출하거나, 무단투기 및 소각행위시에는 100만원 이하의 과태료가 부과됩니다.\n> 생활폐기물 수집·운반업체\n> 생활폐기물 수집 및 운반업체 표입니다.\n> 업체명\n> 담당구역\n> 전화번호\n> 세화산업\n> 괴정 1,2,3동, 하단 1,2동\n> 051-264-8301\n> 미진산업\n> 괴정4동, 당리동, 신평1동, 장림2동, 다대 1,2동\n> 051-264-0894\n> 동진산업\n> 신평2동, 장림1동, 구평동, 감천 1,2동\n> 051-207-2030\n> 쓰레기 규격봉투 가격표 (시행일 : 2012.9.14., 금액:원)\n> 쓰레기 규격봉투 가격표\n> 규격\n> 5ℓ\n> 10ℓ\n> 20ℓ\n> 30ℓ\n> 50ℓ\n> 75ℓ\n> 불연성쓰레기\n> 전용마대 (30ℓ)\n> 건설폐기물\n> 마대 (30ℓ)\n> 일반\n> 220\n> 430\n> 850\n> 1,280\n> 2,070\n> 3,080\n> 1,280\n> 3,000\n> ※ 쓰레기 규격봉투 100ℓ는 2020년 10월 중순부터 제작 중단. (단, 판매처 재고물량에 한해 구입 및 사용 가능)\n> 음식물쓰레기 전용용기 가격표 및 수수료\n> 음식물쓰레기 전용용기 가격표 및 수수료 표입니다.\n> 구분\n> 일반가정용\n> 업소용\n> 공동주택\n> 업소용\n> 용기규격\n> 3ℓ\n> 5ℓ\n> 20ℓ\n> 120ℓ\n> 120ℓ\n> 용기 판매액\n> 6,500원\n> 7,000원\n> 16,000원\n> 개별구매\n> 수거업체 문의\n> 용기 판매처\n> 새마을금고\n> 개별구매\n> 수거업체 문의\n> 납부필증(칩) 수수료\n> 240원/개\n> 400원/개\n> 2,000원/매\n> 8,400원/매\n> 12,000원/개\n> 납부필증(칩) 판매처\n> 종량제 봉투 판매소\n> 새마을금고\n> 수거업체\n> (동진, 미진, 세화)\n> ※용기판매 가격은 업체사정에 따라 변경될 수 있음.\n> 만족도조사\n> 이 페이지에서 제공하는 정보에 만족하십니까?\n> 매우만족(5점)\n> 만족(4점)\n> 보통(3점)\n> 불만족(2점)\n> 매우불만족(1점)\n> 의견\n> 담당자\n> 자원순환과\t\t\t\n> \t\t\t\n> \t\t\t\t\n> \t\t\t\t(051-220-4432)\n> 최근업데이트\n> 2026-01-13",
+        "sources": [
+          {
+            "title": "생활쓰레기 배출요령",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+            "category": "환경/청소",
+            "service_type": "환경",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "WEEK2",
+      "turn": 1,
+      "question": "요일별 쓰레기 어떻게 내놓으면 돼요?",
+      "criterion": {
+        "parent_id": 1001
+      },
+      "seconds": 0.412,
+      "server_timing": "app;dur=395.6",
+      "status": 200,
+      "error": null,
+      "request_id": "2e807b4d9c95467ab293eb3862ab53f6",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.412
+        }
+      ],
+      "response": {
+        "answer": "요일별 배출 품목은 다음과 같습니다.\n- **월요일**: 플라스틱류(유색페트병포함),비닐류,요구르트병,의류.\n- **수요일**: 투명페트병,골판지류(박스등),기타종이류,종이팩류,유리병류,스티로폼,캔‧고철류,폐형광등,폐건전지등,일반쓰레기(불연성),소형폐가전.\n- **화·목·일요일**: 일반쓰레기(가연성)·음식물쓰레기.\n- **금·토요일**: 배출 금지.\n- 일반·음식물 배출 안내: 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.",
+        "answer_details": "> Home\n> >\n> 분야별정보\n> >\n> 환경/청소\n> >\n> 폐기물\n> 열기\n> 블로그\n> 인스타그램\n> 페이스북\n> 카카오\n> 닫기\n> 인쇄하기\n> 폐기물\n> 생활폐기물처리안내\n> 생활쓰레기 배출요령\n> 쓰레기 종량제는\n> 쓰레기 없는 쾌적한 환경을 만들기 위하여 95년 1월부터 실시하고있는 제도로서 주택의 크기 또는 재산세액에 따라 차등적으로 수수료를 적용하던 종전의 제도와 달리, 배출자에게 본인이 배출있는 쓰레기의 양만큼 비용을 부담하도록 함으로써 스스로 쓰레기를 줄이고 재활용품도 최대한 분리 배출하도록 한 제도입니다.\n> 구민이 지켜야 할 사항\n> 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.\n> 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과),\n> 재활용품은 반드시 품목별로 분리하여 요일별로\n> 지정된 쓰레기만 배출하여야 합니다.\n> 쓰레기 배출요일은 다음과 같습니다.\n> 요일별 쓰레기 배출요령 다운로드\n> 쓰레기 배출요일과 쓰레기 종류 표입니다.\n> 배출요일\n> 월\n> 화\n> 수\n> 목\n> 금\n> 토\n> 일\n> 쓰레기\n> 종류\n> 재활용품\n> (플라스틱류(유색페트병\n> 포함),비닐류,\n> 요구르트병, 의류)\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 재활용품(투명페트병,골판지류\n> (박스 등), 기타종이류,\n> 종이팩류,유리병류, 스티로폼,\n> 캔‧고철류, 폐형광등,폐건전지등),\n> 일반쓰레기(불연성), 소형폐가전\n> 일반쓰레기 (가연성)\n> 음식물쓰레기\n> 배출\n> 금지\n> 배출\n> 금지\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 이럴때는 쓰레기를 수거하지 않습니다.\n> 일반쓰레기와 재활용품을 분리배출하지 않은 경우\n> 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우\n> 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우\n> 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우\n> 대형폐기물(냉장고, 장롱, 책상 등)\n> 기타사항\n> 종량제 규격봉투를 사용하지 않고 배출하거나, 무단투기 및 소각행위시에는 100만원 이하의 과태료가 부과됩니다.\n> 생활폐기물 수집·운반업체\n> 생활폐기물 수집 및 운반업체 표입니다.\n> 업체명\n> 담당구역\n> 전화번호\n> 세화산업\n> 괴정 1,2,3동, 하단 1,2동\n> 051-264-8301\n> 미진산업\n> 괴정4동, 당리동, 신평1동, 장림2동, 다대 1,2동\n> 051-264-0894\n> 동진산업\n> 신평2동, 장림1동, 구평동, 감천 1,2동\n> 051-207-2030\n> 쓰레기 규격봉투 가격표 (시행일 : 2012.9.14., 금액:원)\n> 쓰레기 규격봉투 가격표\n> 규격\n> 5ℓ\n> 10ℓ\n> 20ℓ\n> 30ℓ\n> 50ℓ\n> 75ℓ\n> 불연성쓰레기\n> 전용마대 (30ℓ)\n> 건설폐기물\n> 마대 (30ℓ)\n> 일반\n> 220\n> 430\n> 850\n> 1,280\n> 2,070\n> 3,080\n> 1,280\n> 3,000\n> ※ 쓰레기 규격봉투 100ℓ는 2020년 10월 중순부터 제작 중단. (단, 판매처 재고물량에 한해 구입 및 사용 가능)\n> 음식물쓰레기 전용용기 가격표 및 수수료\n> 음식물쓰레기 전용용기 가격표 및 수수료 표입니다.\n> 구분\n> 일반가정용\n> 업소용\n> 공동주택\n> 업소용\n> 용기규격\n> 3ℓ\n> 5ℓ\n> 20ℓ\n> 120ℓ\n> 120ℓ\n> 용기 판매액\n> 6,500원\n> 7,000원\n> 16,000원\n> 개별구매\n> 수거업체 문의\n> 용기 판매처\n> 새마을금고\n> 개별구매\n> 수거업체 문의\n> 납부필증(칩) 수수료\n> 240원/개\n> 400원/개\n> 2,000원/매\n> 8,400원/매\n> 12,000원/개\n> 납부필증(칩) 판매처\n> 종량제 봉투 판매소\n> 새마을금고\n> 수거업체\n> (동진, 미진, 세화)\n> ※용기판매 가격은 업체사정에 따라 변경될 수 있음.\n> 만족도조사\n> 이 페이지에서 제공하는 정보에 만족하십니까?\n> 매우만족(5점)\n> 만족(4점)\n> 보통(3점)\n> 불만족(2점)\n> 매우불만족(1점)\n> 의견\n> 담당자\n> 자원순환과\t\t\t\n> \t\t\t\n> \t\t\t\t\n> \t\t\t\t(051-220-4432)\n> 최근업데이트\n> 2026-01-13",
+        "sources": [
+          {
+            "title": "생활쓰레기 배출요령",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+            "category": "환경/청소",
+            "service_type": "환경",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "MED1",
+      "turn": 1,
+      "question": "미숙아나 선천성이상아의 의료비 지원을 받을 수 있나요?",
+      "criterion": {
+        "parent_id": 86
+      },
+      "seconds": 1.045,
+      "server_timing": "search;dur=606.4, verify;dur=372.6, review_gate;dur=2.9, grounding;dur=5.4, originals;dur=0.0, review;dur=1.0, prepare;dur=4.0, app;dur=1036.9",
+      "status": 200,
+      "error": null,
+      "request_id": "742da160fa794e2e85ee09e5cbdd3447",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.045
+        }
+      ],
+      "response": {
+        "answer": "공식 안내의 사업별 대상입니다.\n- 미숙아 의료비 지원 — 대 상: 출생 후 24시간 이내 긴급한 수술 및 치료가 필요하여 신생아 중환자실에 입원한 미숙아 ※ 미숙아란? 임신 37주 미만의 출생아 또는 체중 2,500그램 미만의 출생아\n- 선천성이상아 의료비 지원 — 대 상: 출생 후 2년 이내 선천성이상(Q코드)으로 진단받고 선천성이상 질환을 치료하기 위하여 출생 후 2년 이내에 입원하여 수술한 환아\n지원 범위·제외 비용·신청서류는 공식 원문을 함께 확인해 주세요.",
+        "answer_details": "> ## 영유아 의료비 지원\n> ### 미숙아 및 선천성이상아 의료비 지원\n> #### 미숙아 의료비 지원\n> 대 상: 출생 후 24시간 이내 긴급한 수술 및 치료가 필요하여 신생아 중환자실에 입원한 미숙아 ※ 미숙아란? 임신 37주 미만의 출생아 또는 체중 2,500그램 미만의 출생아\n> 지원 범위: 진료비 영수증에 기재된 급여 중 전액본인부담금 및 비급여\n> 지원 제외: 재입원, 외래 및 재활치료, 이송비, 제증명서 발급비용, 병실입원료, 보호자 식대, 미숙아용 기저귀, 치료와 직접 관련이 없는 소모품 (체온계 등), 예방접종비, 외국 의료기관에서 발생한 진료비 등\n> 신청 및 문의: 건강증진과 (문의 : ☎ 051-220-5762)\n> #### 선천성이상아 의료비 지원\n> 대 상: 출생 후 2년 이내 선천성이상(Q코드)으로 진단받고 선천성이상 질환을 치료하기 위하여 출생 후 2년 이내에 입원하여 수술한 환아\n> 지원 범위: 진료비 영수증에 기재된 급여 중 전액본인부담금 및 비급여\n> 지원 제외: 외래 및 재활치료, 이송비, 제증명서 발급비용, 병실입원료, 보호자 식대, 치료와 직접적으로 관련 없는 소모품(체온계 등), 예방접종비, 외국 의료기관에서 발생한 진료비 등\n> 신청 및 문의: 건강증진과 (문의 : ☎ 051-220-5762)\n> #### 선천성이상아 의료비 지원\n> 신청서류: 1. 신청서 및 개인정보동의서(보건소 비치) 2. 진료비 영수증 원본(혹은 '원본대조필' 사본) 3. 진료비 세부내역서 4. 영아 부모 신분증 5. 입금 받을 통장사본 6. (미숙아의 경우) 출생증명서(출생보고서) 7. (선천성이상아의 경우) 질병명, 질병코드, 최초진단일이 포함된 진단서 및 *입 · 퇴원확인서 각 1부 * 입 · 퇴원확인서는 입원횟수별 제출. 단, 진단서 상 각각의 입 · 퇴원 진료기록이 모두 기재된 경우 입 · 퇴원확인서 생략 가능 8. 주민등록등본 ※ 전자정부법에 따른 행정정보공동이용 동의 시 생략 가능",
+        "sources": [
+          {
+            "title": "영유아 의료비 지원",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "복지 서비스 신청 방법 알려줘",
+          "복지 담당 부서 연락처 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "MED2",
+      "turn": 1,
+      "question": "미숙아와 선천성이상아 지원 대상 알려줘",
+      "criterion": {
+        "parent_id": 86
+      },
+      "seconds": 0.768,
+      "server_timing": "search;dur=320.0, verify;dur=374.8, review_gate;dur=3.7, grounding;dur=3.2, originals;dur=0.0, review;dur=1.0, prepare;dur=4.6, app;dur=749.6",
+      "status": 200,
+      "error": null,
+      "request_id": "61ffc5b6c1bd4b2c9c2049a53703bcb8",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.768
+        }
+      ],
+      "response": {
+        "answer": "공식 안내의 사업별 대상입니다.\n- 미숙아 의료비 지원 — 대 상: 출생 후 24시간 이내 긴급한 수술 및 치료가 필요하여 신생아 중환자실에 입원한 미숙아 ※ 미숙아란? 임신 37주 미만의 출생아 또는 체중 2,500그램 미만의 출생아\n- 선천성이상아 의료비 지원 — 대 상: 출생 후 2년 이내 선천성이상(Q코드)으로 진단받고 선천성이상 질환을 치료하기 위하여 출생 후 2년 이내에 입원하여 수술한 환아\n지원 범위·제외 비용·신청서류는 공식 원문을 함께 확인해 주세요.",
+        "answer_details": "> ## 영유아 의료비 지원\n> ### 미숙아 및 선천성이상아 의료비 지원\n> #### 미숙아 의료비 지원\n> 대 상: 출생 후 24시간 이내 긴급한 수술 및 치료가 필요하여 신생아 중환자실에 입원한 미숙아 ※ 미숙아란? 임신 37주 미만의 출생아 또는 체중 2,500그램 미만의 출생아\n> 지원 범위: 진료비 영수증에 기재된 급여 중 전액본인부담금 및 비급여\n> 지원 제외: 재입원, 외래 및 재활치료, 이송비, 제증명서 발급비용, 병실입원료, 보호자 식대, 미숙아용 기저귀, 치료와 직접 관련이 없는 소모품 (체온계 등), 예방접종비, 외국 의료기관에서 발생한 진료비 등\n> 신청 및 문의: 건강증진과 (문의 : ☎ 051-220-5762)\n> #### 선천성이상아 의료비 지원\n> 대 상: 출생 후 2년 이내 선천성이상(Q코드)으로 진단받고 선천성이상 질환을 치료하기 위하여 출생 후 2년 이내에 입원하여 수술한 환아\n> 지원 범위: 진료비 영수증에 기재된 급여 중 전액본인부담금 및 비급여\n> 지원 제외: 외래 및 재활치료, 이송비, 제증명서 발급비용, 병실입원료, 보호자 식대, 치료와 직접적으로 관련 없는 소모품(체온계 등), 예방접종비, 외국 의료기관에서 발생한 진료비 등\n> 신청 및 문의: 건강증진과 (문의 : ☎ 051-220-5762)\n> #### 선천성이상아 의료비 지원\n> 신청서류: 1. 신청서 및 개인정보동의서(보건소 비치) 2. 진료비 영수증 원본(혹은 '원본대조필' 사본) 3. 진료비 세부내역서 4. 영아 부모 신분증 5. 입금 받을 통장사본 6. (미숙아의 경우) 출생증명서(출생보고서) 7. (선천성이상아의 경우) 질병명, 질병코드, 최초진단일이 포함된 진단서 및 *입 · 퇴원확인서 각 1부 * 입 · 퇴원확인서는 입원횟수별 제출. 단, 진단서 상 각각의 입 · 퇴원 진료기록이 모두 기재된 경우 입 · 퇴원확인서 생략 가능 8. 주민등록등본 ※ 전자정부법에 따른 행정정보공동이용 동의 시 생략 가능",
+        "sources": [
+          {
+            "title": "영유아 의료비 지원",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "eligibility"
+          ],
+          "matched_fields": [
+            "eligibility"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "복지 서비스 신청 방법 알려줘",
+          "복지 담당 부서 연락처 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "CANCER",
+      "turn": 1,
+      "question": "소아암 환자의 의료비 지원제도가 있나요?",
+      "criterion": {
+        "parent_id": 99
+      },
+      "seconds": 1.598,
+      "server_timing": "search;dur=829.4, verify;dur=662.8, review_gate;dur=2.5, grounding;dur=7.3, originals;dur=0.0, review;dur=1.2, prepare;dur=13.7, app;dur=1578.8",
+      "status": 200,
+      "error": null,
+      "request_id": "e135be7bafa74a00ae25bbb434b49147",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.598
+        }
+      ],
+      "response": {
+        "answer": "**소아암환자 의료비지원**\n- 지원대상: 등록 신청일 기준 18세 미만의 자 전년도 등록 및 지원자에 대해서는 해당 연도 내 만 18세가 되는 해까지 지원 가능함 ※ 1월 1일 기분 만 17세나, 해당연도 내에 생일이 지나 만 18세가 되더라도 지원 가능\n- 선정기준: 의료급여수급자\n- 선정기준: 차상위 본인부담경감대상자(건강 보험증의 구분자 코드 C,E)\n- 선정기준: 건강보험가입자는 환자가구의 소득 및 재산기준에 적합한 자\n- 지원신청: 성인 암환자 의료비지원사업과 중복되어 등록, 지원 신청할 수 없음 ※ 사망한 미등록․미신청 의료비지원 대상자는 사망일까지 발생한 의료비에 대하여 지원신청이 가능함. 단, 가족관계등록부 증명서 등으로 확인이 되는 보호자에게만 지급가능(신청기한 : 사망일로부터 1년 이내) 외국 국적인 자 및 국외이주자 신청불가 ※ 난민협약에 의한 난민, 북한이탈주민, 영주귀국 사할린한인 제외",
+        "answer_details": "소아암환자 의료비지원의 공식 안내 원문입니다.\n\n> ## 소아암환자 의료비지원\n> ### 지원 사업 소개\n> 생활이 어려운 소아·아동 암환자 가정에 의료비를 지원하여 가계의 경제적 부담을 완화하고 치료율을 제고하여, 가정의 행복과 사회적, 심리적 안녕상태를 도모하고자 함\n> 지원대상: 등록 신청일 기준 18세 미만의 자 전년도 등록 및 지원자에 대해서는 해당 연도 내 만 18세가 되는 해까지 지원 가능함 ※ 1월 1일 기분 만 17세나, 해당연도 내에 생일이 지나 만 18세가 되더라도 지원 가능\n> 지원암종: 백혈병 및 전체암종(C00~C97, D00~D09, D37~D48 중 일부)\n> 지원금액: 백혈병 : 연간 3,000만원까지 기타암종 : 연간2,000만원\n> 지원신청: 성인 암환자 의료비지원사업과 중복되어 등록, 지원 신청할 수 없음 ※ 사망한 미등록․미신청 의료비지원 대상자는 사망일까지 발생한 의료비에 대하여 지원신청이 가능함. 단, 가족관계등록부 증명서 등으로 확인이 되는 보호자에게만 지급가능(신청기한 : 사망일로부터 1년 이내) 외국 국적인 자 및 국외이주자 신청불가 ※ 난민협약에 의한 난민, 북한이탈주민, 영주귀국 사할린한인 제외\n> ### 대상자 선정 기준\n> 선정기준: 의료급여수급자\n> 선정기준: 차상위 본인부담경감대상자(건강 보험증의 구분자 코드 C,E)\n> 선정기준: 건강보험가입자는 환자가구의 소득 및 재산기준에 적합한 자\n> [2026년 소아 암환자 지원 대상자 선정 소득 기준] (단위：원)\n> 3,077,086 — 2인: 5,039,150\n> 3,077,086 — 3인: 6,430,843\n> 3,077,086 — 4인: 7,793,686\n> 3,077,086 — 5인: 9,068,063\n> 3,077,086 — 6인: 10,267,142\n> 3,077,086 — 7인: 11,418,180\n> 3,077,086 — 8인: 12,569,218\n> ※ 8인 이상 가구의 경우, 1인 증가 시마다 1,151,038원씩 증가\n> ※ 소득 기준은 가구의 월평균 소득 기준, (‘26년 기준 중위소득 120% 이하)을 적용한 값임\n> 대상자 선정 기준: 국민기초생활보장법 제6조2(기준 중위소득의 산정)\n> [2026년 소아 암환자 지원 대상자 선정 재산 기준] (단위：원)\n> 370,791,022 — 2인: 417,842,935\n> 370,791,022 — 3인: 451,216,863\n> 370,791,022 — 4인: 483,898,935\n> 370,791,022 — 5인: 514,459,540\n> 370,791,022 — 6인: 543,214,446\n> 370,791,022 — 7인: 570,817,266\n> 370,791,022 — 8인: 598,420,086\n> ※ 8인 이상 가구의 경우, 1인 증가 시마다 27,602,820원씩 증가\n> ※일반재산 최고재산액 기준 300% 이하 산출식을 적용한 값임\n> ### 지원 대상 범위\n> 암진단일(최종진단)이후의 암치료 관련 의료비\n> 암진단을 받는과정에서 소요된 검사(진단)관련 의료비\n> 전이된 암, 암치료로 인한 합병증 관련 의료비\n> 조혈모세포 이식 관련 의료비\n> ### 의료비 지원 항목\n> 법정본인부담 의료비\n> 비급여 항목의 본인 부담 의료비 : 선택진료, 초음파 제증명료 등\n> 희귀 의약품 구입비\n> 조혈모세포 이식관련 의료비\n> 암치료에 직접 소요되는 필수 치료재료대\n> 항암치료 부작용 중 탈모에 따른 가발 구입비\n> ### 신청 절차 및 서류 안내\n> 진단서 1부 가족관계증명서 1부 보호자 신분증 및 통장 — 2.재산 및 소득 조사((한달 소요): 적합 시 담당자가 유선통보\n> 진단서 1부 가족관계증명서 1부 보호자 신분증 및 통장 — 3.지원 서류 작성: 병원비 영수증 약국 영수증 및 처방전 소아암환자 의료비 신청서류",
+        "sources": [
+          {
+            "title": "소아암환자 의료비지원",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0406030000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "소아암환자 의료비 신청서류",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000147609&&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "복지 서비스 신청 방법 알려줘",
+          "복지 담당 부서 연락처 알려줘",
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "CONTACT",
+      "turn": 1,
+      "question": "대형 쓰레기 담당자 전화만 알려주세요",
+      "criterion": {
+        "parent_id": 16
+      },
+      "seconds": 0.268,
+      "server_timing": "app;dur=249.2",
+      "status": 200,
+      "error": null,
+      "request_id": "86f2d593ab854638852b3b36e0498ec0",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.268
+        }
+      ],
+      "response": {
+        "answer": "**자원순환과**\n\n- **051-220-4452** (주무관)\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "answer_details": "주무관 · 051-220-4452\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "sources": [
+          {
+            "title": "사하구청 직원업무안내",
+            "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "자원순환과",
+            "contact": "051-220-4452",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26T04:38:31.114927+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "EXAM",
+      "turn": 1,
+      "question": "사하구에서 토익이나 토익스피킹 응시료 지원을 받을 수 있나요?",
+      "criterion": {
+        "parent_id": 58
+      },
+      "seconds": 1.003,
+      "server_timing": "search;dur=464.6, verify;dur=344.8, review_gate;dur=3.0, grounding;dur=5.1, originals;dur=0.0, review;dur=1.1, prepare;dur=10.1, app;dur=985.2",
+      "status": 200,
+      "error": null,
+      "request_id": "82917ccfb1494ee8b38b105f02a55e30",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.003
+        }
+      ],
+      "response": {
+        "answer": "**자격증 등 응시료 지원**\n- 지원대상: 18세 ~ 39세(출생연도 기준, 1987년 ~ 2008년 생) 청년 중 아래 요건을 모두 충족하는 자\n- 거주기준 : 신청일 기준 사하구 1년 이상 계속 거주자\n- 근로이력 : 신청일 현재 미취업자 및 사업자등록사실이 없는 자\n- - 거주기준 : 신청일 기준 사하구 1년 이상 계속 거주자\n- - 근로이력 : 신청일 현재 미취업자 및 사업자등록사실이 없는 자\n- 지원내용: 1인당 연 1회 자격증 응시료 지원\n- 신청방법: 사하청년시대1839 홈페이지 내 신청서 작성 및 제출서류 업로드\n- 지원 시험 — 어 학: 토익·토익스피킹",
+        "answer_details": "자격증 등 응시료 지원의 공식 안내 원문입니다.\n\n> ## 자격증 등 응시료 지원\n> 청년의 취·창업을 지원하고 청년들이 자유롭게 소통·교류할 수 있도록 「사하구 청년창업지원센터」를 개소. 사하구는 청년 여러분들이 창업의 꿈이 실현되고 더 나은 미래를 도전할 수 있도록 든든한 디딤돌이 되겠습니다.\n> ### 자격증 등 응시료 지원\n> 우리 구에서는 청년의 진로 및 직업능력 강화를 위해 기존 어학시험을 포함한 국가 자격증 등 지원분야 확대로, 청년들의 경제적 부담 경감 및 고용촉진의 기회를 제공하고자 「2026년 자격증 등 응시료 지원 사업 확대 시행」을 다음과 같이 시행하오니 많은 신청 바랍니다.\n> #### 지원대상\n> 지원대상: 18세 ~ 39세(출생연도 기준, 1987년 ~ 2008년 생) 청년 중 아래 요건을 모두 충족하는 자\n> - 거주기준 : 신청일 기준 사하구 1년 이상 계속 거주자\n> - 근로이력 : 신청일 현재 미취업자 및 사업자등록사실이 없는 자\n> #### 지원내용\n> 지원내용: 1인당 연 1회 자격증 응시료 지원\n> 구 분: 지원 시험 종류\n> 자 격 증: ○ 「자격기본법」에 따른 국가기술자격증 ○ 「대한민국 정부 각 부처의 개별법」에 따른 국가전문자격증 ○ 「자격기본법 제19조」에 따른 국가공인민간자격증\n> 어 학: ○ 토익, 텝스, 플렉스, 스널트, 토익스피킹, 오픽, 아이엘츠, 토플, 지텔프 ○ 한어수평고시(HSK), 일본어능력시험(JPT, JLPT) ○ 독일어능력시험(Test DAF), 괴테어학검정시험(독어) ○ 달프/델프(DALF/DELF) ○ 델레(DELE) ○ 토르플(TORFL)\n> 한 국 사: ○ 「국사편찬원회」 주관 한국사능력검정시험\n> ※ 필기/실기, 1차/2차 등으로 나누어져 있는 경우 1회만 지원 가능: ※ 필기/실기, 1차/2차 등으로 나누어져 있는 경우 1회만 지원 가능\n> 지원내용: 국가기술자격, 국가전문자격, 국가공인민간자격 세부종목은 Q-Net( www.q-net.or.kr ) 홈페이지를 통해 확인 가능\n> #### 지원금액\n> 지원금액: 정기시험 응시료 기준 (최대 8만원 한도 내 지원)\n> #### 접수기간\n> 접수기간: 2026. 1. 26. ~ 12. 15. ※ 단, 예산 소진 시 사업 조기 종료 매월 1일~말일 접수분 : 심사를 거쳐 익월 입금예정\n> #### 신청방법\n> 신청방법: 사하청년시대1839 홈페이지 내 신청서 작성 및 제출서류 업로드\n> #### 지급방법\n> 지급방법: 개인별 계좌송금\n> #### 문의\n> 문의: 사하구청 일자리정책과 청년지원계 051) 220-5951\n> 온라인신청 : 사하청년시대1839 홈페이지( www.saha.go.kr/startup )에서 신청",
+        "sources": [
+          {
+            "title": "자격증 등 응시료 지원",
+            "url": "https://www.saha.go.kr/job/contents.do?mId=0301070000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "services"
+          ],
+          "matched_fields": [
+            "services"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "복지 서비스 신청 방법 알려줘",
+          "복지 담당 부서 연락처 알려줘"
+        ]
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-26T08:22:56.664890+00:00"
+}

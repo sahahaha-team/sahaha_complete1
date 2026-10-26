@@ -218,6 +218,28 @@ def requested_supported_items(query: str, units: list[str]) -> list[str]:
     return output
 
 
+def requested_programme_targets(query: str, units: list[str]) -> list[str]:
+    """Answer explicitly named sibling programmes without choosing only one."""
+    if requested_goals(query) not in (('services',), ('eligibility',)):
+        return []
+    from chatbot.concise_answers import _section_headings
+    matches = {}
+    for pos in _section_headings(units):
+        title = units[pos].lstrip('# ')
+        name = re.sub(r'\s*(?:의료비\s*)?(?:지원|사업|운영|안내)(?:사업)?(?:\s*안내)?$', '', title).strip()
+        if len(compact(name)) < 3 or compact(name) not in compact(query):
+            continue
+        start,end = section_bounds(units,pos)
+        targets = [u for u in units[start:end] if re.match(r'(?:지원)?대\s*상\s*[:：]',u)
+                   and source_unit_complete(u) and len(u)<250]
+        if targets:
+            matches[name] = (start,end,title,targets)
+    regions = list(matches.values())
+    if len(regions)<2 or any(a[0]<=b[0]<a[1] for a in regions for b in regions if a!=b):
+        return []
+    return [title+' — '+target for _start,_end,title,targets in regions for target in targets]
+
+
 def explicit_table_answer(query: str, units: list[str], title: str) -> str | None:
     """Read categorical lists and comparison cells with both axes intact."""
     request = compact(query)
@@ -274,6 +296,7 @@ def explicit_table_answer(query: str, units: list[str], title: str) -> str | Non
             return label + ': **' + mark.strip() + '** — ' + meaning
     if (answer_goal(query) == 'cost' and re.search(r'무료|무상',query)
             and not re.search(r'훼손|파손|분해|부품.{0,5}(?:빼|없|탈취)',request)):
+        proofs, exclusions = [], []
         for row in rows:
             owner, field = row.split(' — ',1)
             if not re.match(r'품\s*명\s*:',field):
@@ -284,12 +307,17 @@ def explicit_table_answer(query: str, units: list[str], title: str) -> str | Non
                      and re.match(r'분\s*류\s*:',u.split(' — ',1)[1])][:1]
             if not matches or not rules:
                 continue
-            proof = '·'.join(matches) + ' — ' + owner + '\n- ' + '\n- '.join(rules)
+            proof = '·'.join(matches) + ' — ' + owner.split('/',1)[0].strip() + ' / ' + ' / '.join(rules)
             qualifications = [u for u in units if QUALIFICATION.match(u) and
                               (compact(owner) in compact(u) or any(compact(x) in compact(u) for x in matches)) and len(u)<170
                               and not ('품목 中' in u and not any(compact(x) in compact(u) for x in matches))]
-            proof += ''.join('\n- '+u for u in qualifications[:2])
-            return proof if len(proof) <= 400 else None
+            proofs.append(proof)
+            exclusions.extend(u for u in qualifications[:2] if u not in exclusions)
+        if proofs:
+            proof = '\n'.join('- '+u for u in proofs+exclusions)
+            field_details = {t for t in details if not any(t in compact(u) for u in units if u.startswith('#'))}
+            if all(t in compact(proof) for t in field_details):
+                return proof if len(proof) <= MAX_BRIEF_LENGTH else None
     if answer_goal(query) == 'conditions' and details:
         focused = [u for u in rows if source_unit_complete(u) and
                    any(t in compact(u.split(' — ',1)[0]) for t in details)]
@@ -309,6 +337,13 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     if goal == 'reference':
         return None
     units = scoped_units(query, body, keywords)
+    programme_targets = requested_programme_targets(query, _source_units(body.splitlines()))
+    if programme_targets:
+        answer = '공식 안내의 사업별 대상입니다.\n'+'\n'.join('- '+u for u in programme_targets)
+        answer += '\n지원 범위·제외 비용·신청서류는 공식 원문을 함께 확인해 주세요.'
+        if len(answer)<=MAX_BRIEF_LENGTH:
+            return {'answer':answer,'documents':[document],'is_clarification':False,'answer_method':'structured_source',
+                    'answer_details':'\n'.join('> '+u for u in body.splitlines())}
     if (requested_goals(query) == ('services',)
             and re.search(r'받을\s*수|서비스가\s*있|제도가\s*있', query)
             and not re.search(r'어떤|무슨|무엇|종류|지원|급여|수급|보장|의료비|신청|장려금', query)):
@@ -527,7 +562,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
             score = (0 if resolved_field and (scope or page_scope) else matches * 5) + int(bool(re.search(r'^[^:：]{1,35}[:：]', unit))) * 3
             # Topic retrieval and requested detail are separate. A matching
             # service alone cannot choose the wrong certificate/table row.
-            score += 10 * sum(t in compact(unit) for t in details)
+            score += 10 * sum(t in compact(unit) for t in details if t not in compact(title))
             if requested_row(unit):
                 score += 20
             score += 5 * sum(t in compact(section_heading) for t in details)

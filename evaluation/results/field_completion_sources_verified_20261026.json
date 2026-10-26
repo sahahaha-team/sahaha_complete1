@@ -1,0 +1,34 @@
+[
+  {
+    "id": "0405050101",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+    "checked_at": "2026-10-26T08:17:17.307297+00:00",
+    "status": 200,
+    "body_sha256": "830d335f5260910a1963164c32fd851a04cf2b1d6b344c6c2542161c818b5fbd",
+    "same_body": true
+  },
+  {
+    "id": "0405050104",
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+    "checked_at": "2026-10-26T08:17:17.233220+00:00",
+    "status": 200,
+    "body_sha256": "0153c42fa9095ab7f1695eac15c47116021b0a92e81fa4ff82aec69883779056",
+    "same_body": true
+  },
+  {
+    "id": "0402030000",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0402030000",
+    "checked_at": "2026-10-26T08:17:16.642420+00:00",
+    "status": 200,
+    "body_sha256": "11bd8bfc6bd48c6e6a95ce07a0ba0b429a7bca1058a2a51e8cf292293d181a85",
+    "same_body": true
+  },
+  {
+    "id": "0406030000",
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0406030000",
+    "checked_at": "2026-10-26T08:17:16.615099+00:00",
+    "status": 200,
+    "body_sha256": "09f5c29bea9e7e209c59c698a9e2fd4cac7e27489708e790eae4f5a6542dad6b",
+    "same_body": true
+  }
+]

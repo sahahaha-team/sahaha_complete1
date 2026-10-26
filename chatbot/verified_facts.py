@@ -52,6 +52,13 @@ def parse_disposal_schedule(content: str, query: str) -> str | None:
         groups = [(day, items) for days, items in groups for day in days.split('·') if day in requested]
     answer = '요일별 배출 품목은 다음과 같습니다.\n' + '\n'.join(
         f'- **{days}요일**: {items}.' for days, items in groups)
+    # Read the operating rule separately from the weekday cells. Collection
+    # hours must never be presented as the time residents put waste out.
+    rules = re.findall(r'일반쓰레기는\s*종량제봉투에.*?수거는.*?합니다[.]', content, re.S)
+    if len(rules) == 1:
+        rule = ' '.join(rules[0].split())
+        if re.search(r'당일.*?\d+시부터\s*\d+시까지.*?내어\s*놓', rule):
+            answer += '\n- 일반·음식물 배출 안내: ' + rule
     return answer if len(answer) <= 480 else None
 
 

@@ -1,0 +1,15 @@
+{
+ "protocol":{"population":"developer_derived_and_supplied_rechecks","grading":"개발 AI의 공식 원문 대조. C/P/I를S로 합산하지 않음"},"families":[],
+ "scenarios":[
+  {"id":"ITEM1","turns":["냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?"],"criterion":{"parent_id":17}},
+  {"id":"ITEM2","turns":["냉장고랑 세탁기 무료 수거 되나요?"],"criterion":{"parent_id":17}},
+  {"id":"DAMAGE","turns":["모터를 뺀 세탁기도 무료로 가져가요?"],"criterion":{"parent_id":17}},
+  {"id":"WEEK1","turns":["사하구 요일별 쓰레기 배출 방법은 어떻게 되나요?"],"criterion":{"parent_id":1001}},
+  {"id":"WEEK2","turns":["요일별 쓰레기 어떻게 내놓으면 돼요?"],"criterion":{"parent_id":1001}},
+  {"id":"MED1","turns":["미숙아나 선천성이상아의 의료비 지원을 받을 수 있나요?"],"criterion":{"parent_id":86}},
+  {"id":"MED2","turns":["미숙아와 선천성이상아 지원 대상 알려줘"],"criterion":{"parent_id":86}},
+  {"id":"CANCER","turns":["소아암 환자의 의료비 지원제도가 있나요?"],"criterion":{"parent_id":99}},
+  {"id":"CONTACT","turns":["대형 쓰레기 담당자 전화만 알려주세요"],"criterion":{"parent_id":16}},
+  {"id":"EXAM","turns":["사하구에서 토익이나 토익스피킹 응시료 지원을 받을 수 있나요?"],"criterion":{"parent_id":58}}
+ ]
+}
