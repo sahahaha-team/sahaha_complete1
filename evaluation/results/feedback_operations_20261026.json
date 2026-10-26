@@ -1,0 +1,71 @@
+{
+  "checked_at": "2026-10-26T04:03:09.923040+00:00",
+  "web_pid": 21324,
+  "ollama_pid": 13228,
+  "worker": {
+    "pid": 14360,
+    "started_at": "2026-10-26T13:01:42.2431682+09:00"
+  },
+  "health_status": "ok",
+  "model": "gemma4:e4b",
+  "digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+  "jobs": {
+    "staff_directory_refresh": {
+      "status": "succeeded",
+      "last_attempt_at": "2026-10-25T04:32:51.640719+00:00",
+      "last_success_at": "2026-10-25T04:34:54.245208+00:00",
+      "consecutive_failures": 0,
+      "next_retry_at": null,
+      "last_error_type": null,
+      "last_result": {
+        "staff_rows": 1139,
+        "checked_at": "2026-10-25T04:34:42.697959+00:00"
+      }
+    },
+    "official_sources_refresh": {
+      "status": "running",
+      "last_attempt_at": "2026-10-26T04:01:43.513585+00:00",
+      "consecutive_failures": 7,
+      "last_error_type": "IncompleteRefresh",
+      "next_retry_at": "2026-10-25T17:30:47.301724+00:00",
+      "last_result": {
+        "reports": 0,
+        "verified_pages": 109,
+        "failed_pages": 1,
+        "new_chunks": 0,
+        "errors": 0
+      }
+    },
+    "conversation_ttl_cleanup": {
+      "status": "succeeded",
+      "last_attempt_at": "2026-10-25T04:42:51.656173+00:00",
+      "last_success_at": "2026-10-25T04:42:53.846647+00:00",
+      "consecutive_failures": 0,
+      "next_retry_at": null,
+      "last_error_type": null
+    },
+    "incremental_crawl": {
+      "status": "succeeded",
+      "last_attempt_at": "2026-10-25T04:47:51.676122+00:00",
+      "consecutive_failures": 0,
+      "last_error_type": null,
+      "next_retry_at": null,
+      "last_success_at": "2026-10-25T05:26:04.711930+00:00",
+      "last_result": {
+        "new": 10,
+        "updated": 61,
+        "unchanged": 385,
+        "deleted": 0,
+        "failed": 0
+      }
+    }
+  },
+  "queue": {
+    "available": true,
+    "queued": 0,
+    "running": 58,
+    "succeeded": 73,
+    "failed": 213
+  },
+  "report_markdown": "- 운영 확인 시각: **2026-10-26 13:03 KST**(원시 기록은UTC). 웹21324/Ollama13228/Worker14360. 웹 상태`ok`, Gemma4 digest는 고정 평가와 같다. Worker의 스케줄러와 만료 점검 실행을 확인했다.\n- 고정 평가는Worker 재실행 전에 끝났다. 이후 공식 자료 갱신은 현재`running`이며, 이 상태에서 이전 last_result(109개/미확보1개)를 오늘 갱신 완료 결과로 세지 않는다. 갱신 완료 또는 진행 중 상태는 이 시각의 기록이다. 고정152턴을 갱신 이후 자료의 새 평가라고 주장하지 않는다.\n- 실제 큐: queued0/running58/succeeded73/failed213. 기존 과거 점유 작업을 일괄 실패·재실행하지 않았다. 무료 자전거 대여 본문1개와 과거 실패/점유 작업은 별도 운영 제약으로 남는다.\n- 이번 재개 시 PC의 웹·모델·Worker가 모두 종료된 상태였고 기존 프로세스로 복구했다. PC가 중단된 동안의 최신성은 자동으로 확보되지 않는다. 상시 운영 서비스 배포나 OS 자동시작 설정을 새로 완료한 것으로 설명하지 않는다."
+}

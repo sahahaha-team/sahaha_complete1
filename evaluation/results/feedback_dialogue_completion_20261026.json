@@ -1,0 +1,118 @@
+{
+  "assessment": "developer_AI_semantic_review_not_independent",
+  "definition": "3회는최초질문포함사용자입력횟수. 마지막S와최초목표/전체하위요청완료를별도집계.",
+  "repeated_clarification_review": "D03:2일반주민은연령미확정. V07:2어맞아/V08:2응도대안선택미확정이므로필요한재확인3건. 나이등이미확정조건의재질문0건.",
+  "counts": {
+    "multi_turn_scenarios": 10,
+    "initial_goal_sufficient": 5,
+    "initial_goal_sufficient_within_three": 4,
+    "all_requested_goals_complete": 3,
+    "last_turn_sufficient": 7,
+    "insufficient_last_turn": 3,
+    "topic_drift_scenarios": 0,
+    "repeated_clarification_slot_count": 3,
+    "already_answered_condition_repeated_count": 0
+  },
+  "scenarios": [
+    {
+      "id": "D01",
+      "user_inputs": 5,
+      "initial_goal_first_sufficient_input": 3,
+      "initial_goal_sufficient_within_three": true,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "I",
+      "reason": "미성년 부모 서류는3회차 해결. 마지막 새 요청인 물리 장소는I.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D02",
+      "user_inputs": 3,
+      "initial_goal_first_sufficient_input": 2,
+      "initial_goal_sufficient_within_three": true,
+      "all_requested_goals_complete": true,
+      "last_turn_grade": "S",
+      "reason": "2회차 폐렴구균 장소와3회차 독감 정정 장소를 각각 원문에 연결.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D03",
+      "user_inputs": 4,
+      "initial_goal_first_sufficient_input": null,
+      "initial_goal_sufficient_within_three": false,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "S",
+      "reason": "예약 방법은P. 마지막 장소S를 최초 예약 해결로 세지 않음.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D04",
+      "user_inputs": 4,
+      "initial_goal_first_sufficient_input": null,
+      "initial_goal_sufficient_within_three": false,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "S",
+      "reason": "나이 정정 후에도 예약 방법P. 마지막 전화S는 별도 요청 해결.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D05",
+      "user_inputs": 2,
+      "initial_goal_first_sufficient_input": 1,
+      "initial_goal_sufficient_within_three": true,
+      "all_requested_goals_complete": true,
+      "last_turn_grade": "S",
+      "reason": "직원 직통번호S와 후속 소파 접수방법S를 각각 해결.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D06",
+      "user_inputs": 2,
+      "initial_goal_first_sufficient_input": null,
+      "initial_goal_sufficient_within_three": false,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "I",
+      "reason": "모름 후 신청자 조건을 추정하지 않고I 종결.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D07",
+      "user_inputs": 2,
+      "initial_goal_first_sufficient_input": null,
+      "initial_goal_sufficient_within_three": false,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "I",
+      "reason": "모름 후 교육 대상을 추정하지 않고I 종결.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "D08",
+      "user_inputs": 3,
+      "initial_goal_first_sufficient_input": 1,
+      "initial_goal_sufficient_within_three": true,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "S",
+      "reason": "첫 접수방법S·중간 위치C·마지막 프로그램 문의번호S. 개별 위치는 여전히 미해결.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "V07",
+      "user_inputs": 4,
+      "initial_goal_first_sufficient_input": null,
+      "initial_goal_sufficient_within_three": false,
+      "all_requested_goals_complete": false,
+      "last_turn_grade": "S",
+      "reason": "모호한 긍정 뒤 연령을 받고 예약P/장소S. 예약 해결로 합산하지 않음.",
+      "topic_drift_observed": false
+    },
+    {
+      "id": "V08",
+      "user_inputs": 4,
+      "initial_goal_first_sufficient_input": 4,
+      "initial_goal_sufficient_within_three": false,
+      "all_requested_goals_complete": true,
+      "last_turn_grade": "S",
+      "reason": "모호한 긍정은 연령 답변 아님. 연령·부모 역할 후4회차 서류S.",
+      "topic_drift_observed": false
+    }
+  ]
+}

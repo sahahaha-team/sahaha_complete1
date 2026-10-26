@@ -1,0 +1,31 @@
+{
+  "assessed_commit": "da8234cc265ac98edac3651adc0bd3cc121f3b15",
+  "run_started_at": "2026-10-26T03:44:07.179690+00:00",
+  "run_finished_at": "2026-10-26T04:00:46.225046+00:00",
+  "common_code_hashes_identical_across_cohorts": true,
+  "source_url_count": 109,
+  "source_changes": {
+    "text_sha256": [],
+    "html_sha256": []
+  },
+  "contact_hashes_identical": true,
+  "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+  "data_snapshots": {
+    "before": "feedback_sources_da8234c_before_20261026.json",
+    "after": "feedback_sources_da8234c_after_20261026.json"
+  },
+  "case_hashes": {
+    "feedback_supplied_final_20261025": "2996c26e0dc08f72162819821b8d149988e067c8a2974613f4cc10b548622652",
+    "feedback_priority_final_20261025": "c3e80ab59021b6dc785c3ed2488fced09e433bac7435753c21bb74392bf199e3",
+    "feedback_wording_complete_20261025": "ec2058b8e8376179fe59e1cd41a8c3e92c7181bb8386fc83f9686103e1ca086b"
+  },
+  "total_turns": 152,
+  "scenarios": 129,
+  "unique_question_strings": 137,
+  "worker_during_final_run": "stopped_after_PC_interruption; restored separately after frozen evaluation",
+  "automatic_regressions": {
+    "count": 663,
+    "seconds": 25.875,
+    "log": ".local/feedback_phase9_tests_verified.log"
+  }
+}
