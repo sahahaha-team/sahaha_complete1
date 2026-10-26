@@ -164,7 +164,7 @@ def is_field_only_question(message: str) -> bool:
     text = re.sub(r'^(?:그럼|그러면|그건|그거|관련)', '', text)
     text = re.sub(r'(?:은|는)?어떻게(?:하나요|해요|해|받아요|받아)[?？]?$', '방법', text)
     text = re.sub(r'(?:좀)?(?:알려(?:줘|주세요)|설명해줘|보고싶(?:어|어요)|보여(?:줘|주세요)|확인하고싶(?:어|어요)|궁금(?:해|해요))$', '', text)
-    fields = r'현황도|현황|노선도|노선|지도|위치|주소|장소|시간|일정|기간|비용|수수료|준비물|서류|대상|자격|조건|참여방법|신청방법|이용방법|신청절차|발급절차|신청|접수|방법'
+    fields = r'전화번호|연락처|팩스번호|현황도|현황|노선도|노선|지도|위치|주소|장소|시간|일정|기간|비용|수수료|준비물|서류|대상|자격|조건|참여방법|신청방법|이용방법|신청절차|발급절차|신청|접수|방법'
     return bool(text and re.fullmatch(r'(?:(?:' + fields + r')(?:과|와|이랑|랑|하고|및)?)+(?:은|는|을|를|도|가|이|요|좀)*', text))
 
 
@@ -467,7 +467,7 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     profile_reply = bool('여권' in previous and len(compact) <= 32
         and re.search(r'성인|어른|미성년|\d{1,2}(?:세|살)|신규|처음|재발급', compact)
         and not re.search(r'서류|준비|구비|챙|가져|방법|절차|어떻게|어디|언제|기간|시간|며칠|수수료|비용|얼마|대상|자격|조건|사진|규격|담당|연락|번호', compact))
-    if answer_goal(current) and old_names and not profile_reply:
+    if (answer_goal(current) or field_follow_up) and old_names and not profile_reply:
         # Carry the service and explicit profile, not the previous requested
         # field (e.g. automatic enrolment must not replace a benefit question).
         profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}(?:세|살)|성인|미성년자?|부모|친족|신규|재발급',previous)

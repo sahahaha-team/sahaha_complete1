@@ -1,0 +1,54 @@
+{
+  "families": [],
+  "scenarios": [
+    {
+      "id": "D04",
+      "turns": [
+        "소방특화 들락날락 예약 방법 알려줘",
+        "아이는 8살",
+        "아니 12살이야",
+        "그럼 전화번호는?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "D08",
+      "turns": [
+        "작은도서관 교육 프로그램 예약 방법 알려줘",
+        "신청 말고 장소 알려줘",
+        "그럼 전화번호는?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1003,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    },
+    {
+      "id": "C03",
+      "turns": [
+        "예방접종은 전화로만 신청할 수 있어?"
+      ],
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      }
+    }
+  ],
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    },
+    "note": "업그레이드9 개발 검증. 제공100문항과 별도."
+  }
+}

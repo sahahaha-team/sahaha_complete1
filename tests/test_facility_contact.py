@@ -27,3 +27,14 @@ class FacilityContactTests(unittest.TestCase):
             with patch('database_db.raw_pages.read_raw_pages') as read:
                 self.assertIsNone(facility_contact(query, object()))
                 read.assert_not_called()
+
+    def test_programme_inquiry_label_is_preserved_instead_of_claiming_a_branch_line(self):
+        body = '## 작은도서관 프로그램 운영 안내\n대상: 사하구민\n문 의 : 사하구 평생교육과(☎ 051-220-4834)'
+        with patch('database_db.raw_pages.read_raw_pages', return_value=[self.row(body)]):
+            result = facility_contact('작은도서관 교육 그럼 전화번호는?', object())
+            self.assertIn('프로그램 안내의 문의 전화번호', result['answer'])
+            self.assertIn('051-220-4834', result['answer'])
+            self.assertIsNone(facility_contact('하단동 작은도서관 전화번호', object()))
+        for invalid in (body+'\n문의: 다른 프로그램 051-220-1111', body.replace('문 의 :', '예약번호:')):
+            with patch('database_db.raw_pages.read_raw_pages', return_value=[self.row(invalid)]):
+                self.assertIsNone(facility_contact('작은도서관 교육 전화번호', object()))

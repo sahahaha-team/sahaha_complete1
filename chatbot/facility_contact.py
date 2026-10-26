@@ -22,16 +22,27 @@ def facility_contact(query: str, client) -> dict | None:
     from chatbot.official_content import official_html_text
     body = official_html_text(rows[0].get('raw_html') or '') or rows[0].get('content') or ''
     phones = set()
+    inquiry_phones = set()
     for line in body.splitlines():
         field = re.search(r'(?:^|[▹▷—])\s*(?:문의전화|전화번호|연락처|전화)\s*[:：]\s*(.+)', line)
         if field:
             phones.update(re.findall(r'0\d{1,2}-\d{3,4}-\d{4}(?:\s*~\s*\d{1,4})?', field[1]))
+        inquiry = re.search(r'(?:^|[▹▷—])\s*문\s*의\s*[:：]\s*(.+)', line)
+        if inquiry:
+            inquiry_phones.update(re.findall(r'0\d{1,2}-\d{3,4}-\d{4}(?:\s*~\s*\d{1,4})?', inquiry[1]))
+    # A programme inquiry number is not a specific branch's direct line.
+    # Keep its published role, and leave named local branches to normal search.
+    programme_inquiry = bool(not phones and inquiry_phones and re.search(r'프로그램', body)
+                             and not re.search(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)\d?동', query))
+    if programme_inquiry:
+        phones = inquiry_phones
     if len(phones) != 1:
         return None  # Do not choose one library/program from a directory.
     phone = next(iter(phones))
     source = {'title': rows[0].get('title') or '시설 이용안내', 'url': url,
               'checked_at': checked, 'source_type': 'verified_page'}
-    return {'answer': f'공식 시설 안내의 **전화번호는 {phone}**입니다.',
+    label = '공식 프로그램 안내의 문의 전화번호' if programme_inquiry else '공식 시설 안내의 전화번호'
+    return {'answer': f'{label}는 **{phone}**입니다.',
             'sources': [source], 'is_clarification': False, 'degraded': False,
             'degraded_reason': None, 'suggested_questions': [],
             'evidence': {'status': 'official', 'label': '공식 시설 연락처 확인됨',

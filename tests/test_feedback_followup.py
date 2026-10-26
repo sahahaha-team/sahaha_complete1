@@ -11,6 +11,19 @@ def follow(previous, reply):
 
 
 class FeedbackFollowupTests(unittest.TestCase):
+    def test_contact_field_after_location_clarification_keeps_service_not_old_field(self):
+        from chatbot.response_helpers import resolve_clarification_reply, is_field_only_question
+        pending = {'query':'작은도서관 교육 장소 알려줘', 'reply_terms':['하단','괴정'], 'suggested_questions':[]}
+        for reply in ('그럼 전화번호는?', '연락처 알려줘', '팩스번호는요?'):
+            self.assertTrue(is_field_only_question(reply))
+            query = resolve_clarification_reply(reply, pending)
+            self.assertIn('작은도서관', query)
+            self.assertIn('교육', query)
+            self.assertNotIn('장소', query)
+        self.assertEqual(resolve_clarification_reply('소방특화 들락날락 전화번호', pending),
+                         '소방특화 들락날락 전화번호')
+        self.assertEqual(follow('', '그럼 전화번호는?'), '그럼 전화번호는?')
+
     def test_explicit_field_replacement_discards_the_rejected_request(self):
         for previous in ('미성년자 여권 준비물 12세 부모', '작은도서관 교육 프로그램 예약 방법'):
             with self.subTest(previous=previous):
