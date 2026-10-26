@@ -21,6 +21,12 @@ def facility_contact(query: str, client) -> dict | None:
         return None
     from chatbot.official_content import official_html_text
     body = official_html_text(rows[0].get('raw_html') or '') or rows[0].get('content') or ''
+    from chatbot.dialogue_profile import course_audiences, course_audience_conflict
+    if course_audience_conflict(query, course_audiences(body.splitlines())):
+        return {'answer':'공식 안내의 이용 대상과 말씀하신 대상이 다릅니다. 해당 대상의 이용 가능 여부와 문의 경로를 이 자료만으로 확정할 수 없습니다.',
+                'sources':[{'title':rows[0].get('title') or '시설 이용안내','url':url,'checked_at':checked,'source_type':'verified_page'}],
+                'is_clarification':False,'degraded':True,'degraded_reason':'audience_mismatch','suggested_questions':[],
+                'evidence':{'status':'insufficient','label':'이용 대상 확인 필요','official_source_count':1,'answer_method':'audience_mismatch'}}
     phones = set()
     inquiry_phones = set()
     for line in body.splitlines():

@@ -1,0 +1,10 @@
+{
+  "protocol": {"population": "developer_derived_regression", "grading": "S/C/P/I/R/W/E 원문 대조. 성인에게 어린이 이용 절차를 권하면 W. 제한 설명을 위한 원문 인용과 구분."},
+  "families": [],
+  "scenarios": [
+    {"id":"ADULT","turns":["소방 체험 어떻게 신청해","성인","신청 말고 장소 알려줘"],"criterion":{"parent_id":1002,"review":"성인 조건을 유지하며 어린이 시설 신청으로 안내하지 않음"}},
+    {"id":"AGE","turns":["소방 체험 어떻게 신청해","30살"],"criterion":{"parent_id":1002,"review":"명시 연령도 동일 제한"}},
+    {"id":"CHILD","turns":["소방 체험 어떻게 신청해","아이는 8살","그럼 전화번호는?"],"criterion":{"parent_id":1002,"review":"어린이 체험과 시설 연락처 정상 유지"}},
+    {"id":"SWITCH","turns":["소방특화 들락날락 체험 신청방법","성인","아니 아이가 8살"],"criterion":{"parent_id":1002,"review":"새 명시 조건이 이전 성인 조건을 대체. 원문 범위 밖 안내 금지"}}
+  ]
+}

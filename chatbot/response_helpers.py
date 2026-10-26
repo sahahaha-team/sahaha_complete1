@@ -62,7 +62,11 @@ def _scope_confirmation(message: str) -> tuple[str | None, str]:
 def _scoped_query(query: str, scope: str, field: str = '') -> str:
     # Keep the confirmed audience as a separate profile when the next turn
     # changes only the requested field. This is internal search context.
-    scoped = f'{query} (확인대상: {scope})'
+    from chatbot.dialogue_profile import SCOPE_PROFILE, DEMOGRAPHIC, replace_demographic
+    if scope in DEMOGRAPHIC:
+        query = replace_demographic(query)
+    query = SCOPE_PROFILE.sub('', query)
+    scoped = f'{query.strip()} (확인대상: {scope})'
     if field:
         return build_contextual_search_query(field, [{'role': 'user', 'content': query, 'search_query': scoped}])
     return scoped
@@ -396,6 +400,25 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     recent = [(m.get('search_query') or m.get('content') or '').strip()
               for m in history or [] if m.get('role') == 'user']
     previous_query = recent[-1] if recent else ''
+    # A verified answer may have resolved a generic activity to one registered
+    # facility. Use that URL's navigation name for the next elided field only;
+    # do not infer a facility from an unsupported answer or an older source.
+    if previous_query and is_field_only_question(current):
+        from chatbot.faq_targets import priority_source_name, priority_entities
+        last_assistant = next((m for m in reversed(history or []) if m.get('role') == 'assistant'), {})
+        sources = last_assistant.get('sources') or []
+        if isinstance(sources, str):
+            import json
+            try:
+                sources = json.loads(sources)
+            except (ValueError, TypeError):
+                sources = []
+        if isinstance(sources, list) and len(sources) == 1:
+            url = sources[0].get('url', '') if isinstance(sources[0], dict) else sources[0]
+            name = priority_source_name(url) if isinstance(url, str) else ''
+            if (name and not priority_entities(previous_query) and service_names(name)
+                    and service_names(name) <= service_names(previous_query)):
+                previous_query += ' ' + name
     from chatbot.vaccination import corrected_vaccine_query
     corrected = corrected_vaccine_query(previous_query, current)
     if corrected:
@@ -416,6 +439,10 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     new_subject = any(not any(n in old or old in n for old in old_names) for n in names)
     if new_subject:
         return current
+    from chatbot.dialogue_profile import COURSE, replace_demographic
+    participant = re.fullmatch(r'(?:아니(?:요)?|저는)?(성인|어른|어린이|아동|초등학생)(?:이야|이에요|예요|입니다|이요|요)?', compact)
+    if previous_query and old_names and COURSE.search(previous_query) and participant:
+        return _scoped_query(previous_query, participant[1])
     # Age-only replies are profile updates, including outside passport flows.
     # A complete new service was already excluded above.
     age_reply = bool(re.fullmatch(r'(?:아니(?:요)?|정정)?(?:(?:아이|자녀|신청자|나이)(?:는|가|은|이)?)?(?:만)?\d{1,2}(?:세|살)(?:이야|야|이에요|예요|입니다|이요|요)?', compact))
@@ -423,7 +450,7 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         from chatbot.passport_documents import merge_applicant_followup
         if '여권' in previous_query:
             return merge_applicant_followup(previous_query, current)
-        base = re.sub(r'(?:만\s*)?\d{1,2}\s*(?:세|살)(?!\s*(?:이상|이하|미만))', '', previous_query)
+        base = replace_demographic(previous_query)
         return (base + ' ' + current).strip()
     # Bare fields can follow generic families too. The full-match language
     # check ensures "비상급수시설 지도" is a new topic, not a bicycle follow-up.
@@ -463,7 +490,7 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         for message in (history or [])[-4:]
         if message.get("role") == "user" and (message.get("content") or "").strip()
     ]
-    previous = recent_user_messages[-1] if recent_user_messages else ""
+    previous = previous_query if recent_user_messages else ""
     profile_reply = bool('여권' in previous and len(compact) <= 32
         and re.search(r'성인|어른|미성년|\d{1,2}(?:세|살)|신규|처음|재발급', compact)
         and not re.search(r'서류|준비|구비|챙|가져|방법|절차|어떻게|어디|언제|기간|시간|며칠|수수료|비용|얼마|대상|자격|조건|사진|규격|담당|연락|번호', compact))

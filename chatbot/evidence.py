@@ -183,11 +183,6 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
-    if answer_goal(query) == 'reference':
-        from chatbot.faq_targets import confident_official_page
-        registered = confident_official_page(query)
-        if registered and registered == (doc.get('metadata') or {}).get('url') and topic_support(doc, keywords)[0]:
-            return True  # The verified guide answers navigation, not factual eligibility.
     if ('지방세' in compact(query) and re.search(r'종류|세목|전체목록', compact(query))
             and re.search(r'자동차세|재산세|취득세|주민세', title)):
         return False  # One child tax's payment guide is not the tax catalogue.
@@ -200,14 +195,27 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     from chatbot.dialogue_profile import child_course_conflict
     if child_course_conflict(query, body_text):
         return False
+    from chatbot.dialogue_profile import COURSE, DEMOGRAPHIC, course_audiences, course_audience_conflict
+    if COURSE.search(query):
+        from chatbot.structured_answers import scoped_units
+        from chatbot.source_scope import normalize_plain_source
+        owned = scoped_units(query, normalize_plain_source(body_text, title), keywords)
+        if course_audience_conflict(query, course_audiences(owned)):
+            return False
     # A scope confirmed from one program is a source constraint, not merely
     # extra search words. Shared topics (e.g. fire education for children and
     # apartment managers) cannot exchange schedules after a field follow-up.
     from chatbot.dialogue_profile import confirmed_audience
     audience = confirmed_audience(query)
-    if (audience and compact(audience) not in {'일반주민', '일반구민'}
+    if (audience and not (COURSE.search(query) and audience in DEMOGRAPHIC)
+            and compact(audience) not in {'일반주민', '일반구민'}
             and compact(audience) not in compact(body_text)):
         return False
+    if answer_goal(query) == 'reference':
+        from chatbot.faq_targets import confident_official_page
+        registered = confident_official_page(query)
+        if registered and registered == (doc.get('metadata') or {}).get('url') and topic_support(doc, keywords)[0]:
+            return True  # Navigation still respects the participant's conditions.
     from chatbot.answer_goal import requested_goals
     if keywords == {'구청'} and 'location' in requested_goals(query) and '구청' not in title:
         return False  # Another facility's address cannot locate the district office.

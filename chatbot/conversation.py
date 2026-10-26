@@ -411,11 +411,21 @@ class ChatBot:
             if not original:
                 from chatbot.request_metrics import model_failure_reason
                 failure = model_failure_reason()
+                # An unsupported answer still owns the user's latest conditions.
+                # Otherwise the next short reply falls back to an older question.
+                self._save_conversation_safe(session_id, "user", user_message, search_query=search_query)
                 if failure:
                     from chatbot.evidence_decision import unavailable_answer
-                    return unavailable_answer(failure)
+                    response = unavailable_answer(failure)
+                    self._save_conversation_safe(session_id, "assistant", response['answer'])
+                    return response
+                from chatbot.dialogue_profile import COURSE, confirmed_audience, explicit_age
+                answer = LOW_CONFIDENCE_MESSAGE
+                if COURSE.search(search_query) and (confirmed_audience(search_query) or explicit_age(search_query) is not None):
+                    answer = '말씀하신 대상 조건에 맞는 교육·체험의 신청·이용 정보를 현재 공식 자료에서 확인하지 못했습니다.'
+                self._save_conversation_safe(session_id, "assistant", answer)
                 return {
-                    "answer": LOW_CONFIDENCE_MESSAGE, "sources": [], "is_clarification": False,
+                    "answer": answer, "sources": [], "is_clarification": False,
                     "degraded": True, "degraded_reason": "no_current_evidence",
                     "evidence": {"status": "insufficient", "label": "최신 근거를 찾지 못함", "official_source_count": 0},
                     "suggested_questions": [],

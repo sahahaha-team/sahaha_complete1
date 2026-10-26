@@ -14,7 +14,7 @@ from chatbot.answer_completion import (
 )
 
 MAX_BRIEF_LENGTH = 480
-SCOPE_FIELD = re.compile(r"^(?:교육)?(?:대\s*상|신청자격|지원대상|이용대상|발급민원|조건)\s*[:：]")
+SCOPE_FIELD = re.compile(r"^[\s▹▸▶▷]*(?:교육)?(?:대\s*상|신청자격|지원대상|이용대상|참여대상|발급민원|조건)\s*[:：]")
 
 
 def _section_headings(units: list[str]) -> list[int]:
@@ -190,9 +190,14 @@ def condition_indices(units: list[str], indices: list[int]) -> list[int]:
 
 def course_scope_result(query: str, audience: str | None) -> dict | None:
     """Clarify a documented course's audience once; do not repeat after a no."""
-    if not audience or not any(word in query for word in ('교육', '훈련', '강좌')):
+    if not audience or not any(word in query for word in ('교육', '훈련', '강좌', '체험')):
         return None
     value = re.split(r'[:：]', audience, maxsplit=1)[-1].strip()
+    value = re.split(r'[▹▸▶▷]', value, maxsplit=1)[0].strip()
+    from chatbot.dialogue_profile import course_audience_conflict
+    if course_audience_conflict(query, [value]):
+        return {'answer': f'확인된 이용 대상은 **{value}**입니다. 말씀하신 대상이 참여할 수 있는 신청 방법은 이 자료에서 확인되지 않습니다.',
+                'is_clarification':False, 'suggested_questions':[], 'degraded':True}
     from chatbot.dialogue_profile import explicit_age
     age = explicit_age(query)
     bounds = re.search(r'(\d{1,2})세이상(\d{1,2})세이하', compact(value))

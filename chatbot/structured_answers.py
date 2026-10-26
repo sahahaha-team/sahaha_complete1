@@ -342,7 +342,7 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
         return {'answer':'공식 안내에서는 청소년의 예약을 구분하고 있습니다. **청소년인가요, 성인인가요?**',
                 'is_clarification':True,'documents':[], 'answer_method':'structured_source',
                 'reply_terms':['청소년','성인'],'suggested_questions':[]}
-    if re.search(r'교육|훈련|강좌', query) and goal in (None,'method','location','schedule','services'):
+    if re.search(r'교육|훈련|강좌|체험', query) and goal in (None,'method','location','schedule','services','eligibility'):
         from chatbot.concise_answers import SCOPE_FIELD, course_scope_result
         audience = next((u for u in units if SCOPE_FIELD.match(u)), None)
         course = course_scope_result(query, audience)
