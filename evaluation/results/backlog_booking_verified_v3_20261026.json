@@ -1,0 +1,1135 @@
+{
+  "started_at": "2026-10-26T10:05:48.103575+00:00",
+  "commit": "a41eb547e93b2cb9d8cf81bcabd60b76faa979ee",
+  "case_sha256": "efcd41b6885759fada5233e37d0651de4355c567fea28ba8993e3a00dc3211bf",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "5935f082868e86153baab86cc380e82137487ea10594be7d3ec1c5f36f279cdf",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "50537ee15c1bf267a9a85bdcb158a7eebea694d0c41176825d7b6708e0de2227",
+    "chatbot\\concise_answers.py": "a930033ee5e5daf11ec4442864d0ffca65ce63be26b61a06212d6cb62568b7a9",
+    "chatbot\\contact_directory.py": "7b2f8e8474dc74204263bd05159acb2982f7ef0e536e821296c83065cfc4ec7e",
+    "chatbot\\conversation.py": "1da6e9e00b9c060c2858d02f951557918ffacc6166f78df82ab3ce6d151cdc0b",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "761196f32963974b1f443d9f035a93b453bfab72ea621132083dd5b6b27e0b7d",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "16865ba43e11185126e0f46fd5a0e84d7f9cdfb8948e42fe6fba3bead1991f18",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "30338e2c02fbdacee0f8c79eb4734f1519ee561ae52f7a7c0b8a91d8f142ec18",
+    "chatbot\\facility_directory.py": "8371ce9f40c1c0ce1a66a3d29edb0c8a367973e3c7bb79c42ab82612129e3f9e",
+    "chatbot\\faq_targets.py": "8ffe715a5b904fa07a0ade4ccd0ad26931148497c097c05f63a44fa91cc7332e",
+    "chatbot\\fire_booking.py": "b9f63cc078ede5c803b7f904a51d82d9d884861f65c03cbcb0e4479b05966f32",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "9cd193abd68ad871f5dc97a50dbf7fd70b424ffd56d4035ca848141871f3c26f",
+    "chatbot\\question_intent.py": "84526668c0f41961059737d8693e9fd8a8351d40c3c10471f9bd13f4fa12da0d",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "57b77852a5a9ca7fe66e5eae5a18721cd03743dcaea84ef8179885bef00f0282",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "50157e19c1c98e6348121066ac551095d93291ce57617d8ac61f45ada8490dbc",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "bc66908a401c79b019e7b8c6bbc943d5842f3dff4b71ac4337653140d55dc5fc",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "4c0dd73ae965a6ba628399ab195cce17d58936d2c21b97d6f6ce03b7befcf7ab",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "893a75bca3bd8cedb1b23116366e8feb60ea4d3149dfc1dae3191a57c63be4e8",
+    "resources\\department_contacts.json": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "c423ee4ac2d2b7ba231fb7736eb39dab41fe34381eb211920f42093d03b5445a",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "developer_derived_booking_scope_and_neighbours",
+    "grading": "실제 신청 진입·대상·인증·시점을 공식 원문/정적 동작과 대조. C/P/I를 충분으로 합산하지 않음"
+  },
+  "records": [
+    {
+      "id": "FIRE",
+      "turn": 1,
+      "question": "소방 체험 어떻게 신청해",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.815,
+      "server_timing": "app;dur=809.0",
+      "status": 200,
+      "error": null,
+      "request_id": "92644673f157470c93225b4bf02d3316",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.815
+        }
+      ],
+      "response": {
+        "answer": "확인된 교육은 4세 이상 13세 이하 어린이 대상입니다.\n이 대상의 교육을 찾으시나요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "소방 체험 어떻게 신청해 체험 (4세 이상 13세 이하 어린이 대상)",
+          "일반 주민 소방 체험 어떻게 신청해 체험"
+        ]
+      }
+    },
+    {
+      "id": "FIRE",
+      "turn": 2,
+      "question": "아이는 8살",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.981,
+      "server_timing": "app;dur=950.6",
+      "status": 200,
+      "error": null,
+      "request_id": "d2b1c3f6d59e464680ea09ea351df808",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.981
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "FIRE",
+      "turn": 3,
+      "question": "그럼 전화번호는?",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.428,
+      "server_timing": "app;dur=420.8",
+      "status": 200,
+      "error": null,
+      "request_id": "67046d825e0147b7b47847781f0a10e0",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.428
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 안내의 전화번호는 **051-271-6835**입니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_contact",
+          "status": "official",
+          "label": "공식 시설 연락처 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "FIRE",
+      "turn": 4,
+      "question": "장소는?",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.414,
+      "server_timing": "app;dur=408.2",
+      "status": 200,
+      "error": null,
+      "request_id": "ee671401a322443984060123977d6ec4",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.414
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 안내의 주소는 **부산광역시 사하구 장평로 270(신평동)**입니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_location",
+          "status": "official",
+          "label": "공식 시설 위치 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "EDU",
+      "turn": 1,
+      "question": "소방 교육 하는방법 알려줘",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.038,
+      "server_timing": "app;dur=13.8",
+      "status": 200,
+      "error": null,
+      "request_id": "eebfde7e697b4b6e93082b7f46ca4b07",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.038
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "EDU",
+      "turn": 2,
+      "question": "아니 일반 주민이야",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.016,
+      "server_timing": "app;dur=10.3",
+      "status": 200,
+      "error": null,
+      "request_id": "cf69ab6930c0414aaf0294d0fb3e27af",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.016
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 나이를 알려주셔도 됩니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "EDU",
+      "turn": 3,
+      "question": "아이는 8살",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 1.07,
+      "server_timing": "app;dur=1048.0",
+      "status": 200,
+      "error": null,
+      "request_id": "af5674516f514917a8726214a8d4ed58",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.07
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "EDU",
+      "turn": 4,
+      "question": "아니 12살이야",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.721,
+      "server_timing": "app;dur=715.5",
+      "status": 200,
+      "error": null,
+      "request_id": "8bfdb60351884aa3a37943d3a03251ed",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.721
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "ADULT",
+      "turn": 1,
+      "question": "소방 체험 어떻게 신청해",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.557,
+      "server_timing": "app;dur=541.1",
+      "status": 200,
+      "error": null,
+      "request_id": "39baf1ba726c404f91c1d8df7e7896d8",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.557
+        }
+      ],
+      "response": {
+        "answer": "확인된 교육은 4세 이상 13세 이하 어린이 대상입니다.\n이 대상의 교육을 찾으시나요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "소방 체험 어떻게 신청해 체험 (4세 이상 13세 이하 어린이 대상)",
+          "일반 주민 소방 체험 어떻게 신청해 체험"
+        ]
+      }
+    },
+    {
+      "id": "ADULT",
+      "turn": 2,
+      "question": "성인",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 5.027,
+      "server_timing": "search;dur=2409.2, verify;dur=1837.5, review_gate;dur=64.5, rerank;dur=635.8, grounding;dur=11.7, originals;dur=0.0, review;dur=0.6, prepare;dur=6.1, app;dur=5013.0",
+      "status": 200,
+      "error": null,
+      "request_id": "c1abae28ff254d878c63a89235c49957",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 5.027
+        }
+      ],
+      "response": {
+        "answer": "관련 공식 자료는 찾았지만, 이용 방법에 답할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "missing_requested_field",
+        "evidence": {
+          "answer_method": "source_fallback",
+          "status": "partial",
+          "label": "요청 항목 확인 필요",
+          "official_source_count": 1,
+          "decision": "partial",
+          "reasons": [
+            "missing_requested_fields"
+          ],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "ADULT",
+      "turn": 3,
+      "question": "그럼 장소는?",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.34,
+      "server_timing": "app;dur=337.0",
+      "status": 200,
+      "error": null,
+      "request_id": "472241c4c52a4933a75edfe4feaea0fa",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.34
+        }
+      ],
+      "response": {
+        "answer": "공식 안내의 이용 대상과 말씀하신 대상이 다릅니다. 해당 대상의 이용 가능 여부와 문의 경로를 이 자료만으로 확정할 수 없습니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "audience_mismatch",
+        "evidence": {
+          "answer_method": "audience_mismatch",
+          "status": "insufficient",
+          "label": "이용 대상 확인 필요",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "NAMED",
+      "turn": 1,
+      "question": "소방특화 들락날락 체험 성인 신청방법",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.729,
+      "server_timing": "app;dur=724.7",
+      "status": 200,
+      "error": null,
+      "request_id": "e8d32d0d7af94aa6a3f8ecb15602ad46",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.729
+        }
+      ],
+      "response": {
+        "answer": "확인된 이용 대상은 **4세 이상 13세 이하 어린이**입니다. 말씀하신 대상이 참여할 수 있는 신청 방법은 이 자료에서 확인되지 않습니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "booking_scope_unverified",
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "insufficient",
+          "label": "예약 조건 확인 필요",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "AGE13",
+      "turn": 1,
+      "question": "소방특화 들락날락 13살 예약 방법 알려줘",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.529,
+      "server_timing": "app;dur=525.0",
+      "status": 200,
+      "error": null,
+      "request_id": "59835c56bce24d1489a01791031662ec",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.529
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "AGE14",
+      "turn": 1,
+      "question": "소방특화 들락날락 14살 예약 방법 알려줘",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.523,
+      "server_timing": "app;dur=509.5",
+      "status": 200,
+      "error": null,
+      "request_id": "75c6f4eda3d7431a9e855f41c551d5bc",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.523
+        }
+      ],
+      "response": {
+        "answer": "확인된 이용 대상은 **4세 이상 13세 이하 어린이**입니다. 말씀하신 대상이 참여할 수 있는 신청 방법은 이 자료에서 확인되지 않습니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "booking_scope_unverified",
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "insufficient",
+          "label": "예약 조건 확인 필요",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "LIVE",
+      "turn": 1,
+      "question": "소방특화 들락날락 지금 남은 예약 자리가 몇 개야?",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.013,
+      "server_timing": "app;dur=9.4",
+      "status": 200,
+      "error": null,
+      "request_id": "d5af26b216af4c808a815df618f4763d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.013
+        }
+      ],
+      "response": {
+        "answer": "현재 상담에는 **실시간 대기 인원·남은 접수 인원을 조회하는 기능이 없습니다.** 안내문의 모집 정원이나 대기 가능 여부를 현재 인원으로 바꾸어 안내할 수는 없습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "live_data_unavailable",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "실행·조회 기능 확인 필요",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "MEMBER",
+      "turn": 1,
+      "question": "공동주택 소방교육 관리자 신청방법",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 5.21,
+      "server_timing": "search;dur=2141.0, verify;dur=1960.4, review_gate;dur=82.4, rerank;dur=951.0, grounding;dur=19.6, originals;dur=0.0, review;dur=0.6, prepare;dur=9.7, app;dur=5206.2",
+      "status": 200,
+      "error": null,
+      "request_id": "19f7d45dea1f4edc85b4be9f835b4ff7",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 5.21
+        }
+      ],
+      "response": {
+        "answer": "**교육개요**\n- 대 상 : 의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자\n신청·이용 방법 정보는 이 자료에서 명확히 확인되지 않았습니다.",
+        "answer_details": "공동주택 관리 안내의 공식 안내 원문입니다.\n\n> ## 공동주택 관리 안내\n> ### 어린이 놀이시설 안전관리\n> #### 안전검사 및 교육기관관련 사이트\n> 검사·교육기관 — 기관명: 한국건설생활환경시험연구원 · 소재지: 부산울산경남지원 (051-974-9675) · 연결사이트주소: http://www.kcl.re.kr\n> 검사·교육기관 — 기관명: 한국기계전기전자시험연구원 · 소재지: 부산지원 (051-336-1566) · 연결사이트주소: http://www.ktc.re.kr\n> 검사·교육기관 — 기관명: (사)대한민국 비상재난안전협회 · 소재지: 서울 강남구 (02-512-3780) · 연결사이트주소: http://www.kedss.kr\n> 교육기관 — 기관명: (사)한국생활안전연합 · 소재지: 서울 서초구 (02-3476-0119) · 연결사이트주소: http://www.safia.org\n> 교육기관 — 기관명: (재)한국재난안전기술원 · 소재지: 서울시 영등포구 (02-780-4624) · 연결사이트주소: http://www.safeleader.org\n> 교육기관 — 기관명: (사)대한민국 비상재난안전협회 · 소재지: 서울 강남구 (02-512-3780) · 연결사이트주소: http://www.kedss.kr\n> 교육인정기관 — 기관명: (사)대한주택관리사협회 · 소재지: 서울 금천구 (02-882-0050) · 연결사이트주소: http://www.khma.org\n> 검사기관 — 기관명: (사)한국생활안전연합 · 소재지: 부산지회 (051-804-5454) · 연결사이트주소: http://www.safety.or.kr\n> ※ 교육수강 신청은 각 기관사이트의 수강신청서 이용\n> ### 공동주택 자체 사이버 안전점검 실시\n> #### 관련법령\n> 주택법 제50조, 재난 및 안전관리기본법 제26조 및 영 제33조\n> #### 점검개요\n> 점검일시 : 상, 하반기 총 2회 이상\n> 대 상 특정관리대상시설 중 의무관리대상시설 ▹자체사이버 안전점검 대상시설 현황 ※ 준공이후 15년이 지난 공동주택 중 300세대 이상, 150대~300세대중 중앙난방방식 또는 E/V가 있는 시설\n> 점검결과 입력 국가재난정보센터 접속(safekorea.go.kr)→특정관리대상 클릭(하단 우측) → 기본정보(시설물관리번호 및 비밀번호) 입력→안전점검결과 입력\n> ### 관리주체 소방 및 방범교육\n> #### 관련법령\n> 주택법 제49조(안전관리계획 및 교육 등) 및 시행규칙 제28조(방범교육 및 안전교육)\n> #### 교육개요\n> 일 시 : 상반기 중 예정\n> 장 소 : 사하구청(예정)\n> 대 상 : 의무관리대상 공동주택단지 경비책임자, 시설물안전관리책임자\n> 강 사 : 사하경찰서, 사하소방서\n> 교육내용 방범교육 : 강도․절도 등의 예방 및 대응 소방에 관한 안전교육 : 소화․연소 및 화재예방\n> ### 입주자대표회의 운영 및 윤리교육\n> #### 관련법령\n> 주택법 제43조의2(입주자대표회의의 운영교육)\n> 주택법시행령 제50조의3(입주자대회의의 운영 및 윤리교육)\n> #### 교육개요\n> 일 시 : 미정\n> 장 소 : 사하구청 예정\n> 대 상 : 의무관리대상 공동주택 동별대표자\n> 강 사 : 대한주택관리사협회 부산시회 전문강사 등\n> 교육내용 공동주택관리규약 및 관리에 필요한 모든 규정의 내용 관리비‧사용료 및 장기수선충당금 등 산정방법 관리현황의 공개방법 및 관리업무의 전산화 등 입주자대표회의의 운영에 필요한 사항",
+        "sources": [
+          {
+            "title": "공동주택 관리 안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0404110000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "missing_requested_field",
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "partial",
+          "label": "요청 항목 확인 필요",
+          "official_source_count": 1,
+          "decision": "partial",
+          "reasons": [
+            "missing_requested_fields"
+          ],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "F017",
+      "turn": 1,
+      "question": "냉장고랑 세탁기 무료 수거 되나요?",
+      "criterion": {
+        "parent_id": 17
+      },
+      "seconds": 7.258,
+      "server_timing": "search;dur=1733.4, verify;dur=2009.2, review_gate;dur=1.5, rerank;dur=3266.8, grounding;dur=50.6, originals;dur=0.0, review;dur=0.7, prepare;dur=146.4, app;dur=7254.6",
+      "status": 200,
+      "error": null,
+      "request_id": "00c107d1ecec4e87a22fce56cf19aa19",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 7.258
+        }
+      ],
+      "response": {
+        "answer": "공식 안내: **대형폐가전 : 무상수거**\n- 냉장고 — 단일수거 가능제품 / 분 류: 온도교환 기기\n- 세탁기 — 단일수거 가능제품 / 분 류: 일반 전기 전자제품\n- ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.",
+        "answer_details": "폐기물의 공식 안내 원문입니다.\n\n> ## 폐기물\n> ### 페가전 무상처리 안내\n> #### 대형폐가전\n> 대형폐가전 : 무상수거\n> 대 상 : 아래 품목\n> 신청방법 : 콜센터(1599-0903), 인터넷(http://www.15990903.or.kr)\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 분 류: 온도교환 기기\n> 단일수거 가능제품 / 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기 — 품 명: 냉장고, 에어컨, 자동판매기, 전기정수기(냉온수기), 제습기\n> 단일수거 가능제품 / TV — 분 류: 디스플레이기기\n> 단일수거 가능제품 / TV — 품 명: TV\n> 단일수거 가능제품 / 복사기 — 분 류: 통신사무기기\n> 단일수거 가능제품 / 복사기 — 품 명: 복사기\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 분 류: 일반 전기 전자제품\n> 단일수거 가능제품 / 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기 — 품 명: 세탁기, 탈수기, 전기오븐, 전자레인지, 런닝머신, 식기건조(세척)기, 공기청청기\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 분 류: 세트 제품\n> 단일수거 가능제품 / 오디오세트(구형 전축), PC세트(본체, 모니터)* — 품 명: 오디오세트(구형 전축), PC세트(본체, 모니터)*\n> 다량수거 가능품목 — 분 류: 5개이상 동시배출시 수거가능 제품\n> 다량수거 가능품목 — 품 명: 컴퓨터, 모니터, 오디오, 프린터, 팩시밀리, 음식물처리기, 전기비데, 전기히터, 연수기, 가습기, 전기다리미, 선풍기, 믹서기, 청소기, 비디오플레이어, 휴대폰, 스캐너, 빔프로젝터, 유무선공유기, 전기밥솥, 토스트기, 전기주전자, 전기온수기, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 전기안마기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기\n> ※ 다량수거가능품목 中 전기안마기의 경우, 안마의자는 제외\n> ※ 고장난 제품은 수거가능하나, 부품 탈취 등 원형훼손 제품(냉장고 냉각기, 세탁기 모터 등 부품 훼손)은 무상 수거가 되지 않음.\n> ※ 단일수거가능제품 배출시 다량수거가능품목(소형 폐가전) 무상수거도 가능 함.\n> #### 소형폐가전\n> 소형폐가전 : 무상수거\n> 대 상 : 아래 품목(40여종)\n> 배출방법 : 단독주택 : 매주 수요일 비닐봉투 등에 담아 문전 배출 공동주택 : 전용수거함이 있는 경우 ▷ 상시 배출 전용수거함이 없는 경우 ▷ 재활용품 배출일자에 배출 레이저프린터, 비레이저프린터, 복사기, 팩시밀리, 컴퓨터자판, 컴퓨터본체, 스캐너, 빔프로젝트, 유무선공유기, 포터블, 오디오본체, 오디오스피커, 오디오차량용, 전기오븐, 전자레인지, 음식물처리기, 식기건조기, 전기비데, 공기청정기, 전기히터, 전기밥솥, 가습기, 다리미, 선풍기, 믹서기, 청소기, 비디오, 토스트기, 전기주전자, 전기후라이팬, 헤어드라이어, 감시카메라, 식품건조기, 족욕기, 재봉틀, 영상게임기, 제빵기, 튀김기, 커피메이커, 약탕기, 탈수기 ※ 옥매트, 전기장판, 조명기기류, 전기장목재재질의 전자제품(디지털피아노 등)은 제외 - 대형폐기물로 배출(처리 수수료 있음)",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "cost"
+          ],
+          "matched_fields": [
+            "cost"
+          ],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-26T10:07:39.464122+00:00"
+}

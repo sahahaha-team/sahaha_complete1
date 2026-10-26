@@ -1,4 +1,4 @@
-"""Read a named facility's phone from its registered, current official page."""
+"""Read a named facility's scalar phone/address from its current official page."""
 from __future__ import annotations
 import re
 from chatbot.faq_targets import match_official_page, priority_entities
@@ -6,7 +6,10 @@ from chatbot.verified_facts import _fresh
 
 
 def facility_contact(query: str, client) -> dict | None:
-    if (not priority_entities(query) or not re.search(r'전화|연락처|번호', query)
+    from chatbot.answer_goal import requested_goals
+    from chatbot.question_intent import asks_location, has_location_unit
+    location = asks_location(query) and set(requested_goals(query)) == {'location'}
+    if (not priority_entities(query) or not (re.search(r'전화|연락처|번호', query) or location)
             or re.search(r'담당\s*(?:부서|자)|팩스|fax|전화로', query, re.I)):
         return None
     url = match_official_page(query)
@@ -27,6 +30,16 @@ def facility_contact(query: str, client) -> dict | None:
                 'sources':[{'title':rows[0].get('title') or '시설 이용안내','url':url,'checked_at':checked,'source_type':'verified_page'}],
                 'is_clarification':False,'degraded':True,'degraded_reason':'audience_mismatch','suggested_questions':[],
                 'evidence':{'status':'insufficient','label':'이용 대상 확인 필요','official_source_count':1,'answer_method':'audience_mismatch'}}
+    if location:
+        addresses = {m[1].strip() for line in body.splitlines()
+                     if (m := re.match(r'^[\s▹▸▶▷]*(?:주소|위치)\s*[:：]\s*(.+)',line))
+                     and has_location_unit('주소: '+m[1]) and len(m[1])<160}
+        if len(addresses)!=1:
+            return None
+        return {'answer':'공식 시설 안내의 주소는 **'+next(iter(addresses))+'**입니다.',
+                'sources':[{'title':rows[0].get('title') or '시설 이용안내','url':url,'checked_at':checked,'source_type':'verified_page'}],
+                'is_clarification':False,'degraded':False,'degraded_reason':None,'suggested_questions':[],
+                'evidence':{'status':'official','label':'공식 시설 위치 확인됨','official_source_count':1,'answer_method':'facility_location'}}
     phones = set()
     inquiry_phones = set()
     for line in body.splitlines():

@@ -49,8 +49,13 @@ def _priority_entity_url(question: str) -> str | None:
 
 
 def priority_source_name(url: str) -> str:
-    return next((str(item.get('source_name') or '') for item in _question_indexes()[1].items
-                 if current_official_url(item['url']) == url), '')
+    names = {current_official_url(item['url']): str(item.get('source_name') or '')
+             for item in _question_indexes()[1].items}
+    if url in names:
+        return names[url]
+    path = Path(__file__).resolve().parents[1] / 'resources' / 'additional_official_pages.json'
+    related = json.loads(path.read_text(encoding='utf-8')) if path.is_file() else []
+    return next((names.get(item.get('parent_url'), '') for item in related if item['url'] == url), '')
 
 
 def find_official_question(question: str) -> dict | None:

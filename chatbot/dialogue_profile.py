@@ -35,11 +35,18 @@ def replace_demographic(query: str) -> str:
 
 def course_audiences(units: list[str]) -> list[str]:
     values = []
+    audience_heading = False
     for unit in units:
+        if unit.startswith('#'):
+            audience_heading = bool(re.fullmatch(r'(?:신청|이용|교육|참여)대상(?:및인원)?', re.sub(r'[\s#]', '', unit)))
+            continue
         unit = re.sub(r'^[\s▹▸▶▷-]+', '', unit)
         match = re.match(r'(?:(?:이용|교육|참여|신청)\s*)?대\s*상\s*[:：]\s*(.+)', unit)
         if match:
             values.append(re.split(r'[▹▸▶▷]', match[1], maxsplit=1)[0].strip())
+        elif audience_heading and re.search(r'어린이|성인|학생|주민|구민|세\s*이상', unit):
+            values.append(unit)
+        audience_heading = False
     return values
 
 

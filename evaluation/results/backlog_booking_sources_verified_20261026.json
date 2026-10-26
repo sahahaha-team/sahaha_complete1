@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+    "checked_at": "2026-10-26T04:07:43.999828+00:00",
+    "verified_at": "2026-10-26T10:08:50.738693+00:00",
+    "body_sha256": "c76d79fb25468a677c0be4cd11c82533250e520120f072e3f9ae1cc4bac8d674",
+    "same_as_direct_http": true
+  },
+  {
+    "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+    "checked_at": "2026-10-26T09:48:45.651175+00:00",
+    "verified_at": "2026-10-26T10:08:50.756516+00:00",
+    "body_sha256": "e39b294cd0b2f583cdab394e08c74e99a5f2b692b7e3b868d9c435ca69881281",
+    "same_as_direct_http": true
+  }
+]

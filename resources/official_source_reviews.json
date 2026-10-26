@@ -101,5 +101,22 @@
     "reason": "구청 성인접종 페이지의 어린이12세 이하 대상은 질병관리청2026–2027절기6개월–14세 국가사업 안내와 불일치. 복합 대상행은 제외하고 장소·접종종류별 나머지 정보를 유지. 현행 국가사업을 부산시 추가지원 자격으로 대체하지 않음.",
     "verification_reference": "https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1",
     "user_warning": "원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요."
+  },
+  {
+    "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207020100",
+    "reviewed_at": "2026-10-26",
+    "status": "superseded",
+    "marker": "(?s)4세\\s*이상\\s*12세\\s*이하.*전달\\s*1일\\s*9시",
+    "unverified_fields": [
+      "method",
+      "schedule",
+      "hours",
+      "eligibility",
+      "conditions"
+    ],
+    "unverified_line_pattern": "4세\\s*이상\\s*12세\\s*이하|개인\\s*12명|1차\\(10:00|전달\\s*1일\\s*9시",
+    "reason": "이전 예약 페이지는 대상4~12세·개인12명·전달예약이며 현행 이용안내/신규예약1207030000은4~13세·개인10명·3개월전예약으로 다름. 동일시설임을 이유로 대상/슬롯을 섞지 않음.",
+    "verification_reference": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+    "user_warning": "이전 예약 페이지의 대상·시간·예약 시점이 현재 안내와 달라 해당 항목은 제외했습니다. 현재 예약안내 및 예약 페이지에서 확인해 주세요."
   }
 ]

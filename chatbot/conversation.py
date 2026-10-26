@@ -288,6 +288,13 @@ class ChatBot:
         capability = unavailable_capability(resolved_message)
         if capability:
             return capability
+        from chatbot.fire_booking import fire_booking
+        booking = fire_booking(resolved_message, self.retriever.db.client)
+        if booking:
+            if booking.get('is_clarification'):
+                return self._clarification_result(session_id, user_message, resolved_message, booking)
+            self.remember_contact_exchange(session_id, user_message, booking, resolved_message)
+            return booking
         from chatbot.facility_directory import facility_directory
         directory = facility_directory(resolved_message, self.retriever.db.client)
         if directory:

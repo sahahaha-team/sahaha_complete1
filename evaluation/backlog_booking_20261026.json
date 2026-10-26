@@ -1,0 +1,98 @@
+{
+  "protocol": {
+    "population": "developer_derived_booking_scope_and_neighbours",
+    "grading": "실제 신청 진입·대상·인증·시점을 공식 원문/정적 동작과 대조. C/P/I를 충분으로 합산하지 않음"
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "FIRE",
+      "turns": [
+        "소방 체험 어떻게 신청해",
+        "아이는 8살",
+        "그럼 전화번호는?",
+        "장소는?"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "EDU",
+      "turns": [
+        "소방 교육 하는방법 알려줘",
+        "아니 일반 주민이야",
+        "아이는 8살",
+        "아니 12살이야"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "ADULT",
+      "turns": [
+        "소방 체험 어떻게 신청해",
+        "성인",
+        "그럼 장소는?"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "NAMED",
+      "turns": [
+        "소방특화 들락날락 체험 성인 신청방법"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "AGE13",
+      "turns": [
+        "소방특화 들락날락 13살 예약 방법 알려줘"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "AGE14",
+      "turns": [
+        "소방특화 들락날락 14살 예약 방법 알려줘"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "LIVE",
+      "turns": [
+        "소방특화 들락날락 지금 남은 예약 자리가 몇 개야?"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "MEMBER",
+      "turns": [
+        "공동주택 소방교육 관리자 신청방법"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "F017",
+      "turns": [
+        "냉장고랑 세탁기 무료 수거 되나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    }
+  ]
+}

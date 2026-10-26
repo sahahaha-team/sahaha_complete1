@@ -413,9 +413,10 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
                 sources = json.loads(sources)
             except (ValueError, TypeError):
                 sources = []
-        if isinstance(sources, list) and len(sources) == 1:
-            url = sources[0].get('url', '') if isinstance(sources[0], dict) else sources[0]
-            name = priority_source_name(url) if isinstance(url, str) else ''
+        if isinstance(sources, list) and sources:
+            urls = [s.get('url', '') if isinstance(s, dict) else s for s in sources]
+            names = {priority_source_name(url) if isinstance(url, str) else '' for url in urls}
+            name = next(iter(names)) if len(names) == 1 and '' not in names else ''
             if (name and not priority_entities(previous_query) and service_names(name)
                     and service_names(name) <= service_names(previous_query)):
                 previous_query += ' ' + name
