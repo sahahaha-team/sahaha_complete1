@@ -89,6 +89,9 @@ def _targets() -> list[tuple[str, str]]:
 
 def confident_official_page(question: str) -> str | None:
     """A registered question identifies a business, never its factual answer."""
+    collection = collection_guide(question)
+    if collection:
+        return collection
     normalized = _normalize(question)
     exact = {url for candidate, url in _targets() if candidate == normalized}
     if exact:
@@ -105,6 +108,18 @@ def confident_official_page(question: str) -> str | None:
     best = max((score for score, _ in scores), default=0)
     urls = {url for score, url in scores if score >= max(.92, best - .01)}
     return next(iter(urls)) if len(urls) == 1 else None
+
+
+def collection_guide(question: str) -> str | None:
+    """Only navigate an explicit free-appliance collection request."""
+    text = _normalize(question)
+    if (re.search(r'무료|무상',text) and re.search(r'수거|버리|처리|가져가',text)
+            and re.search(r'폐가전|가전|냉장고|세탁기|에어컨',text)
+            and not re.search(r'유상|유료|수수료|스티커|지원|보조|구매|보험|축제',text)):
+        from chatbot.query_subject import service_names
+        if service_names(question) <= {'냉장고','세탁기','대형폐가전','소형폐가전','대형폐기물','쓰레기'}:
+            return 'https://www.saha.go.kr/portal/contents.do?mId=0405050104'
+    return None
 
 
 def match_official_page(question: str) -> str | None:

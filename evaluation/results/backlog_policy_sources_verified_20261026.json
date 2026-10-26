@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-26T13:07:05.153645+00:00",
+  "sources": [
+    {
+      "url": "https://www.mohw.go.kr/menu.es?mid=a10710030100",
+      "status": 200,
+      "last_checked_at": "2026-10-26T12:50:18.680764+00:00",
+      "body_sha256": "12b8e09b749c51076fa3e509ac252e4ee26e4e212cbb148afea23f5123d1d2e0",
+      "db_body_sha256": "12b8e09b749c51076fa3e509ac252e4ee26e4e212cbb148afea23f5123d1d2e0",
+      "same_body": true,
+      "policy_fields": [
+        "18세 이상의 장애인연금법상 중증장애인 중 본인과 배우자의 소득과 재산을 합산한 금액(소득인정액)이 선정기준액 이하인 사람",
+        "신청일이 속한 월 당시, 18세 이상인 사람(신청일이 속하는 월 말일까지 18세가 되는 자는 18세 이상으로 봄)",
+        "선정기준액(2026년) : 배우자가 없는 중증장애인 140만원, 배우자가 있는 중증장애인 224만원",
+        [
+          "140",
+          "224"
+        ]
+      ]
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0504020200",
+      "status": 200,
+      "last_checked_at": "2026-10-26T07:52:50.023955+00:00",
+      "body_sha256": "626b34686d3c539f584849742d6146ad9250c87d2ecb011e7904d70713ab069c",
+      "db_body_sha256": "626b34686d3c539f584849742d6146ad9250c87d2ecb011e7904d70713ab069c",
+      "same_body": true,
+      "policy_fields": null
+    },
+    {
+      "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050104",
+      "status": 200,
+      "last_checked_at": "2026-10-26T07:46:24.06431+00:00",
+      "body_sha256": "0153c42fa9095ab7f1695eac15c47116021b0a92e81fa4ff82aec69883779056",
+      "db_body_sha256": "0153c42fa9095ab7f1695eac15c47116021b0a92e81fa4ff82aec69883779056",
+      "same_body": true,
+      "policy_fields": null
+    }
+  ]
+}

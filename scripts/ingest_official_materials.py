@@ -45,6 +45,9 @@ REPORTS = {
 
 
 def _official_url(url: str) -> bool:
+    from chatbot.policy_supplement import POLICY
+    if url == POLICY:
+        return True  # One reviewed national guide; not arbitrary go.kr sites.
     parsed = urlparse(url)
     return parsed.scheme == "https" and (parsed.hostname == "saha.go.kr" or
         (parsed.hostname or "").endswith(".saha.go.kr"))
@@ -91,7 +94,13 @@ def _fetch_page(target: tuple[str, str]):
         response.encoding = response.apparent_encoding or "utf-8"
         soup = BeautifulSoup(response.text, "lxml")
         crawler = object.__new__(SahaCrawler)
-        content = crawler._extract_plain_content(soup)
+        from chatbot.policy_supplement import POLICY, policy_content, policy_fields
+        if url == POLICY:
+            if not policy_fields(response.text, datetime.now().year):
+                raise ValueError('중앙 제도 원문의 현행 연도·대상 구조를 확인하지 못함')
+            content = policy_content(response.text)
+        else:
+            content = crawler._extract_plain_content(soup)
         title = crawler._extract_title(soup)
         attachments = crawler._extract_attachments(soup, url)
         if len(content.strip()) < 80:

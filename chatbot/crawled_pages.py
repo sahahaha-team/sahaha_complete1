@@ -87,10 +87,17 @@ class CrawledPageIndex:
 
     def _snapshot(self):
         with self._lock:
-            if self._loaded_at is None and time.monotonic() >= self._retry_at:
+            if self._loaded_at is None and not self._retry_at:
                 # Only the first load waits; subsequent refreshes leave the
                 # previous snapshot available to concurrent consultations.
                 self._load_pages()
+            elif (self._loaded_at is None and time.monotonic() >= self._retry_at
+                  and not self._refreshing):
+                # After a failed startup load, do not rebuild every original
+                # inside a resident's request. Other readers still verify the
+                # actual source; this empty snapshot is never marked fresh.
+                self._refreshing = True
+                threading.Thread(target=self._load_pages, daemon=True, name="page-recovery").start()
             elif (self._loaded_at is not None and time.monotonic() >= self._retry_at
                   and time.monotonic() - self._loaded_at >= 300 and not self._refreshing):
                 self._refreshing = True

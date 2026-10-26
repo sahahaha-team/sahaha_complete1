@@ -1,0 +1,102 @@
+{
+  "protocol": {
+    "population": "F017_F029_and_derived_neighbours",
+    "grading": "개발 AI 공식 원문 대조. 개인 수급 확정과 충분 기본자격 안내를 구분하고 C/P/I는S에 합산하지 않음"
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "F029",
+      "turns": [
+        "장애인연금은 누가 신청할 수 있나요?"
+      ],
+      "criterion": {
+        "parent_id": 29
+      }
+    },
+    {
+      "id": "PENSION",
+      "turns": [
+        "장애인 연금 신청 대상 알려줘"
+      ],
+      "criterion": {
+        "parent_id": 29
+      }
+    },
+    {
+      "id": "AGE",
+      "turns": [
+        "장애인연금은 몇 살부터 신청할 수 있어?"
+      ],
+      "criterion": {
+        "parent_id": 29
+      }
+    },
+    {
+      "id": "F017",
+      "turns": [
+        "냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "PARA",
+      "turns": [
+        "냉장고랑 세탁기 무료 수거 되나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "DAMAGE",
+      "turns": [
+        "모터를 뺀 세탁기도 무료로 가져가요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "METHOD",
+      "turns": [
+        "냉장고 무료 방문수거 신청은 어디로 해요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "DOCS",
+      "turns": [
+        "냉장고 무료 수거하려면 서류를 가져가야 하나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "PAID",
+      "turns": [
+        "냉장고 500ℓ이상 처리 수수료는 얼마인가요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "FIRE",
+      "turns": [
+        "소방 체험 어떻게 신청해",
+        "아이는8살",
+        "그럼 전화번호는?",
+        "장소는?"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    }
+  ]
+}

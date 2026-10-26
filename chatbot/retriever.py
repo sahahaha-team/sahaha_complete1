@@ -368,7 +368,7 @@ class HybridRetriever:
                     'url,last_checked_at,content,raw_html,attachments',urls=set(urls))
                 originals = {row["url"]: row for row in rows}
             except Exception as exc:
-                logger.warning("출처 확인 시각 조회 실패: %s", exc)
+                logger.warning("출처 확인 시각 조회 실패 (%s)", type(exc).__name__)
                 verification_failed = True
         from chatbot.freshness import source_max_age_days
         age_days = source_max_age_days(query)

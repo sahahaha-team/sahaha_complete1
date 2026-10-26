@@ -1,5 +1,6 @@
 """Read current originals, retaining compatibility before the HTML migration."""
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,17 @@ def read_raw_pages(client, fields: str, *, url=None, urls=None, limit=None, offs
             query = query.order(order)
         if offset is not None and count is not None:
             query = query.range(offset, offset + count - 1)
-        return query.execute().data or []
+        for attempt in range(2):
+            try:
+                return query.execute().data or []
+            except Exception as exc:
+                code=str(getattr(exc,'code',''))
+                if attempt or code not in {'500','502','503','504','520','521','522','523','524'}:
+                    raise
+                # Read-only GET, once. Never reuse stale facts, retry writes,
+                # or treat authorization/schema errors as temporary outages.
+                logger.warning('공식 원문 일시 조회 오류: status=%s; 1회 재확인',code)
+                time.sleep(.15)
     try:
         return read(fields)
     except Exception as exc:

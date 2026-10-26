@@ -403,6 +403,26 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
     ancestry = heading_path(whole_units,whole_units.index(units[0])) if units and units[0] in whole_units else ''
     if not topic_support({'content':'\n'.join(units)+' '+ancestry,'metadata':document.get('metadata') or {}},keywords)[0]:
         return None
+    if (goal == 'method' and set(requested_goals(query)) <= {'method','cost'}
+            and re.search(r'무료|무상',query) and not has_product_damage(query)):
+        # An owned free-collection field and actual product rows establish
+        # this route. A different product's free paragraph cannot do so.
+        products=service_names(query) & {'냉장고','세탁기'}
+        free=[(i,u) for i,u in enumerate(units) if re.fullmatch(r'대형폐가전\s*[:：]\s*(?:무상|무료)수거',u)]
+        if products and len(free)==1:
+            i,free_unit=free[0]
+            owner=heading_path(units,i)
+            own=[u for j,u in enumerate(units) if heading_path(units,j)==owner]
+            rows=[u for u in own if ' — ' in u and re.match(r'품\s*명\s*:',u.split(' — ',1)[1])]
+            methods=[u for u in own if re.match(r'신청방법\s*[:：]',u) and field_matches('method',u,query)]
+            exceptions=[u for u in own if QUALIFICATION.match(u) and re.search(r'훼손|탈취|제외|되지\s*않음',u)]
+            if (all(any(p in compact(u.split(' — ',1)[1]) for u in rows) for p in products)
+                    and len(methods)==1 and exceptions
+                    and all(source_unit_complete(u) for u in exceptions)):
+                answer='**'+free_unit+'**\n'+'\n'.join('- '+u for u in methods+exceptions)
+                if len(answer)<=MAX_BRIEF_LENGTH:
+                    return {'answer':answer,'answer_details':'\n'.join('> '+u for u in body.splitlines()),
+                            'documents':[document],'is_clarification':False,'degraded':False,'answer_method':'structured_source'}
     if goal == 'location':
         areas = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동', query)
         rows = [u for u in units if ' — ' in u and any(area in compact(u) for area in areas)]

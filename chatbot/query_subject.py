@@ -20,6 +20,7 @@ WEAK_WORDS.update("어떤 얼마나 몇 며칠 한참 대신 직접 없이 장�
 WEAK_WORDS.update({'민원서류','계속'})
 WEAK_WORDS.update({'엄마','아빠','어머니','아버지','공식','부탁'})
 WEAK_WORDS.add('순서')
+WEAK_WORDS.update({'해요', '하나요'})
 WEAK_WORDS.update({'기한','퍼센트','비율','연락','요청','진행'})
 WEAK_WORDS.update({'의미','방문','대표','대표전화','전화번호'})
 WEAK_WORDS.update({'기부금액', '이내'})  # Amount/bound fields, not separate benefits.
@@ -189,6 +190,7 @@ def query_keywords(query: str, words: Iterable[str]) -> set[str]:
     # before another noun. Preserve the explicitly written request noun;
     # do not promote arbitrary character fragments to service names.
     if re.search(r'(?<![가-힣])수거(?=\s|는|은|를|가|이|해|하|[?？]|$)|(?:방문|무상)\s*수거', subject):
+        topics -= {'방문수거', '무상수거'}
         topics.add('수거')
     if re.search(r'가구.*(?:버리|배출)|소파.*(?:버리|배출|수수료|비용)',query):
         return {'대형폐기물'}
@@ -287,6 +289,7 @@ def substantive_keywords(words: Iterable[str]) -> set[str]:
 
 def fallback_keywords(query: str) -> set[str]:
     text = subject_query(query)
+    text = re.sub(r'(?:해요|하나요)\s*[?？.!]*$', ' ', text)
     text = re.sub(r"알려(?:주세요|줘)?|어떻게(?:해|하나요)?|무엇|뭐야|좀", " ", text)
     words = []
     for word in re.findall(r"[가-힣A-Za-z0-9]+", text):
