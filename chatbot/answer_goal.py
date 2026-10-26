@@ -4,7 +4,7 @@ from __future__ import annotations
 import re
 from functools import lru_cache
 
-from chatbot.question_intent import asks_location, asks_opening_hours
+from chatbot.question_intent import asks_location, asks_opening_hours, is_collection_pickup
 
 GOAL_WORDS = {
     "medical_details": ("처방", "약명", "약품명", "복용량", "용량", "복용법"),
@@ -55,6 +55,8 @@ def answer_goal(query: str) -> str | None:
     from chatbot.query_subject import interpret_query
     query = interpret_query(query)
     compact_query = query.replace(' ', '')
+    if re.search(r'무료|무상', compact_query) and is_collection_pickup(query):
+        return 'cost'
     if (re.search(r'\d{1,2}(?:세|살)',compact_query) and '예약할수있' in compact_query
             and not re.search(r'방법|절차|서류|수수료|언제|시간',compact_query)):
         return 'eligibility'
@@ -224,7 +226,8 @@ def answer_goal(query: str) -> str | None:
     if any(word in query for word in ("서류", "준비물", "구비", "준비해야")) and not any(word in query for word in ("발급", "신청", "어떻게")):
         return "documents"
     if any(word in query for word in ("준비물", "구비", "준비해야", "필요한 서류")) or (
-            re.search(r'가져가|가져갈',query) and not re.search(r'수거|가져가.*서비스|와서.*가져가',query)):
+            re.search(r'가져가|가져갈',query) and not is_collection_pickup(query)
+            and not re.search(r'수거|가져가.*서비스|와서.*가져가',query)):
         return "documents"
     if re.search(r'통행료|입장료|사용료', query) and re.search(r'무료|무상|면제|얼마|금액|할인|감면', query):
         return 'cost'
@@ -286,7 +289,8 @@ def requested_goals(query: str) -> tuple[str, ...]:
         for goal, pattern in extra:
             field_query = re.sub(r'제외\s*대상', '', query) if goal == 'eligibility' and primary == 'conditions' else query
             if (goal not in goals and re.search(pattern, field_query)
-                    and not (goal == 'documents' and re.search(r'수거|가져가.*서비스|와서.*가져가',query))
+                    and not (goal == 'documents' and (is_collection_pickup(query) or
+                        (re.search(r'수거|가져가.*서비스|와서.*가져가',query) and not re.search(r'서류|준비물|지참|구비',query))))
                     and not (primary in ('precautions','hours','location','specifications') and goal == 'method')
                     and not (primary == 'conditions' and goal == 'method' and not re.search(r'어떻게|방법|어디',query))
                     and not (primary == 'conditions' and goal == 'schedule' and '불이익' in query and not re.search(r'언제|날짜|며칠|몇일',query))

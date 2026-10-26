@@ -23,6 +23,19 @@ _PLACE_ENTITY = re.compile(
 )
 
 
+def is_collection_pickup(query: str) -> bool:
+    """Taking an appliance away is not bringing application documents."""
+    text = re.sub(r'\s+', '', query or '')
+    return bool(re.search(r'가져가|가져갈', text)
+                and re.search(r'가전|폐기물|쓰레기|냉장고|세탁기|에어컨|소파|매트리스|텔레비전|TV', text, re.I)
+                and not re.search(r'서류|신분증|준비물|지참|구비', text))
+
+
+def has_product_damage(query: str) -> bool:
+    text = re.sub(r'\s+', '', query or '')
+    return bool(re.search(r'훼손|파손|분해|(?:부품|모터|냉각기).{0,6}(?:빼|뺀|뽑|없|떼|탈취)', text))
+
+
 def asks_location(query: str) -> bool:
     # Do not concatenate '공장 소음' into a spurious '장소' request.
     if re.search(r'(?:받는|이용하는)\s*데\s*(?:돈|비용|요금|수수료)', query or '') and not re.search(r'어디|장소|위치|주소',query or ''):

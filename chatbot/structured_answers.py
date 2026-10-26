@@ -11,7 +11,7 @@ from chatbot.answer_goal import answer_goal, requested_goals
 from chatbot.answer_completion import source_unit_complete, QUALIFICATION
 from chatbot.concise_answers import _source_units, named_section_bounds, topic_section_bounds, section_bounds, MAX_BRIEF_LENGTH
 from chatbot.query_subject import compact, SERVICE_NAMES, service_names
-from chatbot.question_intent import has_opening_hours, has_location_unit
+from chatbot.question_intent import has_opening_hours, has_location_unit, has_product_damage
 from chatbot.source_scope import focus_units, focus_terms, detail_section_bounds, normalize_plain_source
 
 FIELD = {
@@ -49,7 +49,7 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
         if unit.startswith('정의:') or '적용개시일' in unit or '공시' not in unit + context:
             return False
     scoped = context + ' ' + unit
-    damaged = bool(re.search(r'훼손|파손|분해|부품.{0,5}(?:빼|없|탈취)',request))
+    damaged = has_product_damage(query)
     if damaged and goal in ('cost','eligibility','conditions'):
         if not re.search(r'훼손|파손|탈취|분해',unit):
             return False
@@ -295,8 +295,8 @@ def explicit_table_answer(query: str, units: list[str], title: str) -> str | Non
                 meaning = '이 표에서는 대상이 아닌 것으로 표시되어 있습니다.'
             return label + ': **' + mark.strip() + '** — ' + meaning
     if (answer_goal(query) == 'cost' and re.search(r'무료|무상',query)
-            and not re.search(r'훼손|파손|분해|부품.{0,5}(?:빼|없|탈취)',request)):
-        proofs, exclusions = [], []
+            and not has_product_damage(query)):
+        proofs, exclusions, free_rules = [], [], []
         for row in rows:
             owner, field = row.split(' — ',1)
             if not re.match(r'품\s*명\s*:',field):
@@ -312,9 +312,19 @@ def explicit_table_answer(query: str, units: list[str], title: str) -> str | Non
                               (compact(owner) in compact(u) or any(compact(x) in compact(u) for x in matches)) and len(u)<170
                               and not ('품목 中' in u and not any(compact(x) in compact(u) for x in matches))]
             proofs.append(proof)
+            from chatbot.source_hierarchy import heading_path
+            row_index = units.index(row)
+            path = heading_path(units, row_index)
+            owned_free = [u for i, u in enumerate(units[:row_index])
+                          if heading_path(units, i) == path
+                          and re.fullmatch(r'[^:：]{2,40}\s*[:：]\s*(?:무상|무료)(?:수거|처리)?[.]?',u)
+                          and compact(u.split(':',1)[0].split('：',1)[0]) in compact(path)]
+            free_rules.append(owned_free[-1] if owned_free else None)
             exclusions.extend(u for u in qualifications[:2] if u not in exclusions)
         if proofs:
             proof = '\n'.join('- '+u for u in proofs+exclusions)
+            if all(free_rules):
+                proof = '공식 안내: **' + ' / '.join(dict.fromkeys(free_rules)) + '**\n' + proof
             field_details = {t for t in details if not any(t in compact(u) for u in units if u.startswith('#'))}
             if all(t in compact(proof) for t in field_details):
                 return proof if len(proof) <= MAX_BRIEF_LENGTH else None

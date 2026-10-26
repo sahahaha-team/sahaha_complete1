@@ -24,8 +24,29 @@ class FieldCompletionTests(unittest.TestCase):
         self.assertIsNotNone(r)
         for term in ('냉장고','세탁기','온도교환','일반 전기','원형훼손','되지 않음'):
             self.assertIn(term,r['answer'])
+        self.assertIn('공식 안내: **대형폐가전 : 무상수거**',r['answer'])
         units=_source_units(SOURCES['0405050104']['body'].splitlines())
         self.assertIsNone(explicit_table_answer('훼손된 세탁기 무료 수거',units,'폐기물'))
+
+    def test_a_negative_exception_or_another_section_cannot_prove_free_collection(self):
+        body=SOURCES['0405050104']['body']
+        units=_source_units(body.replace('대형폐가전 : 무상수거','대형폐가전 안내').splitlines())
+        answer=explicit_table_answer('냉장고랑 세탁기 무료 수거 되나요?',units,'폐기물')
+        self.assertIsNotNone(answer)
+        self.assertNotIn('공식 안내: **',answer)
+
+    def test_component_removal_does_not_receive_a_positive_free_answer(self):
+        from chatbot.answer_goal import answer_goal, requested_goals
+        from chatbot.question_intent import has_product_damage
+        for q in ('모터를 뺀 세탁기도 무료로 가져가요?', '냉각기가 없는 냉장고 무료 수거 되나요?'):
+            self.assertTrue(has_product_damage(q))
+            self.assertEqual(answer_goal(q),'cost')
+            self.assertNotIn('documents',requested_goals(q))
+            r=brief('0405050104',q,{'세탁기'} if '세탁기' in q else {'냉장고'})
+            self.assertIsNotNone(r)
+            self.assertIn('무상 수거가 되지 않음',r['answer'])
+            self.assertNotIn('공식 안내: **대형폐가전 : 무상수거**',r['answer'])
+        self.assertIn('documents',requested_goals('냉장고 무료 수거하려면 서류를 가져가야 하나요?'))
 
     def test_both_medical_programmes_keep_their_own_targets(self):
         query='미숙아나 선천성이상아의 의료비 지원을 받을 수 있나요?'

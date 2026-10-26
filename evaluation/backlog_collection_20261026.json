@@ -1,0 +1,81 @@
+{
+  "protocol": {
+    "population": "developer_derived_and_F017_supplied_recheck",
+    "grading": "공식 원문 검수. C/P/I는충분 답변에 합산하지 않음"
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "F017",
+      "turns": [
+        "냉장고나 세탁기 같은 대형 폐가전은 무료로 수거해 주나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "PARA",
+      "turns": [
+        "냉장고랑 세탁기 무료 수거 되나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "DAMAGE",
+      "turns": [
+        "모터를 뺀 세탁기도 무료로 가져가요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "COOL",
+      "turns": [
+        "냉각기가 없는 냉장고 무료 수거 되나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "DOCS",
+      "turns": [
+        "냉장고 무료 수거하려면 서류를 가져가야 하나요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "METHOD",
+      "turns": [
+        "냉장고 무료 방문수거 신청은 어디로 해요?"
+      ],
+      "criterion": {
+        "parent_id": 17
+      }
+    },
+    {
+      "id": "CONTACT",
+      "turns": [
+        "대형 쓰레기 담당자 전화만 알려주세요"
+      ],
+      "criterion": {
+        "parent_id": 16
+      }
+    },
+    {
+      "id": "WEEK",
+      "turns": [
+        "사하구 요일별 쓰레기 배출 방법은 어떻게 되나요?"
+      ],
+      "criterion": {
+        "parent_id": 1001
+      }
+    }
+  ]
+}
