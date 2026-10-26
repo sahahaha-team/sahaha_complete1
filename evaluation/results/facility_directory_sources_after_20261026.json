@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+    "last_checked_at": "2026-10-26T08:09:47.428005+00:00",
+    "checked_at": "2026-10-26T09:07:03.488822+00:00",
+    "body_sha256": "b1e9635d1b42b1416e07be1154dc57fedb468e346a5cab7e571ba1e8ac0872e2",
+    "same_as_verified_before": true
+  },
+  {
+    "url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
+    "last_checked_at": "2026-10-26T04:05:26.748205+00:00",
+    "checked_at": "2026-10-26T09:07:03.554460+00:00",
+    "body_sha256": "1739287f696363946d58637578d7c1caeae7c84bdac9bf1152d443ed08406fcb",
+    "same_as_verified_before": true
+  }
+]

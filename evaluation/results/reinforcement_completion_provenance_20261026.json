@@ -1,0 +1,55 @@
+{
+  "assessed_code_commit": "954fdb9edb29c1b60b14cc406463b85a3c9009f4",
+  "started_at": "2026-10-26T08:43:33.002003+00:00",
+  "finished_at": "2026-10-26T09:05:04.312231+00:00",
+  "code_hashes_identical": true,
+  "source_url_count": 109,
+  "source_changes_during_run": {
+    "html_sha256": [],
+    "text_sha256": []
+  },
+  "contact_hashes_unchanged": true,
+  "runtime_directory_hashes": {
+    "data\\department_contacts.json": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd",
+    "data\\staff_directory.json": "e698889da3426ea5c9a866342598c20866772c4795de6d5ea381f740140dd455",
+    "resources\\department_contacts.json": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae"
+  },
+  "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+  "total_final_turns": 152,
+  "scenarios": 129,
+  "unique_question_strings": 137,
+  "grades": {
+    "S": 109,
+    "C": 28,
+    "P": 10,
+    "I": 5
+  },
+  "latency_seconds": {
+    "median": 1.264,
+    "p95_nearest_rank": 2.599,
+    "max": 5.762
+  },
+  "model_calls": 0,
+  "automatic_regressions": {
+    "count": 681,
+    "seconds": 20.978,
+    "log": ".local/directory_tests_verified_20261026.log"
+  },
+  "first_priority_run_preserved": {
+    "turns": 38,
+    "grades": {
+      "S": 14,
+      "C": 14,
+      "P": 5,
+      "I": 4,
+      "E": 1
+    },
+    "raw": "feedback_priority_reinforced_20261026.json",
+    "error": "D08:3 ConnectionError before response/request ID; cause unconfirmed. Whole38 replayed, no individual answer replacement."
+  },
+  "sources_changed_since_previous_evaluation": [
+    "https://www.saha.go.kr/welfare.do",
+    "https://www.saha.go.kr/portal/contents.do?mId=0103050000"
+  ],
+  "conditions": "Web fully initialized and warmed by feature checks; local Ollama/Gemma4 unchanged, no generation calls in these cohorts. Worker alive; incremental crawl completed17:13KST, priority refresh109/110 partial. Offline source comparison overlapped part of supplied-question run. No school server."
+}

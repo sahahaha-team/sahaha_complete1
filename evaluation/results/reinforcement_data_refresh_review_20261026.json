@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-26T08:57:22.360075+00:00",
+  "origin": "Worker refresh existed at turn start; preserved and reviewed without overwriting",
+  "files": {
+    "data/department_contacts.json": {
+      "head_sha256": "638f8eb4de9d63bb2099707efaa7407f52c390979b266d7c4ef72fa72a65d983",
+      "runtime_sha256": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd"
+    },
+    "data/staff_directory.json": {
+      "head_sha256": "ecd784b1c199a77c545dad0ba740f9ff95aabbbd844f90786a21b1da028c1aa2",
+      "runtime_sha256": "e698889da3426ea5c9a866342598c20866772c4795de6d5ea381f740140dd455"
+    },
+    "resources/department_contacts.json": {
+      "head_sha256": "607ec91925534c56ac169836496443a185b1a4708b22d4cdb6513a7746701d23",
+      "runtime_sha256": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae"
+    }
+  },
+  "staff_role_duty_phone_multiset_equal_ignoring_page": true,
+  "contact_role_duty_phone_multisets_equal_ignoring_page": true,
+  "verified_representative_phones_unchanged": true,
+  "portable_export_note": "resources export uses staff-derived department lookup; resident replies use data/department_contacts.json actual representative table and role labels. First exported staff phone is not declared a verified department representative.",
+  "staff_rows": 1139,
+  "departments": 71,
+  "staff_checked_at": "2026-10-26T04:38:31.114927+00:00",
+  "official_spot_check": "reinforcement_staff_spot_check_20261026.json"
+}

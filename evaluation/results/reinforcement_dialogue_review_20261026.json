@@ -1,0 +1,56 @@
+{
+  "assessment": "developer_AI_semantic_review_not_independent",
+  "definition": "Three inputs includes initial question. Last S is separate from original and all subgoals.",
+  "existing_ten_counts": {
+    "multi_turn_scenarios": 10,
+    "initial_goal_sufficient": 5,
+    "initial_goal_sufficient_within_three": 4,
+    "all_requested_goals_complete": 3,
+    "last_turn_sufficient": 7,
+    "insufficient_last_turn": 3,
+    "topic_drift_scenarios": 0,
+    "repeated_clarification_slot_count": 3,
+    "already_answered_condition_repeated_count": 0
+  },
+  "existing_ten_review": "Same original ten conversations reviewed against fresh transcripts; original-goal completion unchanged. D08 location clarification now direct and faster, but a region was not supplied in that original scenario.",
+  "additional_four": [
+    {
+      "id": "LIB",
+      "initial_goal_first_sufficient_input": 2,
+      "within_three": true,
+      "all_requested_goals_complete": true,
+      "last": "S"
+    },
+    {
+      "id": "CLASS",
+      "initial_goal_first_sufficient_input": 1,
+      "within_three": true,
+      "all_requested_goals_complete": false,
+      "last": "S",
+      "reason": "Facility address does not establish the actual classroom of a specific course."
+    },
+    {
+      "id": "HEALTH",
+      "initial_goal_first_sufficient_input": 2,
+      "within_three": true,
+      "all_requested_goals_complete": true,
+      "last": "S"
+    },
+    {
+      "id": "ADULT",
+      "initial_goal_first_sufficient_input": null,
+      "within_three": false,
+      "all_requested_goals_complete": false,
+      "last": "I",
+      "reason": "Adult application source still missing; safe abstention is not success."
+    }
+  ],
+  "additional_counts": {
+    "initial_goal_sufficient": 3,
+    "within_three": 3,
+    "all_requested_goals_complete": 2,
+    "last_sufficient": 3,
+    "insufficient_last": 1
+  },
+  "repeated_already_answered_condition_observed": 0
+}

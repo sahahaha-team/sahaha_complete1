@@ -1,0 +1,94 @@
+{
+  "checked_at": "2026-10-26T09:06:39.306481+00:00",
+  "health": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "tags": [
+    {
+      "name": "gemma4:e4b",
+      "model": "gemma4:e4b",
+      "modified_at": "2026-10-16T17:57:53.9735974+09:00",
+      "size": 6583656505,
+      "digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "capabilities": [
+        "completion",
+        "vision",
+        "audio",
+        "tools",
+        "thinking"
+      ]
+    }
+  ],
+  "resident": [],
+  "directory_sha256": {
+    "data\\department_contacts.json": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd",
+    "data\\staff_directory.json": "e698889da3426ea5c9a866342598c20866772c4795de6d5ea381f740140dd455",
+    "resources\\department_contacts.json": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae"
+  }
+}

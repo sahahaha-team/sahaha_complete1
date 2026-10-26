@@ -1,0 +1,57 @@
+{
+  "started": "post_connection_error_diagnostic",
+  "checked_at": "2026-10-26T09:02:55.848409+00:00",
+  "method": "GET health with one requests.Session at 6.5s spacing; no chat retries or server setting changes",
+  "records": [
+    {
+      "i": 1,
+      "status": 200,
+      "seconds": 0.11
+    },
+    {
+      "i": 2,
+      "status": 200,
+      "seconds": 0.073
+    },
+    {
+      "i": 3,
+      "status": 200,
+      "seconds": 0.12
+    },
+    {
+      "i": 4,
+      "status": 200,
+      "seconds": 0.083
+    },
+    {
+      "i": 5,
+      "status": 200,
+      "seconds": 0.06
+    },
+    {
+      "i": 6,
+      "status": 200,
+      "seconds": 0.052
+    },
+    {
+      "i": 7,
+      "status": 200,
+      "seconds": 0.071
+    },
+    {
+      "i": 8,
+      "status": 200,
+      "seconds": 0.054
+    },
+    {
+      "i": 9,
+      "status": 200,
+      "seconds": 0.059
+    },
+    {
+      "i": 10,
+      "status": 200,
+      "seconds": 0.074
+    }
+  ]
+}

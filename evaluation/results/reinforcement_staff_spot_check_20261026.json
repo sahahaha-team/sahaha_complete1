@@ -1,0 +1,52 @@
+{
+  "assessment": "public_official_staff_spot_check_not_full_recrawl",
+  "requests": [
+    {
+      "page": 11,
+      "checked_at": "2026-10-26T08:52:20.588198+00:00",
+      "html_sha256": "beba011ac2039fd2ae594dd5a37b1bfc534cd8507e84cf9cdb22e37cf42ac8c0",
+      "parsed_rows": 10
+    },
+    {
+      "page": 83,
+      "checked_at": "2026-10-26T08:52:22.096994+00:00",
+      "html_sha256": "f046ad3a37c23dae339f69e3d6fb4a265c65fff35d2e7b4162b706eb6f2cf6f8",
+      "parsed_rows": 10
+    },
+    {
+      "page": 84,
+      "checked_at": "2026-10-26T08:52:22.898751+00:00",
+      "html_sha256": "55d3ab66b496a47247ee4abf38e7e8656ca00238952588b7d59d776f060c1354",
+      "parsed_rows": 10
+    },
+    {
+      "page": 85,
+      "checked_at": "2026-10-26T08:52:23.741952+00:00",
+      "html_sha256": "b6ad91b0c579f9286f97a216ae1023a2e4e42549bbca27f677bdb4a6ed866bb9",
+      "parsed_rows": 10
+    }
+  ],
+  "checks": [
+    {
+      "phone": "051-220-5722",
+      "department": "건강증진과",
+      "exact_role_duty_match": true
+    },
+    {
+      "phone": "051-220-4452",
+      "department": "자원순환과",
+      "exact_role_duty_match": true
+    },
+    {
+      "phone": "051-220-5737",
+      "department": "건강증진과",
+      "exact_role_duty_match": true
+    },
+    {
+      "phone": "051-220-5814",
+      "department": "을숙도문화회관",
+      "exact_role_duty_match": true
+    }
+  ],
+  "staff_snapshot_checked_at": "2026-10-26T04:38:31.114927+00:00"
+}
