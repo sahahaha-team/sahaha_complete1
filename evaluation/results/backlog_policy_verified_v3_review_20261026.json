@@ -67,5 +67,5 @@
       "source_check": "장애인연금은 보건복지부 동일제도18세/월말연령 및2026기준액과 사하구 안내 대조. 폐가전0405050104의 품목별무상/훼손제외/무료접수와0405050103 유상규격별금액, 소방1207030000/1207000000 대상·예약·번호·주소를 각각 대조."
     }
   },
-  "runtime": "Web PID17460, source GET521 observed; initial index load failed and global PAID request synchronously rebuilt512originals. Preserve before recovery fixes."
+  "runtime": "Web PID17460, source GET521 observed; initial index load failed and global PAID request synchronously rebuilt522originals. Preserve before recovery fixes."
 }

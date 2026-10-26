@@ -20,7 +20,16 @@ ROOT = Path(__file__).resolve().parents[1]
 def save_report(path, report):
     temporary = path.with_name(path.name + '.tmp')
     temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-    temporary.replace(path)
+    for attempt in range(5):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if attempt == 4:
+                raise
+            # Windows readers/virus scanners can briefly hold the previous
+            # report open. Retry only the file rename, never the chat POST.
+            time.sleep(.1 * (attempt + 1))
 
 
 def code_hashes():

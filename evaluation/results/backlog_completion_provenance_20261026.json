@@ -1,0 +1,133 @@
+{
+  "assessed_code_commit": "5ced97c1546338d2858b5a668fc00b89a5dc3389",
+  "started_at": "2026-10-26T13:20:48.283820+00:00",
+  "finished_at": "2026-10-26T13:37:15.253155+00:00",
+  "service_code_hashes_identical": true,
+  "runner_sha256": "54cbc8fb1aeadfd7b1818c10186e8ba1ec763c9a49302c5bdf7e0e11c380b1a2",
+  "source_target_count": 112,
+  "source_present_count": 111,
+  "source_missing": [
+    "https://www.saha.go.kr/portal/contents.do?mId=0407020000"
+  ],
+  "source_changes_during_fixed_run": [],
+  "extra_facility_sources": "backlog_final_facility_sources_20261026.json",
+  "contact_hashes_unchanged": true,
+  "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+  "model_digest_unchanged": true,
+  "final_turns": 152,
+  "scenarios": 129,
+  "unique_question_strings": 137,
+  "grades": {
+    "S": 115,
+    "C": 29,
+    "P": 3,
+    "I": 5
+  },
+  "latency_seconds": {
+    "median": 1.1165,
+    "p95_nearest_rank": 1.968,
+    "max": 2.809
+  },
+  "model_calls": 0,
+  "automatic_regressions": {
+    "count": 698,
+    "seconds": 13.308,
+    "meaning": "code_regressions_not_resident_questions"
+  },
+  "dialogues": [
+    {
+      "id": "D01",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 3,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": false,
+      "reason": "준비물은해결했으나실제방문창구는미확인"
+    },
+    {
+      "id": "D02",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 2,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": true,
+      "reason": "백신정정후검증된접종장소안내"
+    },
+    {
+      "id": "D03",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 3,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": true,
+      "reason": "8살확정후예약실행과같은시설위치"
+    },
+    {
+      "id": "D04",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 2,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": true,
+      "reason": "예약실행·12살정정·시설전화"
+    },
+    {
+      "id": "D05",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 1,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": true,
+      "reason": "담당직통후소파접수방법"
+    },
+    {
+      "id": "D06",
+      "initial_goal_sufficient": false,
+      "earliest_initial_goal_turn": null,
+      "within_three_inputs": false,
+      "all_requested_subgoals_sufficient": false,
+      "reason": "대상조건미확정"
+    },
+    {
+      "id": "D07",
+      "initial_goal_sufficient": false,
+      "earliest_initial_goal_turn": null,
+      "within_three_inputs": false,
+      "all_requested_subgoals_sufficient": false,
+      "reason": "대상조건미확정"
+    },
+    {
+      "id": "D08",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 1,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": false,
+      "reason": "프로그램신청과문의전화는안내했으나지역미제공으로시설장소미해결"
+    },
+    {
+      "id": "V07",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 3,
+      "within_three_inputs": true,
+      "all_requested_subgoals_sufficient": true,
+      "reason": "단순긍정으로선택하지않고8살확정후예약실행·위치"
+    },
+    {
+      "id": "V08",
+      "initial_goal_sufficient": true,
+      "earliest_initial_goal_turn": 4,
+      "within_three_inputs": false,
+      "all_requested_subgoals_sufficient": true,
+      "reason": "부모신청조건확정후미성년여권준비물"
+    }
+  ],
+  "dialogue_summary": {
+    "initial_goal_sufficient": 8,
+    "within_three_inputs": 7,
+    "all_subgoals_sufficient": 6,
+    "total": 10
+  },
+  "related13turns": "backlog_policy_verified_v4_reviewed_20261026.json",
+  "preserved_failures": [
+    "backlog_policy_verified_v2_20261026.json",
+    "backlog_policy_verified_v3_20261026.json",
+    "feedback_supplied_backlog_interrupted_20261026.json",
+    "feedback_supplied_backlog_interrupted_pending_20261026.json"
+  ],
+  "conditions": "Worker paused before fixed run, restored only after final source/runtime snapshot.152newHTTPturns; earlier unchanged answer+URLs reuse source reviews with hash checks. No independent user accuracy or generation benchmark."
+}

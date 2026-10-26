@@ -1,0 +1,18 @@
+{
+  "incident": "evaluation_report_atomic_rename_permission_error",
+  "time_kst": "2026-10-26 22:19",
+  "completed_report_rows": 13,
+  "pending_report_rows": 14,
+  "last_pending_question": "F014",
+  "api_response_was_received": true,
+  "finished_cohort": false,
+  "count_as_final_accuracy": false,
+  "actual_error": "PermissionError WinError5 replacing report.json.tmp with report.json",
+  "cause": "Windows destination file access conflict observed; exact holder not identified",
+  "fix": "Only atomic file rename is retried five times with total1.0second configured delay. Chat POST is not retried. Persistent failure retains prior and pending files.",
+  "verification": [
+    "Actual Windows reader lock released after0.25seconds: new report saved in0.313seconds",
+    "Persistent reader lock: bounded PermissionError, old report plus new pending data retained"
+  ],
+  "full_cohort_restarted": true
+}

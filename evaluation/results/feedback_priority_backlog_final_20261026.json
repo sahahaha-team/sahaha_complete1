@@ -1,0 +1,2250 @@
+{
+  "started_at": "2026-10-26T13:31:41.027655+00:00",
+  "commit": "5ced97c1546338d2858b5a668fc00b89a5dc3389",
+  "case_sha256": "c3e80ab59021b6dc785c3ed2488fced09e433bac7435753c21bb74392bf199e3",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "5935f082868e86153baab86cc380e82137487ea10594be7d3ec1c5f36f279cdf",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "50537ee15c1bf267a9a85bdcb158a7eebea694d0c41176825d7b6708e0de2227",
+    "chatbot\\concise_answers.py": "a930033ee5e5daf11ec4442864d0ffca65ce63be26b61a06212d6cb62568b7a9",
+    "chatbot\\contact_directory.py": "7b2f8e8474dc74204263bd05159acb2982f7ef0e536e821296c83065cfc4ec7e",
+    "chatbot\\conversation.py": "43355a109d84ce589582f237a6a39b141288f0c936cf72af8767a85e46428370",
+    "chatbot\\crawled_pages.py": "61130305bed1ac42381e5efb4a9e9bfbada4f82ca86d0e844d099a4ce6565c1e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "761196f32963974b1f443d9f035a93b453bfab72ea621132083dd5b6b27e0b7d",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "16865ba43e11185126e0f46fd5a0e84d7f9cdfb8948e42fe6fba3bead1991f18",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "30338e2c02fbdacee0f8c79eb4734f1519ee561ae52f7a7c0b8a91d8f142ec18",
+    "chatbot\\facility_directory.py": "8371ce9f40c1c0ce1a66a3d29edb0c8a367973e3c7bb79c42ab82612129e3f9e",
+    "chatbot\\faq_targets.py": "46b5976379779f8f72b9fedbe7e2bf8ad8ee006aca6d72ad0cc78fda968d4210",
+    "chatbot\\fire_booking.py": "b9f63cc078ede5c803b7f904a51d82d9d884861f65c03cbcb0e4479b05966f32",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\policy_supplement.py": "e92679b9e364d2722d4eaa199cd6017f670cf055b4913ce229f7ce64d070f367",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "dc73291af6ac7d2de44699a6707a69b995a4df72855d8ee4c101afca9ae8c20d",
+    "chatbot\\question_intent.py": "84526668c0f41961059737d8693e9fd8a8351d40c3c10471f9bd13f4fa12da0d",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "57b77852a5a9ca7fe66e5eae5a18721cd03743dcaea84ef8179885bef00f0282",
+    "chatbot\\retriever.py": "3e4e736b2d35bc4fa924cc0c5669c192324e011b1845cdaefb704c067a239419",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "50157e19c1c98e6348121066ac551095d93291ce57617d8ac61f45ada8490dbc",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "79206b007d002270d9d8e663db12f53e8c2bee8faf3e58b3f8df0269ad85c09f",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "4c0dd73ae965a6ba628399ab195cce17d58936d2c21b97d6f6ce03b7befcf7ab",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "0ff5cab72539daafdf7216a9b018e8948a25b5247e41be7a74d2f8130150b57a",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "c12d0c9efdcf4eb3191141cfb198015abb0b567cd427f221ceb60283cde6b42e",
+    "resources\\department_contacts.json": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "c423ee4ac2d2b7ba231fb7736eb39dab41fe34381eb211920f42093d03b5445a",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "구청 제공100문항과 별도 우선업무/파생 대화. 개발 AI 원문 대조이며 독립 평가 아님",
+    "grading": "S/C/P/I/R/W/E 별도 수동검수; 초안 문장 유사도는 정답 판정에 사용하지 않음",
+    "turn_definition": "최초 질문 포함 사용자 입력 횟수",
+    "source_files": {
+      "data\\official_sources\\2026년 정보공개청구 민원 데이터 분석 결과보고.pdf": "c9de1bb7e5e3f9926b1c603ec665d84a4da9793c088dbd78cb40f66e68a2bf9a",
+      "data\\official_sources\\사하구 홈페이지 방문자 및 검색 통계 분석 결과 보고.pdf": "5954accb59e3eb87f682ab82f5873448d2542d9670407f0555e9186b5e15df50",
+      "data\\official_sources\\사하구 홈페이지_100개 질문.xlsx": "2e31c1d8508d0d4eba4ec3eae62cd8fb00c0aa42a6e94cd3887d35885fac0b1f"
+    }
+  },
+  "records": [
+    {
+      "id": "P1001",
+      "turn": 1,
+      "question": "사하구 요일별 쓰레기 배출 방법은 어떻게 되나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1001,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0405050000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.308,
+      "server_timing": "app;dur=281.9",
+      "status": 200,
+      "error": null,
+      "request_id": "7ffc0f007e3f43ae92874ee4c5b41fd7",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.308
+        }
+      ],
+      "response": {
+        "answer": "요일별 배출 품목은 다음과 같습니다.\n- **월요일**: 플라스틱류(유색페트병포함),비닐류,요구르트병,의류.\n- **수요일**: 투명페트병,골판지류(박스등),기타종이류,종이팩류,유리병류,스티로폼,캔‧고철류,폐형광등,폐건전지등,일반쓰레기(불연성),소형폐가전.\n- **화·목·일요일**: 일반쓰레기(가연성)·음식물쓰레기.\n- **금·토요일**: 배출 금지.\n- 일반·음식물 배출 안내: 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.",
+        "answer_details": "> Home\n> >\n> 분야별정보\n> >\n> 환경/청소\n> >\n> 폐기물\n> 열기\n> 블로그\n> 인스타그램\n> 페이스북\n> 카카오\n> 닫기\n> 인쇄하기\n> 폐기물\n> 생활폐기물처리안내\n> 생활쓰레기 배출요령\n> 쓰레기 종량제는\n> 쓰레기 없는 쾌적한 환경을 만들기 위하여 95년 1월부터 실시하고있는 제도로서 주택의 크기 또는 재산세액에 따라 차등적으로 수수료를 적용하던 종전의 제도와 달리, 배출자에게 본인이 배출있는 쓰레기의 양만큼 비용을 부담하도록 함으로써 스스로 쓰레기를 줄이고 재활용품도 최대한 분리 배출하도록 한 제도입니다.\n> 구민이 지켜야 할 사항\n> 일반쓰레기는 종량제봉투에 음식물쓰레기는 전용용기에 당일 저녁 7시부터 10시까지 대문앞(연립주택은 1층 출입구 밖)에 내어 놓아야 하며, 수거는 밤 10시부터 익일 오전 6시까지 합니다.\n> 재활용품은 종량제봉투에 담지 않으며(일반쓰레기와 혼합배출시 과태료 부과),\n> 재활용품은 반드시 품목별로 분리하여 요일별로\n> 지정된 쓰레기만 배출하여야 합니다.\n> 쓰레기 배출요일은 다음과 같습니다.\n> 요일별 쓰레기 배출요령 다운로드\n> 쓰레기 배출요일과 쓰레기 종류 표입니다.\n> 배출요일\n> 월\n> 화\n> 수\n> 목\n> 금\n> 토\n> 일\n> 쓰레기\n> 종류\n> 재활용품\n> (플라스틱류(유색페트병\n> 포함),비닐류,\n> 요구르트병, 의류)\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 재활용품(투명페트병,골판지류\n> (박스 등), 기타종이류,\n> 종이팩류,유리병류, 스티로폼,\n> 캔‧고철류, 폐형광등,폐건전지등),\n> 일반쓰레기(불연성), 소형폐가전\n> 일반쓰레기 (가연성)\n> 음식물쓰레기\n> 배출\n> 금지\n> 배출\n> 금지\n> 일반쓰레기\n> (가연성)\n> 음식물쓰레기\n> 이럴때는 쓰레기를 수거하지 않습니다.\n> 일반쓰레기와 재활용품을 분리배출하지 않은 경우\n> 재활용품을 품목(종류)별로 분리하지 않고 내어 놓는 경우\n> 일반쓰레기 배출시 규격봉투를 사용하지 않은 경우\n> 음식물쓰레기 등의 수분(물기)을 제거하지 않은 경우\n> 대형폐기물(냉장고, 장롱, 책상 등)\n> 기타사항\n> 종량제 규격봉투를 사용하지 않고 배출하거나, 무단투기 및 소각행위시에는 100만원 이하의 과태료가 부과됩니다.\n> 생활폐기물 수집·운반업체\n> 생활폐기물 수집 및 운반업체 표입니다.\n> 업체명\n> 담당구역\n> 전화번호\n> 세화산업\n> 괴정 1,2,3동, 하단 1,2동\n> 051-264-8301\n> 미진산업\n> 괴정4동, 당리동, 신평1동, 장림2동, 다대 1,2동\n> 051-264-0894\n> 동진산업\n> 신평2동, 장림1동, 구평동, 감천 1,2동\n> 051-207-2030\n> 쓰레기 규격봉투 가격표 (시행일 : 2012.9.14., 금액:원)\n> 쓰레기 규격봉투 가격표\n> 규격\n> 5ℓ\n> 10ℓ\n> 20ℓ\n> 30ℓ\n> 50ℓ\n> 75ℓ\n> 불연성쓰레기\n> 전용마대 (30ℓ)\n> 건설폐기물\n> 마대 (30ℓ)\n> 일반\n> 220\n> 430\n> 850\n> 1,280\n> 2,070\n> 3,080\n> 1,280\n> 3,000\n> ※ 쓰레기 규격봉투 100ℓ는 2020년 10월 중순부터 제작 중단. (단, 판매처 재고물량에 한해 구입 및 사용 가능)\n> 음식물쓰레기 전용용기 가격표 및 수수료\n> 음식물쓰레기 전용용기 가격표 및 수수료 표입니다.\n> 구분\n> 일반가정용\n> 업소용\n> 공동주택\n> 업소용\n> 용기규격\n> 3ℓ\n> 5ℓ\n> 20ℓ\n> 120ℓ\n> 120ℓ\n> 용기 판매액\n> 6,500원\n> 7,000원\n> 16,000원\n> 개별구매\n> 수거업체 문의\n> 용기 판매처\n> 새마을금고\n> 개별구매\n> 수거업체 문의\n> 납부필증(칩) 수수료\n> 240원/개\n> 400원/개\n> 2,000원/매\n> 8,400원/매\n> 12,000원/개\n> 납부필증(칩) 판매처\n> 종량제 봉투 판매소\n> 새마을금고\n> 수거업체\n> (동진, 미진, 세화)\n> ※용기판매 가격은 업체사정에 따라 변경될 수 있음.\n> 만족도조사\n> 이 페이지에서 제공하는 정보에 만족하십니까?\n> 매우만족(5점)\n> 만족(4점)\n> 보통(3점)\n> 불만족(2점)\n> 매우불만족(1점)\n> 의견\n> 담당자\n> 자원순환과\t\t\t\n> \t\t\t\n> \t\t\t\t\n> \t\t\t\t(051-220-4432)\n> 최근업데이트\n> 2026-01-13",
+        "sources": [
+          {
+            "title": "생활쓰레기 배출요령",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050101",
+            "category": "환경/청소",
+            "service_type": "환경",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "verified_table",
+          "status": "official",
+          "label": "최근 공식 표의 해당 항목 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1002",
+      "turn": 1,
+      "question": "소방특화 들락날락 체험은 어떻게 예약하나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1002,
+        "source_url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.651,
+      "server_timing": "app;dur=624.9",
+      "status": 200,
+      "error": null,
+      "request_id": "ee6786e413be47debd8f031d9698db41",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.651
+        }
+      ],
+      "response": {
+        "answer": "확인된 교육은 4세 이상 13세 이하 어린이 대상입니다.\n이 대상의 교육을 찾으시나요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "소방특화 들락날락 체험은 어떻게 예약하나요? 체험 (4세 이상 13세 이하 어린이 대상)",
+          "일반 주민 소방특화 들락날락 체험은 어떻게 예약하나요? 체험"
+        ]
+      }
+    },
+    {
+      "id": "P1003",
+      "turn": 1,
+      "question": "작은도서관 교육 프로그램은 어떻게 예약하나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1003,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 1.345,
+      "server_timing": "search;dur=791.2, verify;dur=460.2, review_gate;dur=2.3, grounding;dur=7.4, originals;dur=0.0, review;dur=1.3, prepare;dur=6.2, app;dur=1316.0",
+      "status": 200,
+      "error": null,
+      "request_id": "11e22f2e9b0a4482a70f291e80f3565a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.345
+        }
+      ],
+      "response": {
+        "answer": "**작은도서관 프로그램 운영 안내**\n- 접수방법 : 온라인접수(사하구 통합예약)\n- 대 상 : 사하구민",
+        "answer_details": "작은도서관의 공식 안내 원문입니다.\n\n> ## 작은도서관\n> ### 작은도서관 프로그램 운영 안내\n> 대 상 : 사하구민\n> 수 강 료 : 무료(단, 교재 및 재료비 별도)\n> 운영기간 : 연중\n> 독서문화 프로그램 — 구 분: 겨울방학\n> 독서문화 프로그램 — 운 영: 1월\n> 독서문화 프로그램 — 구 분: 체험형 동화구연\n> 독서문화 프로그램 — 운 영: 3월~12월\n> 독서문화 프로그램 — 구 분: 상반기\n> 독서문화 프로그램 — 운 영: 3월~6월\n> 독서문화 프로그램 — 구 분: 도서관주간 행사\n> 독서문화 프로그램 — 운 영: 4월\n> 독서문화 프로그램 — 구 분: 여름방학\n> 독서문화 프로그램 — 운 영: 7월~8월\n> 독서문화 프로그램 — 구 분: 원데이 특강\n> 독서문화 프로그램 — 운 영: 5월~6월 11월~12월\n> 독서문화 프로그램 — 구 분: 하반기\n> 독서문화 프로그램 — 운 영: 9월~12월\n> 독서문화 프로그램 — 구 분: 어린이 독서캠프\n> 독서문화 프로그램 — 운 영: 10월\n> 접수방법 : 온라인접수(사하구 통합예약)\n> 문 의 : 사하구 평생교육과(☎ 051-220-4834)\n> 통합예약 신청하기",
+        "sources": [
+          {
+            "title": "작은도서관",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "registered_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1004",
+      "turn": 1,
+      "question": "사하구보건소 운영시간은 어떻게 되나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1004,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.996,
+      "server_timing": "search;dur=622.0, verify;dur=325.5, review_gate;dur=1.6, grounding;dur=1.3, originals;dur=0.0, review;dur=0.5, prepare;dur=1.5, app;dur=987.7",
+      "status": 200,
+      "error": null,
+      "request_id": "d1a84fa934c74b729d97aff1f99751ae",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.996
+        }
+      ],
+      "response": {
+        "answer": "**보건소 정보**\n- 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.",
+        "answer_details": "찾아오시는길의 공식 안내 원문입니다.\n\n> ## 찾아오시는길\n> ### 약도\n> 지도이미지영역 건너뛰기\n> ### 보건소 정보\n> 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n> 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)\n> 대표전화 : 051)220-5740, 5704, 5706(보건소 민원실) 051)220-5701(보건행정과 사무실) 051)220-5711(건강증진과 사무실)\n> FAX번호 : 051-220-5709(보건행정과) / 5719(건강증진과)",
+        "sources": [
+          {
+            "title": "찾아오시는길",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours"
+          ],
+          "matched_fields": [
+            "hours"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1005",
+      "turn": 1,
+      "question": "사하구보건소 성인 예방접종은 언제 받을 수 있나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1005,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.315,
+      "server_timing": "app;dur=166.4",
+      "status": 200,
+      "error": null,
+      "request_id": "687edc8174b7448ea319b94edc02665b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.315
+        }
+      ],
+      "response": {
+        "answer": "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "독감 접종 장소 알려줘",
+          "폐렴구균 접종 장소 알려줘",
+          "B형간염 접종 장소 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "P1006",
+      "turn": 1,
+      "question": "사하구 복지 서비스에는 무엇이 있나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1006,
+        "source_url": "https://www.saha.go.kr/welfare.do",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.029,
+      "server_timing": "app;dur=24.4",
+      "status": 200,
+      "error": null,
+      "request_id": "94b40de873c14d8e92f53be64a4d6d43",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.029
+        }
+      ],
+      "response": {
+        "answer": "**누구를 위한 지원**을 찾으시나요? 어르신·아동·장애인 등 대상을 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "어르신 복지 지원 알려줘",
+          "아동·보육 지원 알려줘",
+          "장애인 복지 지원 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "P1007",
+      "turn": 1,
+      "question": "사하구 지방세에는 어떤 종류가 있나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1007,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0105010000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 1.154,
+      "server_timing": "app;dur=554.8",
+      "status": 200,
+      "error": null,
+      "request_id": "1b7a7d516b494ad8bbcc2e14fb1eb98a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.154
+        }
+      ],
+      "response": {
+        "answer": "공식 세금 분류 안내입니다.\n- 지방세 - 지방자치단체가 부과징수하는 세금(부산광역시세, 자치구세 등)\n\n세목별 전체 목록은 이 문단만으로 확인할 수 없습니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "세금의분류",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0105010000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "partial_catalogue",
+        "evidence": {
+          "answer_method": "official_overview",
+          "status": "partial",
+          "label": "공식 분류 일부 확인",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1008",
+      "turn": 1,
+      "question": "사하구보건소에서는 어떤 업무를 이용할 수 있나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1008,
+        "source_url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.038,
+      "server_timing": "app;dur=11.0",
+      "status": 200,
+      "error": null,
+      "request_id": "5e80b78151b849e6af7b70547a32c7a2",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.038
+        }
+      ],
+      "response": {
+        "answer": "보건소의 **진료·검사·예방접종 중 어떤 업무**가 필요하신가요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1009",
+      "turn": 1,
+      "question": "사하구 통합예약에서는 무엇을 예약할 수 있나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1009,
+        "source_url": "https://www.saha.go.kr/reserve/main.do",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.964,
+      "server_timing": "app;dur=940.4",
+      "status": 200,
+      "error": null,
+      "request_id": "64431eefd1324b208a7152c3e2eb3cbe",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.964
+        }
+      ],
+      "response": {
+        "answer": "통합예약의 주요 분야는 **교육·강좌 · 공연·전시 · 문화·체험 · 대여·대관**입니다.\n각 프로그램·시설에서 접수 일정과 예약 가능 여부를 확인해 주세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "사하구 통합예약",
+            "url": "https://www.saha.go.kr/reserve/main.do",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_overview",
+          "status": "official",
+          "label": "공식 예약 분야 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "P1010",
+      "turn": 1,
+      "question": "사하구의 주요 민원 서비스에는 무엇이 있나요?",
+      "criterion": {
+        "population": "priority",
+        "parent_id": 1010,
+        "source_url": "https://www.saha.go.kr/portal/contents.do?mId=0100000000",
+        "review": "예약 일반 안내/현재 모집/잔여석 구분, 공식 원문 검수"
+      },
+      "seconds": 0.337,
+      "server_timing": "app;dur=26.6",
+      "status": 200,
+      "error": null,
+      "request_id": "6f277599386e4809ba73019662730c45",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.337
+        }
+      ],
+      "response": {
+        "answer": "**어떤 민원이나 서류**가 필요하신가요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D01",
+      "turn": 1,
+      "question": "여권 준비물 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.047,
+      "server_timing": "app;dur=22.5",
+      "status": 200,
+      "error": null,
+      "request_id": "61dbdcc6266445e184ddaa30f6d5b6ef",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.047
+        }
+      ],
+      "response": {
+        "answer": "여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "성인 신규 여권 준비물 알려줘",
+          "성인 여권 재발급 준비물 알려줘",
+          "미성년자 여권 준비물 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "D01",
+      "turn": 2,
+      "question": "아이는 8살",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.041,
+      "server_timing": "app;dur=23.1",
+      "status": 200,
+      "error": null,
+      "request_id": "143ec61e752e4623be470e79a236ed60",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.041
+        }
+      ],
+      "response": {
+        "answer": "미성년자 여권은 **누가 신청**하시나요? 부모·본인·친족 대리인을 구분해 주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "부모가 미성년자 여권 신청할 때 준비물",
+          "미성년자 본인이 여권 신청할 때 준비물",
+          "친족이 미성년자 여권 대리 신청할 때 준비물"
+        ]
+      }
+    },
+    {
+      "id": "D01",
+      "turn": 3,
+      "question": "엄마가 가요",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.135,
+      "server_timing": "app;dur=1076.7",
+      "status": 200,
+      "error": null,
+      "request_id": "caf5240511004883a48ec920d7de193b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.135
+        }
+      ],
+      "response": {
+        "answer": "**만 18세 미만 · 부모·법정대리인 방문 신청 기준**\n- 여권발급신청서 1부, 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n- 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서\n- 유효기간이 남은 기존 여권도 지참하세요.",
+        "answer_details": "> ## 여권발급안내\n> ### 여권발급 주요 내용\n> 차세대 전자여권 발급\n> 본인이 직접 방문신청(미성년자 제외)\n> 만 18세 미만 미성년자 친권자(부 또는 모), 후견인 등 법정대리인이 신청 공동친권자인 법정대리인이 외국인인 경우, 가족관계등록부에 외국인등록번호 13자리가 등재되어 있고, 외국인등록증을 신분증으로 제출한 경우에만 법정대리인 동의서 대표서명(날인) 가능 미성년자의 사진 및 구여권(유효기간 만료 전 여권), 법정대리인 신분증 지참\n> 일반여권 유효기간이 10년으로 확대 만 18세 미만자 5년, 병역미필자 5년 여권 발급(현역 10년 여권)\n> 최근 5년 이내 3회 이상, 1년 이내 2회 여권 분실자 경찰서 경위 확인 결과에 따라 발급 가능 (유효기간 제한) ※ 여권 분실 횟수에 따른 재발급 시 유효기간 제한\n> 분실 횟수: 여권 유효기간\n> 최근 5년 이내에 여권 분실횟수가 2회인 사람: 5년\n> 최근 5년 이내에 여권 분실횟수가 3회 이상인 사람: 2년\n> 최근 1년 이내에 여권 분실횟수가 2회인 사람: 2년\n> 전자여행 허가제 안내 2016. 3. 15.부터 캐나다를 입국하는 우리 국민은 아래 사이트에서 전자여행허가(eTA)를 취득하여야 함 - 신청 주소 : https://www.Canada.ca/eTA - 승인서 출력 불요, 승인 후 5년간 유효 미국 및 호주 - 미국 ESTA 신청주소 : https://esta.cbp.dhs.gov/esta/ - 호주 ETA 신청주소 : Australian ETA앱에서 신청하기 권장 ※ 기타 비자 발급에 관한 사항은 해당 국 대사관에 직접 문의바랍니다.\n> 온라인 여권 민원 서비스(정부24) 대상민원 : 여권 재발급, 분실신고, 이력 조회, 각종 증명서 발급 신청 주소 : http://www.gov.kr/portal/main\n> ### 신규발급\n> ##### 일반여권\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 만18세 미만 미성년자의 여권 신청 친권자(혹은 법정대리인) 신청시 : 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서 미성년자 본인 신청서 : 친권자(혹은 법정대리인)의 신분증, 인감증명서 및 인감도장, 법정대리인 동의서, 미성년자 본인 신분증(학생증 혹은 청소년증 등) 미성년자의 2촌 이내 친족(만18세 이상) 신청 시 : 법정대리인 동의서, 친권자의 인감증명서 및 인감도장, 위임장 및 위임자(법정대리인) 신분증(사본가능), 방문한 대리인의 신분증\n> #### 긴급여권\n> ※부산시청 여권계, 강서구청 여권계, 김해국제공항 긴급여권 발급 창구에서만 신청 가능하므로 해당 창구로 반드시 개별 문의하신 후에 방문하시기 바랍니다.\n> ※ 해외에서 가족 및 친인척 등의 사건·사고로 긴급히 출국해야하는 경우, 기타 인도적 사유나 사업상 급히 출국할 필요가 있다고 인정되는 경우\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 긴급여권 발급신청사유서\n> 증빙서류 : 항공권 사본, 사망진단서, 초청장 및 계약서 등 사업상 긴급한 사유를 증명할 수 있는 서류 등 증빙서류 첨부\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> #### 관용여권\n> 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 공무원증 또는 재직증명서 1부\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 관계기관 공문(관용여권 발급의뢰 공문-수신처 : 외교부 여권과장)\n> 기존 일반여권(제출 후 관용여권 발급 가능)\n> #### 재발급\n> ‘재발급’ 의미 이미 여권을 발급받은 적이 있는 사람이 새로운 여권을 발급받는 경우로 아래 2가지 중 선택 가능 - 새로운 유효기간을 부여하는 재발급(신규발급에 준하는 수수료 부과) - 기존 여권의 남은 유효기간을 부여하는 재발급\n> ‘재발급’ 사유 여권 수록정보의 정정·변경(개명, 주민등록번호 정정, 사진 변경 등), 분실, 훼손, 사증란 부족 등\n> 구비서류 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재 신분증(주민등록증, 운전면허증 등) 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝) 유효기간 남은 여권은 지참 여권은 새 여권으로 교부(새 여권번호 부여) 구여권은 재발급 신청 시 무효조치 후 본인에게 반환\n> ### 여권발급 등에 관한 수수료\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 52,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 49,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 44,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 41,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 35,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 32,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 단수여권 — 유효기간: 1년\n> 단수여권 — 여권발급수수료: 26면\n> 단수여권 — 여권발급수수료: 17,000원\n> 단수여권 — 대상(생일기준): 6개월 이내 1회만 여행가능\n> 기재사항변경 — 여권발급수수료: 26면\n> 기재사항변경 — 여권발급수수료: 5,000원\n> 기재사항변경 — 대상(생일기준): 여권번호기재, 출생지 표기 (긴급여권 사무대행기관에서만 가능)\n> ### 여권발급 기록 증명서\n> 종류 : 여권발급기록증명서,여권사본증명서(실물여권지참),여권실효 확인서,여권발급신청서류증명서,여권정보증명서\n> #### 구비서류\n> 본인 : 신분증 - 대리인 신청 시 : 사실증명 신청서, 위임장 및 인감증명서, 대리인 신분증\n> 수수료 : 1건당 1,000원\n> ### 국제운전면허증 신청\n> 신청 대상 : 여권 신청자 중 국제운전면허증 발급 희망자\n> 구비서류 : 신청서, 사진1매, 수수료(8,500원), 배달등기료(2,500원)\n> 면허증 수령 : 희망 주소지로 등기 배송\n> ### 여권교부\n> 여권교부 : 여권 신청일로부터 8~10일 정도 소요(근무일 기준)\n> 본인 수령 : 신분증 및 접수증 지참\n> 대리 수령 : 대리인 신분증, 접수증, 위임장 및 위임자의 신분증(사본 가능)\n> 우편 수령 : 여권발급 신청 시 사전에 신청(등기료 5,500원) - 외교부 직송, 3일~4일 소요, 본인 또는 지정한 대리인 직접 수령\n> 여권 수령 후 서명란에 반드시 본인이 자필로 서명 후 사용 ※ 발급일로부터 6개월 이내에 찾아가지 않은 여권은 직권무효 처리되어 폐기됩니다.",
+        "sources": [
+          {
+            "title": "여권발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "passport_documents",
+          "status": "official",
+          "label": "공식 여권 신청 서류 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D01",
+      "turn": 4,
+      "question": "아니 12살이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.54,
+      "server_timing": "app;dur=519.3",
+      "status": 200,
+      "error": null,
+      "request_id": "3d608458e1704501b3655b4910a0fd09",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.54
+        }
+      ],
+      "response": {
+        "answer": "**만 18세 미만 · 부모·법정대리인 방문 신청 기준**\n- 여권발급신청서 1부, 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n- 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서\n- 유효기간이 남은 기존 여권도 지참하세요.",
+        "answer_details": "> ## 여권발급안내\n> ### 여권발급 주요 내용\n> 차세대 전자여권 발급\n> 본인이 직접 방문신청(미성년자 제외)\n> 만 18세 미만 미성년자 친권자(부 또는 모), 후견인 등 법정대리인이 신청 공동친권자인 법정대리인이 외국인인 경우, 가족관계등록부에 외국인등록번호 13자리가 등재되어 있고, 외국인등록증을 신분증으로 제출한 경우에만 법정대리인 동의서 대표서명(날인) 가능 미성년자의 사진 및 구여권(유효기간 만료 전 여권), 법정대리인 신분증 지참\n> 일반여권 유효기간이 10년으로 확대 만 18세 미만자 5년, 병역미필자 5년 여권 발급(현역 10년 여권)\n> 최근 5년 이내 3회 이상, 1년 이내 2회 여권 분실자 경찰서 경위 확인 결과에 따라 발급 가능 (유효기간 제한) ※ 여권 분실 횟수에 따른 재발급 시 유효기간 제한\n> 분실 횟수: 여권 유효기간\n> 최근 5년 이내에 여권 분실횟수가 2회인 사람: 5년\n> 최근 5년 이내에 여권 분실횟수가 3회 이상인 사람: 2년\n> 최근 1년 이내에 여권 분실횟수가 2회인 사람: 2년\n> 전자여행 허가제 안내 2016. 3. 15.부터 캐나다를 입국하는 우리 국민은 아래 사이트에서 전자여행허가(eTA)를 취득하여야 함 - 신청 주소 : https://www.Canada.ca/eTA - 승인서 출력 불요, 승인 후 5년간 유효 미국 및 호주 - 미국 ESTA 신청주소 : https://esta.cbp.dhs.gov/esta/ - 호주 ETA 신청주소 : Australian ETA앱에서 신청하기 권장 ※ 기타 비자 발급에 관한 사항은 해당 국 대사관에 직접 문의바랍니다.\n> 온라인 여권 민원 서비스(정부24) 대상민원 : 여권 재발급, 분실신고, 이력 조회, 각종 증명서 발급 신청 주소 : http://www.gov.kr/portal/main\n> ### 신규발급\n> ##### 일반여권\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 만18세 미만 미성년자의 여권 신청 친권자(혹은 법정대리인) 신청시 : 친권자(혹은 법정대리인) 신분증, 법정대리인 동의서 미성년자 본인 신청서 : 친권자(혹은 법정대리인)의 신분증, 인감증명서 및 인감도장, 법정대리인 동의서, 미성년자 본인 신분증(학생증 혹은 청소년증 등) 미성년자의 2촌 이내 친족(만18세 이상) 신청 시 : 법정대리인 동의서, 친권자의 인감증명서 및 인감도장, 위임장 및 위임자(법정대리인) 신분증(사본가능), 방문한 대리인의 신분증\n> #### 긴급여권\n> ※부산시청 여권계, 강서구청 여권계, 김해국제공항 긴급여권 발급 창구에서만 신청 가능하므로 해당 창구로 반드시 개별 문의하신 후에 방문하시기 바랍니다.\n> ※ 해외에서 가족 및 친인척 등의 사건·사고로 긴급히 출국해야하는 경우, 기타 인도적 사유나 사업상 급히 출국할 필요가 있다고 인정되는 경우\n> 여권발급신청서 1부 ※ 구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 긴급여권 발급신청사유서\n> 증빙서류 : 항공권 사본, 사망진단서, 초청장 및 계약서 등 사업상 긴급한 사유를 증명할 수 있는 서류 등 증빙서류 첨부\n> 신분증(주민등록증, 운전면허증 등)\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> #### 관용여권\n> 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재\n> 신분증(주민등록증, 운전면허증 등)\n> 공무원증 또는 재직증명서 1부\n> 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝)\n> 관계기관 공문(관용여권 발급의뢰 공문-수신처 : 외교부 여권과장)\n> 기존 일반여권(제출 후 관용여권 발급 가능)\n> #### 재발급\n> ‘재발급’ 의미 이미 여권을 발급받은 적이 있는 사람이 새로운 여권을 발급받는 경우로 아래 2가지 중 선택 가능 - 새로운 유효기간을 부여하는 재발급(신규발급에 준하는 수수료 부과) - 기존 여권의 남은 유효기간을 부여하는 재발급\n> ‘재발급’ 사유 여권 수록정보의 정정·변경(개명, 주민등록번호 정정, 사진 변경 등), 분실, 훼손, 사증란 부족 등\n> 구비서류 여권발급신청서 1부 ※구청 민원실 비치, 출력해 올 경우 반드시 컬러 인쇄, 흑색펜 기재 신분증(주민등록증, 운전면허증 등) 여권용 컬러 사진 2매(최근 6개월 이내 촬영, 가로 3.5cm×세로 4.5cm, 정수리~턱까지의 길이가 3.2~3.6㎝) 유효기간 남은 여권은 지참 여권은 새 여권으로 교부(새 여권번호 부여) 구여권은 재발급 신청 시 무효조치 후 본인에게 반환\n> ### 여권발급 등에 관한 수수료\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 52,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 10년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 49,000원\n> 복수여권 — 대상(생일기준): 만18세 이상\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 44,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 41,000원\n> 복수여권 — 대상(생일기준): 만8세 이상~만18세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 35,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 5년\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 32,000원\n> 복수여권 — 대상(생일기준): 만8세 미만\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 58면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 복수여권 — 유효기간: 잔여기간\n> 복수여권 — 여권발급수수료: 26면\n> 복수여권 — 여권발급수수료: 27,000원\n> 복수여권 — 대상(생일기준): 남은 유효기간 재발급자\n> 단수여권 — 유효기간: 1년\n> 단수여권 — 여권발급수수료: 26면\n> 단수여권 — 여권발급수수료: 17,000원\n> 단수여권 — 대상(생일기준): 6개월 이내 1회만 여행가능\n> 기재사항변경 — 여권발급수수료: 26면\n> 기재사항변경 — 여권발급수수료: 5,000원\n> 기재사항변경 — 대상(생일기준): 여권번호기재, 출생지 표기 (긴급여권 사무대행기관에서만 가능)\n> ### 여권발급 기록 증명서\n> 종류 : 여권발급기록증명서,여권사본증명서(실물여권지참),여권실효 확인서,여권발급신청서류증명서,여권정보증명서\n> #### 구비서류\n> 본인 : 신분증 - 대리인 신청 시 : 사실증명 신청서, 위임장 및 인감증명서, 대리인 신분증\n> 수수료 : 1건당 1,000원\n> ### 국제운전면허증 신청\n> 신청 대상 : 여권 신청자 중 국제운전면허증 발급 희망자\n> 구비서류 : 신청서, 사진1매, 수수료(8,500원), 배달등기료(2,500원)\n> 면허증 수령 : 희망 주소지로 등기 배송\n> ### 여권교부\n> 여권교부 : 여권 신청일로부터 8~10일 정도 소요(근무일 기준)\n> 본인 수령 : 신분증 및 접수증 지참\n> 대리 수령 : 대리인 신분증, 접수증, 위임장 및 위임자의 신분증(사본 가능)\n> 우편 수령 : 여권발급 신청 시 사전에 신청(등기료 5,500원) - 외교부 직송, 3일~4일 소요, 본인 또는 지정한 대리인 직접 수령\n> 여권 수령 후 서명란에 반드시 본인이 자필로 서명 후 사용 ※ 발급일로부터 6개월 이내에 찾아가지 않은 여권은 직권무효 처리되어 폐기됩니다.",
+        "sources": [
+          {
+            "title": "여권발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+            "category": "전자민원",
+            "service_type": "민원",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "passport_documents",
+          "status": "official",
+          "label": "공식 여권 신청 서류 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D01",
+      "turn": 5,
+      "question": "신청 말고 장소 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.378,
+      "server_timing": "search;dur=529.8, verify;dur=740.1, review_gate;dur=1.6, grounding;dur=3.4, originals;dur=0.0, review;dur=0.8, prepare;dur=8.7, app;dur=1374.1",
+      "status": 200,
+      "error": null,
+      "request_id": "2aea4adee71b460ab650e10b3fff5478",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.378
+        }
+      ],
+      "response": {
+        "answer": "관련 공식 자료는 찾았지만, 이용 장소에 답할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "여권발급안내",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0104020000",
+            "category": "전자민원",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "missing_requested_field",
+        "evidence": {
+          "answer_method": "source_fallback",
+          "status": "partial",
+          "label": "요청 항목 확인 필요",
+          "official_source_count": 1,
+          "decision": "partial",
+          "reasons": [
+            "missing_requested_fields"
+          ],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D02",
+      "turn": 1,
+      "question": "보건소 예방접종 어디서 해?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.473,
+      "server_timing": "app;dur=50.9",
+      "status": 200,
+      "error": null,
+      "request_id": "ef54c3e7554347a09a4eee058da86c9d",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.473
+        }
+      ],
+      "response": {
+        "answer": "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "독감 접종 장소 알려줘",
+          "폐렴구균 접종 장소 알려줘",
+          "B형간염 접종 장소 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "D02",
+      "turn": 2,
+      "question": "폐렴구균",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.524,
+      "server_timing": "search;dur=930.9, verify;dur=524.7, review_gate;dur=3.3, grounding;dur=2.3, originals;dur=0.0, review;dur=2.7, prepare;dur=3.8, app;dur=1518.5",
+      "status": 200,
+      "error": null,
+      "request_id": "028517065c264e3785cca342e74546d3",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.524
+        }
+      ],
+      "response": {
+        "answer": "**유료 및 성인예방접종**\n- 접종장소 : 보건소 접종 미운영, 전국 지정 위탁의료기관에서 주소지 무관 접종 가능\n- 대상 : 65세 이상인 자 (1961.12.31.이전 출생자)\n\n원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요.",
+        "answer_details": "유료 및 성인예방접종의 공식 안내 원문입니다.\n\n> ## 유료 및 성인예방접종\n> 65세 이상 어르신 폐렴구균 예방접종\n> 대상 : 65세 이상인 자 (1961.12.31.이전 출생자)\n> 관내 위탁의료기관 현황:\n> 접종장소 : 보건소 접종 미운영, 전국 지정 위탁의료기관에서 주소지 무관 접종 가능\n> 시행일자 : 연중\n> 시행백신 : 다당질 백신 프로디악스 23가(PPSV23)\n> 준 비 물 : 신분증\n> 접종횟수 : 만 65세 이상 평생 1회 접종\n> 과거 65세 이상 연령에서 폐렴구균 23가 다당질백신(PPSV23)을 접종(의료기관에서 유료로 접종했거나, 보건소에서 무료로 접종했을 때)한 경우 접종 불필요\n> 과거 65세 미만 연령에서 폐렴구균 23가 다당질백신(PPSV23)을 접종한 경우 5년경과 후 1회에 한하여 재접종\n> 폐렴구균 예방접종 전 담당 주치의와 상담이 필요한 기저질환자\n> 뇌척수액 누출자\n> 인공와우 이식 환자\n> 기능적 또는 해부학적 무비증 환자\n> 면역저하자: 종양질환, 백혈병, 림프종, 호치킨병, 다발성골수종, 방사선 치료, 면역억제제(스테로이드 포함) 투여, 조혈모세포 이식, 고형장기 이식, 만성 신부증, 신증후군, HIV감염, 선천성 면역저하 등",
+        "sources": [
+          {
+            "title": "유료 및 성인예방접종",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "다운로드",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000184787&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "D02",
+      "turn": 3,
+      "question": "아니 독감이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.067,
+      "server_timing": "search;dur=515.6, verify;dur=451.4, review_gate;dur=3.3, grounding;dur=1.8, originals;dur=0.0, review;dur=3.2, prepare;dur=3.6, app;dur=1062.8",
+      "status": 200,
+      "error": null,
+      "request_id": "b5cad0498382491c9e9fe9d0e478c4f9",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.067
+        }
+      ],
+      "response": {
+        "answer": "**유료 및 성인예방접종**\n- 접종장소 : 전국 지정 위탁의료기관 (지자체 대상자는 부산시 지정 위탁의료기관만 가능)\n- ※ 지정의료기관은 매년 독감접종 시작전 공고 예정\n\n원문의 어린이 독감 지원 연령은 현행 국가사업 안내와 달라 제외했습니다. 올해 대상·기간은 [질병관리청 예방접종도우미](https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuCd=134&menuLv=1)에서, 부산시 추가지원 여부는 보건소의 해당 절기 공고에서 확인해 주세요.",
+        "answer_details": "유료 및 성인예방접종의 공식 안내 원문입니다.\n\n> ## 유료 및 성인예방접종\n> 인플루엔자 예방접종\n> 시기 : 매년 10월 중 시작(절기 사업으로 사업 종료 시 접종 안됨)\n> 비용 : 무료 (※현재 보건소에서는 직접 주사 안됨)\n> 접종장소 : 전국 지정 위탁의료기관 (지자체 대상자는 부산시 지정 위탁의료기관만 가능)\n> ※ 지정의료기관은 매년 독감접종 시작전 공고 예정",
+        "sources": [
+          {
+            "title": "유료 및 성인예방접종",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0203020000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [
+              {
+                "name": "다운로드",
+                "url": "https://www.saha.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000000184787&fileSn=0"
+              }
+            ],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "원문 최신 확인 필요",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "관련 첨부서류도 확인하고 싶어요"
+        ]
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 1,
+      "question": "소방 교육 하는방법 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.035,
+      "server_timing": "app;dur=20.7",
+      "status": 200,
+      "error": null,
+      "request_id": "4c7706fe325e47949363436a39adaac8",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.035
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 2,
+      "question": "아니 일반 주민이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.023,
+      "server_timing": "app;dur=7.4",
+      "status": 200,
+      "error": null,
+      "request_id": "bffad8043d71440a98552692f4d6c804",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.023
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 나이를 알려주셔도 됩니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 3,
+      "question": "아이는 8살",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.858,
+      "server_timing": "app;dur=828.7",
+      "status": 200,
+      "error": null,
+      "request_id": "6854542a453142deabc685ff72429a52",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.858
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D03",
+      "turn": 4,
+      "question": "신청 말고 장소 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.162,
+      "server_timing": "app;dur=1143.0",
+      "status": 200,
+      "error": null,
+      "request_id": "c3338403382b4558a2cff50e91e79d0a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.162
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 안내의 주소는 **부산광역시 사하구 장평로 270(신평동)**입니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_location",
+          "status": "official",
+          "label": "공식 시설 위치 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 1,
+      "question": "소방특화 들락날락 예약 방법 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.482,
+      "server_timing": "app;dur=1454.5",
+      "status": 200,
+      "error": null,
+      "request_id": "fe963e4a96634089bc68bb9784970f96",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.482
+        }
+      ],
+      "response": {
+        "answer": "확인된 교육은 4세 이상 13세 이하 어린이 대상입니다.\n이 대상의 교육을 찾으시나요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "소방특화 들락날락 예약 방법 알려줘 체험 (4세 이상 13세 이하 어린이 대상)",
+          "일반 주민 소방특화 들락날락 예약 방법 알려줘 체험"
+        ]
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 2,
+      "question": "아이는 8살",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.72,
+      "server_timing": "app;dur=713.8",
+      "status": 200,
+      "error": null,
+      "request_id": "1544b4a609b74d248b28ee9572dc954c",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.72
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 3,
+      "question": "아니 12살이야",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.765,
+      "server_timing": "app;dur=738.6",
+      "status": 200,
+      "error": null,
+      "request_id": "253586dd0abe4accb1a0ee9dd7d7e83b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.765
+        }
+      ],
+      "response": {
+        "answer": "**소방특화 들락날락 예약**\n- 대상: 4세 이상 13세 이하 어린이\n- [공식 예약안내 및 예약](https://www.saha.go.kr/reserve/contents.do?mId=1207030000)에서 개인정보 수집·이용 동의를 확인한 뒤 **예약신청**으로 진행하세요.\n- 체험관 홈페이지에서 신청(휴대폰 본인인증, 아이핀 본인인증 또는 카카오 로그인, 네이버 로그인 방식)\n- 3개월 전 매월 1일 9시부터 예약가능(예 : 12월 예약은 10월 1일 9시부터 가능) ※ 단체 예약 시, ‘기타’ 란에 단체명을 기재해 주시기 바랍니다.\n- ※ 프로그램의 원활한 진행을 위해 회차당 최소 3인 이상 충족 시에만 체험이 운영됩니다. (미달 시 일정 조정 또는 취소 안내 예정)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          },
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "official",
+          "label": "공식 예약 절차 확인됨",
+          "official_source_count": 2,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D04",
+      "turn": 4,
+      "question": "그럼 전화번호는?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.495,
+      "server_timing": "app;dur=468.7",
+      "status": 200,
+      "error": null,
+      "request_id": "349fbe8b47d44b14ae00850cea0838a6",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.495
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 안내의 전화번호는 **051-271-6835**입니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "이용안내",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207000000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_contact",
+          "status": "official",
+          "label": "공식 시설 연락처 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D05",
+      "turn": 1,
+      "question": "대형폐기물 담당 전화번호",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.076,
+      "server_timing": "app;dur=56.3",
+      "status": 200,
+      "error": null,
+      "request_id": "c6a21c73071f4c73bf2cb4a7d70cc408",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.076
+        }
+      ],
+      "response": {
+        "answer": "**자원순환과**\n\n- **051-220-4452** (주무관)\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "answer_details": "주무관 · 051-220-4452\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "sources": [
+          {
+            "title": "사하구청 직원업무안내",
+            "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "자원순환과",
+            "contact": "051-220-4452",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26T04:38:31.114927+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D05",
+      "turn": 2,
+      "question": "그럼 소파 버리는 절차도 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.753,
+      "server_timing": "search;dur=493.8, verify;dur=844.4, review_gate;dur=2.4, grounding;dur=23.2, originals;dur=0.0, review;dur=0.9, prepare;dur=207.2, app;dur=1736.7",
+      "status": 200,
+      "error": null,
+      "request_id": "ca2406646a07425fb1bc13a9f82d9aa6",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.753
+        }
+      ],
+      "response": {
+        "answer": "대형폐기물은 **맑은사하환경(051-266-1170~1)**에 전화·문자로 접수하세요. 카카오톡 ‘맑은사하환경’ 1:1 접수도 가능합니다.",
+        "answer_details": "> #### 대형 폐기물 배출 · 처리안내\n> 적용대상 : 품명 식별이 가능하고 쓰레기 봉투로 처리할 수 없는 폐기물로 가구, 가전제품, 사무용기, 냉 · 방기기, 소화기 등\n> 관련근거 : 페기물관리법 제14조 및 사하구 폐기물 관리 및 수수료 등에 관한 조례 제10조\n> 처리(위탁)업체 : 맑은사하환경(☎ 266-1170~1)\n> 처리방법 처리업체에 직접 전화(☎ 266-1170~1) 또는 문자 접수(051-266-1170~1) 카카오톡 플러스친구(맑은사하환경) 1:1톡 접수 아래 물품중 냉장고, 텔레비젼, 세탁기, 에어컨 및 1m이상 가스오븐렌지, 공기청정기, 복사기, 런닝머신은 무상수거 (콜센터 1599-0903) 단, 원형훼손제품은 제외 (유상 처리)\n> 대형폐기물 수집·운반·처리 수수료(제10조제1항제2호 관련)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 규격: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 규 격: 돌침대 2인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 수 수 료 / 조 정 후 / 계: 30,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 20,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 2인용 — 수 수 료 / 조 정 후 / 처리비: 10,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 규격: 2\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 규 격: 돌침대 1인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 수 수 료 / 조 정 후 / 계: 20,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 13,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 돌침대 1인용 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 규격: 3\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 규 격: 일반침대 2인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 수 수 료 / 조 정 후 / 계: 18,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 12,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 2인용 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 품명: 1\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 품 명: 침대 (매트리스, 서랍, 부속장치 포함)\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 규격: 4\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 규 격: 일반침대 1인용\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 9,000\n> 가구 / 침대 (매트리스, 서랍, 부속장치 포함) / 일반침대 1인용 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 매트리스 / 일반 2인용 — 품명: 2\n> 가구 / 매트리스 / 일반 2인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 일반 2인용 — 규격: 5\n> 가구 / 매트리스 / 일반 2인용 — 규 격: 일반 2인용\n> 가구 / 매트리스 / 일반 2인용 — 수 수 료 / 조 정 후 / 계: 12,000\n> 가구 / 매트리스 / 일반 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 매트리스 / 일반 2인용 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 매트리스 / 일반 1인용 — 품명: 2\n> 가구 / 매트리스 / 일반 1인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 일반 1인용 — 규격: 6\n> 가구 / 매트리스 / 일반 1인용 — 규 격: 일반 1인용\n> 가구 / 매트리스 / 일반 1인용 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 매트리스 / 일반 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 매트리스 / 일반 1인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 매트리스 / 라텍스 2인용 — 품명: 2\n> 가구 / 매트리스 / 라텍스 2인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 라텍스 2인용 — 규격: 7\n> 가구 / 매트리스 / 라텍스 2인용 — 규 격: 라텍스 2인용\n> 가구 / 매트리스 / 라텍스 2인용 — 수 수 료 / 조 정 후 / 계: 15,000\n> 가구 / 매트리스 / 라텍스 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 가구 / 매트리스 / 라텍스 2인용 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 매트리스 / 라텍스 1인용 — 품명: 2\n> 가구 / 매트리스 / 라텍스 1인용 — 품 명: 매트리스\n> 가구 / 매트리스 / 라텍스 1인용 — 규격: 8\n> 가구 / 매트리스 / 라텍스 1인용 — 규 격: 라텍스 1인용\n> 가구 / 매트리스 / 라텍스 1인용 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 매트리스 / 라텍스 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 매트리스 / 라텍스 1인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 규격: 9\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 규 격: 옥매트 3인용이상\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 수 수 료 / 조 정 후 / 계: 11,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 3인용이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 규격: 10\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 규 격: 옥매트 2인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 2인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 규격: 11\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 규 격: 옥매트 1인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 옥매트 1인용 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 규격: 12\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 규 격: 일반장판 2인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 2인용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 품명: 3\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 품 명: 전기매트 (옥, 황토, 온수매트포함)\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 규격: 13\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 규 격: 일반장판 1인용\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 전기매트 (옥, 황토, 온수매트포함) / 일반장판 1인용 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 장 롱 / 120cm 1짝 — 품명: 4\n> 가구 / 장 롱 / 120cm 1짝 — 품 명: 장 롱\n> 가구 / 장 롱 / 120cm 1짝 — 규격: 14\n> 가구 / 장 롱 / 120cm 1짝 — 규 격: 120cm 1짝\n> 가구 / 장 롱 / 120cm 1짝 — 수 수 료 / 조 정 후 / 계: 20,000\n> 가구 / 장 롱 / 120cm 1짝 — 수 수 료 / 조 정 후 / 수집·운반비: 13,000\n> 가구 / 장 롱 / 120cm 1짝 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 가구 / 장 롱 / 90cm 1짝 — 품명: 4\n> 가구 / 장 롱 / 90cm 1짝 — 품 명: 장 롱\n> 가구 / 장 롱 / 90cm 1짝 — 규격: 15\n> 가구 / 장 롱 / 90cm 1짝 — 규 격: 90cm 1짝\n> 가구 / 장 롱 / 90cm 1짝 — 수 수 료 / 조 정 후 / 계: 15,000\n> 가구 / 장 롱 / 90cm 1짝 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 가구 / 장 롱 / 90cm 1짝 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 장 롱 / 90cm 미만 1짝 — 품명: 4\n> 가구 / 장 롱 / 90cm 미만 1짝 — 품 명: 장 롱\n> 가구 / 장 롱 / 90cm 미만 1짝 — 규격: 16\n> 가구 / 장 롱 / 90cm 미만 1짝 — 규 격: 90cm 미만 1짝\n> 가구 / 장 롱 / 90cm 미만 1짝 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 장 롱 / 90cm 미만 1짝 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 장 롱 / 90cm 미만 1짝 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 소 파 / 3인용 — 품명: 5\n> 가구 / 소 파 / 3인용 — 품 명: 소 파\n> 가구 / 소 파 / 3인용 — 규격: 17\n> 가구 / 소 파 / 3인용 — 규 격: 3인용\n> 가구 / 소 파 / 3인용 — 수 수 료 / 조 정 후 / 계: 13,000\n> 가구 / 소 파 / 3인용 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 소 파 / 3인용 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 소 파 / 2인용 — 품명: 5\n> 가구 / 소 파 / 2인용 — 품 명: 소 파\n> 가구 / 소 파 / 2인용 — 규격: 18\n> 가구 / 소 파 / 2인용 — 규 격: 2인용\n> 가구 / 소 파 / 2인용 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 소 파 / 2인용 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 소 파 / 2인용 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 소 파 / 1인용 — 품명: 5\n> 가구 / 소 파 / 1인용 — 품 명: 소 파\n> 가구 / 소 파 / 1인용 — 규격: 19\n> 가구 / 소 파 / 1인용 — 규 격: 1인용\n> 가구 / 소 파 / 1인용 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 소 파 / 1인용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 소 파 / 1인용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 소 파 / 보조의자 — 품명: 5\n> 가구 / 소 파 / 보조의자 — 품 명: 소 파\n> 가구 / 소 파 / 보조의자 — 규격: 20\n> 가구 / 소 파 / 보조의자 — 규 격: 보조의자\n> 가구 / 소 파 / 보조의자 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 소 파 / 보조의자 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 소 파 / 보조의자 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 책 상 / 1m*1m 이상 — 품명: 6\n> 가구 / 책 상 / 1m*1m 이상 — 품 명: 책 상\n> 가구 / 책 상 / 1m*1m 이상 — 규격: 21\n> 가구 / 책 상 / 1m*1m 이상 — 규 격: 1m*1m 이상\n> 가구 / 책 상 / 1m*1m 이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 책 상 / 1m*1m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 책 상 / 1m*1m 이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 책 상 / 1m*1m 미만 — 품명: 6\n> 가구 / 책 상 / 1m*1m 미만 — 품 명: 책 상\n> 가구 / 책 상 / 1m*1m 미만 — 규격: 22\n> 가구 / 책 상 / 1m*1m 미만 — 규 격: 1m*1m 미만\n> 가구 / 책 상 / 1m*1m 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 책 상 / 1m*1m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 책 상 / 1m*1m 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 책 상 / 책상+책장 세트 — 품명: 6\n> 가구 / 책 상 / 책상+책장 세트 — 품 명: 책 상\n> 가구 / 책 상 / 책상+책장 세트 — 규격: 23\n> 가구 / 책 상 / 책상+책장 세트 — 규 격: 책상+책장 세트\n> 가구 / 책 상 / 책상+책장 세트 — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 책 상 / 책상+책장 세트 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 책 상 / 책상+책장 세트 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 품명: 7\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 품 명: 거실장식장 (TV받침, 문갑포함)\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 규격: 24\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 규 격: 길이 120cm 이상\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 이상 — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 품명: 7\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 품 명: 거실장식장 (TV받침, 문갑포함)\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 규격: 25\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 규 격: 길이 120cm 미만\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 수 수 료 / 조 정 후 / 계: 12,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 7,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 120cm 미만 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 품명: 7\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 품 명: 거실장식장 (TV받침, 문갑포함)\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 규격: 26\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 규 격: 길이 90cm 미만\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 수 수 료 / 조 정 후 / 계: 9,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 거실장식장 (TV받침, 문갑포함) / 길이 90cm 미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 품명: 8\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 품 명: 장식장 (책장, 찬장)\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 규격: 27\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 규 격: 가로 120cm 이상\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 수 수 료 / 조 정 후 / 계: 13,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 품명: 8\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 품 명: 장식장 (책장, 찬장)\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 규격: 28\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 규 격: 가로 120cm 미만\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 장식장 (책장, 찬장) / 가로 120cm 미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 품명: 8\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 품 명: 장식장 (책장, 찬장)\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 규격: 29\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 규 격: 가로 90cm 미만\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 장식장 (책장, 찬장) / 가로 90cm 미만 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 옷걸이 / 모든 규격 — 품명: 9\n> 가구 / 옷걸이 / 모든 규격 — 품 명: 옷걸이\n> 가구 / 옷걸이 / 모든 규격 — 규격: 30\n> 가구 / 옷걸이 / 모든 규격 — 규 격: 모든 규격\n> 가구 / 옷걸이 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가구 / 옷걸이 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 옷걸이 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 책꽂이 / 50cm*50cm이하 — 품명: 10\n> 가구 / 책꽂이 / 50cm*50cm이하 — 품 명: 책꽂이\n> 가구 / 책꽂이 / 50cm*50cm이하 — 규격: 31\n> 가구 / 책꽂이 / 50cm*50cm이하 — 규 격: 50cm*50cm이하\n> 가구 / 책꽂이 / 50cm*50cm이하 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가구 / 책꽂이 / 50cm*50cm이하 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 책꽂이 / 50cm*50cm이하 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 품명: 11\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 품 명: 식 탁\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 규격: 32\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 규 격: 대리석. 아일랜드(6인 이상)\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 수 수 료 / 조 정 후 / 계: 18,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 수 수 료 / 조 정 후 / 수집·운반비: 12,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 이상) — 수 수 료 / 조 정 후 / 처리비: 6,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 품명: 11\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 품 명: 식 탁\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 규격: 33\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 규 격: 대리석. 아일랜드(6인 미만)\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 수 수 료 / 조 정 후 / 계: 14,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 수 수 료 / 조 정 후 / 수집·운반비: 9,000\n> 가구 / 식 탁 / 대리석. 아일랜드(6인 미만) — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 품명: 11\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 품 명: 식 탁\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 규격: 34\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 규 격: 일반식탁 6인용 이상\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 식 탁 / 일반식탁 6인용 이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 품명: 11\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 품 명: 식 탁\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 규격: 35\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 규 격: 일반식탁 6인용 미만\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 식 탁 / 일반식탁 6인용 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 서랍장 / 5단 이상 — 품명: 12\n> 가구 / 서랍장 / 5단 이상 — 품 명: 서랍장\n> 가구 / 서랍장 / 5단 이상 — 규격: 36\n> 가구 / 서랍장 / 5단 이상 — 규 격: 5단 이상\n> 가구 / 서랍장 / 5단 이상 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 서랍장 / 5단 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 7,000\n> 가구 / 서랍장 / 5단 이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 서랍장 / 5단 미만 — 품명: 12\n> 가구 / 서랍장 / 5단 미만 — 품 명: 서랍장\n> 가구 / 서랍장 / 5단 미만 — 규격: 37\n> 가구 / 서랍장 / 5단 미만 — 규 격: 5단 미만\n> 가구 / 서랍장 / 5단 미만 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 서랍장 / 5단 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가구 / 서랍장 / 5단 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 품명: 13\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 품 명: 화장대\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 규격: 38\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 규 격: 상판가로 90㎝ 이상\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 화장대 / 상판가로 90㎝ 이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 품명: 13\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 품 명: 화장대\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 규격: 39\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 규 격: 상판가로 90㎝ 미만\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 화장대 / 상판가로 90㎝ 미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 의자 / 목제 — 품명: 14\n> 가구 / 의자 / 목제 — 품 명: 의자\n> 가구 / 의자 / 목제 — 규격: 40\n> 가구 / 의자 / 목제 — 규 격: 목제\n> 가구 / 의자 / 목제 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가구 / 의자 / 목제 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 의자 / 목제 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가구 / 의자 / 철제 — 품명: 14\n> 가구 / 의자 / 철제 — 품 명: 의자\n> 가구 / 의자 / 철제 — 규격: 41\n> 가구 / 의자 / 철제 — 규 격: 철제\n> 가구 / 의자 / 철제 — 수 수 료 / 조 정 후 / 계: 1,500\n> 가구 / 의자 / 철제 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가구 / 의자 / 철제 — 수 수 료 / 조 정 후 / 처리비: 500\n> 가구 / 의자 / PP재질의자 — 품명: 14\n> 가구 / 의자 / PP재질의자 — 품 명: 의자\n> 가구 / 의자 / PP재질의자 — 규격: 42\n> 가구 / 의자 / PP재질의자 — 규 격: PP재질의자\n> 가구 / 의자 / PP재질의자 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 의자 / PP재질의자 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가구 / 의자 / PP재질의자 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 품명: 15\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 품 명: 철제 캐비넷\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 규격: 43\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 철제 캐비넷 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 품명: 15\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 품 명: 철제 캐비넷\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 규격: 44\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 철제 캐비넷 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 신발장 / 높이 1m이상 — 품명: 16\n> 가구 / 신발장 / 높이 1m이상 — 품 명: 신발장\n> 가구 / 신발장 / 높이 1m이상 — 규격: 45\n> 가구 / 신발장 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가구 / 신발장 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가구 / 신발장 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가구 / 신발장 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 신발장 / 높이 1m미만 — 품명: 16\n> 가구 / 신발장 / 높이 1m미만 — 품 명: 신발장\n> 가구 / 신발장 / 높이 1m미만 — 규격: 46\n> 가구 / 신발장 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가구 / 신발장 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가구 / 신발장 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가구 / 신발장 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 싱크대 찬장 / 2칸 — 품명: 17\n> 가구 / 싱크대 찬장 / 2칸 — 품 명: 싱크대 찬장\n> 가구 / 싱크대 찬장 / 2칸 — 규격: 47\n> 가구 / 싱크대 찬장 / 2칸 — 규 격: 2칸\n> 가구 / 싱크대 찬장 / 2칸 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가구 / 싱크대 찬장 / 2칸 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가구 / 싱크대 찬장 / 2칸 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가구 / 싱크대 찬장 / 1칸 — 품명: 17\n> 가구 / 싱크대 찬장 / 1칸 — 품 명: 싱크대 찬장\n> 가구 / 싱크대 찬장 / 1칸 — 규격: 48\n> 가구 / 싱크대 찬장 / 1칸 — 규 격: 1칸\n> 가구 / 싱크대 찬장 / 1칸 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가구 / 싱크대 찬장 / 1칸 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가구 / 싱크대 찬장 / 1칸 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가구 / 싱크대 / 大 1짝당 — 품명: 18\n> 가구 / 싱크대 / 大 1짝당 — 품 명: 싱크대\n> 가구 / 싱크대 / 大 1짝당 — 규격: 49\n> 가구 / 싱크대 / 大 1짝당 — 규 격: 大 1짝당\n> 가구 / 싱크대 / 大 1짝당 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가구 / 싱크대 / 大 1짝당 — 수 수 료 / 조 정 후 / 수집·운반비: 7,000\n> 가구 / 싱크대 / 大 1짝당 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가구 / 싱크대 / 小 1짝당 — 품명: 18\n> 가구 / 싱크대 / 小 1짝당 — 품 명: 싱크대\n> 가구 / 싱크대 / 小 1짝당 — 규격: 50\n> 가구 / 싱크대 / 小 1짝당 — 규 격: 小 1짝당\n> 가구 / 싱크대 / 小 1짝당 — 수 수 료 / 조 정 후 / 계: 8,000\n> 가구 / 싱크대 / 小 1짝당 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가구 / 싱크대 / 小 1짝당 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 냉장고 / 500ℓ이상 — 품명: 19\n> 가전제품 / 냉장고 / 500ℓ이상 — 품 명: 냉장고\n> 가전제품 / 냉장고 / 500ℓ이상 — 규격: 51\n> 가전제품 / 냉장고 / 500ℓ이상 — 규 격: 500ℓ이상\n> 가전제품 / 냉장고 / 500ℓ이상 — 수 수 료 / 조 정 후 / 계: 20,000\n> 가전제품 / 냉장고 / 500ℓ이상 — 수 수 료 / 조 정 후 / 수집·운반비: 13,000\n> 가전제품 / 냉장고 / 500ℓ이상 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 가전제품 / 냉장고 / 300ℓ이상 — 품명: 19\n> 가전제품 / 냉장고 / 300ℓ이상 — 품 명: 냉장고\n> 가전제품 / 냉장고 / 300ℓ이상 — 규격: 52\n> 가전제품 / 냉장고 / 300ℓ이상 — 규 격: 300ℓ이상\n> 가전제품 / 냉장고 / 300ℓ이상 — 수 수 료 / 조 정 후 / 계: 15,000\n> 가전제품 / 냉장고 / 300ℓ이상 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 가전제품 / 냉장고 / 300ℓ이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가전제품 / 냉장고 / 300ℓ미만 — 품명: 19\n> 가전제품 / 냉장고 / 300ℓ미만 — 품 명: 냉장고\n> 가전제품 / 냉장고 / 300ℓ미만 — 규격: 53\n> 가전제품 / 냉장고 / 300ℓ미만 — 규 격: 300ℓ미만\n> 가전제품 / 냉장고 / 300ℓ미만 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 냉장고 / 300ℓ미만 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가전제품 / 냉장고 / 300ℓ미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가전제품 / 텔레비전 / 42″이상 — 품명: 20\n> 가전제품 / 텔레비전 / 42″이상 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 42″이상 — 규격: 54\n> 가전제품 / 텔레비전 / 42″이상 — 규 격: 42″이상\n> 가전제품 / 텔레비전 / 42″이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가전제품 / 텔레비전 / 42″이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가전제품 / 텔레비전 / 42″이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가전제품 / 텔레비전 / 29″이상 — 품명: 20\n> 가전제품 / 텔레비전 / 29″이상 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 29″이상 — 규격: 55\n> 가전제품 / 텔레비전 / 29″이상 — 규 격: 29″이상\n> 가전제품 / 텔레비전 / 29″이상 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 텔레비전 / 29″이상 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 텔레비전 / 29″이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 텔레비전 / 14″이상 — 품명: 20\n> 가전제품 / 텔레비전 / 14″이상 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 14″이상 — 규격: 56\n> 가전제품 / 텔레비전 / 14″이상 — 규 격: 14″이상\n> 가전제품 / 텔레비전 / 14″이상 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 텔레비전 / 14″이상 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 텔레비전 / 14″이상 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 텔레비전 / 14″미만 — 품명: 20\n> 가전제품 / 텔레비전 / 14″미만 — 품 명: 텔레비전\n> 가전제품 / 텔레비전 / 14″미만 — 규격: 57\n> 가전제품 / 텔레비전 / 14″미만 — 규 격: 14″미만\n> 가전제품 / 텔레비전 / 14″미만 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 텔레비전 / 14″미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 텔레비전 / 14″미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 세탁기 / 용량8kg이상 — 품명: 21\n> 가전제품 / 세탁기 / 용량8kg이상 — 품 명: 세탁기\n> 가전제품 / 세탁기 / 용량8kg이상 — 규격: 58\n> 가전제품 / 세탁기 / 용량8kg이상 — 규 격: 용량8kg이상\n> 가전제품 / 세탁기 / 용량8kg이상 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가전제품 / 세탁기 / 용량8kg이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가전제품 / 세탁기 / 용량8kg이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 세탁기 / 용량8kg미만 — 품명: 21\n> 가전제품 / 세탁기 / 용량8kg미만 — 품 명: 세탁기\n> 가전제품 / 세탁기 / 용량8kg미만 — 규격: 59\n> 가전제품 / 세탁기 / 용량8kg미만 — 규 격: 용량8kg미만\n> 가전제품 / 세탁기 / 용량8kg미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가전제품 / 세탁기 / 용량8kg미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 세탁기 / 용량8kg미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 세탁기 / 드럼세탁기 — 품명: 21\n> 가전제품 / 세탁기 / 드럼세탁기 — 품 명: 세탁기\n> 가전제품 / 세탁기 / 드럼세탁기 — 규격: 60\n> 가전제품 / 세탁기 / 드럼세탁기 — 규 격: 드럼세탁기\n> 가전제품 / 세탁기 / 드럼세탁기 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 세탁기 / 드럼세탁기 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가전제품 / 세탁기 / 드럼세탁기 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 품명: 22\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 품 명: 에어컨 (실외기 또는 실내기), 온풍기\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 규격: 61\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 규 격: 264㎡형이상\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 수 수 료 / 조 정 후 / 계: 12,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 수 수 료 / 조 정 후 / 수집·운반비: 9,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 264㎡형이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 품명: 22\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 품 명: 에어컨 (실외기 또는 실내기), 온풍기\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 규격: 62\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 규 격: 66㎡이상\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 수 수 료 / 조 정 후 / 계: 8,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 품명: 22\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 품 명: 에어컨 (실외기 또는 실내기), 온풍기\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 규격: 63\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 규 격: 66㎡미만\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 수 수 료 / 조 정 후 / 계: 6,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가전제품 / 에어컨 (실외기 또는 실내기), 온풍기 / 66㎡미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 품명: 23\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 품 명: 오븐레인지\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 규격: 64\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 오븐레인지 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 품명: 23\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 품 명: 오븐레인지\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 규격: 65\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가전제품 / 오븐레인지 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 품명: 24\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 품 명: 가스레인지\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 규격: 66\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 규 격: 화구 3개 이상\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가전제품 / 가스레인지 / 화구 3개 이상 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 품명: 24\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 품 명: 가스레인지\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 규격: 67\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 규 격: 화구 2개 이하\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 가스레인지 / 화구 2개 이하 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 공기청정기 / 높이 1m이상 — 품명: 25\n> 가전제품 / 공기청정기 / 높이 1m이상 — 품 명: 공기청정기\n> 가전제품 / 공기청정기 / 높이 1m이상 — 규격: 68\n> 가전제품 / 공기청정기 / 높이 1m이상 — 규 격: 높이 1m이상\n> 가전제품 / 공기청정기 / 높이 1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 가전제품 / 공기청정기 / 높이 1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 가전제품 / 공기청정기 / 높이 1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 가전제품 / 공기청정기 / 높이 1m미만 — 품명: 25\n> 가전제품 / 공기청정기 / 높이 1m미만 — 품 명: 공기청정기\n> 가전제품 / 공기청정기 / 높이 1m미만 — 규격: 69\n> 가전제품 / 공기청정기 / 높이 1m미만 — 규 격: 높이 1m미만\n> 가전제품 / 공기청정기 / 높이 1m미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 공기청정기 / 높이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 가전제품 / 공기청정기 / 높이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 시계 / PP재질 — 품명: 26\n> 가전제품 / 시계 / PP재질 — 품 명: 시계\n> 가전제품 / 시계 / PP재질 — 규격: 70\n> 가전제품 / 시계 / PP재질 — 규 격: PP재질\n> 가전제품 / 시계 / PP재질 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 시계 / PP재질 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 시계 / PP재질 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 시계 / 목재 재질 — 품명: 26\n> 가전제품 / 시계 / 목재 재질 — 품 명: 시계\n> 가전제품 / 시계 / 목재 재질 — 규격: 71\n> 가전제품 / 시계 / 목재 재질 — 규 격: 목재 재질\n> 가전제품 / 시계 / 목재 재질 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 시계 / 목재 재질 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 시계 / 목재 재질 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 전축 / 길이 1m 이상 — 품명: 27\n> 가전제품 / 전축 / 길이 1m 이상 — 품 명: 전축\n> 가전제품 / 전축 / 길이 1m 이상 — 규격: 72\n> 가전제품 / 전축 / 길이 1m 이상 — 규 격: 길이 1m 이상\n> 가전제품 / 전축 / 길이 1m 이상 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 전축 / 길이 1m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가전제품 / 전축 / 길이 1m 이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가전제품 / 전축 / 길이 1m 미만 — 품명: 27\n> 가전제품 / 전축 / 길이 1m 미만 — 품 명: 전축\n> 가전제품 / 전축 / 길이 1m 미만 — 규격: 73\n> 가전제품 / 전축 / 길이 1m 미만 — 규 격: 길이 1m 미만\n> 가전제품 / 전축 / 길이 1m 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 전축 / 길이 1m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 가전제품 / 전축 / 길이 1m 미만 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 가전제품 / 탈수기 / 모든규격 — 품명: 28\n> 가전제품 / 탈수기 / 모든규격 — 품 명: 탈수기\n> 가전제품 / 탈수기 / 모든규격 — 규격: 74\n> 가전제품 / 탈수기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 탈수기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 탈수기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 탈수기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 정수기 / 모든규격 — 품명: 29\n> 가전제품 / 정수기 / 모든규격 — 품 명: 정수기\n> 가전제품 / 정수기 / 모든규격 — 규격: 75\n> 가전제품 / 정수기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 정수기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 4,000\n> 가전제품 / 정수기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 가전제품 / 정수기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 가전제품 / 선풍기 / 모든규격 — 품명: 30\n> 가전제품 / 선풍기 / 모든규격 — 품 명: 선풍기\n> 가전제품 / 선풍기 / 모든규격 — 규격: 76\n> 가전제품 / 선풍기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 선풍기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 선풍기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 선풍기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / PC 모니터 / 모든규격 — 품명: 31\n> 가전제품 / PC 모니터 / 모든규격 — 품 명: PC 모니터\n> 가전제품 / PC 모니터 / 모든규격 — 규격: 77\n> 가전제품 / PC 모니터 / 모든규격 — 규 격: 모든규격\n> 가전제품 / PC 모니터 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / PC 모니터 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / PC 모니터 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / PC 본체 / 모든규격 — 품명: 32\n> 가전제품 / PC 본체 / 모든규격 — 품 명: PC 본체\n> 가전제품 / PC 본체 / 모든규격 — 규격: 78\n> 가전제품 / PC 본체 / 모든규격 — 규 격: 모든규격\n> 가전제품 / PC 본체 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / PC 본체 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / PC 본체 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 복사기 / 50x50cm 이상 — 품명: 33\n> 가전제품 / 복사기 / 50x50cm 이상 — 품 명: 복사기\n> 가전제품 / 복사기 / 50x50cm 이상 — 규격: 79\n> 가전제품 / 복사기 / 50x50cm 이상 — 규 격: 50x50cm 이상\n> 가전제품 / 복사기 / 50x50cm 이상 — 수 수 료 / 조 정 후 / 계: 10,000\n> 가전제품 / 복사기 / 50x50cm 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 가전제품 / 복사기 / 50x50cm 이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 가전제품 / 복사기 / 50x50cm 미만 — 품명: 33\n> 가전제품 / 복사기 / 50x50cm 미만 — 품 명: 복사기\n> 가전제품 / 복사기 / 50x50cm 미만 — 규격: 80\n> 가전제품 / 복사기 / 50x50cm 미만 — 규 격: 50x50cm 미만\n> 가전제품 / 복사기 / 50x50cm 미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 복사기 / 50x50cm 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 가전제품 / 복사기 / 50x50cm 미만 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 가전제품 / 팩시밀리 / 모든규격 — 품명: 34\n> 가전제품 / 팩시밀리 / 모든규격 — 품 명: 팩시밀리\n> 가전제품 / 팩시밀리 / 모든규격 — 규격: 81\n> 가전제품 / 팩시밀리 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 팩시밀리 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 팩시밀리 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 팩시밀리 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 식기세척기 / 모든규격 — 품명: 35\n> 가전제품 / 식기세척기 / 모든규격 — 품 명: 식기세척기\n> 가전제품 / 식기세척기 / 모든규격 — 규격: 82\n> 가전제품 / 식기세척기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 식기세척기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 5,000\n> 가전제품 / 식기세척기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 가전제품 / 식기세척기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 가전제품 / 비디오 / 모든규격 — 품명: 36\n> 가전제품 / 비디오 / 모든규격 — 품 명: 비디오\n> 가전제품 / 비디오 / 모든규격 — 규격: 83\n> 가전제품 / 비디오 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 비디오 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 가전제품 / 비디오 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 가전제품 / 비디오 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 가전제품 / 청소기 / 모든규격 — 품명: 37\n> 가전제품 / 청소기 / 모든규격 — 품 명: 청소기\n> 가전제품 / 청소기 / 모든규격 — 규격: 84\n> 가전제품 / 청소기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 청소기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 청소기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 청소기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 밥통 / 모든규격 — 품명: 38\n> 가전제품 / 밥통 / 모든규격 — 품 명: 밥통\n> 가전제품 / 밥통 / 모든규격 — 규격: 85\n> 가전제품 / 밥통 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 밥통 / 모든규격 — 수 수 료 / 조 정 후 / 계: 1,000\n> 가전제품 / 밥통 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 가전제품 / 밥통 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 500\n> 가전제품 / 식기건조기 / 모든규격 — 품명: 39\n> 가전제품 / 식기건조기 / 모든규격 — 품 명: 식기건조기\n> 가전제품 / 식기건조기 / 모든규격 — 규격: 86\n> 가전제품 / 식기건조기 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 식기건조기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 가전제품 / 식기건조기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 가전제품 / 식기건조기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 가전제품 / 스탠드 / 모든규격 — 품명: 40\n> 가전제품 / 스탠드 / 모든규격 — 품 명: 스탠드\n> 가전제품 / 스탠드 / 모든규격 — 규격: 87\n> 가전제품 / 스탠드 / 모든규격 — 규 격: 모든규격\n> 가전제품 / 스탠드 / 모든규격 — 수 수 료 / 조 정 후 / 계: 1,000\n> 가전제품 / 스탠드 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 가전제품 / 스탠드 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 500\n> 기타 / 피아노 / 그랜드 — 품명: 41\n> 기타 / 피아노 / 그랜드 — 품 명: 피아노\n> 기타 / 피아노 / 그랜드 — 규격: 88\n> 기타 / 피아노 / 그랜드 — 규 격: 그랜드\n> 기타 / 피아노 / 그랜드 — 수 수 료 / 조 정 후 / 계: 30,000\n> 기타 / 피아노 / 그랜드 — 수 수 료 / 조 정 후 / 수집·운반비: 18,000\n> 기타 / 피아노 / 그랜드 — 수 수 료 / 조 정 후 / 처리비: 12,000\n> 기타 / 피아노 / 업라이트 — 품명: 41\n> 기타 / 피아노 / 업라이트 — 품 명: 피아노\n> 기타 / 피아노 / 업라이트 — 규격: 89\n> 기타 / 피아노 / 업라이트 — 규 격: 업라이트\n> 기타 / 피아노 / 업라이트 — 수 수 료 / 조 정 후 / 계: 20,000\n> 기타 / 피아노 / 업라이트 — 수 수 료 / 조 정 후 / 수집·운반비: 12,000\n> 기타 / 피아노 / 업라이트 — 수 수 료 / 조 정 후 / 처리비: 8,000\n> 기타 / 피아노 / 디지털 — 품명: 41\n> 기타 / 피아노 / 디지털 — 품 명: 피아노\n> 기타 / 피아노 / 디지털 — 규격: 90\n> 기타 / 피아노 / 디지털 — 규 격: 디지털\n> 기타 / 피아노 / 디지털 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 피아노 / 디지털 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 피아노 / 디지털 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 재봉틀 / 모든규격 — 품명: 42\n> 기타 / 재봉틀 / 모든규격 — 품 명: 재봉틀\n> 기타 / 재봉틀 / 모든규격 — 규격: 91\n> 기타 / 재봉틀 / 모든규격 — 규 격: 모든규격\n> 기타 / 재봉틀 / 모든규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 재봉틀 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 재봉틀 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 쌀통 / 목재1*1m이상 — 품명: 43\n> 기타 / 쌀통 / 목재1*1m이상 — 품 명: 쌀통\n> 기타 / 쌀통 / 목재1*1m이상 — 규격: 92\n> 기타 / 쌀통 / 목재1*1m이상 — 규 격: 목재1*1m이상\n> 기타 / 쌀통 / 목재1*1m이상 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 쌀통 / 목재1*1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 쌀통 / 목재1*1m이상 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 쌀통 / 목재1*1m이하 — 품명: 43\n> 기타 / 쌀통 / 목재1*1m이하 — 품 명: 쌀통\n> 기타 / 쌀통 / 목재1*1m이하 — 규격: 93\n> 기타 / 쌀통 / 목재1*1m이하 — 규 격: 목재1*1m이하\n> 기타 / 쌀통 / 목재1*1m이하 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 쌀통 / 목재1*1m이하 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 쌀통 / 목재1*1m이하 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 가방류 / 골프가방 — 품명: 44\n> 기타 / 가방류 / 골프가방 — 품 명: 가방류\n> 기타 / 가방류 / 골프가방 — 규격: 94\n> 기타 / 가방류 / 골프가방 — 규 격: 골프가방\n> 기타 / 가방류 / 골프가방 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 가방류 / 골프가방 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 가방류 / 골프가방 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 가방류 / 화물용 — 품명: 44\n> 기타 / 가방류 / 화물용 — 품 명: 가방류\n> 기타 / 가방류 / 화물용 — 규격: 95\n> 기타 / 가방류 / 화물용 — 규 격: 화물용\n> 기타 / 가방류 / 화물용 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 가방류 / 화물용 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 가방류 / 화물용 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 가방류 / 그 밖의 가방류 — 품명: 44\n> 기타 / 가방류 / 그 밖의 가방류 — 품 명: 가방류\n> 기타 / 가방류 / 그 밖의 가방류 — 규격: 96\n> 기타 / 가방류 / 그 밖의 가방류 — 규 격: 그 밖의 가방류\n> 기타 / 가방류 / 그 밖의 가방류 — 수 수 료 / 조 정 후 / 계: 1,000\n> 기타 / 가방류 / 그 밖의 가방류 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 기타 / 가방류 / 그 밖의 가방류 — 수 수 료 / 조 정 후 / 처리비: 500\n> 기타 / 문짝 / 목재 — 품명: 45\n> 기타 / 문짝 / 목재 — 품 명: 문짝\n> 기타 / 문짝 / 목재 — 규격: 97\n> 기타 / 문짝 / 목재 — 규 격: 목재\n> 기타 / 문짝 / 목재 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 문짝 / 목재 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 문짝 / 목재 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 문짝 / 목재,유리포함 — 품명: 45\n> 기타 / 문짝 / 목재,유리포함 — 품 명: 문짝\n> 기타 / 문짝 / 목재,유리포함 — 규격: 98\n> 기타 / 문짝 / 목재,유리포함 — 규 격: 목재,유리포함\n> 기타 / 문짝 / 목재,유리포함 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 문짝 / 목재,유리포함 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 문짝 / 목재,유리포함 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 보일러 / 모든 규격 — 품명: 46\n> 기타 / 보일러 / 모든 규격 — 품 명: 보일러\n> 기타 / 보일러 / 모든 규격 — 규격: 99\n> 기타 / 보일러 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 보일러 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 보일러 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 보일러 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 기름 탱크 / 2드럼이상 — 품명: 47\n> 기타 / 기름 탱크 / 2드럼이상 — 품 명: 기름 탱크\n> 기타 / 기름 탱크 / 2드럼이상 — 규격: 100\n> 기타 / 기름 탱크 / 2드럼이상 — 규 격: 2드럼이상\n> 기타 / 기름 탱크 / 2드럼이상 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 기름 탱크 / 2드럼이상 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 기름 탱크 / 2드럼이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 기름 탱크 / 2드럼미만 — 품명: 47\n> 기타 / 기름 탱크 / 2드럼미만 — 품 명: 기름 탱크\n> 기타 / 기름 탱크 / 2드럼미만 — 규격: 101\n> 기타 / 기름 탱크 / 2드럼미만 — 규 격: 2드럼미만\n> 기타 / 기름 탱크 / 2드럼미만 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 기름 탱크 / 2드럼미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 기름 탱크 / 2드럼미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 물탱크(FRP) / 5드럼이상 — 품명: 48\n> 기타 / 물탱크(FRP) / 5드럼이상 — 품 명: 물탱크(FRP)\n> 기타 / 물탱크(FRP) / 5드럼이상 — 규격: 102\n> 기타 / 물탱크(FRP) / 5드럼이상 — 규 격: 5드럼이상\n> 기타 / 물탱크(FRP) / 5드럼이상 — 수 수 료 / 조 정 후 / 계: 20,000\n> 기타 / 물탱크(FRP) / 5드럼이상 — 수 수 료 / 조 정 후 / 수집·운반비: 15,000\n> 기타 / 물탱크(FRP) / 5드럼이상 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 물탱크(FRP) / 5드럼미만 — 품명: 48\n> 기타 / 물탱크(FRP) / 5드럼미만 — 품 명: 물탱크(FRP)\n> 기타 / 물탱크(FRP) / 5드럼미만 — 규격: 103\n> 기타 / 물탱크(FRP) / 5드럼미만 — 규 격: 5드럼미만\n> 기타 / 물탱크(FRP) / 5드럼미만 — 수 수 료 / 조 정 후 / 계: 15,000\n> 기타 / 물탱크(FRP) / 5드럼미만 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 기타 / 물탱크(FRP) / 5드럼미만 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 조명기구 / 장식용 — 품명: 49\n> 기타 / 조명기구 / 장식용 — 품 명: 조명기구\n> 기타 / 조명기구 / 장식용 — 규격: 104\n> 기타 / 조명기구 / 장식용 — 규 격: 장식용\n> 기타 / 조명기구 / 장식용 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 조명기구 / 장식용 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 조명기구 / 장식용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 조명기구 / 일반용 — 품명: 49\n> 기타 / 조명기구 / 일반용 — 품 명: 조명기구\n> 기타 / 조명기구 / 일반용 — 규격: 105\n> 기타 / 조명기구 / 일반용 — 규 격: 일반용\n> 기타 / 조명기구 / 일반용 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 조명기구 / 일반용 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 조명기구 / 일반용 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 품명: 50\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 품 명: 거울·액자\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 규격: 106\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 규 격: 50㎝×50㎝ 미만\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 품명: 50\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 품 명: 거울·액자\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 규격: 107\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 규 격: 50㎝×50㎝ 이상\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 거울·액자 / 50㎝×50㎝ 이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 운동기구 / 러닝머신 — 품명: 51\n> 기타 / 운동기구 / 러닝머신 — 품 명: 운동기구\n> 기타 / 운동기구 / 러닝머신 — 규격: 108\n> 기타 / 운동기구 / 러닝머신 — 규 격: 러닝머신\n> 기타 / 운동기구 / 러닝머신 — 수 수 료 / 조 정 후 / 계: 10,000\n> 기타 / 운동기구 / 러닝머신 — 수 수 료 / 조 정 후 / 수집·운반비: 6,000\n> 기타 / 운동기구 / 러닝머신 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 운동기구 / 싸이클 — 품명: 51\n> 기타 / 운동기구 / 싸이클 — 품 명: 운동기구\n> 기타 / 운동기구 / 싸이클 — 규격: 109\n> 기타 / 운동기구 / 싸이클 — 규 격: 싸이클\n> 기타 / 운동기구 / 싸이클 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 운동기구 / 싸이클 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 운동기구 / 싸이클 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 운동기구 / 그 밖의 운동기구 — 품명: 51\n> 기타 / 운동기구 / 그 밖의 운동기구 — 품 명: 운동기구\n> 기타 / 운동기구 / 그 밖의 운동기구 — 규격: 110\n> 기타 / 운동기구 / 그 밖의 운동기구 — 규 격: 그 밖의 운동기구\n> 기타 / 운동기구 / 그 밖의 운동기구 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 운동기구 / 그 밖의 운동기구 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 운동기구 / 그 밖의 운동기구 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 우산 / 모든규격 — 품명: 52\n> 기타 / 우산 / 모든규격 — 품 명: 우산\n> 기타 / 우산 / 모든규격 — 규격: 111\n> 기타 / 우산 / 모든규격 — 규 격: 모든규격\n> 기타 / 우산 / 모든규격 — 수 수 료 / 조 정 후 / 계: 1,000\n> 기타 / 우산 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 500\n> 기타 / 우산 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 500\n> 기타 / 자전거 / 성인용 — 품명: 53\n> 기타 / 자전거 / 성인용 — 품 명: 자전거\n> 기타 / 자전거 / 성인용 — 규격: 112\n> 기타 / 자전거 / 성인용 — 규 격: 성인용\n> 기타 / 자전거 / 성인용 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 자전거 / 성인용 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 자전거 / 성인용 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 자전거 / 아동용 — 품명: 53\n> 기타 / 자전거 / 아동용 — 품 명: 자전거\n> 기타 / 자전거 / 아동용 — 규격: 113\n> 기타 / 자전거 / 아동용 — 규 격: 아동용\n> 기타 / 자전거 / 아동용 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 자전거 / 아동용 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 자전거 / 아동용 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 돗자리 / 모든 규격 — 품명: 54\n> 기타 / 돗자리 / 모든 규격 — 품 명: 돗자리\n> 기타 / 돗자리 / 모든 규격 — 규격: 114\n> 기타 / 돗자리 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 돗자리 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 돗자리 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 돗자리 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 수족관(어항) / 길이 2m 이상 — 품명: 55\n> 기타 / 수족관(어항) / 길이 2m 이상 — 품 명: 수족관(어항)\n> 기타 / 수족관(어항) / 길이 2m 이상 — 규격: 115\n> 기타 / 수족관(어항) / 길이 2m 이상 — 규 격: 길이 2m 이상\n> 기타 / 수족관(어항) / 길이 2m 이상 — 수 수 료 / 조 정 후 / 계: 15,000\n> 기타 / 수족관(어항) / 길이 2m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 8,000\n> 기타 / 수족관(어항) / 길이 2m 이상 — 수 수 료 / 조 정 후 / 처리비: 7,000\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 품명: 55\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 품 명: 수족관(어항)\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 규격: 116\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 규 격: 길이 1m～2m미만\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 수 수 료 / 조 정 후 / 계: 9,000\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 수족관(어항) / 길이 1m～2m미만 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 수족관(어항) / 길이 1m미만 — 품명: 55\n> 기타 / 수족관(어항) / 길이 1m미만 — 품 명: 수족관(어항)\n> 기타 / 수족관(어항) / 길이 1m미만 — 규격: 117\n> 기타 / 수족관(어항) / 길이 1m미만 — 규 격: 길이 1m미만\n> 기타 / 수족관(어항) / 길이 1m미만 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 수족관(어항) / 길이 1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 수족관(어항) / 길이 1m미만 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 유모차 / 모든 규격 — 품명: 56\n> 기타 / 유모차 / 모든 규격 — 품 명: 유모차\n> 기타 / 유모차 / 모든 규격 — 규격: 118\n> 기타 / 유모차 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 유모차 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 유모차 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 유모차 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 보행기 / 모든규격 — 품명: 57\n> 기타 / 보행기 / 모든규격 — 품 명: 보행기\n> 기타 / 보행기 / 모든규격 — 규격: 119\n> 기타 / 보행기 / 모든규격 — 규 격: 모든규격\n> 기타 / 보행기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 보행기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 보행기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 카펫 / 3.3㎡당 — 품명: 58\n> 기타 / 카펫 / 3.3㎡당 — 품 명: 카펫\n> 기타 / 카펫 / 3.3㎡당 — 규격: 120\n> 기타 / 카펫 / 3.3㎡당 — 규 격: 3.3㎡당\n> 기타 / 카펫 / 3.3㎡당 — 수 수 료 / 조 정 후 / 계: 8,000\n> 기타 / 카펫 / 3.3㎡당 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 카펫 / 3.3㎡당 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 개집(FRP) / 모든규격 — 품명: 59\n> 기타 / 개집(FRP) / 모든규격 — 품 명: 개집(FRP)\n> 기타 / 개집(FRP) / 모든규격 — 규격: 121\n> 기타 / 개집(FRP) / 모든규격 — 규 격: 모든규격\n> 기타 / 개집(FRP) / 모든규격 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 개집(FRP) / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 개집(FRP) / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 정화조 / 10인용 이상 — 품명: 60\n> 기타 / 정화조 / 10인용 이상 — 품 명: 정화조\n> 기타 / 정화조 / 10인용 이상 — 규격: 122\n> 기타 / 정화조 / 10인용 이상 — 규 격: 10인용 이상\n> 기타 / 정화조 / 10인용 이상 — 수 수 료 / 조 정 후 / 계: 35,000\n> 기타 / 정화조 / 10인용 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 18,000\n> 기타 / 정화조 / 10인용 이상 — 수 수 료 / 조 정 후 / 처리비: 17,000\n> 기타 / 정화조 / 10인용 미만 — 품명: 60\n> 기타 / 정화조 / 10인용 미만 — 품 명: 정화조\n> 기타 / 정화조 / 10인용 미만 — 규격: 123\n> 기타 / 정화조 / 10인용 미만 — 규 격: 10인용 미만\n> 기타 / 정화조 / 10인용 미만 — 수 수 료 / 조 정 후 / 계: 21,000\n> 기타 / 정화조 / 10인용 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 11,000\n> 기타 / 정화조 / 10인용 미만 — 수 수 료 / 조 정 후 / 처리비: 10,000\n> 기타 / 욕조 / 길이 2m 이상 — 품명: 61\n> 기타 / 욕조 / 길이 2m 이상 — 품 명: 욕조\n> 기타 / 욕조 / 길이 2m 이상 — 규격: 124\n> 기타 / 욕조 / 길이 2m 이상 — 규 격: 길이 2m 이상\n> 기타 / 욕조 / 길이 2m 이상 — 수 수 료 / 조 정 후 / 계: 20,000\n> 기타 / 욕조 / 길이 2m 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 10,000\n> 기타 / 욕조 / 길이 2m 이상 — 수 수 료 / 조 정 후 / 처리비: 10,000\n> 기타 / 욕조 / 길이1m~2m 미만 — 품명: 61\n> 기타 / 욕조 / 길이1m~2m 미만 — 품 명: 욕조\n> 기타 / 욕조 / 길이1m~2m 미만 — 규격: 125\n> 기타 / 욕조 / 길이1m~2m 미만 — 규 격: 길이1m~2m 미만\n> 기타 / 욕조 / 길이1m~2m 미만 — 수 수 료 / 조 정 후 / 계: 10,000\n> 기타 / 욕조 / 길이1m~2m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 욕조 / 길이1m~2m 미만 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 욕조 / 길이1m 미만 — 품명: 61\n> 기타 / 욕조 / 길이1m 미만 — 품 명: 욕조\n> 기타 / 욕조 / 길이1m 미만 — 규격: 126\n> 기타 / 욕조 / 길이1m 미만 — 규 격: 길이1m 미만\n> 기타 / 욕조 / 길이1m 미만 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 욕조 / 길이1m 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 욕조 / 길이1m 미만 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 변기 / 모든규격 — 품명: 62\n> 기타 / 변기 / 모든규격 — 품 명: 변기\n> 기타 / 변기 / 모든규격 — 규격: 127\n> 기타 / 변기 / 모든규격 — 규 격: 모든규격\n> 기타 / 변기 / 모든규격 — 수 수 료 / 조 정 후 / 계: 9,000\n> 기타 / 변기 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 변기 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 4,000\n> 기타 / 세면대 / 모든규격 — 품명: 63\n> 기타 / 세면대 / 모든규격 — 품 명: 세면대\n> 기타 / 세면대 / 모든규격 — 규격: 128\n> 기타 / 세면대 / 모든규격 — 규 격: 모든규격\n> 기타 / 세면대 / 모든규격 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 세면대 / 모든규격 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 세면대 / 모든규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 난로 / 석 유 — 품명: 64\n> 기타 / 난로 / 석 유 — 품 명: 난로\n> 기타 / 난로 / 석 유 — 규격: 129\n> 기타 / 난로 / 석 유 — 규 격: 석 유\n> 기타 / 난로 / 석 유 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 난로 / 석 유 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 난로 / 석 유 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 난로 / 전 기 — 품명: 64\n> 기타 / 난로 / 전 기 — 품 명: 난로\n> 기타 / 난로 / 전 기 — 규격: 130\n> 기타 / 난로 / 전 기 — 규 격: 전 기\n> 기타 / 난로 / 전 기 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 난로 / 전 기 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 난로 / 전 기 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 드럼통 / 모든 규격 — 품명: 65\n> 기타 / 드럼통 / 모든 규격 — 품 명: 드럼통\n> 기타 / 드럼통 / 모든 규격 — 규격: 131\n> 기타 / 드럼통 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 드럼통 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 드럼통 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 드럼통 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 병풍 / 가로1m이상 — 품명: 66\n> 기타 / 병풍 / 가로1m이상 — 품 명: 병풍\n> 기타 / 병풍 / 가로1m이상 — 규격: 132\n> 기타 / 병풍 / 가로1m이상 — 규 격: 가로1m이상\n> 기타 / 병풍 / 가로1m이상 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 병풍 / 가로1m이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 병풍 / 가로1m이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 병풍 / 가로1m미만 — 품명: 66\n> 기타 / 병풍 / 가로1m미만 — 품 명: 병풍\n> 기타 / 병풍 / 가로1m미만 — 규격: 133\n> 기타 / 병풍 / 가로1m미만 — 규 격: 가로1m미만\n> 기타 / 병풍 / 가로1m미만 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 병풍 / 가로1m미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 병풍 / 가로1m미만 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 이불, 요 / 100L 봉투 기준 — 품명: 67\n> 기타 / 이불, 요 / 100L 봉투 기준 — 품 명: 이불, 요\n> 기타 / 이불, 요 / 100L 봉투 기준 — 규격: 134\n> 기타 / 이불, 요 / 100L 봉투 기준 — 규 격: 100L 봉투 기준\n> 기타 / 이불, 요 / 100L 봉투 기준 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 이불, 요 / 100L 봉투 기준 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 이불, 요 / 100L 봉투 기준 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 이불, 요 / 50L 봉투 기준 — 품명: 67\n> 기타 / 이불, 요 / 50L 봉투 기준 — 품 명: 이불, 요\n> 기타 / 이불, 요 / 50L 봉투 기준 — 규격: 135\n> 기타 / 이불, 요 / 50L 봉투 기준 — 규 격: 50L 봉투 기준\n> 기타 / 이불, 요 / 50L 봉투 기준 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 이불, 요 / 50L 봉투 기준 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 이불, 요 / 50L 봉투 기준 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 타이어 / 화물차량 등 — 품명: 68\n> 기타 / 타이어 / 화물차량 등 — 품 명: 타이어\n> 기타 / 타이어 / 화물차량 등 — 규격: 136\n> 기타 / 타이어 / 화물차량 등 — 규 격: 화물차량 등\n> 기타 / 타이어 / 화물차량 등 — 수 수 료 / 조 정 후 / 계: 12,000\n> 기타 / 타이어 / 화물차량 등 — 수 수 료 / 조 정 후 / 수집·운반비: 4,000\n> 기타 / 타이어 / 화물차량 등 — 수 수 료 / 조 정 후 / 처리비: 8,000\n> 기타 / 타이어 / 승용차 — 품명: 68\n> 기타 / 타이어 / 승용차 — 품 명: 타이어\n> 기타 / 타이어 / 승용차 — 규격: 137\n> 기타 / 타이어 / 승용차 — 규 격: 승용차\n> 기타 / 타이어 / 승용차 — 수 수 료 / 조 정 후 / 계: 7,000\n> 기타 / 타이어 / 승용차 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 타이어 / 승용차 — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 항아리 / 20ℓ이상 — 품명: 69\n> 기타 / 항아리 / 20ℓ이상 — 품 명: 항아리\n> 기타 / 항아리 / 20ℓ이상 — 규격: 138\n> 기타 / 항아리 / 20ℓ이상 — 규 격: 20ℓ이상\n> 기타 / 항아리 / 20ℓ이상 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 항아리 / 20ℓ이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 항아리 / 20ℓ이상 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 항아리 / 20ℓ미만 — 품명: 69\n> 기타 / 항아리 / 20ℓ미만 — 품 명: 항아리\n> 기타 / 항아리 / 20ℓ미만 — 규격: 139\n> 기타 / 항아리 / 20ℓ미만 — 규 격: 20ℓ미만\n> 기타 / 항아리 / 20ℓ미만 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 항아리 / 20ℓ미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 항아리 / 20ℓ미만 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 비데 / 모든 규격 — 품명: 70\n> 기타 / 비데 / 모든 규격 — 품 명: 비데\n> 기타 / 비데 / 모든 규격 — 규격: 140\n> 기타 / 비데 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 비데 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 비데 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 비데 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 화분 / 20ℓ 이상 — 품명: 71\n> 기타 / 화분 / 20ℓ 이상 — 품 명: 화분\n> 기타 / 화분 / 20ℓ 이상 — 규격: 141\n> 기타 / 화분 / 20ℓ 이상 — 규 격: 20ℓ 이상\n> 기타 / 화분 / 20ℓ 이상 — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 화분 / 20ℓ 이상 — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 기타 / 화분 / 20ℓ 이상 — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 기타 / 화분 / 20ℓ 미만 — 품명: 71\n> 기타 / 화분 / 20ℓ 미만 — 품 명: 화분\n> 기타 / 화분 / 20ℓ 미만 — 규격: 142\n> 기타 / 화분 / 20ℓ 미만 — 규 격: 20ℓ 미만\n> 기타 / 화분 / 20ℓ 미만 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 화분 / 20ℓ 미만 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 화분 / 20ℓ 미만 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 비닐 / 100ℓ마대당 — 품명: 72\n> 기타 / 비닐 / 100ℓ마대당 — 품 명: 비닐\n> 기타 / 비닐 / 100ℓ마대당 — 규격: 143\n> 기타 / 비닐 / 100ℓ마대당 — 규 격: 100ℓ마대당\n> 기타 / 비닐 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 비닐 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 비닐 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> 기타 / 금고 / 대 (1m이상) — 품명: 73\n> 기타 / 금고 / 대 (1m이상) — 품 명: 금고\n> 기타 / 금고 / 대 (1m이상) — 규격: 144\n> 기타 / 금고 / 대 (1m이상) — 규 격: 대 (1m이상)\n> 기타 / 금고 / 대 (1m이상) — 수 수 료 / 조 정 후 / 계: 10,000\n> 기타 / 금고 / 대 (1m이상) — 수 수 료 / 조 정 후 / 수집·운반비: 5,000\n> 기타 / 금고 / 대 (1m이상) — 수 수 료 / 조 정 후 / 처리비: 5,000\n> 기타 / 금고 / 소 (1m미만) — 품명: 73\n> 기타 / 금고 / 소 (1m미만) — 품 명: 금고\n> 기타 / 금고 / 소 (1m미만) — 규격: 145\n> 기타 / 금고 / 소 (1m미만) — 규 격: 소 (1m미만)\n> 기타 / 금고 / 소 (1m미만) — 수 수 료 / 조 정 후 / 계: 5,000\n> 기타 / 금고 / 소 (1m미만) — 수 수 료 / 조 정 후 / 수집·운반비: 2,500\n> 기타 / 금고 / 소 (1m미만) — 수 수 료 / 조 정 후 / 처리비: 2,500\n> 기타 / 합판 / 장당 — 품명: 74\n> 기타 / 합판 / 장당 — 품 명: 합판\n> 기타 / 합판 / 장당 — 규격: 146\n> 기타 / 합판 / 장당 — 규 격: 장당\n> 기타 / 합판 / 장당 — 수 수 료 / 조 정 후 / 계: 4,000\n> 기타 / 합판 / 장당 — 수 수 료 / 조 정 후 / 수집·운반비: 2,000\n> 기타 / 합판 / 장당 — 수 수 료 / 조 정 후 / 처리비: 2,000\n> 기타 / 방충망 / 모든 규격 — 품명: 75\n> 기타 / 방충망 / 모든 규격 — 품 명: 방충망\n> 기타 / 방충망 / 모든 규격 — 규격: 147\n> 기타 / 방충망 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 방충망 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 2,000\n> 기타 / 방충망 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,000\n> 기타 / 방충망 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,000\n> 기타 / 블라인드 / 모든 규격 — 품명: 76\n> 기타 / 블라인드 / 모든 규격 — 품 명: 블라인드\n> 기타 / 블라인드 / 모든 규격 — 규격: 148\n> 기타 / 블라인드 / 모든 규격 — 규 격: 모든 규격\n> 기타 / 블라인드 / 모든 규격 — 수 수 료 / 조 정 후 / 계: 3,000\n> 기타 / 블라인드 / 모든 규격 — 수 수 료 / 조 정 후 / 수집·운반비: 1,500\n> 기타 / 블라인드 / 모든 규격 — 수 수 료 / 조 정 후 / 처리비: 1,500\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 품명: 77\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 품 명: 목재류\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 규격: 149\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 규 격: 폐목재류(1톤차량기준)\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 수 수 료 / 조 정 후 / 계: 100,000\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 수 수 료 / 조 정 후 / 수집·운반비: 50,000\n> 기타 / 목재류 / 폐목재류(1톤차량기준) — 수 수 료 / 조 정 후 / 처리비: 50,000\n> 기타 / 폐합성수지 / 100ℓ마대당 — 품명: 78\n> 기타 / 폐합성수지 / 100ℓ마대당 — 품 명: 폐합성수지\n> 기타 / 폐합성수지 / 100ℓ마대당 — 규격: 150\n> 기타 / 폐합성수지 / 100ℓ마대당 — 규 격: 100ℓ마대당\n> 기타 / 폐합성수지 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 계: 6,000\n> 기타 / 폐합성수지 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 수집·운반비: 3,000\n> 기타 / 폐합성수지 / 100ℓ마대당 — 수 수 료 / 조 정 후 / 처리비: 3,000\n> ※ 품명에 명시되지 않은 대형폐기물은 종류 및 규격을 감안하여 유사한 품목의 수수료를 준용 ※ 차량진입가능한 곳까지 배출하여야 수거 가능",
+        "sources": [
+          {
+            "title": "폐기물",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0405050103",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "대형 폐기물 배출 방법 알려줘",
+          "재활용품 분리배출 방법 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "D06",
+      "turn": 1,
+      "question": "여권 준비물 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.028,
+      "server_timing": "app;dur=20.9",
+      "status": 200,
+      "error": null,
+      "request_id": "ba1c5dca7aa54129a0a6cf900adc0b71",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.028
+        }
+      ],
+      "response": {
+        "answer": "여권을 신청하는 분이 **성인**인가요, **만 18세 미만**인가요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "성인 신규 여권 준비물 알려줘",
+          "성인 여권 재발급 준비물 알려줘",
+          "미성년자 여권 준비물 알려줘"
+        ]
+      }
+    },
+    {
+      "id": "D06",
+      "turn": 2,
+      "question": "잘 모르겠어",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 11,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.029,
+      "server_timing": "app;dur=22.1",
+      "status": 200,
+      "error": null,
+      "request_id": "057238d4519b43b18f72e434a7c0be50",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.029
+        }
+      ],
+      "response": {
+        "answer": "안내에 필요한 조건을 확인하기 어려워 현재 정보만으로는 답변을 확정할 수 없습니다. 조건을 확인한 뒤 알려주시면 이어서 안내하겠습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "unresolved_condition",
+        "evidence": {
+          "answer_method": "unresolved_clarification",
+          "status": "insufficient",
+          "label": "조건 확인 필요",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D07",
+      "turn": 1,
+      "question": "사하구 소방교육 신청 방법",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.04,
+      "server_timing": "app;dur=21.9",
+      "status": 200,
+      "error": null,
+      "request_id": "d048bab68c684417bfddba6e9250f346",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.04
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D07",
+      "turn": 2,
+      "question": "잘 모르겠어",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1002,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.028,
+      "server_timing": "app;dur=21.3",
+      "status": 200,
+      "error": null,
+      "request_id": "1382ed35d5d440c5b71654d8f825ada6",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.028
+        }
+      ],
+      "response": {
+        "answer": "안내에 필요한 조건을 확인하기 어려워 현재 정보만으로는 답변을 확정할 수 없습니다. 조건을 확인한 뒤 알려주시면 이어서 안내하겠습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "unresolved_condition",
+        "evidence": {
+          "answer_method": "unresolved_clarification",
+          "status": "insufficient",
+          "label": "조건 확인 필요",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D08",
+      "turn": 1,
+      "question": "작은도서관 교육 프로그램 예약 방법 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1003,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.95,
+      "server_timing": "search;dur=1247.2, verify;dur=644.2, review_gate;dur=2.4, grounding;dur=6.1, originals;dur=0.0, review;dur=0.8, prepare;dur=4.9, app;dur=1943.6",
+      "status": 200,
+      "error": null,
+      "request_id": "3fa7c338a351480eb964e45c5bc04fa0",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.95
+        }
+      ],
+      "response": {
+        "answer": "**작은도서관 프로그램 운영 안내**\n- 접수방법 : 온라인접수(사하구 통합예약)\n- 대 상 : 사하구민",
+        "answer_details": "작은도서관의 공식 안내 원문입니다.\n\n> ## 작은도서관\n> ### 작은도서관 프로그램 운영 안내\n> 대 상 : 사하구민\n> 수 강 료 : 무료(단, 교재 및 재료비 별도)\n> 운영기간 : 연중\n> 독서문화 프로그램 — 구 분: 겨울방학\n> 독서문화 프로그램 — 운 영: 1월\n> 독서문화 프로그램 — 구 분: 체험형 동화구연\n> 독서문화 프로그램 — 운 영: 3월~12월\n> 독서문화 프로그램 — 구 분: 상반기\n> 독서문화 프로그램 — 운 영: 3월~6월\n> 독서문화 프로그램 — 구 분: 도서관주간 행사\n> 독서문화 프로그램 — 운 영: 4월\n> 독서문화 프로그램 — 구 분: 여름방학\n> 독서문화 프로그램 — 운 영: 7월~8월\n> 독서문화 프로그램 — 구 분: 원데이 특강\n> 독서문화 프로그램 — 운 영: 5월~6월 11월~12월\n> 독서문화 프로그램 — 구 분: 하반기\n> 독서문화 프로그램 — 운 영: 9월~12월\n> 독서문화 프로그램 — 구 분: 어린이 독서캠프\n> 독서문화 프로그램 — 운 영: 10월\n> 접수방법 : 온라인접수(사하구 통합예약)\n> 문 의 : 사하구 평생교육과(☎ 051-220-4834)\n> 통합예약 신청하기",
+        "sources": [
+          {
+            "title": "작은도서관",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D08",
+      "turn": 2,
+      "question": "신청 말고 장소 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1003,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.956,
+      "server_timing": "app;dur=952.1",
+      "status": 200,
+      "error": null,
+      "request_id": "4e63ea368e314dc69893078702717759",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.956
+        }
+      ],
+      "response": {
+        "answer": "**어느 동의 작은도서관**를 찾으시나요? 동 이름이나 시설명을 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "D08",
+      "turn": 3,
+      "question": "그럼 전화번호는?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 1003,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 1.278,
+      "server_timing": "app;dur=1271.7",
+      "status": 200,
+      "error": null,
+      "request_id": "3696d6c813ab4e1181071c0422af6192",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.278
+        }
+      ],
+      "response": {
+        "answer": "공식 프로그램 안내의 문의 전화번호는 **051-220-4834**입니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "작은도서관",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_contact",
+          "status": "official",
+          "label": "공식 시설 연락처 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "C01",
+      "turn": 1,
+      "question": "대형쓰레기 담당자 번호 알려주세요",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.075,
+      "server_timing": "app;dur=53.9",
+      "status": 200,
+      "error": null,
+      "request_id": "9a138d725b8c43d3a2770f1ce18d2328",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.075
+        }
+      ],
+      "response": {
+        "answer": "**자원순환과**\n\n- **051-220-4452** (주무관)\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "answer_details": "주무관 · 051-220-4452\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "sources": [
+          {
+            "title": "사하구청 직원업무안내",
+            "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "자원순환과",
+            "contact": "051-220-4452",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26T04:38:31.114927+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "C02",
+      "turn": 1,
+      "question": "대형폐기물 팩스번호 알려줘",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 16,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.029,
+      "server_timing": "app;dur=7.1",
+      "status": 200,
+      "error": null,
+      "request_id": "e65da3d53fe245509693b2c45a538259",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.029
+        }
+      ],
+      "response": {
+        "answer": "현재 공식 연락처 파일에서는 **팩스번호를 확인할 수 없습니다.** 직통전화와 같은 번호라고 안내할 수 없습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "fax_not_verified",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "문의 업무 확인 필요",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "C03",
+      "turn": 1,
+      "question": "예방접종은 전화로만 신청할 수 있어?",
+      "criterion": {
+        "population": "derived",
+        "parent_id": 39,
+        "review": "후속 대화에서 업무/조건/요청 항목 보존 및 정정 우선; 관련 공식 출처 검수"
+      },
+      "seconds": 0.03,
+      "server_timing": "app;dur=22.3",
+      "status": 200,
+      "error": null,
+      "request_id": "b9d2cb456a2a4ca4b1c4c0788772bb47",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.03
+        }
+      ],
+      "response": {
+        "answer": "어떤 백신을 접종하시려나요? **독감·폐렴구균·B형간염** 등 종류를 알려주세요. 백신마다 접종 장소가 달라요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "독감 접종 장소 알려줘",
+          "폐렴구균 접종 장소 알려줘",
+          "B형간염 접종 장소 알려줘"
+        ]
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-26T13:35:41.630109+00:00"
+}

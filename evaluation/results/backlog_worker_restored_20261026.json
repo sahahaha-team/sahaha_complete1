@@ -1,0 +1,87 @@
+{
+  "checked_at": "2026-10-26T13:42:23.1482746+00:00",
+  "processes": [
+    {
+      "ProcessId": 13228,
+      "Name": "ollama.exe",
+      "CreationDate": "2026-10-26T12:40:54.500842+09:00"
+    },
+    {
+      "ProcessId": 11684,
+      "Name": "python.exe",
+      "CreationDate": "2026-10-26T22:11:51.73146+09:00"
+    },
+    {
+      "ProcessId": 23856,
+      "Name": "python.exe",
+      "CreationDate": "2026-10-26T22:39:37.65584+09:00"
+    }
+  ],
+  "listeners": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 11434,
+      "OwningProcess": 13228
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 5000,
+      "OwningProcess": 11684
+    }
+  ],
+  "web_status": "ok",
+  "model": "gemma4:e4b",
+  "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+  "worker_jobs": {
+    "staff_directory_refresh": {
+      "status": "succeeded",
+      "last_attempt_at": "2026-10-26T13:36:43.521867+09:00",
+      "last_success_at": "2026-10-26T13:38:35.280863+09:00",
+      "consecutive_failures": 0,
+      "next_retry_at": null,
+      "last_error_type": null,
+      "last_result": {
+        "staff_rows": 1139,
+        "checked_at": "2026-10-26T13:38:31.114927+09:00"
+      }
+    },
+    "official_sources_refresh": {
+      "status": "running",
+      "last_attempt_at": "2026-10-26T22:39:38.520526+09:00",
+      "consecutive_failures": 8,
+      "last_error_type": "IncompleteRefresh",
+      "next_retry_at": "2026-10-26T19:08:14.161045+09:00",
+      "last_result": {
+        "reports": 0,
+        "verified_pages": 109,
+        "failed_pages": 1,
+        "new_chunks": 65,
+        "errors": 0
+      }
+    },
+    "conversation_ttl_cleanup": {
+      "status": "succeeded",
+      "last_attempt_at": "2026-10-26T13:46:43.516206+09:00",
+      "last_success_at": "2026-10-26T13:46:45.011315+09:00",
+      "consecutive_failures": 0,
+      "next_retry_at": null,
+      "last_error_type": null
+    },
+    "incremental_crawl": {
+      "status": "succeeded",
+      "last_attempt_at": "2026-10-26T14:26:43.521214+09:00",
+      "consecutive_failures": 0,
+      "last_error_type": null,
+      "next_retry_at": null,
+      "last_success_at": "2026-10-26T17:13:50.095451+09:00",
+      "last_result": {
+        "new": 10,
+        "updated": 23,
+        "unchanged": 433,
+        "deleted": 0,
+        "failed": 0
+      }
+    }
+  },
+  "note": "Worker restored after fixed evaluation and source/runtime snapshots. Previous last_result is not a completed new refresh. No queue bulk reset or OS autostart installed."
+}
