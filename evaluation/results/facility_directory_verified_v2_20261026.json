@@ -1,0 +1,1019 @@
+{
+  "started_at": "2026-10-26T08:40:33.225330+00:00",
+  "commit": "307c5ddcd2a539e92d62ffb06814bd8f6bcb39c9",
+  "case_sha256": "a7ca612974863c27a526e33447c278a001e4bf4e54e37605b62cd006a8495b18",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "0b6330e11aef9b41ca9526dcbd72f130c1bc78f8b4ffa2b3a806c69b05cc8672",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "204a2b157581fc380cc684733a45c136c83f8085e0e7195aa3796329c3d3c68c",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "50537ee15c1bf267a9a85bdcb158a7eebea694d0c41176825d7b6708e0de2227",
+    "chatbot\\concise_answers.py": "a930033ee5e5daf11ec4442864d0ffca65ce63be26b61a06212d6cb62568b7a9",
+    "chatbot\\contact_directory.py": "7b2f8e8474dc74204263bd05159acb2982f7ef0e536e821296c83065cfc4ec7e",
+    "chatbot\\conversation.py": "293f370209427af6b1e6fc89ed2406675aaa890224d323dadd39729b7f0b545a",
+    "chatbot\\crawled_pages.py": "4605926059c06277e1d275edb83547f6cc92dd2a2641f341f85fccd7b66b5c6e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "3c33e500e724d0a521c9fad389596da33800c70996eb4fd8e1579836ff98c951",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\evidence.py": "16865ba43e11185126e0f46fd5a0e84d7f9cdfb8948e42fe6fba3bead1991f18",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "be6f1abd111bff0e9939acd1151c06e2cd2dc568f6accb5fd1a3dcf7991023c9",
+    "chatbot\\facility_directory.py": "8371ce9f40c1c0ce1a66a3d29edb0c8a367973e3c7bb79c42ab82612129e3f9e",
+    "chatbot\\faq_targets.py": "924501e32a0352c4a2862feb7891a083a5bdc2e6a9dcd9ee625ce5ec1f9057bc",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "9cd193abd68ad871f5dc97a50dbf7fd70b424ffd56d4035ca848141871f3c26f",
+    "chatbot\\question_intent.py": "20701bbcabc24811964d48a58932e74e7acaa95f450a5e738f65d27807625c72",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "d1c81fcb29f79aa51707fe147165777e0025fbc63529a87bca8ed28e20f82a67",
+    "chatbot\\retriever.py": "c9fc53bd2cc354143cba7e7d95af273980c73e2595d688dff71bdfcca7cab3ec",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "50157e19c1c98e6348121066ac551095d93291ce57617d8ac61f45ada8490dbc",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "6951a50bb3106d4beb92edbcd9dd1046e69fbfbe90a7df3caadf22f2eda90d04",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "4c0dd73ae965a6ba628399ab195cce17d58936d2c21b97d6f6ce03b7befcf7ab",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "2fbc310beb7be13273b0d88cf37c52c291331273565ff542885aab309e438541",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\saha_crawler.py": "14b16a76106462bb4b4de8365a1c17c989cc0077c27bebe626d089b21efa04bf",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "1f657f3ed881a743c31bf487017ae24b6842eae5dd5399a04eddfdeee82ccc5c",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "fffc02ba69e4476882fff8a8e0bf78f6ae36ae1e2e1d6d66da0e900748dd47e7",
+    "resources\\department_contacts.json": "9e73eac9cb50afa9fbda7413d60af11c3e964b5e05b3570e7f67d8468e89b3ae",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "67dc010124494e02e2062eb8106c2bad2c88d186f83ea74e555289be42c2be97",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "4ba823886329240b0d35f45aafc34c00296bc94827ba064fe8266e7c881886bd"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": {
+    "population": "developer_derived_facility_followups",
+    "grading": "공식 원문 직접 대조. C/P/I는S와 별도. 시설 주소와 실제 강좌 장소를 구분."
+  },
+  "records": [
+    {
+      "id": "LIB",
+      "turn": 1,
+      "question": "작은도서관 위치 알려줘",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 1.195,
+      "server_timing": "app;dur=1188.0",
+      "status": 200,
+      "error": null,
+      "request_id": "a47cd6e37fbc4d6488727c99155a7dfe",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.195
+        }
+      ],
+      "response": {
+        "answer": "**어느 동의 작은도서관**를 찾으시나요? 동 이름이나 시설명을 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "LIB",
+      "turn": 2,
+      "question": "하단동",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 1.025,
+      "server_timing": "app;dur=1000.8",
+      "status": 200,
+      "error": null,
+      "request_id": "92e476d26fef4be0a82e2cb4023f7587",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.025
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **하단2동 노을나루길 작은도서관**: 하신번영로 388 (하단동)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "LIB",
+      "turn": 3,
+      "question": "그럼 전화번호는?",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.596,
+      "server_timing": "app;dur=585.0",
+      "status": 200,
+      "error": null,
+      "request_id": "46cb345ab4a745988971a1f7784b1f56",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.596
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **하단2동 노을나루길 작은도서관**: 하신번영로 388 (하단동) / 전화 051-220-5207",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "LIB",
+      "turn": 4,
+      "question": "아니 감천2동이에요",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.87,
+      "server_timing": "app;dur=846.7",
+      "status": 200,
+      "error": null,
+      "request_id": "072f5b073d6249668d6beae822c044eb",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.87
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **감천2동 감천횃불 작은도서관**: 감내1로175번길 50, 1층 (감천동) / 감내별빛센터 1층 / 전화 051-203-0543",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "CLASS",
+      "turn": 1,
+      "question": "작은도서관 교육 예약 어떻게 해",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 2.147,
+      "server_timing": "search;dur=1364.5, verify;dur=643.7, review_gate;dur=3.9, grounding;dur=11.1, originals;dur=0.0, review;dur=1.5, prepare;dur=10.7, app;dur=2137.5",
+      "status": 200,
+      "error": null,
+      "request_id": "4114b33bedca45aa94eb2a5de2a47e02",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 2.147
+        }
+      ],
+      "response": {
+        "answer": "**작은도서관 프로그램 운영 안내**\n- 접수방법 : 온라인접수(사하구 통합예약)\n- 대 상 : 사하구민",
+        "answer_details": "작은도서관의 공식 안내 원문입니다.\n\n> ## 작은도서관\n> ### 작은도서관 프로그램 운영 안내\n> 대 상 : 사하구민\n> 수 강 료 : 무료(단, 교재 및 재료비 별도)\n> 운영기간 : 연중\n> 독서문화 프로그램 — 구 분: 겨울방학\n> 독서문화 프로그램 — 운 영: 1월\n> 독서문화 프로그램 — 구 분: 체험형 동화구연\n> 독서문화 프로그램 — 운 영: 3월~12월\n> 독서문화 프로그램 — 구 분: 상반기\n> 독서문화 프로그램 — 운 영: 3월~6월\n> 독서문화 프로그램 — 구 분: 도서관주간 행사\n> 독서문화 프로그램 — 운 영: 4월\n> 독서문화 프로그램 — 구 분: 여름방학\n> 독서문화 프로그램 — 운 영: 7월~8월\n> 독서문화 프로그램 — 구 분: 원데이 특강\n> 독서문화 프로그램 — 운 영: 5월~6월 11월~12월\n> 독서문화 프로그램 — 구 분: 하반기\n> 독서문화 프로그램 — 운 영: 9월~12월\n> 독서문화 프로그램 — 구 분: 어린이 독서캠프\n> 독서문화 프로그램 — 운 영: 10월\n> 접수방법 : 온라인접수(사하구 통합예약)\n> 문 의 : 사하구 평생교육과(☎ 051-220-4834)\n> 통합예약 신청하기",
+        "sources": [
+          {
+            "title": "작은도서관",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0408030000",
+            "category": "분야별정보",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [
+            "method"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "CLASS",
+      "turn": 2,
+      "question": "장소는?",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.658,
+      "server_timing": "app;dur=650.6",
+      "status": 200,
+      "error": null,
+      "request_id": "4d375acf18a445e7a61c7def37c6d41a",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.658
+        }
+      ],
+      "response": {
+        "answer": "**어느 동의 작은도서관**를 찾으시나요? 동 이름이나 시설명을 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "CLASS",
+      "turn": 3,
+      "question": "하단동",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.642,
+      "server_timing": "app;dur=619.2",
+      "status": 200,
+      "error": null,
+      "request_id": "a5c36e44737c4e9199238fec0fe56c28",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.642
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **하단2동 노을나루길 작은도서관**: 하신번영로 388 (하단동)\n위 주소는 시설 주소입니다. 개별 강좌의 실제 수업 장소는 해당 모집공고에서 확인해야 합니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "CLASS",
+      "turn": 4,
+      "question": "전화번호는?",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.554,
+      "server_timing": "app;dur=547.2",
+      "status": 200,
+      "error": null,
+      "request_id": "63542a4337074387b6490f093cffd2be",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.554
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **하단2동 노을나루길 작은도서관**: 하신번영로 388 (하단동) / 전화 051-220-5207\n위 주소는 시설 주소입니다. 개별 강좌의 실제 수업 장소는 해당 모집공고에서 확인해야 합니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "HEALTH",
+      "turn": 1,
+      "question": "우리 동 가까운 마을건강센터가 어디 있나요?",
+      "criterion": {
+        "parent_id": 95
+      },
+      "seconds": 0.687,
+      "server_timing": "app;dur=651.1",
+      "status": 200,
+      "error": null,
+      "request_id": "36eeca82ba5c4d948e210a766156a67b",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.687
+        }
+      ],
+      "response": {
+        "answer": "**어느 동의 마을건강센터**를 찾으시나요? 동 이름이나 시설명을 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "HEALTH",
+      "turn": 2,
+      "question": "괴정2동",
+      "criterion": {
+        "parent_id": 95
+      },
+      "seconds": 0.602,
+      "server_timing": "app;dur=574.1",
+      "status": 200,
+      "error": null,
+      "request_id": "c33638c96c7945818364656117bf1d64",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.602
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **괴정2동 마을건강센터**: 까치고개로 14-1 괴정2동 행정복지센터 1층",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "15분 도시, 하하 마을건강센터 운영",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "HEALTH",
+      "turn": 3,
+      "question": "그럼 전화번호는?",
+      "criterion": {
+        "parent_id": 95
+      },
+      "seconds": 0.763,
+      "server_timing": "app;dur=730.1",
+      "status": 200,
+      "error": null,
+      "request_id": "e3540486048f4bbb9e1187c9114ddec1",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.763
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **괴정2동 마을건강센터**: 까치고개로 14-1 괴정2동 행정복지센터 1층 / 전화 220-5051~2",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "15분 도시, 하하 마을건강센터 운영",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0404050000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "MISSING",
+      "turn": 1,
+      "question": "하단1동 작은도서관 위치",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.608,
+      "server_timing": "app;dur=578.9",
+      "status": 200,
+      "error": null,
+      "request_id": "68413c27b57d4c1c8b62c36ee16c0632",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.608
+        }
+      ],
+      "response": {
+        "answer": "이 공식 목록에서는 말씀하신 동의 시설을 확인하지 못했습니다. 다른 동의 시설을 같은 지역의 시설로 안내할 수는 없습니다.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "facility_not_listed",
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "insufficient",
+          "label": "시설 확인 필요",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "NAMED",
+      "turn": 1,
+      "question": "노을나루길 작은도서관 전화번호 알려줘",
+      "criterion": {
+        "parent_id": 1003
+      },
+      "seconds": 0.512,
+      "server_timing": "app;dur=505.4",
+      "status": 200,
+      "error": null,
+      "request_id": "5cb1f379dd96464e9653ec50817d95c4",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.512
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **하단2동 노을나루길 작은도서관**: 하신번영로 388 (하단동) / 전화 051-220-5207",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "ADULT",
+      "turn": 1,
+      "question": "소방 체험 어떻게 신청해",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 0.018,
+      "server_timing": "app;dur=10.3",
+      "status": 200,
+      "error": null,
+      "request_id": "a8e8ed2bde3b4c9da48e9fc86528f973",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.018
+        }
+      ],
+      "response": {
+        "answer": "교육을 받으실 분은 **어린이인가요, 성인인가요?** 공동주택 관리자 교육을 찾으시면 함께 알려주세요.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "clarification",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "ADULT",
+      "turn": 2,
+      "question": "성인",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 6.782,
+      "server_timing": "search;dur=3560.7, verify;dur=2203.3, review_gate;dur=151.9, rerank;dur=793.5, grounding;dur=21.5, originals;dur=0.0, review;dur=1.2, prepare;dur=5.3, app;dur=6775.2",
+      "status": 200,
+      "error": null,
+      "request_id": "1eb152e5c5af4a24bdc69ca5d62f501c",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 6.782
+        }
+      ],
+      "response": {
+        "answer": "말씀하신 대상 조건에 맞는 교육·체험의 신청·이용 정보를 현재 공식 자료에서 확인하지 못했습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "no_current_evidence",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "최신 근거를 찾지 못함",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "ADULT",
+      "turn": 3,
+      "question": "그럼 장소는?",
+      "criterion": {
+        "parent_id": 1002
+      },
+      "seconds": 4.536,
+      "server_timing": "search;dur=2087.5, verify;dur=1592.1, review_gate;dur=8.2, rerank;dur=775.1, grounding;dur=19.9, originals;dur=0.0, review;dur=1.2, prepare;dur=3.9, app;dur=4529.2",
+      "status": 200,
+      "error": null,
+      "request_id": "58434371441a42328dbf28decea76972",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.536
+        }
+      ],
+      "response": {
+        "answer": "말씀하신 대상 조건에 맞는 교육·체험의 신청·이용 정보를 현재 공식 자료에서 확인하지 못했습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "no_current_evidence",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "최신 근거를 찾지 못함",
+          "official_source_count": 0,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "CONTACT",
+      "turn": 1,
+      "question": "대형 쓰레기 담당자 전화만 알려주세요",
+      "criterion": {
+        "parent_id": 16
+      },
+      "seconds": 0.09,
+      "server_timing": "app;dur=73.4",
+      "status": 200,
+      "error": null,
+      "request_id": "818b45bf88474f10935b2db33551ba34",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.09
+        }
+      ],
+      "response": {
+        "answer": "**자원순환과**\n\n- **051-220-4452** (주무관)\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "answer_details": "주무관 · 051-220-4452\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "sources": [
+          {
+            "title": "사하구청 직원업무안내",
+            "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "자원순환과",
+            "contact": "051-220-4452",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26T04:38:31.114927+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-26T08:42:17.865303+00:00"
+}

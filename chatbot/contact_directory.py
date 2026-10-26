@@ -192,6 +192,9 @@ class ContactDirectoryResponder:
         if re.search(r'(?:전화|팩스|이메일)(?:로|으로)(?:만|도)?',text) and not re.search(r'번호|연락처|담당부서|문의처',text):
             return None  # Communication method, not an employee's number.
         wants_contact = bool(INTENT.search(text)) or bool(re.search(r"담당.*번호|번호.*담당|번호(?:는|몇|좀|$)", text))
+        if (wants_contact and re.search(r'작은도서관|마을건강센터', text)
+                and not re.search(r'담당|부서|직원|주무관|업무|팩스|fax', text, re.I)):
+            return None  # The facility's published phone is not its supervising employee.
         from chatbot.faq_targets import priority_entities
         if (wants_contact and priority_entities(query)
                 and not re.search(r'담당자|담당부서|문의부서|팩스|fax', text)):

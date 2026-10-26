@@ -439,6 +439,12 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     new_subject = any(not any(n in old or old in n for old in old_names) for n in names)
     if new_subject:
         return current
+    # A location-only correction replaces the previous region, while retaining
+    # the facility and requested field. Do not combine two incompatible areas.
+    area = r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동'
+    if (old_names & {'작은도서관', '마을건강센터'} and
+            re.fullmatch(r'(?:아니(?:요)?|정정)?' + area + r'(?:이야|이에요|예요|입니다|이요|요)?[.!?]?', compact)):
+        return re.sub(area, '', previous_query).strip() + ' ' + current
     from chatbot.dialogue_profile import COURSE, replace_demographic
     participant = re.fullmatch(r'(?:아니(?:요)?|저는)?(성인|어른|어린이|아동|초등학생)(?:이야|이에요|예요|입니다|이요|요)?', compact)
     if previous_query and old_names and COURSE.search(previous_query) and participant:

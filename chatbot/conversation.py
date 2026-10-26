@@ -288,6 +288,13 @@ class ChatBot:
         capability = unavailable_capability(resolved_message)
         if capability:
             return capability
+        from chatbot.facility_directory import facility_directory
+        directory = facility_directory(resolved_message, self.retriever.db.client)
+        if directory:
+            if directory.get('is_clarification'):
+                return self._clarification_result(session_id, user_message, resolved_message, directory)
+            self.remember_contact_exchange(session_id, user_message, directory, resolved_message)
+            return directory
         from chatbot.contact_directory import contact_responder
         contact_result = contact_responder.respond(session_id, resolved_message)
         if contact_result is not None:

@@ -1,0 +1,82 @@
+{
+  "protocol": {
+    "population": "developer_derived_facility_followups",
+    "grading": "공식 원문 직접 대조. C/P/I는S와 별도. 시설 주소와 실제 강좌 장소를 구분."
+  },
+  "families": [],
+  "scenarios": [
+    {
+      "id": "LIB",
+      "turns": [
+        "작은도서관 위치 알려줘",
+        "하단동",
+        "그럼 전화번호는?",
+        "아니 감천2동이에요"
+      ],
+      "criterion": {
+        "parent_id": 1003
+      }
+    },
+    {
+      "id": "CLASS",
+      "turns": [
+        "작은도서관 교육 예약 어떻게 해",
+        "장소는?",
+        "하단동",
+        "전화번호는?"
+      ],
+      "criterion": {
+        "parent_id": 1003
+      }
+    },
+    {
+      "id": "HEALTH",
+      "turns": [
+        "우리 동 가까운 마을건강센터가 어디 있나요?",
+        "괴정2동",
+        "그럼 전화번호는?"
+      ],
+      "criterion": {
+        "parent_id": 95
+      }
+    },
+    {
+      "id": "MISSING",
+      "turns": [
+        "하단1동 작은도서관 위치"
+      ],
+      "criterion": {
+        "parent_id": 1003
+      }
+    },
+    {
+      "id": "NAMED",
+      "turns": [
+        "노을나루길 작은도서관 전화번호 알려줘"
+      ],
+      "criterion": {
+        "parent_id": 1003
+      }
+    },
+    {
+      "id": "ADULT",
+      "turns": [
+        "소방 체험 어떻게 신청해",
+        "성인",
+        "그럼 장소는?"
+      ],
+      "criterion": {
+        "parent_id": 1002
+      }
+    },
+    {
+      "id": "CONTACT",
+      "turns": [
+        "대형 쓰레기 담당자 전화만 알려주세요"
+      ],
+      "criterion": {
+        "parent_id": 16
+      }
+    }
+  ]
+}

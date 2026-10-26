@@ -38,6 +38,16 @@ def fixture():
 
 
 class ContactDirectoryTests(unittest.TestCase):
+    def test_facility_phone_is_not_the_supervising_employee_but_explicit_staff_lookup_stays(self):
+        self.data['departments'].append({'name':'건강증진과','representative_phone':'','contacts':[
+            {'title':'주무관','phone':'051-220-5722','duties':'마을건강센터(괴정2동, 괴정3동)',
+             'keywords':['마을건강센터','괴정2동','괴정3동']}]})
+        self.save()
+        self.assertIsNone(self.responder.respond('facility','괴정2동 마을건강센터 전화번호는?'))
+        staff=self.responder.respond('staff','괴정2동 마을건강센터 담당자 전화번호')
+        self.assertIsNotNone(staff)
+        self.assertIn('051-220-5722',staff['answer'])
+
     def test_spaced_alias_keeps_only_the_verified_duty(self):
         self.data['departments'].append({'name':'자원순환과','representative_phone':'','contacts':[
             {'title':'주무관','phone':'051-220-4452','duties':'대형폐기물 관련 업무','keywords':['대형폐기물']}]})
