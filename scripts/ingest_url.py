@@ -19,7 +19,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from crawler.saha_crawler import SahaCrawler
+from crawler.saha_crawler import SahaCrawler, PageData
 from database_db.database import Database
 from database_db.vector_store import VectorStore
 from processor.data_cleaner import DataCleaner
@@ -34,15 +34,27 @@ def main() -> None:
     args = parser.parse_args()
 
     hostname = (urlparse(args.url).hostname or "").lower()
-    if not (hostname == "saha.go.kr" or hostname.endswith(".saha.go.kr")):
+    from chatbot.official_registry import reviewed_external_url
+    partner = reviewed_external_url(args.url)
+    if not (hostname == "saha.go.kr" or hostname.endswith(".saha.go.kr") or partner):
         raise SystemExit("공식 saha.go.kr URL만 적재할 수 있습니다.")
 
     crawler = SahaCrawler(use_selenium=False)
     try:
-        fetched = crawler.fetch_page(args.url)
+        if partner:
+            from scripts.ingest_official_materials import _fetch_page
+            row = _fetch_page(('', args.url))
+            if not row:
+                raise SystemExit('검수된 공식 협력기관 원문 수집 실패')
+            page = PageData(url=args.url, title=row['title'], content=row['content'],
+                            category=args.category, raw_html=row['raw_html'], attachments=row['attachments'])
+            fetched = {'status': 'ok', 'html': row['raw_html']}
+        else:
+            fetched = crawler.fetch_page(args.url)
         if not fetched or fetched.get("status") != "ok" or not fetched.get("html"):
             raise SystemExit(f"페이지 수집 실패: {fetched}")
-        page = crawler.parse_page(fetched["html"], args.url, args.category)
+        if not partner:
+            page = crawler.parse_page(fetched["html"], args.url, args.category)
         page.etag = fetched.get("etag")
         page.last_modified = fetched.get("last_modified")
         if not page.content:

@@ -8,6 +8,7 @@ BASE_URL = "https://www.saha.go.kr"
 STAFF_DIRECTORY_URL = "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000"
 
 TARGET_MENUS = {
+    "문화관광": "/tour/contents.do?mId=0200000000",
     "분야별정보": "/portal/contents.do?mId=0401000000",
     "사하복지": "/portal/contents.do?mId=0501000000",
     "전자민원": "/portal/contents.do?mId=0100000000",

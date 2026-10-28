@@ -15,12 +15,20 @@ def is_official_document(doc: dict) -> bool:
         return url.startswith("file://official_reports/")
     parsed = urlparse(url)
     host = (parsed.hostname or "").lower()
+    from chatbot.official_registry import reviewed_external_url
+    if reviewed_external_url(url):
+        return True
     return parsed.scheme == "https" and (host == "saha.go.kr" or host.endswith(".saha.go.kr"))
 
 
 def is_time_compatible(query: str, doc: dict) -> bool:
     """Historical reports cannot establish today's service rules or 2026 counts."""
     meta = doc.get("metadata") or {}
+    if meta.get('source_type') != 'official_report':
+        from chatbot.event_grounding import event_source_time
+        event_time = event_source_time(query, str(meta.get('title') or ''), str(doc.get('content') or ''))
+        if event_time is not None:
+            return event_time
     # An applicant's event date is a condition for today's rule, not the
     # publication year requested. Mask only that occurrence; a separate
     # historical policy/statistics year must still match the actual source.
@@ -183,6 +191,9 @@ def is_service_source(query: str, doc: dict, keywords: set[str]) -> bool:
     """A certificate required by another benefit is not its issuance guide."""
     from chatbot.answer_goal import answer_goal
     title = compact(str((doc.get("metadata") or {}).get("title") or ""))
+    from chatbot.event_grounding import event_history_source
+    if event_history_source(query, title, str(doc.get('content') or '')):
+        return False
     if ('지방세' in compact(query) and re.search(r'종류|세목|전체목록', compact(query))
             and re.search(r'자동차세|재산세|취득세|주민세', title)):
         return False  # One child tax's payment guide is not the tax catalogue.

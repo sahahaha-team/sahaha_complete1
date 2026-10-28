@@ -1,0 +1,1196 @@
+{
+  "started_at": "2026-10-28T01:39:40.791240+00:00",
+  "commit": "79098302d4c98310f3cc6983f6e2e2b4d428694e",
+  "case_sha256": "53bd5d80c9edda874acaa89c7813ffc52325e5fa75a964822b6c42af716f27eb",
+  "code_hashes": {
+    "app.py": "cd4e6b458c9a9694070666ad76b964f7ab46e25a839e1628bcb76407c48fe721",
+    "config.py": "f2a956b6d28e60334ea53f527ca18765659d4e489b1faa3b44753e5e5eafd0aa",
+    "main.py": "ade9ab241856d4b1cdca0fa9a13e0ef825abbf66439e0e92c3d3d1e994b3b72e",
+    "worker.py": "f12a0dce8d7b2c84525da192c31d56b0293df0a565712c2db9a2327debe097ca",
+    "worker_recovery.py": "421189ae592eff6f75bc4e46ed2f404988c0d24e2879e34504e84850835fefdd",
+    "chatbot\\answer_completion.py": "abf111a4fe5fa5278cfe8990066a022301e34273dea53cd93cac2dfc81bfc9e5",
+    "chatbot\\answer_enrichment.py": "1bc19a52f7ab0639466526610e0b7c54ca73d1445dc76c5b4d8d9c1bde579152",
+    "chatbot\\answer_goal.py": "5935f082868e86153baab86cc380e82137487ea10594be7d3ec1c5f36f279cdf",
+    "chatbot\\bm25_index.py": "d9ab832fcee57a90573605b47e1c8363158f1128fa40e46436cf693c4cd36d48",
+    "chatbot\\candidate_search.py": "50537ee15c1bf267a9a85bdcb158a7eebea694d0c41176825d7b6708e0de2227",
+    "chatbot\\concise_answers.py": "a930033ee5e5daf11ec4442864d0ffca65ce63be26b61a06212d6cb62568b7a9",
+    "chatbot\\contact_directory.py": "7b2f8e8474dc74204263bd05159acb2982f7ef0e536e821296c83065cfc4ec7e",
+    "chatbot\\conversation.py": "43355a109d84ce589582f237a6a39b141288f0c936cf72af8767a85e46428370",
+    "chatbot\\crawled_pages.py": "61130305bed1ac42381e5efb4a9e9bfbada4f82ca86d0e844d099a4ce6565c1e",
+    "chatbot\\dept_directory.py": "aa47242ab0b6d6288f054a87c2153b8cb2ae9fd56155efa41f809c8ab70e801c",
+    "chatbot\\dialogue_profile.py": "761196f32963974b1f443d9f035a93b453bfab72ea621132083dd5b6b27e0b7d",
+    "chatbot\\emergency_guidance.py": "aaa56ec992561054bb2a006bf25748a2af3c2af79c40768a40dbcc1d7f3bd83e",
+    "chatbot\\event_grounding.py": "7296f07f440569f8c56a9d94d9090dd51faa5244b1e1dccee1efae805385c154",
+    "chatbot\\evidence.py": "8cd9f579dc5194909f8d6a48b2d90b94cf359849733f879734fc6a24d4659e75",
+    "chatbot\\evidence_decision.py": "4d31d495d27b09f8ddc96c62ca20bfdd6aae438b78314da7563918d54e8cbf55",
+    "chatbot\\facility_contact.py": "30338e2c02fbdacee0f8c79eb4734f1519ee561ae52f7a7c0b8a91d8f142ec18",
+    "chatbot\\facility_directory.py": "8371ce9f40c1c0ce1a66a3d29edb0c8a367973e3c7bb79c42ab82612129e3f9e",
+    "chatbot\\faq_targets.py": "46b5976379779f8f72b9fedbe7e2bf8ad8ee006aca6d72ad0cc78fda968d4210",
+    "chatbot\\fire_booking.py": "b9f63cc078ede5c803b7f904a51d82d9d884861f65c03cbcb0e4479b05966f32",
+    "chatbot\\freshness.py": "aa0ac6b1c3c3188315e724e0f99bee4d8c3f21efb7cf36954d6c3b4b43989807",
+    "chatbot\\grounded_planner.py": "fed3fc0bae448b00d74dce05bd98304c2f054059ab0627c028fca435bc3ed165",
+    "chatbot\\llm_runtime.py": "9dae302992ccd50a9e90134d237ffb23689a57717cf1adb5e8ae48352beabb85",
+    "chatbot\\local_inference.py": "d4b9f9c090c180471259e5f10f7059b58f215b9046ad7303d9893c0b2e0f094e",
+    "chatbot\\model_plan_cache.py": "7b087175226ef20c39cbb2afbdf2bc7c03842e90da8156d6763499651e527318",
+    "chatbot\\official_content.py": "9bd00ec17b04bc3ee8e88c800d7a1f54ef0f168f4c75e1b63e1abe5f20767ccf",
+    "chatbot\\official_faq.py": "b68e34ddcc6e8e16067350e3d85bd5fb0554e10e99c0b06857a4aebe54eabaa6",
+    "chatbot\\official_overview.py": "62a29d70faecdcc549dd5f8bba32b2ea8962874806a964cb3b49865d48291d8f",
+    "chatbot\\official_registry.py": "0b24dbb115422bd5284b5edd0987f017b7b21fff2afcfc50c1fdaaa40d76856f",
+    "chatbot\\official_reports.py": "53898c6825e2c8c6824f3905fa8da72b09cc3f9e797d4a9225c84ccebf6f2dff",
+    "chatbot\\ollama_runtime.py": "72c14f224a142f093725139cedba81fb6536434b4af401788edf805c33968887",
+    "chatbot\\passport_documents.py": "74130a2dfcc3dcaf191280102d0d724caaeddaf3ba179ddd73ec606dfa8c552c",
+    "chatbot\\pii_detector.py": "ee6ad1e5f8510efa52460d5ea8c4f7d7d329dfca41f1494f3d54290e45900e83",
+    "chatbot\\policy_supplement.py": "e92679b9e364d2722d4eaa199cd6017f670cf055b4913ce229f7ce64d070f367",
+    "chatbot\\priority_guard.py": "6a39fefa27cae31d1f4ca4cf0faca0203b444910963490cd69b0a824626bceaa",
+    "chatbot\\privacy.py": "4d343dfe0d2c9209f2c7f5a9a11bdfefcdc34b1caa66c50385927820e11d29b3",
+    "chatbot\\query_subject.py": "6dc56f4d96ec772363179cf26245cb9b3d99feb6cae2200b809645338e680b7a",
+    "chatbot\\question_intent.py": "36c86c9c679ce5479acafa405aecfc174a7c6b22ed0ecf16dd22b6303499e4c5",
+    "chatbot\\reference_answers.py": "f8f85a32ffdb29ef3073bf6ffad0afbea52c6970d3653982e439c7806e936d80",
+    "chatbot\\request_metrics.py": "ad8c5e23227d85f47e39de8f1561d479be59755c6330fa7fe6558ce97578f298",
+    "chatbot\\response_helpers.py": "2a1ea5162254b1ae8b862916ef4ee065d7d850134d412b8778b1b2c807f83cae",
+    "chatbot\\retriever.py": "3e4e736b2d35bc4fa924cc0c5669c192324e011b1845cdaefb704c067a239419",
+    "chatbot\\semantic_ranker.py": "c0bb2dd26c606918a5ce3bb04ab058d1385d5fa7b3c439938b2f61f9da38f943",
+    "chatbot\\source_answers.py": "356b4d6d01a6b1f282ca5b29ac974b91c890114746f1bc814bd99f9a069c91e4",
+    "chatbot\\source_hierarchy.py": "9beaac54c8e603d3c16b9bd5dc8274509993a8f8febe2c6aa358c5c0632ce24d",
+    "chatbot\\source_pages.py": "b7d36434d8c54a1f09056bddc1763f8d0252a7ecaa15c9ece09ffcc1b472c9d6",
+    "chatbot\\source_requirements.py": "f9f19329feaccd86e23c49c6ae7f7491e80509abc0431b0cb148105e15203043",
+    "chatbot\\source_scope.py": "50157e19c1c98e6348121066ac551095d93291ce57617d8ac61f45ada8490dbc",
+    "chatbot\\source_warnings.py": "04cee7140984efb6c0943bcefcc24c601d32914515449144a44914a6d67f9927",
+    "chatbot\\structured_answers.py": "dae5f7b7b50d350fbee76f71c88183457a8409e0d00ac18ae37c06ba2fd770cd",
+    "chatbot\\vaccination.py": "2869f5b3f84d326c6c4b3eb0a4877ff421d812ba67817a921b0227e60190106b",
+    "chatbot\\verified_facts.py": "4c0dd73ae965a6ba628399ab195cce17d58936d2c21b97d6f6ce03b7befcf7ab",
+    "chatbot\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "database_db\\database.py": "da3487872293da7e1bd63a58617cd09beb0199740d257f74afb9390506119d54",
+    "database_db\\raw_pages.py": "0ff5cab72539daafdf7216a9b018e8948a25b5247e41be7a74d2f8130150b57a",
+    "database_db\\vector_store.py": "d48bfccb710446996a9ddae9be18f675e72601e7881049e9f5dbcf9f4d6acc45",
+    "database_db\\__init__.py": "96bc76337624e061b32dae84dce8f4de80da454bb60a32315cf9dbcfa92ab1bb",
+    "crawler\\file_loader.py": "f918a79ca16575f1be30ffffdd3d7b02019c30a2b814608b1d3a3da4ffe1ab2f",
+    "crawler\\partner_event.py": "e844e4fe74cb0234aa36ac2c39212183071e4fa0c7d624f0e970da811064717d",
+    "crawler\\saha_crawler.py": "8ffd7e036df3370f4e81cb80dbd81a8919daf4a7eea2c1dc85e76734198222d7",
+    "crawler\\staff_directory.py": "40e2762e6390dd6d8184dbe01e69350dd0860cdc921d86553888bcc90ce02ce3",
+    "crawler\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "processor\\data_cleaner.py": "7cc15e6ff689127ae96f744b6795fb786ccea1a5d057816a9f0dde230680971d",
+    "processor\\metadata_defaults.py": "7bb1ee95143ff83e1b2f91e3037fad5c0f9ae3093b49600023952633085f8a78",
+    "processor\\metadata_tagger.py": "afe8e319a19b7ef2c5c1509c9c1b9bd80168d386c63580adab07ada26366d136",
+    "processor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\additional_official_pages.json": "d9013f9ccc4d9afd30bb404b0d1f520bc86772eabf7741e761dbfc4c3292d707",
+    "resources\\department_contacts.json": "cfe4e772b6f861d5fed5987fefd4d5d9ade58ca4fad8b8f0791e67cdc58ddcd9",
+    "resources\\official_faq.json": "29d1cefba1a78c4fa6288b4eeac57e1f1ff8f75565c78677d782db11b5f73898",
+    "resources\\official_source_redirects.json": "c7f440500ae037980e4209f9d6e2c9b3e5541ae1e0a8292604edd0012aa26849",
+    "resources\\official_source_reviews.json": "c423ee4ac2d2b7ba231fb7736eb39dab41fe34381eb211920f42093d03b5445a",
+    "resources\\priority_services.json": "374603df1a0e36d66f901066623da82f9f65781c0d6978e15442fefbcc3507d0",
+    "data\\department_contacts.json": "9b248f766cb3660a0d6aca8ac61b193e8bdb7c751253b0ab5051da37c78608ed"
+  },
+  "health_before": {
+    "status": "ok",
+    "llm_provider": "ollama",
+    "llm": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    },
+    "ollama": {
+      "provider": "ollama",
+      "available": true,
+      "model_ready": true,
+      "model": "gemma4:e4b",
+      "model_digest": "dc35e8d9c6061baa6f0fa870975ab6932e2542b579b13ea0f199fa4bb7300c9c",
+      "model_details": {
+        "parent_model": "gemma4-validation-20260929:e4b-imatrix-attention-q6-q8-draft2",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "7.5B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 131072,
+        "embedding_length": 2560,
+        "runner": "llamacpp"
+      },
+      "base_url": "http://127.0.0.1:11434",
+      "installed_models": [
+        "gemma2:2b",
+        "gemma4:e4b"
+      ],
+      "message": "ready"
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct  6 2026, 23:39:35) [MSC v.1944 64 bit (AMD64)]",
+  "split": "development",
+  "protocol": "2026-10-27 targeted development regression, not heldout or population accuracy. Judge against fetched Busan official 1757816 and official service originals. S=sufficient, P=partial, C=clarification, I=insufficient, W=wrong, E=error. C/I must not be added to sufficient answers. Each scenario has its own cookie session; follow-ups share it. Keep local Ollama/Gemma4 and production rate limit.",
+  "records": [
+    {
+      "id": "screenshot",
+      "turn": 1,
+      "question": "감천문화마을 축제언제해",
+      "criterion": "Current festival period 2026-10-31 through 2026-11-01, cited exact event notice; never sister-city visit",
+      "seconds": 3.762,
+      "server_timing": "search;dur=3057.8, verify;dur=656.4, review_gate;dur=2.0, grounding;dur=3.4, originals;dur=0.0, review;dur=0.9, prepare;dur=1.5, app;dur=3757.3",
+      "status": 200,
+      "error": null,
+      "request_id": "b81a7764ab744b59b286eb3479bdba36",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.762
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "screenshot",
+      "turn": 2,
+      "question": "26년 감천문화마을 축제 언제냐고",
+      "criterion": "Current festival period 2026-10-31 through 2026-11-01, cited exact event notice; never sister-city visit",
+      "seconds": 4.552,
+      "server_timing": "search;dur=3886.8, verify;dur=618.5, review_gate;dur=1.6, grounding;dur=3.3, originals;dur=0.0, review;dur=1.0, prepare;dur=2.1, app;dur=4547.8",
+      "status": 200,
+      "error": null,
+      "request_id": "aaceb85978464826aa1de75af82d9101",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.552
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "screenshot",
+      "turn": 3,
+      "question": "그럼 시간은?",
+      "criterion": "Current festival period 2026-10-31 through 2026-11-01, cited exact event notice; never sister-city visit",
+      "seconds": 4.036,
+      "server_timing": "search;dur=3272.5, verify;dur=629.5, review_gate;dur=3.0, grounding;dur=3.6, originals;dur=0.0, review;dur=4.1, prepare;dur=2.3, app;dur=4030.5",
+      "status": 200,
+      "error": null,
+      "request_id": "db33ea11cfd6441ab2df60a145165571",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.036
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours"
+          ],
+          "matched_fields": [
+            "hours"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "screenshot",
+      "turn": 4,
+      "question": "어디서 해?",
+      "criterion": "Current festival period 2026-10-31 through 2026-11-01, cited exact event notice; never sister-city visit",
+      "seconds": 3.526,
+      "server_timing": "search;dur=3041.7, verify;dur=384.5, review_gate;dur=2.2, grounding;dur=2.6, originals;dur=0.0, review;dur=1.9, prepare;dur=1.7, app;dur=3522.0",
+      "status": 200,
+      "error": null,
+      "request_id": "39a878d438fa481295a384ab6e72fe24",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.526
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 장소: 감천문화마을 일원",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "explicit",
+      "turn": 1,
+      "question": "2026년 감천문화마을 골목축제 일정 알려주세요",
+      "criterion": "Same 2026 event date for spacing and short year variants",
+      "seconds": 4.221,
+      "server_timing": "search;dur=3448.2, verify;dur=697.7, review_gate;dur=2.1, grounding;dur=2.8, originals;dur=0.0, review;dur=1.1, prepare;dur=2.2, app;dur=4206.6",
+      "status": 200,
+      "error": null,
+      "request_id": "117ee2111cc04d3fa64ee2831a7cb939",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.221
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "short_year",
+      "turn": 1,
+      "question": "26년 감천문화마을 축제 언제야?",
+      "criterion": "26년 means 2026, not 2024 visit",
+      "seconds": 3.521,
+      "server_timing": "search;dur=2465.2, verify;dur=984.9, review_gate;dur=2.1, grounding;dur=2.3, originals;dur=0.0, review;dur=1.2, prepare;dur=2.8, app;dur=3516.0",
+      "status": 200,
+      "error": null,
+      "request_id": "2bb2ea49d580463d8705c4cc6bf8b23e",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.521
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "correction",
+      "turn": 1,
+      "question": "2024년 감천문화마을 축제 일정 알려줘",
+      "criterion": "No unsupported 2024 dates; year-only correction retains event and new year in time follow-up",
+      "seconds": 7.029,
+      "server_timing": "search;dur=5750.1, verify;dur=970.1, review_gate;dur=2.6, rerank;dur=258.7, grounding;dur=5.1, app;dur=6996.3",
+      "status": 200,
+      "error": null,
+      "request_id": "2eb273da9e504d8a98e8bbd623f01bfc",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 7.029
+        }
+      ],
+      "response": {
+        "answer": "확인한 사하구청 공식 자료에서 질문에 답할 충분한 근거를 찾지 못했습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "insufficient",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "공식 근거 확인 필요",
+          "official_source_count": 0,
+          "decision": "unavailable",
+          "reasons": [
+            "insufficient"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "correction",
+      "turn": 2,
+      "question": "아니 26년 거 말하는거야",
+      "criterion": "No unsupported 2024 dates; year-only correction retains event and new year in time follow-up",
+      "seconds": 4.451,
+      "server_timing": "search;dur=3566.1, verify;dur=784.7, review_gate;dur=2.4, grounding;dur=3.5, originals;dur=0.0, review;dur=1.0, prepare;dur=3.1, app;dur=4447.0",
+      "status": 200,
+      "error": null,
+      "request_id": "333245a4e26648319575a926cc34a5f3",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.451
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "schedule"
+          ],
+          "matched_fields": [
+            "schedule"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "correction",
+      "turn": 3,
+      "question": "그럼 시간은?",
+      "criterion": "No unsupported 2024 dates; year-only correction retains event and new year in time follow-up",
+      "seconds": 3.406,
+      "server_timing": "search;dur=2494.6, verify;dur=593.7, review_gate;dur=1.8, grounding;dur=2.7, originals;dur=0.0, review;dur=1.1, prepare;dur=1.6, app;dur=3198.9",
+      "status": 200,
+      "error": null,
+      "request_id": "da567054e2f54668acc7c1595f35f214",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.406
+        }
+      ],
+      "response": {
+        "answer": "**제16회 감천문화마을 골목축제**\n- 행사시간: 10:00-18:00",
+        "answer_details": "제16회 감천문화마을 골목축제의 공식 안내 원문입니다.\n\n> ## 제16회 감천문화마을 골목축제\n> 원제: The 16th Gamcheon Culture Village Alley Festival\n> 기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n> 행사시간: 10:00-18:00\n> 주최: Saha-gu, Gamcheon Culture Village Residents Council\n> 장소: 감천문화마을 일원",
+        "sources": [
+          {
+            "title": "제16회 감천문화마을 골목축제",
+            "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+            "category": "문화관광",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours"
+          ],
+          "matched_fields": [
+            "hours"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "future",
+      "turn": 1,
+      "question": "2027년 감천문화마을 축제 언제야",
+      "criterion": "Do not substitute 2026 for unsupported 2027 notice",
+      "seconds": 3.185,
+      "server_timing": "search;dur=3118.4, verify;dur=48.4, review_gate;dur=2.2, rerank;dur=0.5, grounding;dur=0.4, app;dur=3178.7",
+      "status": 200,
+      "error": null,
+      "request_id": "73bdd7892020421eae17a0ac40236970",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 3.185
+        }
+      ],
+      "response": {
+        "answer": "관련 자료는 있지만 최신 내용으로 확인할 수 없어 확정해서 안내하기 어렵습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "stale_evidence",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "공식 근거 확인 필요",
+          "official_source_count": 0,
+          "decision": "unavailable",
+          "reasons": [
+            "stale_evidence"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "next_year",
+      "turn": 1,
+      "question": "내년 감천문화마을 축제 일정 알려줘",
+      "criterion": "Current date 2026-10-27: 내년 means 2027; don't use 2026",
+      "seconds": 4.234,
+      "server_timing": "search;dur=4138.4, verify;dur=58.9, review_gate;dur=2.9, rerank;dur=0.9, grounding;dur=0.6, app;dur=4212.5",
+      "status": 200,
+      "error": null,
+      "request_id": "144a8947bb2d4ecdb706cf6f48b3c2ed",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.234
+        }
+      ],
+      "response": {
+        "answer": "관련 자료는 있지만 최신 내용으로 확인할 수 없어 확정해서 안내하기 어렵습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "stale_evidence",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "공식 근거 확인 필요",
+          "official_source_count": 0,
+          "decision": "unavailable",
+          "reasons": [
+            "stale_evidence"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "other_event",
+      "turn": 1,
+      "question": "2026년 다대포 축제 언제해",
+      "criterion": "No Gamcheon dates for a different requested festival",
+      "seconds": 8.477,
+      "server_timing": "search;dur=4259.7, verify;dur=1380.2, review_gate;dur=4.0, rerank;dur=2781.9, grounding;dur=17.0, app;dur=8453.0",
+      "status": 200,
+      "error": null,
+      "request_id": "8ff42f7b3f934d309d4132b3b338eb3c",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 8.477
+        }
+      ],
+      "response": {
+        "answer": "확인한 사하구청 공식 자료에서 질문에 답할 충분한 근거를 찾지 못했습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "insufficient",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "공식 근거 확인 필요",
+          "official_source_count": 0,
+          "decision": "unavailable",
+          "reasons": [
+            "insufficient"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "non_event_hours",
+      "turn": 1,
+      "question": "사하구 보건소 운영시간 알려줘",
+      "criterion": "Official public health centre general hours; no festival contamination",
+      "seconds": 1.209,
+      "server_timing": "search;dur=784.9, verify;dur=333.7, review_gate;dur=4.4, grounding;dur=1.4, originals;dur=0.0, review;dur=1.4, prepare;dur=2.9, app;dur=1201.7",
+      "status": 200,
+      "error": null,
+      "request_id": "e825524082fc4604affc04c98159b01e",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.209
+        }
+      ],
+      "response": {
+        "answer": "**보건소 정보**\n- 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.",
+        "answer_details": "찾아오시는길의 공식 안내 원문입니다.\n\n> ## 찾아오시는길\n> ### 약도\n> 지도이미지영역 건너뛰기\n> ### 보건소 정보\n> 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n> 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)\n> 대표전화 : 051)220-5740, 5704, 5706(보건소 민원실) 051)220-5701(보건행정과 사무실) 051)220-5711(건강증진과 사무실)\n> FAX번호 : 051-220-5709(보건행정과) / 5719(건강증진과)",
+        "sources": [
+          {
+            "title": "찾아오시는길",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "hours"
+          ],
+          "matched_fields": [
+            "hours"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "fire_adult",
+      "turn": 1,
+      "question": "소방 체험 어떻게 신청해",
+      "criterion": "Ask audience first; adult response must not recommend child-only booking",
+      "seconds": 0.841,
+      "server_timing": "app;dur=835.0",
+      "status": 200,
+      "error": null,
+      "request_id": "c2819232d8cf404d98a71795df2d506c",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.841
+        }
+      ],
+      "response": {
+        "answer": "확인된 교육은 4세 이상 13세 이하 어린이 대상입니다.\n이 대상의 교육을 찾으시나요?",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": true,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "official_booking",
+          "status": "clarification",
+          "label": "문의 범위 확인",
+          "official_source_count": 0,
+          "decision": "clarify",
+          "reasons": [
+            "ambiguous_request"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": [
+          "소방 체험 어떻게 신청해 체험 (4세 이상 13세 이하 어린이 대상)",
+          "일반 주민 소방 체험 어떻게 신청해 체험"
+        ]
+      }
+    },
+    {
+      "id": "fire_adult",
+      "turn": 2,
+      "question": "성인",
+      "criterion": "Ask audience first; adult response must not recommend child-only booking",
+      "seconds": 6.674,
+      "server_timing": "search;dur=2674.2, verify;dur=1698.8, review_gate;dur=121.7, rerank;dur=1891.0, grounding;dur=13.3, originals;dur=0.0, review;dur=1.2, prepare;dur=10.6, app;dur=6510.1",
+      "status": 200,
+      "error": null,
+      "request_id": "5c100356d1e0451fa62260ad154dee49",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 6.674
+        }
+      ],
+      "response": {
+        "answer": "관련 공식 자료는 찾았지만, 이용 방법에 답할 근거를 확인하지 못했습니다. 출처의 담당 부서에서 해당 항목을 확인해 주세요.",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "예약안내 및 예약",
+            "url": "https://www.saha.go.kr/reserve/contents.do?mId=1207030000",
+            "category": "공식홈페이지",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "missing_requested_field",
+        "evidence": {
+          "answer_method": "source_fallback",
+          "status": "partial",
+          "label": "요청 항목 확인 필요",
+          "official_source_count": 1,
+          "decision": "partial",
+          "reasons": [
+            "missing_requested_fields"
+          ],
+          "requested_fields": [
+            "method"
+          ],
+          "matched_fields": [],
+          "retrieval_mode": "hybrid_rrf",
+          "vector_invoked": true,
+          "reranker_used": true
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "contact",
+      "turn": 1,
+      "question": "대형폐기물 담당자 전화번호 알려줘",
+      "criterion": "Dedicated official staff directory; correct direct number vs fax",
+      "seconds": 0.202,
+      "server_timing": "app;dur=170.3",
+      "status": 200,
+      "error": null,
+      "request_id": "f9d4bd27d826435e8f7b3f197eeea911",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.202
+        }
+      ],
+      "response": {
+        "answer": "**자원순환과**\n\n- **051-220-4452** (주무관)\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "answer_details": "주무관 · 051-220-4452\n\n선별장 예산 집행, 선별장 이전 업무(사상하단선 차량기지창 재이전), 서부산권 광역 생활자원회수센터 참여 관련, 재활용품(폐형광등, 폐유리병) 처리 민간위탁, 대형폐기물 관련 업무",
+        "sources": [
+          {
+            "title": "사하구청 직원업무안내",
+            "url": "https://www.saha.go.kr/portal/staff/list.do?mId=0604030000",
+            "category": "contact_directory",
+            "service_type": "기타",
+            "department": "자원순환과",
+            "contact": "051-220-4452",
+            "attachments": [],
+            "source_type": "official_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27T14:29:26.887071+00:00"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "",
+          "status": "official",
+          "label": "공식 연락처 파일에서 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "region_correction",
+      "turn": 1,
+      "question": "괴정2동 작은도서관 위치 알려줘",
+      "criterion": "Replace 괴정2동 with 신평1동 while retaining small-library scope",
+      "seconds": 0.833,
+      "server_timing": "app;dur=827.9",
+      "status": 200,
+      "error": null,
+      "request_id": "db26e7895f6e4ad6a11ea4f01e4b05e7",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 0.833
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **괴정2동 까치마을 작은도서관**: 까치고개로 50-10, 1층 (괴정동) / 실버힐링센터 1층",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "region_correction",
+      "turn": 2,
+      "question": "아니 신평1동이야",
+      "criterion": "Replace 괴정2동 with 신평1동 while retaining small-library scope",
+      "seconds": 1.117,
+      "server_timing": "app;dur=1110.3",
+      "status": 200,
+      "error": null,
+      "request_id": "cabaa3728dc34d80950b180e364c3505",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.117
+        }
+      ],
+      "response": {
+        "answer": "공식 시설 목록의 안내입니다.\n- **신평1동 동매누리 작은도서관**: 다대로 130번길 112 (신평동)",
+        "answer_details": "",
+        "sources": [
+          {
+            "title": "도서검색 및 통합대출서비스",
+            "url": "https://www.saha.go.kr/portal/contents.do?mId=0607030000",
+            "category": "",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "verified_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-26"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "facility_directory",
+          "status": "official",
+          "label": "공식 시설 목록 확인됨",
+          "official_source_count": 1,
+          "decision": "",
+          "reasons": [],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "new_topic",
+      "turn": 1,
+      "question": "2026년 감천문화마을 축제 언제해",
+      "criterion": "New health centre question must not inherit festival year or topic",
+      "seconds": 4.282,
+      "server_timing": "search;dur=3431.3, verify;dur=829.3, review_gate;dur=2.0, grounding;dur=6.3, app;dur=4276.9",
+      "status": 200,
+      "error": null,
+      "request_id": "fe6261e7ad1e40f88f043a72f240f4fc",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 4.282
+        }
+      ],
+      "response": {
+        "answer": "확인한 사하구청 공식 자료에서 질문에 답할 충분한 근거를 찾지 못했습니다.",
+        "answer_details": "",
+        "sources": [],
+        "is_clarification": false,
+        "degraded": true,
+        "degraded_reason": "insufficient",
+        "evidence": {
+          "answer_method": "",
+          "status": "insufficient",
+          "label": "공식 근거 확인 필요",
+          "official_source_count": 0,
+          "decision": "unavailable",
+          "reasons": [
+            "insufficient"
+          ],
+          "requested_fields": [],
+          "matched_fields": [],
+          "retrieval_mode": "",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    },
+    {
+      "id": "new_topic",
+      "turn": 2,
+      "question": "보건소 주소는?",
+      "criterion": "New health centre question must not inherit festival year or topic",
+      "seconds": 1.582,
+      "server_timing": "search;dur=634.4, verify;dur=886.0, review_gate;dur=1.7, grounding;dur=1.1, originals;dur=0.0, review;dur=1.6, prepare;dur=2.4, app;dur=1577.9",
+      "status": 200,
+      "error": null,
+      "request_id": "eabf85957ccc4bdcbe000eb4cfe8897f",
+      "attempts": [
+        {
+          "status": 200,
+          "seconds": 1.582
+        }
+      ],
+      "response": {
+        "answer": "**보건소 정보**\n- 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)",
+        "answer_details": "찾아오시는길의 공식 안내 원문입니다.\n\n> ## 찾아오시는길\n> ### 약도\n> 지도이미지영역 건너뛰기\n> ### 보건소 정보\n> 진료시간 : 평일(월∼금) 오전 9:00 ∼ 오후 6:00 ※ 점심시간 : 12시~13시 ※ 단, 검사 및 예방접종은 소요시간이 있으므로 최소한 업무종료 30분 전까지는 방문하셔야합니다.\n> 위 치 : 부산광역시 사하구 하신중앙로 185(신평동, 사하구 제2청사 보건소동)\n> 대표전화 : 051)220-5740, 5704, 5706(보건소 민원실) 051)220-5701(보건행정과 사무실) 051)220-5711(건강증진과 사무실)\n> FAX번호 : 051-220-5709(보건행정과) / 5719(건강증진과)",
+        "sources": [
+          {
+            "title": "찾아오시는길",
+            "url": "https://www.saha.go.kr/health/contents.do?mId=0103000000",
+            "category": "보건소",
+            "service_type": "기타",
+            "department": "",
+            "contact": "",
+            "attachments": [],
+            "source_type": "crawled_page",
+            "issued_at": "",
+            "data_period": "",
+            "page_number": 0,
+            "checked_at": "2026-10-27"
+          }
+        ],
+        "is_clarification": false,
+        "degraded": false,
+        "degraded_reason": null,
+        "evidence": {
+          "answer_method": "structured_source",
+          "status": "official",
+          "label": "공식 자료 핵심 안내",
+          "official_source_count": 1,
+          "decision": "supported",
+          "reasons": [],
+          "requested_fields": [
+            "location"
+          ],
+          "matched_fields": [
+            "location"
+          ],
+          "retrieval_mode": "verified_original",
+          "vector_invoked": false,
+          "reranker_used": false
+        },
+        "suggested_questions": []
+      }
+    }
+  ],
+  "code_unchanged": true,
+  "finished_at": "2026-10-28T01:41:48.819355+00:00"
+}

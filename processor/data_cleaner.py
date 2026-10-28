@@ -164,10 +164,15 @@ class DataCleaner:
             return []
         text = page_data.content
         if getattr(page_data, 'raw_html', ''):
-            from bs4 import BeautifulSoup
-            from crawler.saha_crawler import SahaCrawler
-            crawler = object.__new__(SahaCrawler)
-            text = crawler._extract_content(BeautifulSoup(page_data.raw_html, 'lxml'), page_data.url)
+            from chatbot.official_registry import reviewed_external_url
+            if reviewed_external_url(page_data.url):
+                from crawler.partner_event import event_calendar_content
+                text = event_calendar_content(page_data.raw_html)
+            else:
+                from bs4 import BeautifulSoup
+                from crawler.saha_crawler import SahaCrawler
+                crawler = object.__new__(SahaCrawler)
+                text = crawler._extract_content(BeautifulSoup(page_data.raw_html, 'lxml'), page_data.url)
         cleaned = self.clean_text(text)
 
         if not self.is_valid_content(cleaned):

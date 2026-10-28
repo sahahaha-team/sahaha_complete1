@@ -45,6 +45,9 @@ REPORTS = {
 
 
 def _official_url(url: str) -> bool:
+    from chatbot.official_registry import reviewed_external_url
+    if reviewed_external_url(url):
+        return True
     from chatbot.policy_supplement import POLICY
     if url == POLICY:
         return True  # One reviewed national guide; not arbitrary go.kr sites.
@@ -87,7 +90,12 @@ def official_page_targets(source_dir: Path) -> list[tuple[str, str]]:
 def _fetch_page(target: tuple[str, str]):
     question, url = target
     try:
-        response = requests.get(url, timeout=20, headers={"User-Agent": "SahaOfficialKnowledgeRefresh/1.0"})
+        from chatbot.official_registry import reviewed_external_url
+        partner = reviewed_external_url(url)
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36" if partner else "SahaOfficialKnowledgeRefresh/1.0"}
+        if partner:
+            headers.update({'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'ko-KR,ko;q=0.9'})
+        response = requests.get(url, timeout=20, headers=headers)
         response.raise_for_status()
         if not _official_url(response.url):
             raise ValueError("공식 도메인 밖으로 이동")
@@ -95,13 +103,16 @@ def _fetch_page(target: tuple[str, str]):
         soup = BeautifulSoup(response.text, "lxml")
         crawler = object.__new__(SahaCrawler)
         from chatbot.policy_supplement import POLICY, policy_content, policy_fields
-        if url == POLICY:
+        if partner:
+            from crawler.partner_event import event_calendar_content
+            content = event_calendar_content(response.text)
+        elif url == POLICY:
             if not policy_fields(response.text, datetime.now().year):
                 raise ValueError('중앙 제도 원문의 현행 연도·대상 구조를 확인하지 못함')
             content = policy_content(response.text)
         else:
             content = crawler._extract_plain_content(soup)
-        title = crawler._extract_title(soup)
+        title = content.splitlines()[0].lstrip('# ') if partner else crawler._extract_title(soup)
         attachments = crawler._extract_attachments(soup, url)
         if len(content.strip()) < 80:
             raise ValueError("본문이 너무 짧음")

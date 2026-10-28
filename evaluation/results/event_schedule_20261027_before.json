@@ -1,0 +1,86 @@
+[
+  {
+    "question": "감천문화마을 축제언제해",
+    "response": {
+      "answer": "**교류실적**\n- 2024. 10. 25. : 제14회 감천문화마을 골목축제 방문(부군수외3명)",
+      "answer_details": "전남광주통합특별시 함평군의 공식 안내 원문입니다.\n\n> ## 전남광주통합특별시 함평군\n> ### 자매결연 추진현황\n> #### 주요정보\n> ##### 추진경위\n> 2024. 06. 24. : 자매결연 체결 제의(사하구→함평군)\n> 2024. 07. 02. : 자매결연 체결 동의(함평군→사하구)\n> 2024. 10. 18. : 자매결연 협약 체결(함평군청)\n> ##### 교류실적\n> 2024. 10. 25. : 제14회 감천문화마을 골목축제 방문(부군수외3명)\n> 2025. 04. 25. : 제27회 함평나비대축제 방문(부구청장 외 3명)\n> 2025. 10. 24. : 2025 대한민국 국향대전 방문(총무과장 외 3명)\n> 2026. 04.24. 제28회 함평나비대축제 방문(부구청장 외 4명)\n> ### 군청 위치\n> 군청 위치: 지도이미지영역 건너뛰기",
+      "sources": [
+        {
+          "title": "전남광주통합특별시 함평군",
+          "url": "https://www.saha.go.kr/portal/contents.do?mId=0603050000",
+          "category": "사하소개",
+          "service_type": "기타",
+          "department": "",
+          "contact": "",
+          "attachments": [],
+          "source_type": "crawled_page",
+          "issued_at": "",
+          "data_period": "",
+          "page_number": 0,
+          "checked_at": "2026-10-26"
+        }
+      ],
+      "is_clarification": false,
+      "degraded": false,
+      "degraded_reason": null,
+      "evidence": {
+        "answer_method": "structured_source",
+        "status": "official",
+        "label": "공식 자료 핵심 안내",
+        "official_source_count": 1,
+        "decision": "supported",
+        "reasons": [],
+        "requested_fields": [
+          "schedule"
+        ],
+        "matched_fields": [
+          "schedule"
+        ],
+        "retrieval_mode": "hybrid_rrf",
+        "vector_invoked": true,
+        "reranker_used": true
+      },
+      "suggested_questions": []
+    }
+  },
+  {
+    "question": "26년 감천문화마을 축제 어떠냐고",
+    "response": {
+      "answer": "- 2024. 10. 25. : 제14회 감천문화마을 골목축제 방문(부군수외3명)",
+      "answer_details": "전남광주통합특별시 함평군의 공식 안내 원문입니다.\n\n> ## 전남광주통합특별시 함평군\n> ### 자매결연 추진현황\n> #### 주요정보\n> ##### 추진경위\n> 2024. 06. 24. : 자매결연 체결 제의(사하구→함평군)\n> 2024. 07. 02. : 자매결연 체결 동의(함평군→사하구)\n> 2024. 10. 18. : 자매결연 협약 체결(함평군청)\n> ##### 교류실적\n> 2024. 10. 25. : 제14회 감천문화마을 골목축제 방문(부군수외3명)\n> 2025. 04. 25. : 제27회 함평나비대축제 방문(부구청장 외 3명)\n> 2025. 10. 24. : 2025 대한민국 국향대전 방문(총무과장 외 3명)\n> 2026. 04.24. 제28회 함평나비대축제 방문(부구청장 외 4명)\n> ### 군청 위치\n> 지도이미지영역 건너뛰기\n\n전체 조건은 아래 출처에서 확인할 수 있습니다.",
+      "sources": [
+        {
+          "title": "전남광주통합특별시 함평군",
+          "url": "https://www.saha.go.kr/portal/contents.do?mId=0603050000",
+          "category": "사하소개",
+          "service_type": "기타",
+          "department": "",
+          "contact": "",
+          "attachments": [],
+          "source_type": "crawled_page",
+          "issued_at": "",
+          "data_period": "",
+          "page_number": 0,
+          "checked_at": "2026-10-26"
+        }
+      ],
+      "is_clarification": false,
+      "degraded": false,
+      "degraded_reason": null,
+      "evidence": {
+        "answer_method": "source_fallback",
+        "status": "official",
+        "label": "공식 자료 핵심 안내",
+        "official_source_count": 1,
+        "decision": "supported",
+        "reasons": [],
+        "requested_fields": [],
+        "matched_fields": [],
+        "retrieval_mode": "hybrid_rrf",
+        "vector_invoked": true,
+        "reranker_used": true
+      },
+      "suggested_questions": []
+    }
+  }
+]

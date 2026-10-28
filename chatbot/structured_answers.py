@@ -34,6 +34,15 @@ def field_matches(goal: str | None, unit: str, query: str = '', context: str = '
     unit = re.sub(r'^[\s▹▸▶▷]+', '', unit)  # Decorative markers; keep ※ qualifications and quoted source intact.
     if not source_unit_complete(unit):
         return False
+    if goal in {'schedule', 'hours'}:
+        from chatbot.event_grounding import dated_unit_compatible
+        if not dated_unit_compatible(query, unit):
+            return False
+        # ISO/dotted event dates are facts even without a Korean date suffix.
+        from chatbot.event_grounding import EVENT
+        if goal == 'schedule' and EVENT.search(query) and re.search(
+                r'(?:기간|일자|일정|Period)\s*[:：].*20\d{2}[./-]\s*\d{1,2}', unit):
+            return True
     request = compact(query)
     if goal == 'method' and re.search(r'성명|이름', request) and re.search(r'표기|작성', request):
         return bool(re.search(r'성명|이름', unit) and re.search(r'로마자|영문|대문자|표기|기재', unit))
@@ -637,6 +646,10 @@ def structured_brief(query: str, document: dict, body: str, keywords: set[str]) 
                     continue
             if field == 'schedule' and has_opening_hours(unit):
                 score += 10
+            if field == 'schedule':
+                from chatbot.event_grounding import EVENT
+                if EVENT.search(query) and re.search(r'(?:기간|일자|일정|Period)\s*[:：].*20\d{2}[./-]', unit):
+                    score += 12  # The event period must not lose to its daily hours.
             if field == 'schedule' and not re.search(r'연납|선납',query):
                 if re.search(r'연납|선납',section_heading + ' ' + unit):
                     continue

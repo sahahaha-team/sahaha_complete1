@@ -5,11 +5,12 @@
 """
 
 import time
+import re
 import logging
 import requests
 from bs4 import BeautifulSoup, Tag
 from collections import deque
-from urllib.parse import parse_qs, urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse, urlencode, urlunparse
 from urllib.robotparser import RobotFileParser
 from dataclasses import dataclass, field
 from typing import Optional
@@ -347,8 +348,22 @@ class SahaCrawler:
 
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> list:
         links = []
-        for a in soup.find_all("a", href=True):
-            href = a["href"]
+        for a in soup.find_all("a"):
+            href = a.get("href", "")
+            # The published Saha board UI encodes detail IDs in boardView.
+            # Reconstruct only that known declarative form. Never execute JS.
+            board = re.fullmatch(
+                r"\s*boardView\(\s*'([\w-]+)'\s*,\s*'[\w-]+'\s*,\s*'[YN]'\s*,"
+                r"\s*'(\d+)'\s*,\s*'(\d+)'\s*,\s*'(\d+)'\s*,\s*'(\d+)'\s*\)\s*;\s*(?:return false;?)?\s*",
+                a.get('onclick', ''))
+            if board:
+                form = soup.find('form', id=board[1])
+                action = urlparse(urljoin(base_url, form.get('action', '') if form else ''))
+                if action.path.endswith('/bbs/list.do') and action.hostname == urlparse(base_url).hostname:
+                    href = urlunparse(action._replace(path=action.path[:-7]+'view.do',
+                        query=urlencode({'bIdx':board[2], 'ptIdx':board[3], 'mId':board[4]}), fragment=''))
+            if not href or href.startswith('#') or href.lower().startswith('javascript:'):
+                continue
             full_url = urljoin(base_url, href)
             parsed = urlparse(full_url)
             hostname = (parsed.hostname or "").lower()

@@ -1,0 +1,6 @@
+2026-10-28 KST, local project Python; HF_HUB_OFFLINE=1, TRANSFORMERS_OFFLINE=1.
+Command: python -X utf8 -m unittest discover -s tests
+Ran 709 tests in 16.456s
+OK
+This is a unit/regression test count, not an actual chatbot answer accuracy rate.
+Actual API runs and manual official-source review are separate JSON artifacts.

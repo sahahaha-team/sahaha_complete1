@@ -60,6 +60,7 @@ SERVICE_NAMES += ('인감증명', '본인서명사실확인서')
 SERVICE_NAMES += ('정보공개', '금연')
 SERVICE_NAMES += ('정보화교육',)
 SERVICE_NAMES += ('마을건강센터',)
+SERVICE_NAMES += ('감천문화마을',)
 WORDING_ALIASES.update({'인감증명서':'인감증명'})
 WORDING_ALIASES.update({'껍데기':'껍질'})
 WORDING_ALIASES.update({'aids':'에이즈','갱신':'연장'})
@@ -89,6 +90,8 @@ def strip_general_question_tail(query: str) -> str:
 def normalize_query(query: str) -> str:
     """Normalize surface wording without inventing a service or condition."""
     text = strip_general_question_tail(unicodedata.normalize('NFC', query or ""))
+    if re.search(r'축제|박람회|공연|전시회|행사', text):
+        text = re.sub(r'(?<!\d)(\d{2})\s*년(?!째|간|근속)', r'20\1년', text)
     # Closed vocabulary corrections only. Do not fuzzy-match arbitrary names,
     # numbers, districts or eligibility conditions.
     for typo, name in (('주민등룍증', '주민등록증'), ('대형페기물', '대형폐기물')):
@@ -278,7 +281,7 @@ def substantive_keywords(words: Iterable[str]) -> set[str]:
     output = set()
     for word in words:
         word = compact(word)
-        if len(word) < 2 or word.isdigit() or word in WEAK_WORDS:
+        if len(word) < 2 or word.isdigit() or word in WEAK_WORDS or re.fullmatch(r'(?:20)?\d{2}년도?', word):
             continue
         if AREA_PATTERN.fullmatch(word):
             continue

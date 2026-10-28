@@ -10,7 +10,7 @@ _OPENING = re.compile(
     r"문(?:을)?(?:여는|열|닫)|오픈시간|마감시간"
 )
 _DURATION = re.compile(r"소요시간|시간(?:이)?걸|얼마나걸|처리기간|발급기간|며칠")
-_HOURS_LABEL = re.compile(r"(?:운영|진료|업무|근무|이용|개관|개장|접수|상담|점심)\s*시간")
+_HOURS_LABEL = re.compile(r"(?:운영|진료|업무|근무|이용|개관|개장|접수|상담|점심|행사|공연|축제)\s*시간")
 _CLOCK = re.compile(r"(?<!\d)(?:[01]?\d|2[0-3])(?:\s*:\s*[0-5]\d|\s*시)")
 _DAYS = re.compile(r"평일|주말|공휴일|[월화수목금토일]요일|월\s*[~∼～\-]\s*금")
 _PLACE_FIELD = re.compile(
@@ -19,7 +19,7 @@ _PLACE_FIELD = re.compile(
 )
 _PLACE_ENTITY = re.compile(
     r"보건소|구청|행정복지센터|주민센터|청사|의료기관|병원|의원|민원실|상담실|"
-    r"접종실|결핵실|도서관|문화회관|복지관|센터|온라인|홈페이지|[가-힣0-9]+(?:로|길)\s*\d+"
+    r"접종실|결핵실|도서관|문화회관|복지관|센터|공원|마을|광장|해수욕장|온라인|홈페이지|[가-힣0-9]+(?:로|길)\s*\d+"
 )
 
 
@@ -108,7 +108,8 @@ def location_subject(query: str) -> str:
 def asks_opening_hours(query: str) -> bool:
     text = re.sub(r"\s+", "", query or "")
     compound = bool(re.search(r'시간(?:과|및|이랑|하고)?(?:위치|주소)|(?:위치|주소)(?:와|과|및|이랑|하고)?시간', text))
-    return not _DURATION.search(text) and bool(_OPENING.search(text) or compound)
+    event_hours = bool(re.search(r'축제|박람회|공연|전시회|행사', text) and '시간' in text)
+    return not _DURATION.search(text) and bool(_OPENING.search(text) or compound or event_hours)
 
 
 def has_opening_hours(text: str) -> bool:

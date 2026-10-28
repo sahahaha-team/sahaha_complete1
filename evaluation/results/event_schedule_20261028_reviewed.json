@@ -1,0 +1,325 @@
+{
+  "reviewed_at": "2026-10-28T01:43:27.162072+00:00",
+  "reviewer": "개발 담당 AI의 공식 원문 대조 (not independent/blind evaluation)",
+  "method": "Manual scope/field/citation review. S sufficient; C clarification; I insufficient. C and I are not sufficient answers. Targeted development sample, not population accuracy. Two dates are separate runs.",
+  "runs": [
+    {
+      "input": "event_schedule_20261027_final.json",
+      "started_at": "2026-10-27T04:29:46.783906+00:00",
+      "finished_at": "2026-10-27T04:31:57.343316+00:00",
+      "counts": {
+        "S": 14,
+        "I": 5,
+        "C": 1
+      },
+      "request_metrics_matched": 20,
+      "recorded_model_calls": 0,
+      "latency_seconds": {
+        "median": 5.265,
+        "p95_nearest_rank": 8.448,
+        "maximum": 8.638
+      },
+      "observations": [
+        {
+          "id": "screenshot",
+          "turn": 1,
+          "question": "감천문화마을 축제언제해",
+          "grade": "S",
+          "note": "행사 공고의 2026-10-31~11-01 및 시간 일치; 함평 방문실적 배제"
+        },
+        {
+          "id": "screenshot",
+          "turn": 2,
+          "question": "26년 감천문화마을 축제 언제냐고",
+          "grade": "S",
+          "note": "26년을 2026년으로 유지하여 같은 공고 기간 안내"
+        },
+        {
+          "id": "screenshot",
+          "turn": 3,
+          "question": "그럼 시간은?",
+          "grade": "S",
+          "note": "직전 행사·연도를 유지하고 10:00~18:00 안내"
+        },
+        {
+          "id": "screenshot",
+          "turn": 4,
+          "question": "어디서 해?",
+          "grade": "S",
+          "note": "장소 후속에 공식 감천문화마을 일원 안내"
+        },
+        {
+          "id": "explicit",
+          "turn": 1,
+          "question": "2026년 감천문화마을 골목축제 일정 알려주세요",
+          "grade": "S",
+          "note": "명시 2026년 일정과 원문 기간 일치"
+        },
+        {
+          "id": "short_year",
+          "turn": 1,
+          "question": "26년 감천문화마을 축제 언제야?",
+          "grade": "S",
+          "note": "26년의 행사 기간 일치"
+        },
+        {
+          "id": "correction",
+          "turn": 1,
+          "question": "2024년 감천문화마을 축제 일정 알려줘",
+          "grade": "I",
+          "note": "2024년 행사 전체 공고를 확보하지 못함; 교류 방문일을 행사 기간으로 대체하지 않음"
+        },
+        {
+          "id": "correction",
+          "turn": 2,
+          "question": "아니 26년 거 말하는거야",
+          "grade": "S",
+          "note": "연도만 정정한 뒤 기존 축제의 2026년 기간 안내"
+        },
+        {
+          "id": "correction",
+          "turn": 3,
+          "question": "그럼 시간은?",
+          "grade": "S",
+          "note": "정정된 축제의 시간 후속에 실제 시간 안내"
+        },
+        {
+          "id": "future",
+          "turn": 1,
+          "question": "2027년 감천문화마을 축제 언제야",
+          "grade": "I",
+          "note": "2027년 미확보 공고 대신 2026년 날짜를 쓰지 않음; 실제 일정 답변 아님"
+        },
+        {
+          "id": "next_year",
+          "turn": 1,
+          "question": "내년 감천문화마을 축제 일정 알려줘",
+          "grade": "I",
+          "note": "2026년 실행 기준 내년=2027년; 실제 2027년 일정 미해결"
+        },
+        {
+          "id": "other_event",
+          "turn": 1,
+          "question": "2026년 다대포 축제 언제해",
+          "grade": "I",
+          "note": "다대포 행사 공고를 확보하지 못함; 감천 축제로 대체하지 않음"
+        },
+        {
+          "id": "non_event_hours",
+          "turn": 1,
+          "question": "사하구 보건소 운영시간 알려줘",
+          "grade": "S",
+          "note": "보건소 평일 9~18시·점심 12~13시·종료30분 전 방문 안내 원문 일치"
+        },
+        {
+          "id": "fire_adult",
+          "turn": 1,
+          "question": "소방 체험 어떻게 신청해",
+          "grade": "C",
+          "note": "확인 자료의 어린이 대상임을 명시하고 대상 확인; 신청 안내 완료로 세지 않음"
+        },
+        {
+          "id": "fire_adult",
+          "turn": 2,
+          "question": "성인",
+          "grade": "I",
+          "note": "성인 대상 신청 근거를 확보하지 못함; 어린이 예약을 성인에게 권하지 않음"
+        },
+        {
+          "id": "contact",
+          "turn": 1,
+          "question": "대형폐기물 담당자 전화번호 알려줘",
+          "grade": "S",
+          "note": "직원업무안내 11페이지 자원순환과 대형폐기물 업무와 051-220-4452 일치"
+        },
+        {
+          "id": "region_correction",
+          "turn": 1,
+          "question": "괴정2동 작은도서관 위치 알려줘",
+          "grade": "S",
+          "note": "괴정2동 까치마을 작은도서관 실제 주소 일치"
+        },
+        {
+          "id": "region_correction",
+          "turn": 2,
+          "question": "아니 신평1동이야",
+          "grade": "S",
+          "note": "신평1동 정정 후 동매누리 작은도서관 실제 주소 안내"
+        },
+        {
+          "id": "new_topic",
+          "turn": 1,
+          "question": "2026년 감천문화마을 축제 언제해",
+          "grade": "S",
+          "note": "2026년 행사 공고 기간과 시간 일치"
+        },
+        {
+          "id": "new_topic",
+          "turn": 2,
+          "question": "보건소 주소는?",
+          "grade": "S",
+          "note": "행사 문맥을 새 보건소 질문에 강요하지 않고 공식 기관 주소 안내"
+        }
+      ]
+    },
+    {
+      "input": "event_schedule_20261028_resume.json",
+      "started_at": "2026-10-28T01:39:40.791240+00:00",
+      "finished_at": "2026-10-28T01:41:48.819355+00:00",
+      "counts": {
+        "S": 14,
+        "I": 5,
+        "C": 1
+      },
+      "request_metrics_matched": 20,
+      "recorded_model_calls": 0,
+      "latency_seconds": {
+        "median": 3.644,
+        "p95_nearest_rank": 7.029,
+        "maximum": 8.477
+      },
+      "observations": [
+        {
+          "id": "screenshot",
+          "turn": 1,
+          "question": "감천문화마을 축제언제해",
+          "grade": "S",
+          "note": "행사 공고의 2026-10-31~11-01 및 시간 일치; 함평 방문실적 배제"
+        },
+        {
+          "id": "screenshot",
+          "turn": 2,
+          "question": "26년 감천문화마을 축제 언제냐고",
+          "grade": "S",
+          "note": "26년을 2026년으로 유지하여 같은 공고 기간 안내"
+        },
+        {
+          "id": "screenshot",
+          "turn": 3,
+          "question": "그럼 시간은?",
+          "grade": "S",
+          "note": "직전 행사·연도를 유지하고 10:00~18:00 안내"
+        },
+        {
+          "id": "screenshot",
+          "turn": 4,
+          "question": "어디서 해?",
+          "grade": "S",
+          "note": "장소 후속에 공식 감천문화마을 일원 안내"
+        },
+        {
+          "id": "explicit",
+          "turn": 1,
+          "question": "2026년 감천문화마을 골목축제 일정 알려주세요",
+          "grade": "S",
+          "note": "명시 2026년 일정과 원문 기간 일치"
+        },
+        {
+          "id": "short_year",
+          "turn": 1,
+          "question": "26년 감천문화마을 축제 언제야?",
+          "grade": "S",
+          "note": "26년의 행사 기간 일치"
+        },
+        {
+          "id": "correction",
+          "turn": 1,
+          "question": "2024년 감천문화마을 축제 일정 알려줘",
+          "grade": "I",
+          "note": "2024년 행사 전체 공고를 확보하지 못함; 교류 방문일을 행사 기간으로 대체하지 않음"
+        },
+        {
+          "id": "correction",
+          "turn": 2,
+          "question": "아니 26년 거 말하는거야",
+          "grade": "S",
+          "note": "연도만 정정한 뒤 기존 축제의 2026년 기간 안내"
+        },
+        {
+          "id": "correction",
+          "turn": 3,
+          "question": "그럼 시간은?",
+          "grade": "S",
+          "note": "정정된 축제의 시간 후속에 실제 시간 안내"
+        },
+        {
+          "id": "future",
+          "turn": 1,
+          "question": "2027년 감천문화마을 축제 언제야",
+          "grade": "I",
+          "note": "2027년 미확보 공고 대신 2026년 날짜를 쓰지 않음; 실제 일정 답변 아님"
+        },
+        {
+          "id": "next_year",
+          "turn": 1,
+          "question": "내년 감천문화마을 축제 일정 알려줘",
+          "grade": "I",
+          "note": "2026년 실행 기준 내년=2027년; 실제 2027년 일정 미해결"
+        },
+        {
+          "id": "other_event",
+          "turn": 1,
+          "question": "2026년 다대포 축제 언제해",
+          "grade": "I",
+          "note": "다대포 행사 공고를 확보하지 못함; 감천 축제로 대체하지 않음"
+        },
+        {
+          "id": "non_event_hours",
+          "turn": 1,
+          "question": "사하구 보건소 운영시간 알려줘",
+          "grade": "S",
+          "note": "보건소 평일 9~18시·점심 12~13시·종료30분 전 방문 안내 원문 일치"
+        },
+        {
+          "id": "fire_adult",
+          "turn": 1,
+          "question": "소방 체험 어떻게 신청해",
+          "grade": "C",
+          "note": "확인 자료의 어린이 대상임을 명시하고 대상 확인; 신청 안내 완료로 세지 않음"
+        },
+        {
+          "id": "fire_adult",
+          "turn": 2,
+          "question": "성인",
+          "grade": "I",
+          "note": "성인 대상 신청 근거를 확보하지 못함; 어린이 예약을 성인에게 권하지 않음"
+        },
+        {
+          "id": "contact",
+          "turn": 1,
+          "question": "대형폐기물 담당자 전화번호 알려줘",
+          "grade": "S",
+          "note": "직원업무안내 11페이지 자원순환과 대형폐기물 업무와 051-220-4452 일치"
+        },
+        {
+          "id": "region_correction",
+          "turn": 1,
+          "question": "괴정2동 작은도서관 위치 알려줘",
+          "grade": "S",
+          "note": "괴정2동 까치마을 작은도서관 실제 주소 일치"
+        },
+        {
+          "id": "region_correction",
+          "turn": 2,
+          "question": "아니 신평1동이야",
+          "grade": "S",
+          "note": "신평1동 정정 후 동매누리 작은도서관 실제 주소 안내"
+        },
+        {
+          "id": "new_topic",
+          "turn": 1,
+          "question": "2026년 감천문화마을 축제 언제해",
+          "grade": "S",
+          "note": "2026년 행사 공고 기간과 시간 일치"
+        },
+        {
+          "id": "new_topic",
+          "turn": 2,
+          "question": "보건소 주소는?",
+          "grade": "S",
+          "note": "행사 문맥을 새 보건소 질문에 강요하지 않고 공식 기관 주소 안내"
+        }
+      ]
+    }
+  ]
+}

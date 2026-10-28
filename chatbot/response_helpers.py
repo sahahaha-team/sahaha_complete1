@@ -166,6 +166,8 @@ def is_field_only_question(message: str) -> bool:
     """Recognize elided fields without treating a new service as a follow-up."""
     text = re.sub(r'[\s?!.,？]', '', message or '')
     text = re.sub(r'^(?:그럼|그러면|그건|그거|관련)', '', text)
+    if re.fullmatch(r'어디(?:서|에서)(?:해|해요|하나요|하죠|하는거야|하니)', text):
+        return True
     text = re.sub(r'(?:은|는)?어떻게(?:하나요|해요|해|받아요|받아)[?？]?$', '방법', text)
     text = re.sub(r'(?:좀)?(?:알려(?:줘|주세요)|설명해줘|보고싶(?:어|어요)|보여(?:줘|주세요)|확인하고싶(?:어|어요)|궁금(?:해|해요))$', '', text)
     fields = r'전화번호|연락처|팩스번호|현황도|현황|노선도|노선|지도|위치|주소|장소|시간|일정|기간|비용|수수료|준비물|서류|대상|자격|조건|참여방법|신청방법|이용방법|신청절차|발급절차|신청|접수|방법'
@@ -400,6 +402,10 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
     recent = [(m.get('search_query') or m.get('content') or '').strip()
               for m in history or [] if m.get('role') == 'user']
     previous_query = recent[-1] if recent else ''
+    from chatbot.event_grounding import year_reply
+    event_correction = year_reply(previous_query, current)
+    if event_correction:
+        return event_correction
     # A verified answer may have resolved a generic activity to one registered
     # facility. Use that URL's navigation name for the next elided field only;
     # do not infer a facility from an unsupported answer or an older source.
@@ -505,10 +511,15 @@ def build_contextual_search_query(user_message: str, history: list[dict]) -> str
         # Carry the service and explicit profile, not the previous requested
         # field (e.g. automatic enrolment must not replace a benefit question).
         profile = re.findall(r'(?:괴정|당리|하단|신평|장림|다대|구평|감천)[1-4]?동|(?:만)?\d{1,2}(?:세|살)|성인|미성년자?|부모|친족|신규|재발급',previous)
+        from chatbot.event_grounding import EVENT, event_years
+        if EVENT.search(previous):
+            profile.extend(f'{year}년' for year in sorted(event_years(previous)))
         scope = confirmed_profile(previous)
         if scope:
             profile.append(scope)
         subjects = sorted(old_names,key=len,reverse=True)
+        if (event_kind := EVENT.search(previous)) and not any(event_kind[0] in s for s in subjects):
+            subjects.append(event_kind[0])
         from chatbot.faq_targets import priority_entities
         subjects.extend(entity for entity in priority_entities(previous)
                         if not any(entity in subject for subject in subjects))

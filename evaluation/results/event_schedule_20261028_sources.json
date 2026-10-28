@@ -1,0 +1,49 @@
+{
+  "checked_at": "2026-10-28T01:40:35.799811+00:00",
+  "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+  "current_official_text": "## 제16회 감천문화마을 골목축제\n원제: The 16th Gamcheon Culture Village Alley Festival\n기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n행사시간: 10:00-18:00\n주최: Saha-gu, Gamcheon Culture Village Residents Council\n장소: 감천문화마을 일원",
+  "source_html_sha256": "cba470aa27e1c8b1f47b6608ed31d68afd895aac292147b73db911193d9d4147",
+  "registered_daily_target": true,
+  "stored_pages": [
+    {
+      "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+      "title": "제16회 감천문화마을 골목축제",
+      "content": "## 제16회 감천문화마을 골목축제\n원제: The 16th Gamcheon Culture Village Alley Festival\n기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n행사시간: 10:00-18:00\n주최: Saha-gu, Gamcheon Culture Village Residents Council\n장소: 감천문화마을 일원",
+      "last_checked_at": "2026-10-27T04:10:25.760161+00:00"
+    }
+  ],
+  "stored_html_sizes": [
+    60589
+  ],
+  "facts_match_live_source": true,
+  "processed_chunks": [
+    {
+      "chunk_id": "54c694ec7958034c27f3caf0c633470b",
+      "content": "문서 위치: 제16회 감천문화마을 골목축제\n원제: The 16th Gamcheon Culture Village Alley Festival\n기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n행사시간: 10:00-18:00\n주최: Saha-gu, Gamcheon Culture Village Residents Council\n장소: 감천문화마을 일원",
+      "embedded": true
+    }
+  ],
+  "vector_documents": [
+    {
+      "id": "54c694ec7958034c27f3caf0c633470b",
+      "content": "문서 위치: 제16회 감천문화마을 골목축제\n원제: The 16th Gamcheon Culture Village Alley Festival\n기간: 2026-10-31 (Sat) ~ 2026-11-01 (Sun)\n행사시간: 10:00-18:00\n주최: Saha-gu, Gamcheon Culture Village Residents Council\n장소: 감천문화마을 일원",
+      "metadata": {
+        "url": "https://www.busan.go.kr/eng/bsevents/1757816",
+        "title": "제16회 감천문화마을 골목축제",
+        "summary": "문서 위치: 제16회 감천문화마을 골목축제\n원제: The 16th Gamcheon Cult",
+        "category": "문화관광",
+        "keywords": [
+          "감천문화마을",
+          "골목축제",
+          "Gamcheon",
+          "Culture",
+          "Village"
+        ],
+        "department": "",
+        "attachments": [],
+        "service_type": "기타",
+        "sub_category": ""
+      }
+    }
+  ]
+}
